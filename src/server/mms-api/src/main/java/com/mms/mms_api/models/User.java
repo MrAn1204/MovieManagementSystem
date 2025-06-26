@@ -1,41 +1,50 @@
 package com.mms.mms_api.models;
 
+import java.time.LocalDate;
 import java.util.Collection;
-import java.util.Date;
 
+import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
 import jakarta.persistence.Enumerated;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.JoinTable;
 import jakarta.persistence.ManyToMany;
+import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 
 @Entity
 @Data
 @EqualsAndHashCode(callSuper = true)
+@AllArgsConstructor
 public class User extends BaseEntity {
+    @Column(nullable = false)
     private String username;
 
+    @Column(nullable = false)
     private String fullname;
 
+    @Column(nullable = false)
     private String password;
 
+    @Column(nullable = false)
     @Enumerated(EnumType.STRING)
     private Gender gender;
 
-    private Date dateOfBirth;
+    @Column(nullable = false)
+    private LocalDate dateOfBirth;
 
     private String email;
 
     private String citizenIdNumber;
 
+    @Column(nullable = false)
     private String phoneNumber;
 
     private String address;
 
-    private int score;
+    private int score = 0;
 
     @ManyToMany
     @JoinTable(
