@@ -4,14 +4,17 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.mms.mms_api.business.commands.user.UserCreateCommand;
 import com.mms.mms_api.business.commands.user.UserGetAllQuery;
+import com.mms.mms_api.business.commands.user.UserGetByIdQuery;
 import com.mms.mms_api.business.services.UserService;
 import com.mms.mms_api.dto.UserDto;
 
 import java.util.Collection;
+import java.util.UUID;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -44,4 +47,10 @@ public class UserController {
             : ResponseEntity.status(HttpStatus.BAD_REQUEST).body(null);
     }
     
+    @GetMapping("/{id}")
+    public UserDto getById(@PathVariable String id) {
+        UserGetByIdQuery query = new UserGetByIdQuery(UUID.fromString(id));
+        
+        return userService.handle(query);
+    }
 }
