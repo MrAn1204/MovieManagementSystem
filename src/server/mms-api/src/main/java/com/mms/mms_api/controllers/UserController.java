@@ -2,12 +2,12 @@ package com.mms.mms_api.controllers;
 
 import org.springframework.web.bind.annotation.RestController;
 
-import com.mms.mms_api.business.commands.UserCreateCommand;
+import com.mms.mms_api.business.commands.user.UserCreateCommand;
+import com.mms.mms_api.business.commands.user.UserGetAllQuery;
 import com.mms.mms_api.business.services.UserService;
 import com.mms.mms_api.dto.UserDto;
-import com.mms.mms_api.models.User;
 
-import java.util.List;
+import java.util.Collection;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -27,8 +27,10 @@ public class UserController {
     }
 
     @GetMapping
-    public List<User> getAll() {
-        return List.of();
+    public Collection<UserDto> getAll() {
+        UserGetAllQuery query = new UserGetAllQuery();
+        
+        return userService.handle(query);
     }
     
     @PostMapping("/create")

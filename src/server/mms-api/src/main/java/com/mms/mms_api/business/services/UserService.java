@@ -1,9 +1,13 @@
 package com.mms.mms_api.business.services;
 
+import java.util.Collection;
+
 import org.springframework.stereotype.Service;
 
-import com.mms.mms_api.business.commands.UserCreateCommand;
+import com.mms.mms_api.business.commands.user.UserCreateCommand;
+import com.mms.mms_api.business.commands.user.UserGetAllQuery;
 import com.mms.mms_api.business.handlers.UserCreateHandler;
+import com.mms.mms_api.business.handlers.UserGetAllHandler;
 import com.mms.mms_api.data.UserRepository;
 import com.mms.mms_api.dto.UserDto;
 import com.mms.mms_api.utils.mappers.UserMapper;
@@ -19,8 +23,14 @@ public class UserService {
         this.userMapper = userMapper;
     }
     
-    public UserDto handle(UserCreateCommand command) {
-        UserCreateHandler handler = new UserCreateHandler(command, userRepository, userMapper);
+    public UserDto handle(UserCreateCommand request) {
+        UserCreateHandler handler = new UserCreateHandler(request, userMapper, userRepository);
+
+        return handler.execute();
+    }
+
+    public Collection<UserDto> handle(UserGetAllQuery request) {
+        UserGetAllHandler handler = new UserGetAllHandler(request, userMapper, userRepository);
 
         return handler.execute();
     }

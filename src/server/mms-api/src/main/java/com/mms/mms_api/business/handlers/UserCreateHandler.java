@@ -1,6 +1,6 @@
 package com.mms.mms_api.business.handlers;
 
-import com.mms.mms_api.business.commands.UserCreateCommand;
+import com.mms.mms_api.business.commands.user.UserCreateCommand;
 import com.mms.mms_api.data.UserRepository;
 import com.mms.mms_api.dto.UserDto;
 import com.mms.mms_api.models.User;
@@ -10,9 +10,9 @@ public class UserCreateHandler extends BaseHandler<UserCreateCommand, UserDto> {
     private UserRepository userRepository;
     
     public UserCreateHandler(
-        UserCreateCommand request, 
-        UserRepository userRepository, 
-        UserMapper userMapper
+        UserCreateCommand request,
+        UserMapper userMapper,
+        UserRepository userRepository 
     ) {
         super(request, userMapper);
         this.userRepository = userRepository;
