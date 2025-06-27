@@ -10,16 +10,16 @@ public class UserCreateHandler extends BaseHandler<UserCreateCommand, UserDto> {
     private UserRepository userRepository;
     
     public UserCreateHandler(
-        UserCreateCommand command, 
+        UserCreateCommand request, 
         UserRepository userRepository, 
         UserMapper userMapper
     ) {
-        super(command, userMapper);
+        super(request, userMapper);
         this.userRepository = userRepository;
     }
 
     public UserDto execute() {
-        User user = userMapper.toEntity(command.getUserDto());
+        User user = userMapper.toEntity(request.getUserDto());
         
         User savedUser = userRepository.save(user);
 
