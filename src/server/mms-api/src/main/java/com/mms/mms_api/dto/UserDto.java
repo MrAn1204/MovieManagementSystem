@@ -2,6 +2,7 @@ package com.mms.mms_api.dto;
 
 import java.time.LocalDate;
 import java.util.Collection;
+import java.util.UUID;
 
 import com.mms.mms_api.models.Gender;
 import com.mms.mms_api.models.Role;
@@ -12,6 +13,8 @@ import lombok.Data;
 @Data
 @AllArgsConstructor
 public class UserDto {
+    private UUID id;
+
     private String username;
 
     private String fullname;
