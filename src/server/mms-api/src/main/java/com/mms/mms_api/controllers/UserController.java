@@ -3,6 +3,8 @@ package com.mms.mms_api.controllers;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.mms.mms_api.business.commands.user.UserCreateCommand;
+import com.mms.mms_api.business.commands.user.UserDeleteCommand;
+import com.mms.mms_api.business.commands.user.UserUpdateCommand;
 import com.mms.mms_api.business.commands.user.UserGetAllQuery;
 import com.mms.mms_api.business.commands.user.UserGetByIdQuery;
 import com.mms.mms_api.business.services.UserService;
@@ -13,9 +15,11 @@ import java.util.UUID;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 
@@ -48,9 +52,36 @@ public class UserController {
     }
     
     @GetMapping("/{id}")
-    public UserDto getById(@PathVariable String id) {
-        UserGetByIdQuery query = new UserGetByIdQuery(UUID.fromString(id));
+    public ResponseEntity<UserDto> getById(@PathVariable UUID id) {
+        UserGetByIdQuery query = new UserGetByIdQuery(id);
         
-        return userService.handle(query);
+        UserDto user = userService.handle(query);
+        
+        return user != null
+            ? ResponseEntity.ok(user)
+            : ResponseEntity.notFound().build();
+    }
+
+    @PutMapping("/{id}")
+    public ResponseEntity<UserDto> update(@PathVariable UUID id, @RequestBody UserDto userDto) {
+        userDto.setId(id);
+        UserUpdateCommand command = new UserUpdateCommand(userDto);
+
+        UserDto updatedUser = userService.handle(command);
+
+        return updatedUser != null
+            ? ResponseEntity.ok(updatedUser)
+            : ResponseEntity.notFound().build();
+    }
+
+    @DeleteMapping("/{id}")
+    public ResponseEntity<Void> delete(@PathVariable UUID id) {
+        UserDeleteCommand command = new UserDeleteCommand(id);
+
+        boolean deleted = userService.handle(command);
+
+        return deleted
+            ? ResponseEntity.noContent().build()
+            : ResponseEntity.notFound().build();
     }
 }
