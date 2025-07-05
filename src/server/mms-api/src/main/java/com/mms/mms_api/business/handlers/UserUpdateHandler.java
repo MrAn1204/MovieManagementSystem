@@ -4,7 +4,7 @@ import java.util.Optional;
 
 import com.mms.mms_api.business.commands.user.UserUpdateCommand;
 import com.mms.mms_api.data.UserRepository;
-import com.mms.mms_api.dto.UserDto;
+import com.mms.mms_api.dto.user.UserDto;
 import com.mms.mms_api.models.User;
 import com.mms.mms_api.utils.mappers.UserMapper;
 
@@ -18,9 +18,7 @@ public class UserUpdateHandler extends BaseHandler<UserUpdateCommand, UserDto> {
 
     @Override
     public UserDto execute() {
-        UserDto userDto = request.getUserDto();
-
-        Optional<User> optionalUser = userRepository.findById(userDto.getId());
+        Optional<User> optionalUser = userRepository.findById(request.getId());
 
         if (!optionalUser.isPresent()) {
             return null;
@@ -28,7 +26,7 @@ public class UserUpdateHandler extends BaseHandler<UserUpdateCommand, UserDto> {
 
         User user = optionalUser.get();
 
-        userMapper.updateFromDto(userDto, user);
+        userMapper.updateEntity(request, user);
 
         return userMapper.toDto(userRepository.save(user));
     }

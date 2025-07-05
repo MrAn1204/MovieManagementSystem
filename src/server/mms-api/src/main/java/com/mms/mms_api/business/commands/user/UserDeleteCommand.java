@@ -1,12 +1,11 @@
 package com.mms.mms_api.business.commands.user;
 
 import java.util.UUID;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
 
-@Getter
-@AllArgsConstructor
-public class UserDeleteCommand {
-    
-    private final UUID id;
+import com.mms.mms_api.business.commands.BaseDeleteCommand;
+
+public class UserDeleteCommand extends BaseDeleteCommand {
+    public UserDeleteCommand(UUID id) {
+        super(id);
+    }
 }

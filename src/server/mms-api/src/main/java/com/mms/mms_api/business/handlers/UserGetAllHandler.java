@@ -2,9 +2,9 @@ package com.mms.mms_api.business.handlers;
 
 import java.util.Collection;
 
-import com.mms.mms_api.business.commands.user.UserGetAllQuery;
+import com.mms.mms_api.business.query.user.UserGetAllQuery;
 import com.mms.mms_api.data.UserRepository;
-import com.mms.mms_api.dto.UserDto;
+import com.mms.mms_api.dto.user.UserDto;
 import com.mms.mms_api.models.User;
 import com.mms.mms_api.utils.mappers.UserMapper;
 

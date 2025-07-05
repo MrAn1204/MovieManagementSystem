@@ -5,10 +5,10 @@ import org.springframework.web.bind.annotation.RestController;
 import com.mms.mms_api.business.commands.user.UserCreateCommand;
 import com.mms.mms_api.business.commands.user.UserDeleteCommand;
 import com.mms.mms_api.business.commands.user.UserUpdateCommand;
-import com.mms.mms_api.business.commands.user.UserGetAllQuery;
-import com.mms.mms_api.business.commands.user.UserGetByIdQuery;
+import com.mms.mms_api.business.query.user.UserGetAllQuery;
+import com.mms.mms_api.business.query.user.UserGetByIdQuery;
 import com.mms.mms_api.business.services.UserService;
-import com.mms.mms_api.dto.UserDto;
+import com.mms.mms_api.dto.user.UserDto;
 
 import java.util.Collection;
 import java.util.UUID;
@@ -34,16 +34,16 @@ public class UserController {
     }
 
     @GetMapping
-    public Collection<UserDto> getAll() {
+    public ResponseEntity<Collection<UserDto>> getAll() {
         UserGetAllQuery query = new UserGetAllQuery();
         
-        return userService.handle(query);
+        Collection<UserDto> users = userService.handle(query);
+
+        return ResponseEntity.ok(users);
     }
     
     @PostMapping("/create")
-    public ResponseEntity<UserDto> create(@RequestBody UserDto userDto) {
-        UserCreateCommand command = new UserCreateCommand(userDto);
-        
+    public ResponseEntity<UserDto> create(@RequestBody UserCreateCommand command) {
         UserDto result = userService.handle(command);
         
         return result != null 
@@ -53,9 +53,7 @@ public class UserController {
     
     @GetMapping("/{id}")
     public ResponseEntity<UserDto> getById(@PathVariable UUID id) {
-        UserGetByIdQuery query = new UserGetByIdQuery(id);
-        
-        UserDto user = userService.handle(query);
+        UserDto user = userService.handle(new UserGetByIdQuery(id));
         
         return user != null
             ? ResponseEntity.ok(user)
@@ -63,9 +61,8 @@ public class UserController {
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<UserDto> update(@PathVariable UUID id, @RequestBody UserDto userDto) {
-        userDto.setId(id);
-        UserUpdateCommand command = new UserUpdateCommand(userDto);
+    public ResponseEntity<UserDto> update(@PathVariable UUID id, @RequestBody UserUpdateCommand command) {
+        command.setId(id);
 
         UserDto updatedUser = userService.handle(command);
 
