@@ -1,19 +1,29 @@
 package com.mms.mms_api.business.handler;
 
+import java.util.Collection;
 import java.util.Optional;
 
+import org.springframework.util.CollectionUtils;
+
 import com.mms.mms_api.business.command.user.UserUpdateCommand;
+import com.mms.mms_api.data.RoleRepository;
 import com.mms.mms_api.data.UserRepository;
 import com.mms.mms_api.dto.user.UserDto;
+import com.mms.mms_api.model.Role;
 import com.mms.mms_api.model.User;
 import com.mms.mms_api.util.mapper.UserMapper;
 
 public class UserUpdateHandler extends BaseHandler<UserUpdateCommand, UserDto> {
     private UserRepository userRepository;
 
-    public UserUpdateHandler(UserUpdateCommand request, UserMapper userMapper, UserRepository userRepository) {
+    private RoleRepository roleRepository;
+
+    public UserUpdateHandler(
+            UserUpdateCommand request, UserMapper userMapper, 
+            UserRepository userRepository, RoleRepository roleRepository) {
         super(request, userMapper);
         this.userRepository = userRepository;
+        this.roleRepository = roleRepository;
     }
 
     @Override
@@ -28,7 +38,15 @@ public class UserUpdateHandler extends BaseHandler<UserUpdateCommand, UserDto> {
 
         userMapper.updateEntity(request, user);
 
-        return userMapper.toDto(userRepository.save(user));
+        if (!CollectionUtils.isEmpty(request.getRoles())) {
+            Collection<Role> mappedRoles = roleRepository.findByNameIn(request.getRoles());
+
+            user.setRoles(mappedRoles);
+        }
+
+        User updatedUser = userRepository.save(user);
+
+        return userMapper.toDto(updatedUser);
     }
 
 }

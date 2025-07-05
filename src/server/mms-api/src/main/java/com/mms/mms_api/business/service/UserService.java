@@ -14,23 +14,24 @@ import com.mms.mms_api.business.handler.UserGetByIdHandler;
 import com.mms.mms_api.business.handler.UserUpdateHandler;
 import com.mms.mms_api.business.query.user.UserGetAllQuery;
 import com.mms.mms_api.business.query.user.UserGetByIdQuery;
+import com.mms.mms_api.data.RoleRepository;
 import com.mms.mms_api.data.UserRepository;
 import com.mms.mms_api.dto.user.UserDto;
 import com.mms.mms_api.util.mapper.UserMapper;
 
+import lombok.AllArgsConstructor;
+
 @Service
+@AllArgsConstructor
 public class UserService {
     private UserRepository userRepository;
 
+    private RoleRepository roleRepository;
+
     private UserMapper userMapper;
 
-    public UserService(UserRepository userRepository, UserMapper userMapper) {
-        this.userRepository = userRepository;
-        this.userMapper = userMapper;
-    }
-
     public UserDto handle(UserCreateCommand request) {
-        UserCreateHandler handler = new UserCreateHandler(request, userMapper, userRepository);
+        UserCreateHandler handler = new UserCreateHandler(request, userMapper, userRepository, roleRepository);
 
         return handler.execute();
     }
@@ -48,7 +49,7 @@ public class UserService {
     }
 
     public UserDto handle(UserUpdateCommand request) {
-        UserUpdateHandler handler = new UserUpdateHandler(request, userMapper, userRepository);
+        UserUpdateHandler handler = new UserUpdateHandler(request, userMapper, userRepository, roleRepository);
 
         return handler.execute();
     }

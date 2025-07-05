@@ -35,5 +35,5 @@ public class UserUpdateCommand extends BaseUpdateCommand {
 
     private int score;
 
-    private Collection<Role> roles;
+    private Collection<String> roles;
 }

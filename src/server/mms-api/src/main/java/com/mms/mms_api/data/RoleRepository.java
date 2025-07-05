@@ -1,0 +1,14 @@
+package com.mms.mms_api.data;
+
+import java.util.Collection;
+import java.util.UUID;
+
+import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.stereotype.Repository;
+
+import com.mms.mms_api.model.Role;
+
+@Repository
+public interface RoleRepository extends JpaRepository<Role, UUID> {
+    Collection<Role> findByNameIn(Collection<String> names);
+}

@@ -35,5 +35,5 @@ public class UserDto {
 
     private final int score;
 
-    private final Collection<Role> roles;
+    private final Collection<String> roles;
 }

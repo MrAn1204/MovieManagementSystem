@@ -19,7 +19,10 @@ public interface UserMapper {
     @Mapping(target = "roles", ignore = true)
     User toEntity(UserCreateCommand command);
     
+    @Mapping(target = "roles", expression = "java(user.getRoles().stream().map(role -> role.getName()).toList())")
     UserDto toDto(User user);
     
+    // Roles will be manually mapped in UserUpdateHandler
+    @Mapping(target = "roles", ignore = true)
     void updateEntity(UserUpdateCommand command, @MappingTarget User user);
 }
