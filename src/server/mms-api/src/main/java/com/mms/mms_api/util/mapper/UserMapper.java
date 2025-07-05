@@ -1,4 +1,4 @@
-package com.mms.mms_api.utils.mappers;
+package com.mms.mms_api.util.mapper;
 
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
@@ -6,10 +6,10 @@ import org.mapstruct.MappingTarget;
 import org.mapstruct.NullValuePropertyMappingStrategy;
 import org.mapstruct.ReportingPolicy;
 
-import com.mms.mms_api.business.commands.user.UserCreateCommand;
-import com.mms.mms_api.business.commands.user.UserUpdateCommand;
+import com.mms.mms_api.business.command.user.UserCreateCommand;
+import com.mms.mms_api.business.command.user.UserUpdateCommand;
 import com.mms.mms_api.dto.user.UserDto;
-import com.mms.mms_api.models.User;
+import com.mms.mms_api.model.User;
 
 @Mapper(componentModel = "spring", 
     nullValuePropertyMappingStrategy = NullValuePropertyMappingStrategy.IGNORE, 

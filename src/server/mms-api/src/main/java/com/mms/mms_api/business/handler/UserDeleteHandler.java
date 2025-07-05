@@ -1,6 +1,6 @@
-package com.mms.mms_api.business.handlers;
+package com.mms.mms_api.business.handler;
 
-import com.mms.mms_api.business.commands.user.UserDeleteCommand;
+import com.mms.mms_api.business.command.user.UserDeleteCommand;
 import com.mms.mms_api.data.UserRepository;
 
 public class UserDeleteHandler extends BaseHandler<UserDeleteCommand, Boolean> {

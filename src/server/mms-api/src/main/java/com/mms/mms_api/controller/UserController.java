@@ -1,13 +1,13 @@
-package com.mms.mms_api.controllers;
+package com.mms.mms_api.controller;
 
 import org.springframework.web.bind.annotation.RestController;
 
-import com.mms.mms_api.business.commands.user.UserCreateCommand;
-import com.mms.mms_api.business.commands.user.UserDeleteCommand;
-import com.mms.mms_api.business.commands.user.UserUpdateCommand;
+import com.mms.mms_api.business.command.user.UserCreateCommand;
+import com.mms.mms_api.business.command.user.UserDeleteCommand;
+import com.mms.mms_api.business.command.user.UserUpdateCommand;
 import com.mms.mms_api.business.query.user.UserGetAllQuery;
 import com.mms.mms_api.business.query.user.UserGetByIdQuery;
-import com.mms.mms_api.business.services.UserService;
+import com.mms.mms_api.business.service.UserService;
 import com.mms.mms_api.dto.user.UserDto;
 
 import java.util.Collection;

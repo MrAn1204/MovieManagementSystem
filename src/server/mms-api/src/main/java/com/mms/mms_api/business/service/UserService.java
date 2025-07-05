@@ -1,22 +1,22 @@
-package com.mms.mms_api.business.services;
+package com.mms.mms_api.business.service;
 
 import java.util.Collection;
 
 import org.springframework.stereotype.Service;
 
-import com.mms.mms_api.business.commands.user.UserCreateCommand;
-import com.mms.mms_api.business.commands.user.UserDeleteCommand;
-import com.mms.mms_api.business.commands.user.UserUpdateCommand;
-import com.mms.mms_api.business.handlers.UserCreateHandler;
-import com.mms.mms_api.business.handlers.UserDeleteHandler;
-import com.mms.mms_api.business.handlers.UserGetAllHandler;
-import com.mms.mms_api.business.handlers.UserGetByIdHandler;
-import com.mms.mms_api.business.handlers.UserUpdateHandler;
+import com.mms.mms_api.business.command.user.UserCreateCommand;
+import com.mms.mms_api.business.command.user.UserDeleteCommand;
+import com.mms.mms_api.business.command.user.UserUpdateCommand;
+import com.mms.mms_api.business.handler.UserCreateHandler;
+import com.mms.mms_api.business.handler.UserDeleteHandler;
+import com.mms.mms_api.business.handler.UserGetAllHandler;
+import com.mms.mms_api.business.handler.UserGetByIdHandler;
+import com.mms.mms_api.business.handler.UserUpdateHandler;
 import com.mms.mms_api.business.query.user.UserGetAllQuery;
 import com.mms.mms_api.business.query.user.UserGetByIdQuery;
 import com.mms.mms_api.data.UserRepository;
 import com.mms.mms_api.dto.user.UserDto;
-import com.mms.mms_api.utils.mappers.UserMapper;
+import com.mms.mms_api.util.mapper.UserMapper;
 
 @Service
 public class UserService {

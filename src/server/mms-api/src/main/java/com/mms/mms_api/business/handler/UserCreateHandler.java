@@ -1,14 +1,14 @@
-package com.mms.mms_api.business.handlers;
+package com.mms.mms_api.business.handler;
 
 import java.util.Collection;
 
 import org.springframework.util.CollectionUtils;
 
-import com.mms.mms_api.business.commands.user.UserCreateCommand;
+import com.mms.mms_api.business.command.user.UserCreateCommand;
 import com.mms.mms_api.data.UserRepository;
 import com.mms.mms_api.dto.user.UserDto;
-import com.mms.mms_api.models.User;
-import com.mms.mms_api.utils.mappers.UserMapper;
+import com.mms.mms_api.model.User;
+import com.mms.mms_api.util.mapper.UserMapper;
 
 public class UserCreateHandler extends BaseHandler<UserCreateCommand, UserDto> {
     private UserRepository userRepository;

@@ -1,10 +1,10 @@
-package com.mms.mms_api.business.commands.user;
+package com.mms.mms_api.business.command.user;
 
 import java.time.LocalDate;
 import java.util.Collection;
 
-import com.mms.mms_api.business.commands.BaseCreateCommand;
-import com.mms.mms_api.models.Gender;
+import com.mms.mms_api.business.command.BaseCreateCommand;
+import com.mms.mms_api.model.Gender;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;

@@ -1,12 +1,12 @@
-package com.mms.mms_api.business.handlers;
+package com.mms.mms_api.business.handler;
 
 import java.util.Optional;
 
-import com.mms.mms_api.business.commands.user.UserUpdateCommand;
+import com.mms.mms_api.business.command.user.UserUpdateCommand;
 import com.mms.mms_api.data.UserRepository;
 import com.mms.mms_api.dto.user.UserDto;
-import com.mms.mms_api.models.User;
-import com.mms.mms_api.utils.mappers.UserMapper;
+import com.mms.mms_api.model.User;
+import com.mms.mms_api.util.mapper.UserMapper;
 
 public class UserUpdateHandler extends BaseHandler<UserUpdateCommand, UserDto> {
     private UserRepository userRepository;

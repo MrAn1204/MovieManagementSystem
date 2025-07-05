@@ -1,4 +1,4 @@
-package com.mms.mms_api.models;
+package com.mms.mms_api.model;
 
 import java.util.UUID;
 

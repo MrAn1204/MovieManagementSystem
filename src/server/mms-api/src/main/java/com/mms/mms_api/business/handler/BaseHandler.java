@@ -1,6 +1,6 @@
-package com.mms.mms_api.business.handlers;
+package com.mms.mms_api.business.handler;
 
-import com.mms.mms_api.utils.mappers.UserMapper;
+import com.mms.mms_api.util.mapper.UserMapper;
 
 public abstract class BaseHandler<I, O> {
     protected I request;

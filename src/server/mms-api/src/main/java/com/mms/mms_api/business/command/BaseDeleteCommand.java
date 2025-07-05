@@ -1,4 +1,4 @@
-package com.mms.mms_api.business.commands;
+package com.mms.mms_api.business.command;
 
 import java.util.UUID;
 

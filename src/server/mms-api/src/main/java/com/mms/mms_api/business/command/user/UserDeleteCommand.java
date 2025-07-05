@@ -1,8 +1,8 @@
-package com.mms.mms_api.business.commands.user;
+package com.mms.mms_api.business.command.user;
 
 import java.util.UUID;
 
-import com.mms.mms_api.business.commands.BaseDeleteCommand;
+import com.mms.mms_api.business.command.BaseDeleteCommand;
 
 public class UserDeleteCommand extends BaseDeleteCommand {
     public UserDeleteCommand(UUID id) {

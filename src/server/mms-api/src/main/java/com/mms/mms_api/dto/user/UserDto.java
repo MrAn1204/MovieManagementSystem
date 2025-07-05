@@ -4,8 +4,8 @@ import java.time.LocalDate;
 import java.util.Collection;
 import java.util.UUID;
 
-import com.mms.mms_api.models.Gender;
-import com.mms.mms_api.models.Role;
+import com.mms.mms_api.model.Gender;
+import com.mms.mms_api.model.Role;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
