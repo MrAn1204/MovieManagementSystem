@@ -11,9 +11,12 @@ import com.mms.mms_api.business.handler.UserCreateHandler;
 import com.mms.mms_api.business.handler.UserDeleteHandler;
 import com.mms.mms_api.business.handler.UserGetAllHandler;
 import com.mms.mms_api.business.handler.UserGetByIdHandler;
+import com.mms.mms_api.business.handler.UserSearchHandler;
 import com.mms.mms_api.business.handler.UserUpdateHandler;
 import com.mms.mms_api.business.query.user.UserGetAllQuery;
 import com.mms.mms_api.business.query.user.UserGetByIdQuery;
+import com.mms.mms_api.business.query.user.UserSearchQuery;
+import com.mms.mms_api.common.PaginatedResult;
 import com.mms.mms_api.data.RoleRepository;
 import com.mms.mms_api.data.UserRepository;
 import com.mms.mms_api.dto.user.UserDto;
@@ -57,6 +60,12 @@ public class UserService {
     public Boolean handle(UserDeleteCommand request) {
         UserDeleteHandler handler = new UserDeleteHandler(request, userRepository);
 
+        return handler.execute();
+    }
+
+    public PaginatedResult<UserDto> handle(UserSearchQuery request) {
+        UserSearchHandler handler = new UserSearchHandler(request, userMapper, userRepository);
+        
         return handler.execute();
     }
 }

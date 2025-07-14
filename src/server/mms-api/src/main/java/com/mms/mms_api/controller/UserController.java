@@ -7,7 +7,9 @@ import com.mms.mms_api.business.command.user.UserDeleteCommand;
 import com.mms.mms_api.business.command.user.UserUpdateCommand;
 import com.mms.mms_api.business.query.user.UserGetAllQuery;
 import com.mms.mms_api.business.query.user.UserGetByIdQuery;
+import com.mms.mms_api.business.query.user.UserSearchQuery;
 import com.mms.mms_api.business.service.UserService;
+import com.mms.mms_api.common.PaginatedResult;
 import com.mms.mms_api.dto.user.UserDto;
 
 import java.util.Collection;
@@ -23,7 +25,6 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 
-
 @RestController
 @RequestMapping("/user")
 public class UserController {
@@ -36,28 +37,28 @@ public class UserController {
     @GetMapping
     public ResponseEntity<Collection<UserDto>> getAll() {
         UserGetAllQuery query = new UserGetAllQuery();
-        
+
         Collection<UserDto> users = userService.handle(query);
 
         return ResponseEntity.ok(users);
     }
-    
+
     @PostMapping("/create")
     public ResponseEntity<UserDto> create(@RequestBody UserCreateCommand command) {
         UserDto result = userService.handle(command);
-        
-        return result != null 
-            ? ResponseEntity.status(HttpStatus.CREATED).body(result) 
-            : ResponseEntity.status(HttpStatus.BAD_REQUEST).body(null);
+
+        return result != null
+                ? ResponseEntity.status(HttpStatus.CREATED).body(result)
+                : ResponseEntity.status(HttpStatus.BAD_REQUEST).body(null);
     }
-    
+
     @GetMapping("/{id}")
     public ResponseEntity<UserDto> getById(@PathVariable UUID id) {
         UserDto user = userService.handle(new UserGetByIdQuery(id));
-        
+
         return user != null
-            ? ResponseEntity.ok(user)
-            : ResponseEntity.notFound().build();
+                ? ResponseEntity.ok(user)
+                : ResponseEntity.notFound().build();
     }
 
     @PutMapping("/{id}")
@@ -67,8 +68,8 @@ public class UserController {
         UserDto updatedUser = userService.handle(command);
 
         return updatedUser != null
-            ? ResponseEntity.ok(updatedUser)
-            : ResponseEntity.notFound().build();
+                ? ResponseEntity.ok(updatedUser)
+                : ResponseEntity.notFound().build();
     }
 
     @DeleteMapping("/{id}")
@@ -78,7 +79,14 @@ public class UserController {
         boolean deleted = userService.handle(command);
 
         return deleted
-            ? ResponseEntity.noContent().build()
-            : ResponseEntity.notFound().build();
+                ? ResponseEntity.noContent().build()
+                : ResponseEntity.notFound().build();
+    }
+
+    @GetMapping("/search")
+    public ResponseEntity<PaginatedResult<UserDto>> search(@RequestBody UserSearchQuery query) {
+        PaginatedResult<UserDto> users = userService.handle(query);
+
+        return ResponseEntity.ok(users);
     }
 }
