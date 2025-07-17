@@ -12,7 +12,7 @@ import com.mms.mms_api.business.service.UserService;
 import com.mms.mms_api.common.PaginatedResult;
 import com.mms.mms_api.dto.user.UserDto;
 
-import java.util.Collection;
+import java.util.List;
 import java.util.UUID;
 
 import org.springframework.http.HttpStatus;
@@ -35,10 +35,10 @@ public class UserController {
     }
 
     @GetMapping
-    public ResponseEntity<Collection<UserDto>> getAll() {
+    public ResponseEntity<List<UserDto>> getAll() {
         UserGetAllQuery query = new UserGetAllQuery();
 
-        Collection<UserDto> users = userService.handle(query);
+        List<UserDto> users = userService.handle(query);
 
         return ResponseEntity.ok(users);
     }

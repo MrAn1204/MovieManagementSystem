@@ -1,6 +1,6 @@
 package com.mms.mms_api.business.service;
 
-import java.util.Collection;
+import java.util.List;
 
 import org.springframework.stereotype.Service;
 
@@ -39,7 +39,7 @@ public class UserService {
         return handler.execute();
     }
 
-    public Collection<UserDto> handle(UserGetAllQuery request) {
+    public List<UserDto> handle(UserGetAllQuery request) {
         UserGetAllHandler handler = new UserGetAllHandler(request, userMapper, userRepository);
 
         return handler.execute();

@@ -1,7 +1,7 @@
 package com.mms.mms_api.model;
 
 import java.time.LocalDate;
-import java.util.Collection;
+import java.util.List;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -53,5 +53,5 @@ public class User extends BaseEntity {
         name = "user_roles",
         joinColumns = @JoinColumn(name = "user_id"),
         inverseJoinColumns = @JoinColumn(name = "role_id"))
-    private Collection<Role> roles;
+    private List<Role> roles;
 }

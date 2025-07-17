@@ -1,6 +1,6 @@
 package com.mms.mms_api.business.handler;
 
-import java.util.Collection;
+import java.util.List;
 import java.util.Optional;
 
 import org.springframework.util.CollectionUtils;
@@ -39,7 +39,7 @@ public class UserUpdateHandler extends BaseHandler<UserUpdateCommand, UserDto> {
         userMapper.updateEntity(request, user);
 
         if (!CollectionUtils.isEmpty(request.getRoles())) {
-            Collection<Role> mappedRoles = roleRepository.findByNameIn(request.getRoles());
+            List<Role> mappedRoles = roleRepository.findByNameIn(request.getRoles());
 
             user.setRoles(mappedRoles);
         }

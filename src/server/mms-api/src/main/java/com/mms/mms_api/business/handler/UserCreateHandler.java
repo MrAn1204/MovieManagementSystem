@@ -1,6 +1,6 @@
 package com.mms.mms_api.business.handler;
 
-import java.util.Collection;
+import java.util.List;
 
 import org.springframework.util.CollectionUtils;
 
@@ -28,13 +28,13 @@ public class UserCreateHandler extends BaseHandler<UserCreateCommand, UserDto> {
     }
 
     public UserDto execute() {
-        Collection<String> roles = request.getRoles();
+        List<String> roles = request.getRoles();
 
         if (CollectionUtils.isEmpty(roles)) {
             return null;
         }
 
-        Collection<Role> mappedRoles = roleRepository.findByNameIn(roles);
+        List<Role> mappedRoles = roleRepository.findByNameIn(roles);
 
         User user = userMapper.toEntity(request);
 

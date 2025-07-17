@@ -1,11 +1,10 @@
 package com.mms.mms_api.business.command.user;
 
 import java.time.LocalDate;
-import java.util.Collection;
+import java.util.List;
 
 import com.mms.mms_api.business.command.BaseUpdateCommand;
 import com.mms.mms_api.model.Gender;
-import com.mms.mms_api.model.Role;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -35,5 +34,5 @@ public class UserUpdateCommand extends BaseUpdateCommand {
 
     private int score;
 
-    private Collection<String> roles;
+    private List<String> roles;
 }

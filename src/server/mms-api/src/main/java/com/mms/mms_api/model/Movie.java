@@ -1,7 +1,7 @@
 package com.mms.mms_api.model;
 
 import java.time.LocalDate;
-import java.util.Collection;
+import java.util.List;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.JoinColumn;
@@ -33,26 +33,26 @@ public class Movie extends BaseEntity {
         name = "movie_genres",
         joinColumns = @JoinColumn(name = "movie_id"),
         inverseJoinColumns = @JoinColumn(name = "genre_id"))
-    private Collection<Genre> genres;
+    private List<Genre> genres;
 
     @ManyToMany
     @JoinTable(
         name = "movie_studios",
         joinColumns = @JoinColumn(name = "movie_id"),
         inverseJoinColumns = @JoinColumn(name = "studio_id"))
-    private Collection<Studio> studios;
+    private List<Studio> studios;
 
     @ManyToMany
     @JoinTable(
         name = "movie_talents",
         joinColumns = @JoinColumn(name = "movie_id"),
         inverseJoinColumns = @JoinColumn(name = "talent_id"))
-    private Collection<Talent> talents;
+    private List<Talent> talents;
 
     @ManyToOne
     @JoinColumn(name = "language_id")
     private Language language;
 
     @OneToMany(mappedBy = "movie")
-    private Collection<Schedule> schedules;
+    private List<Schedule> schedules;
 }

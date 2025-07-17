@@ -1,7 +1,7 @@
 package com.mms.mms_api.business.command.user;
 
 import java.time.LocalDate;
-import java.util.Collection;
+import java.util.List;
 
 import com.mms.mms_api.business.command.BaseCreateCommand;
 import com.mms.mms_api.model.Gender;
@@ -28,5 +28,5 @@ public class UserCreateCommand implements BaseCreateCommand {
 
     private String address;
 
-    private Collection<String> roles;
+    private List<String> roles;
 }

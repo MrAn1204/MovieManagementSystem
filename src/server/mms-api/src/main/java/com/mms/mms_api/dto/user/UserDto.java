@@ -1,11 +1,10 @@
 package com.mms.mms_api.dto.user;
 
 import java.time.LocalDate;
-import java.util.Collection;
+import java.util.List;
 import java.util.UUID;
 
 import com.mms.mms_api.model.Gender;
-import com.mms.mms_api.model.Role;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -35,5 +34,5 @@ public class UserDto {
 
     private final int score;
 
-    private final Collection<String> roles;
+    private final List<String> roles;
 }

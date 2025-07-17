@@ -1,6 +1,6 @@
 package com.mms.mms_api.business.handler;
 
-import java.util.Collection;
+import java.util.List;
 
 import com.mms.mms_api.business.query.user.UserGetAllQuery;
 import com.mms.mms_api.data.UserRepository;
@@ -8,7 +8,7 @@ import com.mms.mms_api.dto.user.UserDto;
 import com.mms.mms_api.model.User;
 import com.mms.mms_api.util.mapper.UserMapper;
 
-public class UserGetAllHandler extends BaseHandler<UserGetAllQuery, Collection<UserDto>> {
+public class UserGetAllHandler extends BaseHandler<UserGetAllQuery, List<UserDto>> {
     private UserRepository userRepository;
 
     public UserGetAllHandler(UserGetAllQuery request, UserMapper userMapper, UserRepository userRepository) {
@@ -17,8 +17,8 @@ public class UserGetAllHandler extends BaseHandler<UserGetAllQuery, Collection<U
     }
 
     @Override
-    public Collection<UserDto> execute() {
-        Collection<User> users = userRepository.findAll();
+    public List<UserDto> execute() {
+        List<User> users = userRepository.findAll();
 
         return users.stream().map(u -> userMapper.toDto(u)).toList();
     }

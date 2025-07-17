@@ -1,6 +1,6 @@
 package com.mms.mms_api.model;
 
-import java.util.Collection;
+import java.util.List;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.ManyToMany;
@@ -16,5 +16,5 @@ public class Role extends BaseEntity {
     private String description;
 
     @ManyToMany(mappedBy = "roles")
-    private Collection<User> users;
+    private List<User> users;
 }
