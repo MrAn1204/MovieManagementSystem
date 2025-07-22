@@ -9,6 +9,7 @@ import org.mapstruct.ReportingPolicy;
 import com.mms.mms_api.business.command.user.UserCreateCommand;
 import com.mms.mms_api.business.command.user.UserUpdateCommand;
 import com.mms.mms_api.dto.user.UserDto;
+import com.mms.mms_api.model.Role;
 import com.mms.mms_api.model.User;
 
 @Mapper(componentModel = "spring", 
@@ -19,10 +20,13 @@ public interface UserMapper {
     @Mapping(target = "roles", ignore = true)
     User toEntity(UserCreateCommand command);
     
-    @Mapping(target = "roles", expression = "java(user.getRoles().stream().map(role -> role.getName()).toList())")
     UserDto toDto(User user);
     
     // Roles will be manually mapped in UserUpdateHandler
     @Mapping(target = "roles", ignore = true)
     void updateEntity(UserUpdateCommand command, @MappingTarget User user);
+
+    default String roleToString(Role role) {
+        return role.getName();
+    }
 }
