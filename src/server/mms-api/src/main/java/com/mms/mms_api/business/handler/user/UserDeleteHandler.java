@@ -1,14 +1,11 @@
-package com.mms.mms_api.business.handler;
+package com.mms.mms_api.business.handler.user;
 
 import com.mms.mms_api.business.command.user.UserDeleteCommand;
 import com.mms.mms_api.data.UserRepository;
 
-public class UserDeleteHandler extends BaseHandler<UserDeleteCommand, Boolean> {
-
-    private final UserRepository userRepository;
-
+public class UserDeleteHandler extends UserBaseHandler<UserDeleteCommand, Boolean> {
     public UserDeleteHandler(UserDeleteCommand request, UserRepository userRepository) {
-        super(request, null); // UserMapper is not needed for delete
+        super(request, null, userRepository); // UserMapper is not needed for delete
         this.userRepository = userRepository;
     }
 

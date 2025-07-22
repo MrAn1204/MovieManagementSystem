@@ -1,4 +1,4 @@
-package com.mms.mms_api.business.handler;
+package com.mms.mms_api.business.handler.user;
 
 import java.util.List;
 import java.util.Optional;
@@ -13,16 +13,13 @@ import com.mms.mms_api.model.Role;
 import com.mms.mms_api.model.User;
 import com.mms.mms_api.util.mapper.UserMapper;
 
-public class UserUpdateHandler extends BaseHandler<UserUpdateCommand, UserDto> {
-    private UserRepository userRepository;
-
+public class UserUpdateHandler extends UserBaseHandler<UserUpdateCommand, UserDto> {
     private RoleRepository roleRepository;
 
     public UserUpdateHandler(
             UserUpdateCommand request, UserMapper userMapper, 
             UserRepository userRepository, RoleRepository roleRepository) {
-        super(request, userMapper);
-        this.userRepository = userRepository;
+        super(request, userMapper, userRepository);
         this.roleRepository = roleRepository;
     }
 

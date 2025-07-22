@@ -1,4 +1,4 @@
-package com.mms.mms_api.business.handler;
+package com.mms.mms_api.business.handler.user;
 
 import java.util.Optional;
 
@@ -8,11 +8,9 @@ import com.mms.mms_api.dto.user.UserDto;
 import com.mms.mms_api.model.User;
 import com.mms.mms_api.util.mapper.UserMapper;
 
-public class UserGetByIdHandler extends BaseHandler<UserGetByIdQuery, UserDto> {
-    private UserRepository userRepository;
-
+public class UserGetByIdHandler extends UserBaseHandler<UserGetByIdQuery, UserDto> {
     public UserGetByIdHandler(UserGetByIdQuery request, UserMapper userMapper, UserRepository userRepository) {
-        super(request, userMapper);
+        super(request, userMapper, userRepository);
         this.userRepository = userRepository;
     }
 

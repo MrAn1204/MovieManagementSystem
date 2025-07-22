@@ -1,4 +1,4 @@
-package com.mms.mms_api.business.handler;
+package com.mms.mms_api.business.handler.user;
 
 import com.mms.mms_api.common.PaginatedResult;
 import com.mms.mms_api.business.query.user.UserSearchQuery;
@@ -15,13 +15,9 @@ import org.springframework.data.jpa.domain.Specification;
 
 import java.util.List;
 
-public class UserSearchHandler extends BaseHandler<UserSearchQuery, PaginatedResult<UserDto>> {
-
-    private final UserRepository userRepository;
-
+public class UserSearchHandler extends UserBaseHandler<UserSearchQuery, PaginatedResult<UserDto>> {
     public UserSearchHandler(UserSearchQuery request, UserMapper userMapper, UserRepository userRepository) {
-        super(request, userMapper);
-        this.userRepository = userRepository;
+        super(request, userMapper, userRepository);
     }
 
     @Override
