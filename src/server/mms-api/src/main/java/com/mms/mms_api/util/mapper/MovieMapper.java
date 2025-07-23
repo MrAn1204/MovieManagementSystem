@@ -2,10 +2,12 @@ package com.mms.mms_api.util.mapper;
 
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
+import org.mapstruct.MappingTarget;
 import org.mapstruct.NullValuePropertyMappingStrategy;
 import org.mapstruct.ReportingPolicy;
 
 import com.mms.mms_api.business.command.movie.MovieCreateCommand;
+import com.mms.mms_api.business.command.movie.MovieUpdateCommand;
 import com.mms.mms_api.dto.MovieDto;
 import com.mms.mms_api.model.Genre;
 import com.mms.mms_api.model.Language;
@@ -20,6 +22,12 @@ public interface MovieMapper {
     @Mapping(target = "studios", ignore = true)
     @Mapping(target = "talents", ignore = true)
     Movie toEntity(MovieCreateCommand command);
+
+    @Mapping(target = "genres", ignore = true)
+    @Mapping(target = "language", ignore = true)
+    @Mapping(target = "studios", ignore = true)
+    @Mapping(target = "talents", ignore = true)
+    void updateEntity(MovieUpdateCommand command, @MappingTarget Movie movie);
 
     MovieDto toDto(Movie movie);
 

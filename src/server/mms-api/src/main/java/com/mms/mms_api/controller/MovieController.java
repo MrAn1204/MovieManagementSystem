@@ -1,6 +1,7 @@
 package com.mms.mms_api.controller;
 
 import com.mms.mms_api.business.command.movie.MovieCreateCommand;
+import com.mms.mms_api.business.command.movie.MovieUpdateCommand;
 import com.mms.mms_api.business.query.movie.MovieGetAllQuery;
 import com.mms.mms_api.business.query.movie.MovieGetByIdQuery;
 import com.mms.mms_api.business.service.MovieService;
@@ -46,5 +47,16 @@ public class MovieController {
         return result != null
                 ? ResponseEntity.status(HttpStatus.CREATED).body(result)
                 : ResponseEntity.badRequest().build();
+    }
+
+    @PutMapping("/{id}")
+    public ResponseEntity<MovieDto> update(@PathVariable UUID id, @RequestBody MovieUpdateCommand command) {
+        command.setId(id);
+
+        MovieDto updatedMovie = movieService.handle(command);
+
+        return updatedMovie != null
+                ? ResponseEntity.ok(updatedMovie)
+                : ResponseEntity.notFound().build();
     }
 }

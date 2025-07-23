@@ -3,9 +3,11 @@ package com.mms.mms_api.business.service;
 import java.util.List;
 
 import com.mms.mms_api.business.command.movie.MovieCreateCommand;
+import com.mms.mms_api.business.command.movie.MovieUpdateCommand;
 import com.mms.mms_api.business.handler.movie.MovieCreateHandler;
 import com.mms.mms_api.business.handler.movie.MovieGetAllHandler;
 import com.mms.mms_api.business.handler.movie.MovieGetByIdHandler;
+import com.mms.mms_api.business.handler.movie.MovieUpdateHandler;
 import com.mms.mms_api.business.query.movie.MovieGetAllQuery;
 import com.mms.mms_api.business.query.movie.MovieGetByIdQuery;
 import com.mms.mms_api.data.GenreRepository;
@@ -32,7 +34,7 @@ public class MovieService {
     private final StudioRepository studioRepository;
 
     private final TalentRepository talentRepository;
-    
+
     private final MovieMapper movieMapper;
 
     public MovieDto handle(MovieCreateCommand request) {
@@ -48,6 +50,12 @@ public class MovieService {
 
     public MovieDto handle(MovieGetByIdQuery request) {
         MovieGetByIdHandler handler = new MovieGetByIdHandler(request, movieMapper, movieRepository);
+        return handler.execute();
+    }
+
+    public MovieDto handle(MovieUpdateCommand request) {
+        MovieUpdateHandler handler = new MovieUpdateHandler(request, movieMapper, movieRepository,
+                genreRepository, languageRepository, studioRepository, talentRepository);
         return handler.execute();
     }
 }
