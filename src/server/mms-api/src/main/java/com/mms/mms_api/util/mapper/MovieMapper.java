@@ -32,18 +32,18 @@ public interface MovieMapper {
     MovieDto toDto(Movie movie);
 
     default String genreToString(Genre genre) {
-        return genre.getName();
+        return genre != null ? genre.getName() : null;
     }
 
     default String languageToString(Language language) {
-        return language.getName();
+        return language != null ? language.getName() : null;
     }
 
     default String studioToString(Studio studio) {
-        return studio.getName();
+        return studio != null ? studio.getName() : null;
     }
 
     default String talentToString(Talent talent) {
-        return talent.getName();
+        return talent != null ? talent.getName() : null;
     }
 }
