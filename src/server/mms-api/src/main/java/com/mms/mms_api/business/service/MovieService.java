@@ -3,8 +3,10 @@ package com.mms.mms_api.business.service;
 import java.util.List;
 
 import com.mms.mms_api.business.command.movie.MovieCreateCommand;
+import com.mms.mms_api.business.command.movie.MovieDeleteCommand;
 import com.mms.mms_api.business.command.movie.MovieUpdateCommand;
 import com.mms.mms_api.business.handler.movie.MovieCreateHandler;
+import com.mms.mms_api.business.handler.movie.MovieDeleteHandler;
 import com.mms.mms_api.business.handler.movie.MovieGetAllHandler;
 import com.mms.mms_api.business.handler.movie.MovieGetByIdHandler;
 import com.mms.mms_api.business.handler.movie.MovieUpdateHandler;
@@ -58,4 +60,10 @@ public class MovieService {
                 genreRepository, languageRepository, studioRepository, talentRepository);
         return handler.execute();
     }
+
+    public Boolean handle(MovieDeleteCommand request) {
+        MovieDeleteHandler handler = new MovieDeleteHandler(request, movieRepository);
+        return handler.execute();
+    }
+
 }

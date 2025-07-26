@@ -1,6 +1,7 @@
 package com.mms.mms_api.controller;
 
 import com.mms.mms_api.business.command.movie.MovieCreateCommand;
+import com.mms.mms_api.business.command.movie.MovieDeleteCommand;
 import com.mms.mms_api.business.command.movie.MovieUpdateCommand;
 import com.mms.mms_api.business.query.movie.MovieGetAllQuery;
 import com.mms.mms_api.business.query.movie.MovieGetByIdQuery;
@@ -59,4 +60,16 @@ public class MovieController {
                 ? ResponseEntity.ok(updatedMovie)
                 : ResponseEntity.notFound().build();
     }
+
+    @DeleteMapping("/{id}")
+    public ResponseEntity<Void> delete(@PathVariable UUID id) {
+        MovieDeleteCommand command = new MovieDeleteCommand(id);
+
+        boolean deleted = movieService.handle(command);
+
+        return deleted
+                ? ResponseEntity.noContent().build()
+                : ResponseEntity.notFound().build();
+    }
+
 }
