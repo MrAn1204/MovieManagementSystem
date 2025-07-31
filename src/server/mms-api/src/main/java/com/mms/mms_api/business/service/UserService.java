@@ -57,10 +57,10 @@ public class UserService {
         return handler.execute();
     }
 
-    public Boolean handle(UserDeleteCommand request) {
+    public void handle(UserDeleteCommand request) {
         UserDeleteHandler handler = new UserDeleteHandler(request, userRepository);
 
-        return handler.execute();
+        handler.execute();
     }
 
     public PaginatedResult<UserDto> handle(UserSearchQuery request) {

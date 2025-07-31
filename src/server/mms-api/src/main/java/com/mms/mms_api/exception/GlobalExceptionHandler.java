@@ -17,4 +17,13 @@ public class GlobalExceptionHandler {
                 ErrorType.RESOURCE_NOT_FOUND.getValue(),
                 exception.getMessage());
     }
+
+    @ExceptionHandler(InvalidInputException.class)
+    public ErrorResponse handleInvalidInputException(InvalidInputException exception) {
+        return new ErrorResponse(
+                LocalDateTime.now(),
+                HttpStatus.BAD_REQUEST.value(),
+                ErrorType.INVALID_INPUT.getValue(),
+                exception.getMessage());
+    }
 }

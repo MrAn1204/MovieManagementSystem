@@ -76,11 +76,9 @@ public class UserController {
     public ResponseEntity<Void> delete(@PathVariable UUID id) {
         UserDeleteCommand command = new UserDeleteCommand(id);
 
-        boolean deleted = userService.handle(command);
+        userService.handle(command);
 
-        return deleted
-                ? ResponseEntity.noContent().build()
-                : ResponseEntity.notFound().build();
+        return ResponseEntity.noContent().build();
     }
 
     @GetMapping("/search")
