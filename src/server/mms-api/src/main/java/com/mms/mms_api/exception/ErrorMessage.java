@@ -3,21 +3,21 @@ package com.mms.mms_api.exception;
 public enum ErrorMessage {
     USER_NOT_FOUND("Cannot find user with the provided id"),
 
-    BLANK_USERNAME("Username cannot be blank."),
+    USERNAME_REQUIRED("Username is required."),
 
-    BLANK_FULLNAME("Fullname cannot be blank."),
+    FULLNAME_REQUIRED("Fullname is required."),
 
-    BLANK_PASSWORD("Password cannot be blank."),
+    PASSWORD_REQUIRED("Password is required."),
 
     GENDER_REQUIRED("Gender is required."),
 
     DOB_REQUIRED("Date of birth is required."),
 
-    BLANK_PHONE_NUMBER("Phone number cannot be blank."),
+    PHONE_REQUIRED("Phone number is required."),
 
     ROLES_REQUIRED("At least one role must be assigned to the user."),
 
-    INVALID_ROLES("One or more roles provided are invalid.");
+    ROLES_INVALID("One or more roles provided are invalid.");
 
     private final String value;
 

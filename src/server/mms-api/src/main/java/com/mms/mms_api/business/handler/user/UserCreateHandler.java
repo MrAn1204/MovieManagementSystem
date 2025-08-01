@@ -35,7 +35,7 @@ public class UserCreateHandler extends UserBaseHandler<UserCreateCommand, UserDt
         List<Role> mappedRoles = roleRepository.findByNameIn(roles);
 
         if (mappedRoles.size() != roles.size()) {
-            throw new InvalidInputException(ErrorMessage.INVALID_ROLES.getValue());
+            throw new InvalidInputException(ErrorMessage.ROLES_INVALID.getValue());
         }
 
         User user = userMapper.toEntity(request);
@@ -49,13 +49,13 @@ public class UserCreateHandler extends UserBaseHandler<UserCreateCommand, UserDt
 
     private void validateRequest() {
         if (!StringUtils.hasText(request.getUsername())) {
-            throw new InvalidInputException(ErrorMessage.BLANK_USERNAME.getValue());
+            throw new InvalidInputException(ErrorMessage.USERNAME_REQUIRED.getValue());
         }
         if (!StringUtils.hasText(request.getFullname())) {
-            throw new InvalidInputException(ErrorMessage.BLANK_FULLNAME.getValue());
+            throw new InvalidInputException(ErrorMessage.FULLNAME_REQUIRED.getValue());
         }
         if (!StringUtils.hasText(request.getPassword())) {
-            throw new InvalidInputException(ErrorMessage.BLANK_PASSWORD.getValue());
+            throw new InvalidInputException(ErrorMessage.PASSWORD_REQUIRED.getValue());
         }
         if (request.getGender() == null) {
             throw new InvalidInputException(ErrorMessage.GENDER_REQUIRED.getValue());
@@ -64,7 +64,7 @@ public class UserCreateHandler extends UserBaseHandler<UserCreateCommand, UserDt
             throw new InvalidInputException(ErrorMessage.DOB_REQUIRED.getValue());
         }
         if (!StringUtils.hasText(request.getPhoneNumber())) {
-            throw new InvalidInputException(ErrorMessage.BLANK_PHONE_NUMBER.getValue());
+            throw new InvalidInputException(ErrorMessage.PHONE_REQUIRED.getValue());
         }
         if (CollectionUtils.isEmpty(request.getRoles())) {
             throw new InvalidInputException(ErrorMessage.ROLES_REQUIRED.getValue());

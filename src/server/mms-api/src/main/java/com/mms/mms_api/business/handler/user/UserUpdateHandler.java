@@ -39,7 +39,7 @@ public class UserUpdateHandler extends UserBaseHandler<UserUpdateCommand, UserDt
             List<Role> mappedRoles = roleRepository.findByNameIn(request.getRoles());
 
             if (mappedRoles.size() != request.getRoles().size()) {
-                throw new InvalidInputException(ErrorMessage.INVALID_ROLES.getValue());
+                throw new InvalidInputException(ErrorMessage.ROLES_INVALID.getValue());
             }
 
             user.setRoles(mappedRoles);
@@ -52,13 +52,13 @@ public class UserUpdateHandler extends UserBaseHandler<UserUpdateCommand, UserDt
 
     private void validateRequest() {
         if (!StringUtils.hasText(request.getUsername())) {
-            throw new InvalidInputException(ErrorMessage.BLANK_USERNAME.getValue());
+            throw new InvalidInputException(ErrorMessage.USERNAME_REQUIRED.getValue());
         }
         if (!StringUtils.hasText(request.getFullname())) {
-            throw new InvalidInputException(ErrorMessage.BLANK_FULLNAME.getValue());
+            throw new InvalidInputException(ErrorMessage.FULLNAME_REQUIRED.getValue());
         }
         if (!StringUtils.hasText(request.getPassword())) {
-            throw new InvalidInputException(ErrorMessage.BLANK_PASSWORD.getValue());
+            throw new InvalidInputException(ErrorMessage.PASSWORD_REQUIRED.getValue());
         }
         if (request.getGender() == null) {
             throw new InvalidInputException(ErrorMessage.GENDER_REQUIRED.getValue());
@@ -67,7 +67,7 @@ public class UserUpdateHandler extends UserBaseHandler<UserUpdateCommand, UserDt
             throw new InvalidInputException(ErrorMessage.DOB_REQUIRED.getValue());
         }
         if (!StringUtils.hasText(request.getPhoneNumber())) {
-            throw new InvalidInputException(ErrorMessage.BLANK_PHONE_NUMBER.getValue());
+            throw new InvalidInputException(ErrorMessage.PHONE_REQUIRED.getValue());
         }
         if (CollectionUtils.isEmpty(request.getRoles())) {
             throw new InvalidInputException(ErrorMessage.ROLES_REQUIRED.getValue());
