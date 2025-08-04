@@ -30,8 +30,8 @@ public class UserUpdateHandler extends UserBaseHandler<UserUpdateCommand, UserDt
     public UserDto execute() {
         validateRequest();
 
-        User user = userRepository.findById(request.getId())
-                .orElseThrow(ResourceNotFoundException::new);
+        User user = userRepository.findById(request.getId()).orElseThrow(
+                () -> new ResourceNotFoundException(ErrorMessage.USER_NOT_FOUND.getValue()));
 
         userMapper.updateEntity(request, user);
 
