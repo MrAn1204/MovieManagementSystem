@@ -3,6 +3,7 @@ package com.mms.mms_api.model;
 import java.time.LocalDate;
 import java.util.List;
 
+import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.JoinTable;
@@ -16,6 +17,7 @@ import lombok.EqualsAndHashCode;
 @Data
 @EqualsAndHashCode(callSuper = true)
 public class Movie extends BaseEntity {
+    @Column(nullable = false)
     private String name;
     
     private LocalDate releaseDate;
