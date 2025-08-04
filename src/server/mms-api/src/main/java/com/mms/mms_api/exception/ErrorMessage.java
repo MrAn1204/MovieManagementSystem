@@ -17,7 +17,11 @@ public enum ErrorMessage {
 
     ROLES_REQUIRED("At least one role must be assigned to the user."),
 
-    ROLES_INVALID("One or more roles provided are invalid.");
+    ROLES_INVALID("One or more roles provided are invalid."),
+
+    MOVIE_NOT_FOUND("Cannot find movie with the provided id"),
+
+    NAME_REQUIRED("Name is required.");
 
     private final String value;
 

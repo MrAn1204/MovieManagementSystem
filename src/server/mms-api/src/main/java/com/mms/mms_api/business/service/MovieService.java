@@ -61,9 +61,9 @@ public class MovieService {
         return handler.execute();
     }
 
-    public Boolean handle(MovieDeleteCommand request) {
+    public void handle(MovieDeleteCommand request) {
         MovieDeleteHandler handler = new MovieDeleteHandler(request, movieRepository);
-        return handler.execute();
+        handler.execute();
     }
 
 }

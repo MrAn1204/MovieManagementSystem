@@ -7,6 +7,9 @@ import com.mms.mms_api.data.MovieRepository;
 import com.mms.mms_api.data.StudioRepository;
 import com.mms.mms_api.data.TalentRepository;
 import com.mms.mms_api.dto.MovieDto;
+import com.mms.mms_api.exception.ErrorMessage;
+import com.mms.mms_api.exception.InvalidInputException;
+import com.mms.mms_api.exception.ResourceNotFoundException;
 import com.mms.mms_api.model.Genre;
 import com.mms.mms_api.model.Language;
 import com.mms.mms_api.model.Movie;
@@ -15,7 +18,8 @@ import com.mms.mms_api.model.Talent;
 import com.mms.mms_api.util.mapper.MovieMapper;
 
 import java.util.List;
-import java.util.Optional;
+
+import org.springframework.util.StringUtils;
 
 public class MovieUpdateHandler extends MovieBaseHandler<MovieUpdateCommand, MovieDto> {
     private GenreRepository genreRepository;
@@ -26,16 +30,14 @@ public class MovieUpdateHandler extends MovieBaseHandler<MovieUpdateCommand, Mov
 
     private TalentRepository talentRepository;
 
-
     public MovieUpdateHandler(
-            MovieUpdateCommand request, 
-            MovieMapper movieMapper, 
+            MovieUpdateCommand request,
+            MovieMapper movieMapper,
             MovieRepository movieRepository,
             GenreRepository genreRepository,
             LanguageRepository languageRepository,
             StudioRepository studioRepository,
-            TalentRepository talentRepository
-    ) {
+            TalentRepository talentRepository) {
         super(request, movieMapper, movieRepository);
         this.genreRepository = genreRepository;
         this.languageRepository = languageRepository;
@@ -45,11 +47,10 @@ public class MovieUpdateHandler extends MovieBaseHandler<MovieUpdateCommand, Mov
 
     @Override
     public MovieDto execute() {
-        Optional<Movie> optionalMovie = movieRepository.findById(request.getId());
+        validateRequest();
 
-        if (optionalMovie.isEmpty()) {
-            return null;
-        }
+        Movie movie = movieRepository.findById(request.getId()).orElseThrow(
+                () -> new ResourceNotFoundException(ErrorMessage.MOVIE_NOT_FOUND.getValue()));
 
         List<Genre> genres = genreRepository.findByNameIn(request.getGenres());
 
@@ -59,8 +60,6 @@ public class MovieUpdateHandler extends MovieBaseHandler<MovieUpdateCommand, Mov
 
         List<Talent> talents = talentRepository.findByNameIn(request.getTalents());
 
-        Movie movie = optionalMovie.get();
-        
         movieMapper.updateEntity(request, movie);
         movie.setGenres(genres);
         movie.setLanguage(language);
@@ -70,5 +69,11 @@ public class MovieUpdateHandler extends MovieBaseHandler<MovieUpdateCommand, Mov
         Movie updatedMovie = movieRepository.save(movie);
 
         return movieMapper.toDto(updatedMovie);
+    }
+
+    private void validateRequest() {
+        if (StringUtils.hasText(request.getName())) {
+            throw new InvalidInputException(ErrorMessage.NAME_REQUIRED.getValue());
+        }
     }
 }

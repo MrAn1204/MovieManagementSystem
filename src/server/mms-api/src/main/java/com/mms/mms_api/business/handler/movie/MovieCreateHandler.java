@@ -2,6 +2,8 @@ package com.mms.mms_api.business.handler.movie;
 
 import java.util.List;
 
+import org.springframework.util.StringUtils;
+
 import com.mms.mms_api.business.command.movie.MovieCreateCommand;
 import com.mms.mms_api.data.GenreRepository;
 import com.mms.mms_api.data.LanguageRepository;
@@ -9,6 +11,8 @@ import com.mms.mms_api.data.MovieRepository;
 import com.mms.mms_api.data.StudioRepository;
 import com.mms.mms_api.data.TalentRepository;
 import com.mms.mms_api.dto.MovieDto;
+import com.mms.mms_api.exception.ErrorMessage;
+import com.mms.mms_api.exception.InvalidInputException;
 import com.mms.mms_api.model.Genre;
 import com.mms.mms_api.model.Language;
 import com.mms.mms_api.model.Movie;
@@ -42,6 +46,8 @@ public class MovieCreateHandler extends MovieBaseHandler<MovieCreateCommand, Mov
     }
 
     public MovieDto execute() {
+        validateRequest();
+
         Movie movie = movieMapper.toEntity(request);
 
         List<Genre> genres = genreRepository.findByNameIn(request.getGenres());
@@ -58,7 +64,13 @@ public class MovieCreateHandler extends MovieBaseHandler<MovieCreateCommand, Mov
         movie.setTalents(talents);
 
         Movie savedMovie = movieRepository.save(movie);
-        
+
         return movieMapper.toDto(savedMovie);
+    }
+
+    private void validateRequest() {
+        if (StringUtils.hasText(request.getName())) {
+            throw new InvalidInputException(ErrorMessage.NAME_REQUIRED.getValue());
+        }
     }
 }

@@ -5,6 +5,8 @@ import java.util.Optional;
 import com.mms.mms_api.business.query.movie.MovieGetByIdQuery;
 import com.mms.mms_api.data.MovieRepository;
 import com.mms.mms_api.dto.MovieDto;
+import com.mms.mms_api.exception.ErrorMessage;
+import com.mms.mms_api.exception.ResourceNotFoundException;
 import com.mms.mms_api.model.Movie;
 import com.mms.mms_api.util.mapper.MovieMapper;
 
@@ -17,7 +19,8 @@ public class MovieGetByIdHandler extends MovieBaseHandler<MovieGetByIdQuery, Mov
     public MovieDto execute() {
         Optional<Movie> movieOptional = movieRepository.findById(request.getId());
 
-        return movieOptional.map(movieMapper::toDto).orElse(null);
+        return movieOptional.map(movieMapper::toDto).orElseThrow(
+                () -> new ResourceNotFoundException(ErrorMessage.MOVIE_NOT_FOUND.getValue()));
     }
 
 }

@@ -65,11 +65,9 @@ public class MovieController {
     public ResponseEntity<Void> delete(@PathVariable UUID id) {
         MovieDeleteCommand command = new MovieDeleteCommand(id);
 
-        boolean deleted = movieService.handle(command);
+        movieService.handle(command);
 
-        return deleted
-                ? ResponseEntity.noContent().build()
-                : ResponseEntity.notFound().build();
+        return ResponseEntity.noContent().build();
     }
 
 }
