@@ -9,9 +9,12 @@ import com.mms.mms_api.business.handler.movie.MovieCreateHandler;
 import com.mms.mms_api.business.handler.movie.MovieDeleteHandler;
 import com.mms.mms_api.business.handler.movie.MovieGetAllHandler;
 import com.mms.mms_api.business.handler.movie.MovieGetByIdHandler;
+import com.mms.mms_api.business.handler.movie.MovieSearchHandler;
 import com.mms.mms_api.business.handler.movie.MovieUpdateHandler;
 import com.mms.mms_api.business.query.movie.MovieGetAllQuery;
 import com.mms.mms_api.business.query.movie.MovieGetByIdQuery;
+import com.mms.mms_api.business.query.movie.MovieSearchQuery;
+import com.mms.mms_api.common.PaginatedResult;
 import com.mms.mms_api.data.GenreRepository;
 import com.mms.mms_api.data.LanguageRepository;
 import com.mms.mms_api.data.MovieRepository;
@@ -66,4 +69,8 @@ public class MovieService {
         handler.execute();
     }
 
+    public PaginatedResult<MovieDto> handle(MovieSearchQuery request) {
+        MovieSearchHandler handler = new MovieSearchHandler(request, movieMapper, movieRepository);
+        return handler.execute();
+    }
 }

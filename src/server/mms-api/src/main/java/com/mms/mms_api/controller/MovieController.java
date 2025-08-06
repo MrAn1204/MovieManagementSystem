@@ -5,7 +5,9 @@ import com.mms.mms_api.business.command.movie.MovieDeleteCommand;
 import com.mms.mms_api.business.command.movie.MovieUpdateCommand;
 import com.mms.mms_api.business.query.movie.MovieGetAllQuery;
 import com.mms.mms_api.business.query.movie.MovieGetByIdQuery;
+import com.mms.mms_api.business.query.movie.MovieSearchQuery;
 import com.mms.mms_api.business.service.MovieService;
+import com.mms.mms_api.common.PaginatedResult;
 import com.mms.mms_api.dto.MovieDto;
 
 import org.springframework.http.HttpStatus;
@@ -70,4 +72,10 @@ public class MovieController {
         return ResponseEntity.noContent().build();
     }
 
+    @GetMapping("/search")
+    public ResponseEntity<PaginatedResult<MovieDto>> search(@RequestBody MovieSearchQuery query) {
+        PaginatedResult<MovieDto> movies = movieService.handle(query);
+
+        return ResponseEntity.ok(movies);
+    }
 }
