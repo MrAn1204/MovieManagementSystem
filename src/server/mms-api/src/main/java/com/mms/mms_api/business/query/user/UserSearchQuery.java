@@ -9,9 +9,12 @@ import lombok.EqualsAndHashCode;
 @Data
 @EqualsAndHashCode(callSuper = true)
 public class UserSearchQuery extends BaseSearchQuery {
+    private String role;
 
-    public UserSearchQuery(int pageNumber, int pageSize, String keyword, String sortBy, SortDirection sortDirection) {
+    public UserSearchQuery(int pageNumber, int pageSize, String keyword, String sortBy, SortDirection sortDirection,
+            String role) {
         super(pageNumber, pageSize, keyword, sortBy, sortDirection);
+        this.role = role;
     }
 
 }
