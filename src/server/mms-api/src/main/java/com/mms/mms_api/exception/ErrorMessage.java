@@ -9,6 +9,18 @@ public enum ErrorMessage {
 
     PASSWORD_REQUIRED("Password is required."),
 
+    PASSWORD_LENGTH("Password must have at least 8 characters."),
+
+    PASSWORD_UPPERCASE("Password must have at least one uppercase letter."),
+
+    PASSWORD_LOWERCASE("Password must have at least one lower letter."),
+
+    PASSWORD_DIGIT("Password must have at least one digit."),
+
+    PASSWORD_SPECIAL("Password must have at least one special character."),
+
+    PASSWORD_WHITESPACE("Password must have no whitespace."),
+
     GENDER_REQUIRED("Gender is required."),
 
     DOB_REQUIRED("Date of birth is required."),
