@@ -14,7 +14,7 @@ public class UserDeleteHandler extends UserBaseHandler<UserDeleteCommand, Void> 
     @Override
     public Void execute() {
         if (!userRepository.existsById(request.getId())) {
-            throw new ResourceNotFoundException(ErrorMessage.USER_NOT_FOUND.getValue());
+            throw new ResourceNotFoundException(ErrorMessage.USER_NOT_FOUND);
         }
 
         userRepository.deleteById(request.getId());

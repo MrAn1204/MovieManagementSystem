@@ -31,7 +31,7 @@ public class UserUpdateHandler extends UserBaseHandler<UserUpdateCommand, UserDt
         validateRequest();
 
         User user = userRepository.findById(request.getId()).orElseThrow(
-                () -> new ResourceNotFoundException(ErrorMessage.USER_NOT_FOUND.getValue()));
+                () -> new ResourceNotFoundException(ErrorMessage.USER_NOT_FOUND));
 
         userMapper.updateEntity(request, user);
 
@@ -39,7 +39,7 @@ public class UserUpdateHandler extends UserBaseHandler<UserUpdateCommand, UserDt
             List<Role> mappedRoles = roleRepository.findByNameIn(request.getRoles());
 
             if (mappedRoles.size() != request.getRoles().size()) {
-                throw new InvalidInputException(ErrorMessage.ROLES_INVALID.getValue());
+                throw new InvalidInputException(ErrorMessage.ROLES_INVALID);
             }
 
             user.setRoles(mappedRoles);
@@ -52,25 +52,25 @@ public class UserUpdateHandler extends UserBaseHandler<UserUpdateCommand, UserDt
 
     private void validateRequest() {
         if (!StringUtils.hasText(request.getUsername())) {
-            throw new InvalidInputException(ErrorMessage.USERNAME_REQUIRED.getValue());
+            throw new InvalidInputException(ErrorMessage.USERNAME_REQUIRED);
         }
         if (!StringUtils.hasText(request.getFullname())) {
-            throw new InvalidInputException(ErrorMessage.FULLNAME_REQUIRED.getValue());
+            throw new InvalidInputException(ErrorMessage.FULLNAME_REQUIRED);
         }
         if (!StringUtils.hasText(request.getPassword())) {
-            throw new InvalidInputException(ErrorMessage.PASSWORD_REQUIRED.getValue());
+            throw new InvalidInputException(ErrorMessage.PASSWORD_REQUIRED);
         }
         if (request.getGender() == null) {
-            throw new InvalidInputException(ErrorMessage.GENDER_REQUIRED.getValue());
+            throw new InvalidInputException(ErrorMessage.GENDER_REQUIRED);
         }
         if (request.getDateOfBirth() == null) {
-            throw new InvalidInputException(ErrorMessage.DOB_REQUIRED.getValue());
+            throw new InvalidInputException(ErrorMessage.DOB_REQUIRED);
         }
         if (!StringUtils.hasText(request.getPhoneNumber())) {
-            throw new InvalidInputException(ErrorMessage.PHONE_REQUIRED.getValue());
+            throw new InvalidInputException(ErrorMessage.PHONE_REQUIRED);
         }
         if (CollectionUtils.isEmpty(request.getRoles())) {
-            throw new InvalidInputException(ErrorMessage.ROLES_REQUIRED.getValue());
+            throw new InvalidInputException(ErrorMessage.ROLES_REQUIRED);
         }
     }
 

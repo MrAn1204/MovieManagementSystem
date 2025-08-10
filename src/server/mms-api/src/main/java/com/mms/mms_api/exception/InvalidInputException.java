@@ -5,7 +5,7 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 
 @ResponseStatus(value = HttpStatus.BAD_REQUEST)
 public class InvalidInputException extends RuntimeException {
-    public InvalidInputException(String message) {
-        super(message);
+    public InvalidInputException(ErrorMessage message) {
+        super(message.getValue());
     }
 }

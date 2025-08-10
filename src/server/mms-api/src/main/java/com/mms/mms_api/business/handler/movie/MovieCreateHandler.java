@@ -70,7 +70,7 @@ public class MovieCreateHandler extends MovieBaseHandler<MovieCreateCommand, Mov
 
     private void validateRequest() {
         if (StringUtils.hasText(request.getName())) {
-            throw new InvalidInputException(ErrorMessage.NAME_REQUIRED.getValue());
+            throw new InvalidInputException(ErrorMessage.NAME_REQUIRED);
         }
     }
 }

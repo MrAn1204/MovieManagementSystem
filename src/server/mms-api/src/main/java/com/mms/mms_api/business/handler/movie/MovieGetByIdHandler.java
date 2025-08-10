@@ -20,7 +20,7 @@ public class MovieGetByIdHandler extends MovieBaseHandler<MovieGetByIdQuery, Mov
         Optional<Movie> movieOptional = movieRepository.findById(request.getId());
 
         return movieOptional.map(movieMapper::toDto).orElseThrow(
-                () -> new ResourceNotFoundException(ErrorMessage.MOVIE_NOT_FOUND.getValue()));
+                () -> new ResourceNotFoundException(ErrorMessage.MOVIE_NOT_FOUND));
     }
 
 }

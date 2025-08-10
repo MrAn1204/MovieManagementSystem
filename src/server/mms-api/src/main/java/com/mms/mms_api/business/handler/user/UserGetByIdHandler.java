@@ -16,7 +16,7 @@ public class UserGetByIdHandler extends UserBaseHandler<UserGetByIdQuery, UserDt
     @Override
     public UserDto execute() {
         User user = userRepository.findById(request.getId()).orElseThrow(
-                () -> new ResourceNotFoundException(ErrorMessage.USER_NOT_FOUND.getValue()));
+                () -> new ResourceNotFoundException(ErrorMessage.USER_NOT_FOUND));
 
         return userMapper.toDto(user);
     }

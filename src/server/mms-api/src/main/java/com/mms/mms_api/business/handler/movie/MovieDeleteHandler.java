@@ -13,7 +13,7 @@ public class MovieDeleteHandler extends MovieBaseHandler<MovieDeleteCommand, Voi
     @Override
     public Void execute() {
         if (!movieRepository.existsById(request.getId())) {
-            throw new ResourceNotFoundException(ErrorMessage.MOVIE_NOT_FOUND.getValue());
+            throw new ResourceNotFoundException(ErrorMessage.MOVIE_NOT_FOUND);
         }
 
         movieRepository.deleteById(request.getId());

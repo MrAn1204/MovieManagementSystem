@@ -50,7 +50,7 @@ public class MovieUpdateHandler extends MovieBaseHandler<MovieUpdateCommand, Mov
         validateRequest();
 
         Movie movie = movieRepository.findById(request.getId()).orElseThrow(
-                () -> new ResourceNotFoundException(ErrorMessage.MOVIE_NOT_FOUND.getValue()));
+                () -> new ResourceNotFoundException(ErrorMessage.MOVIE_NOT_FOUND));
 
         List<Genre> genres = genreRepository.findByNameIn(request.getGenres());
 
@@ -73,7 +73,7 @@ public class MovieUpdateHandler extends MovieBaseHandler<MovieUpdateCommand, Mov
 
     private void validateRequest() {
         if (StringUtils.hasText(request.getName())) {
-            throw new InvalidInputException(ErrorMessage.NAME_REQUIRED.getValue());
+            throw new InvalidInputException(ErrorMessage.NAME_REQUIRED);
         }
     }
 }
