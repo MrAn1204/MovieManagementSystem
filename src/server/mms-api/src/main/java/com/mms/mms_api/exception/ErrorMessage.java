@@ -33,7 +33,15 @@ public enum ErrorMessage {
 
     MOVIE_NOT_FOUND("Cannot find movie with the provided id"),
 
-    NAME_REQUIRED("Name is required.");
+    NAME_REQUIRED("Name is required."),
+
+    GENRES_INVALID("One or more genres provided are invalid."),
+
+    LANGUAGE_INVALID("The provided language is invalid."),
+
+    STUDIOS_INVALID("One or more studios provided are invalid."),
+
+    TALENTS_INVALID("One or more talents provided are invalid.");
 
     private final String value;
 
