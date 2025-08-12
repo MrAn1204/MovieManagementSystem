@@ -2,8 +2,6 @@ package com.mms.mms_api.business.handler.movie;
 
 import java.util.List;
 
-import org.springframework.util.StringUtils;
-
 import com.mms.mms_api.business.command.movie.MovieCreateCommand;
 import com.mms.mms_api.data.GenreRepository;
 import com.mms.mms_api.data.LanguageRepository;
@@ -11,14 +9,13 @@ import com.mms.mms_api.data.MovieRepository;
 import com.mms.mms_api.data.StudioRepository;
 import com.mms.mms_api.data.TalentRepository;
 import com.mms.mms_api.dto.MovieDto;
-import com.mms.mms_api.exception.ErrorMessage;
-import com.mms.mms_api.exception.InvalidInputException;
 import com.mms.mms_api.model.Genre;
 import com.mms.mms_api.model.Language;
 import com.mms.mms_api.model.Movie;
 import com.mms.mms_api.model.Studio;
 import com.mms.mms_api.model.Talent;
 import com.mms.mms_api.util.mapper.MovieMapper;
+import com.mms.mms_api.util.validator.MovieValidator;
 
 public class MovieCreateHandler extends MovieBaseHandler<MovieCreateCommand, MovieDto> {
     private GenreRepository genreRepository;
@@ -46,31 +43,33 @@ public class MovieCreateHandler extends MovieBaseHandler<MovieCreateCommand, Mov
     }
 
     public MovieDto execute() {
-        validateRequest();
+        MovieValidator.validateName(request.getName());
+
+        List<String> genreNames = request.getGenres();
+        List<Genre> mappedGenres = genreRepository.findByNameIn(genreNames);
+        MovieValidator.validateGenres(genreNames, mappedGenres);
+
+        String languageName = request.getLanguage();
+        Language mappedLanguage = languageRepository.findByName(languageName);
+        MovieValidator.validateLanguage(languageName, mappedLanguage);
+
+        List<String> studioNames = request.getStudios();
+        List<Studio> mappedStudios = studioRepository.findByNameIn(studioNames);
+        MovieValidator.validateStudios(studioNames, mappedStudios);
+
+        List<String> talentNames = request.getTalents();
+        List<Talent> mappedTalents = talentRepository.findByNameIn(talentNames);
+        MovieValidator.validateTalents(talentNames, mappedTalents);
 
         Movie movie = movieMapper.toEntity(request);
 
-        List<Genre> genres = genreRepository.findByNameIn(request.getGenres());
-
-        Language language = languageRepository.findByName(request.getLanguage());
-
-        List<Studio> studios = studioRepository.findByNameIn(request.getStudios());
-
-        List<Talent> talents = talentRepository.findByNameIn(request.getTalents());
-
-        movie.setGenres(genres);
-        movie.setLanguage(language);
-        movie.setStudios(studios);
-        movie.setTalents(talents);
+        movie.setGenres(mappedGenres);
+        movie.setLanguage(mappedLanguage);
+        movie.setStudios(mappedStudios);
+        movie.setTalents(mappedTalents);
 
         Movie savedMovie = movieRepository.save(movie);
 
         return movieMapper.toDto(savedMovie);
-    }
-
-    private void validateRequest() {
-        if (StringUtils.hasText(request.getName())) {
-            throw new InvalidInputException(ErrorMessage.NAME_REQUIRED);
-        }
     }
 }
