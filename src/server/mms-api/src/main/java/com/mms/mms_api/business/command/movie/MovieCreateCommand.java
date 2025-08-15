@@ -7,10 +7,12 @@ import com.mms.mms_api.business.command.BaseCreateCommand;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 
 @Data
+@EqualsAndHashCode(callSuper = true)
 @AllArgsConstructor
-public class MovieCreateCommand implements BaseCreateCommand {
+public class MovieCreateCommand extends BaseCreateCommand {
     private String name;
 
     private LocalDate releaseDate;

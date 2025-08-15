@@ -7,6 +7,6 @@ import lombok.Data;
 
 @Data
 @AllArgsConstructor
-public abstract class BaseGetByIdQuery {
+public abstract class BaseGetByIdQuery implements BaseQuery {
     private UUID id;
 }

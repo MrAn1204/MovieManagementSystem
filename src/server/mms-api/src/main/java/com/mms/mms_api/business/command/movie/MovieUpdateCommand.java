@@ -1,16 +1,17 @@
 package com.mms.mms_api.business.command.movie;
 
 import com.mms.mms_api.business.command.BaseUpdateCommand;
+
+import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
-import lombok.NoArgsConstructor;
 
 import java.time.LocalDate;
 import java.util.List;
 
 @Data
 @EqualsAndHashCode(callSuper = true)
-@NoArgsConstructor
+@AllArgsConstructor
 public class MovieUpdateCommand extends BaseUpdateCommand {
     private String name;
 

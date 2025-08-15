@@ -8,10 +8,12 @@ import com.mms.mms_api.model.Gender;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 
 @Data
+@EqualsAndHashCode(callSuper = true)
 @AllArgsConstructor
-public class UserCreateCommand implements BaseCreateCommand {
+public class UserCreateCommand extends BaseCreateCommand {
     private String username;
 
     private String fullname;

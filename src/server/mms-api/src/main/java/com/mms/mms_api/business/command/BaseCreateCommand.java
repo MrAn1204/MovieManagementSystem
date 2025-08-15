@@ -1,5 +1,5 @@
 package com.mms.mms_api.business.command;
 
-public interface BaseCreateCommand {
+public abstract class BaseCreateCommand implements BaseCommand {
 
 }

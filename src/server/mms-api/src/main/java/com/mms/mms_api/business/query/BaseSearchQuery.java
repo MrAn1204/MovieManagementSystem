@@ -5,7 +5,7 @@ import java.io.Serializable;
 import lombok.Data;
 
 @Data
-public abstract class BaseSearchQuery implements Serializable {
+public abstract class BaseSearchQuery implements BaseQuery, Serializable {
     private int pageNumber = 1;
     
     private int pageSize = 10;
