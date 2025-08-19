@@ -1,0 +1,63 @@
+package com.mms.mms_api.controller;
+
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
+
+import com.mms.mms_api.business.command.room.RoomCreateCommand;
+import com.mms.mms_api.business.command.room.RoomDeleteCommand;
+import com.mms.mms_api.business.command.room.RoomUpdateCommand;
+import com.mms.mms_api.business.query.room.RoomGetAllQuery;
+import com.mms.mms_api.business.query.room.RoomGetByIdQuery;
+import com.mms.mms_api.business.service.RoomService;
+import com.mms.mms_api.dto.RoomDto;
+
+import lombok.AllArgsConstructor;
+
+import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import java.util.List;
+import java.util.UUID;
+import org.springframework.web.bind.annotation.PutMapping;
+
+
+@RestController
+@RequestMapping("/api/rooms")
+@AllArgsConstructor
+public class RoomController {
+    private final RoomService roomService;
+
+    @GetMapping
+    public ResponseEntity<List<RoomDto>> getAll() {
+        List<RoomDto> rooms = roomService.execute(new RoomGetAllQuery());
+        return ResponseEntity.ok(rooms);
+    }
+
+    @GetMapping("/{id}")
+    public ResponseEntity<RoomDto> getById(@PathVariable UUID id) {
+        RoomDto room = roomService.execute(new RoomGetByIdQuery(id));
+        return ResponseEntity.ok(room);
+    }
+
+    @PostMapping("/create")
+    public ResponseEntity<RoomDto> create(@RequestBody RoomCreateCommand request) {
+        RoomDto roomDto = roomService.execute(request);
+        return ResponseEntity.ok(roomDto);
+    }
+
+    @PutMapping("/{id}")
+    public ResponseEntity<RoomDto> update(@PathVariable UUID id, @RequestBody RoomUpdateCommand request) {
+        request.setId(id);
+        RoomDto updatedRoom = roomService.execute(request);
+        return ResponseEntity.ok(updatedRoom);
+    }
+
+    @DeleteMapping("/{id}")
+    public ResponseEntity<Void> delete(@PathVariable UUID id) {
+        roomService.execute(new RoomDeleteCommand(id));
+        return ResponseEntity.noContent().build();
+    }
+}
