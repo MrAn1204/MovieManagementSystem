@@ -5,6 +5,7 @@ import com.mms.mms_api.data.RoomRepository;
 import com.mms.mms_api.dto.RoomDto;
 import com.mms.mms_api.model.Room;
 import com.mms.mms_api.util.mapper.RoomMapper;
+import com.mms.mms_api.util.validator.RoomValidator;
 
 public class RoomCreateHandler extends RoomBaseHandler<RoomCreateCommand, RoomDto> {
     public RoomCreateHandler(RoomCreateCommand request, RoomMapper roomMapper, RoomRepository roomRepository) {
@@ -13,6 +14,9 @@ public class RoomCreateHandler extends RoomBaseHandler<RoomCreateCommand, RoomDt
 
     @Override
     public RoomDto execute() {
+        RoomValidator.validateSeatQuantity(request.getSeatQuantity());
+        RoomValidator.validateName(request.getName());
+
         Room room = roomMapper.toEntity(request);
         
         Room savedRoom = roomRepository.save(room);

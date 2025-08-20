@@ -3,6 +3,8 @@ package com.mms.mms_api.business.handler.room;
 import com.mms.mms_api.business.query.room.RoomGetByIdQuery;
 import com.mms.mms_api.data.RoomRepository;
 import com.mms.mms_api.dto.RoomDto;
+import com.mms.mms_api.exception.ErrorMessage;
+import com.mms.mms_api.exception.ResourceNotFoundException;
 import com.mms.mms_api.model.Room;
 import com.mms.mms_api.util.mapper.RoomMapper;
 
@@ -13,9 +15,10 @@ public class RoomGetByIdHandler extends RoomBaseHandler<RoomGetByIdQuery, RoomDt
 
     @Override
     public RoomDto execute() {
-        Room room = roomRepository.findById(request.getId()).orElseThrow();
+        Room room = roomRepository.findById(request.getId())
+                .orElseThrow(() -> new ResourceNotFoundException(ErrorMessage.ROOM_NOT_FOUND));
 
         return roomMapper.toDto(room);
     }
-    
+
 }
