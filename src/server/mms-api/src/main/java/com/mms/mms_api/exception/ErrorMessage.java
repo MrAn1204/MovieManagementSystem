@@ -1,6 +1,10 @@
 package com.mms.mms_api.exception;
 
 public enum ErrorMessage {
+    // General
+    NAME_REQUIRED("Name is required."),
+
+    // User-related
     USER_NOT_FOUND("Cannot find user with the provided id"),
 
     USERNAME_REQUIRED("Username is required."),
@@ -31,9 +35,8 @@ public enum ErrorMessage {
 
     ROLES_INVALID("One or more roles provided are invalid."),
 
+    // Movie-related
     MOVIE_NOT_FOUND("Cannot find movie with the provided id"),
-
-    NAME_REQUIRED("Name is required."),
 
     GENRES_INVALID("One or more genres provided are invalid."),
 
@@ -41,7 +44,21 @@ public enum ErrorMessage {
 
     STUDIOS_INVALID("One or more studios provided are invalid."),
 
-    TALENTS_INVALID("One or more talents provided are invalid.");
+    TALENTS_INVALID("One or more talents provided are invalid."),
+
+    // Room-related
+    ROOM_NOT_FOUND("Cannot find room with the provided id"),
+
+    QUANTITY_INVALID("Quantity must be greater than zero."),
+
+    // Seat-related
+    SEAT_NOT_FOUND("Cannot find seat with the provided id"),
+
+    COLUMN_INVALID("Column number is out of range."),
+
+    ROW_INVALID("Row number is out of range."),
+    
+    SEAT_TYPE_INVALID("Seat type is invalid.");
 
     private final String value;
 
