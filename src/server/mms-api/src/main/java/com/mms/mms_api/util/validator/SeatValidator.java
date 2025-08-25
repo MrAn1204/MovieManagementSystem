@@ -29,7 +29,7 @@ public class SeatValidator {
     }
 
     public static void validateName(String name) {
-        if (StringUtils.hasText(name)) {
+        if (!StringUtils.hasText(name)) {
             throw new InvalidInputException(ErrorMessage.NAME_REQUIRED);
         }
     }
