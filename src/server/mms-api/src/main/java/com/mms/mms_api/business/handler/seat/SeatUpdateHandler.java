@@ -27,6 +27,8 @@ public class SeatUpdateHandler extends SeatBaseHandler<SeatUpdateCommand, SeatDt
         SeatValidator.validateName(request.getName());
         SeatValidator.validateSeatType(request.getSeatType());
 
+        seatMapper.updateEntity(request, seat);
+
         if (request.getRoomId() != null) {
             Room room = roomRepository.findById(request.getRoomId())
                     .orElseThrow(() -> new ResourceNotFoundException(ErrorMessage.ROOM_NOT_FOUND));
