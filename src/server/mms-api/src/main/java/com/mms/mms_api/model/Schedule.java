@@ -3,6 +3,7 @@ package com.mms.mms_api.model;
 import java.time.LocalDateTime;
 import java.util.List;
 
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Entity;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
@@ -24,6 +25,6 @@ public class Schedule extends BaseEntity {
     @JoinColumn(name = "room_id")
     private Room room;
 
-    @OneToMany(mappedBy = "schedule")
+    @OneToMany(mappedBy = "schedule", cascade = CascadeType.ALL)
     private List<ScheduleSeat> scheduleSeats;
 }

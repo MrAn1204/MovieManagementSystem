@@ -6,16 +6,20 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.MapsId;
+import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 @Entity
 @Data
+@NoArgsConstructor
+@AllArgsConstructor
 public class ScheduleSeat {
     @EmbeddedId
     private ScheduleSeatId id;
 
     @Column(nullable = false)
-    private boolean reserved;
+    private boolean reserved = false;
 
     @ManyToOne
     @MapsId("scheduleId")

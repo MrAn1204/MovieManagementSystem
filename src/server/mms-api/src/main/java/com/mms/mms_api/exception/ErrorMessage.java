@@ -58,7 +58,10 @@ public enum ErrorMessage {
 
     ROW_INVALID("Row number is out of range."),
     
-    SEAT_TYPE_INVALID("Seat type is invalid.");
+    SEAT_TYPE_INVALID("Seat type is invalid."),
+
+    // Schedule-related
+    SCHEDULE_NOT_FOUND("Cannot find schedule with the provided id");
 
     private final String value;
 
