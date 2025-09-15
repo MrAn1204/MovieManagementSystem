@@ -1,0 +1,62 @@
+package com.mms.mms_api.controller;
+
+import java.util.List;
+import java.util.UUID;
+
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
+
+import com.mms.mms_api.business.command.schedule.ScheduleCreateCommand;
+import com.mms.mms_api.business.command.schedule.ScheduleDeleteCommand;
+import com.mms.mms_api.business.command.schedule.ScheduleUpdateCommand;
+import com.mms.mms_api.business.query.schedule.ScheduleGetAllQuery;
+import com.mms.mms_api.business.query.schedule.ScheduleGetByIdQuery;
+import com.mms.mms_api.business.service.ScheduleService;
+import com.mms.mms_api.dto.ScheduleDto;
+
+import lombok.AllArgsConstructor;
+
+@RestController
+@RequestMapping("/api/schedules")
+@AllArgsConstructor
+public class ScheduleController {
+    private final ScheduleService scheduleService;
+
+    @GetMapping
+    public ResponseEntity<List<ScheduleDto>> getAll() {
+        List<ScheduleDto> schedules = scheduleService.handle(new ScheduleGetAllQuery());
+        return ResponseEntity.ok(schedules);
+    }
+
+    @GetMapping("/{id}")
+    public ResponseEntity<ScheduleDto> getById(@PathVariable UUID id) {
+        ScheduleDto schedule = scheduleService.handle(new ScheduleGetByIdQuery(id));
+        return ResponseEntity.ok(schedule);
+    }
+
+    @PostMapping("/create")
+    public ResponseEntity<ScheduleDto> create(@RequestBody ScheduleCreateCommand request) {
+        ScheduleDto scheduleDto = scheduleService.handle(request);
+        return ResponseEntity.ok(scheduleDto);
+    }
+
+    @PutMapping("/{id}")
+    public ResponseEntity<ScheduleDto> update(@PathVariable UUID id, @RequestBody ScheduleUpdateCommand request) {
+        request.setId(id);
+        ScheduleDto updatedSchedule = scheduleService.handle(request);
+        return ResponseEntity.ok(updatedSchedule);
+    }
+
+    @DeleteMapping("/{id}")
+    public ResponseEntity<Void> delete(@PathVariable UUID id) {
+        scheduleService.handle(new ScheduleDeleteCommand(id));
+        return ResponseEntity.noContent().build();
+    }
+}
