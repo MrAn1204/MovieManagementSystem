@@ -32,32 +32,32 @@ public class RoomController {
 
     @GetMapping
     public ResponseEntity<List<RoomDto>> getAll() {
-        List<RoomDto> rooms = roomService.execute(new RoomGetAllQuery());
+        List<RoomDto> rooms = roomService.handle(new RoomGetAllQuery());
         return ResponseEntity.ok(rooms);
     }
 
     @GetMapping("/{id}")
     public ResponseEntity<RoomDto> getById(@PathVariable UUID id) {
-        RoomDto room = roomService.execute(new RoomGetByIdQuery(id));
+        RoomDto room = roomService.handle(new RoomGetByIdQuery(id));
         return ResponseEntity.ok(room);
     }
 
     @PostMapping("/create")
     public ResponseEntity<RoomDto> create(@RequestBody RoomCreateCommand request) {
-        RoomDto roomDto = roomService.execute(request);
+        RoomDto roomDto = roomService.handle(request);
         return ResponseEntity.ok(roomDto);
     }
 
     @PutMapping("/{id}")
     public ResponseEntity<RoomDto> update(@PathVariable UUID id, @RequestBody RoomUpdateCommand request) {
         request.setId(id);
-        RoomDto updatedRoom = roomService.execute(request);
+        RoomDto updatedRoom = roomService.handle(request);
         return ResponseEntity.ok(updatedRoom);
     }
 
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> delete(@PathVariable UUID id) {
-        roomService.execute(new RoomDeleteCommand(id));
+        roomService.handle(new RoomDeleteCommand(id));
         return ResponseEntity.noContent().build();
     }
 }

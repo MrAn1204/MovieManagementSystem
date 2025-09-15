@@ -27,27 +27,27 @@ public class RoomService {
 
     private final RoomMapper roomMapper;
 
-    public RoomDto execute(RoomCreateCommand request) {
+    public RoomDto handle(RoomCreateCommand request) {
         RoomCreateHandler handler = new RoomCreateHandler(request, roomMapper, roomRepository);
         return handler.execute();
     }
 
-    public List<RoomDto> execute(RoomGetAllQuery request) {
+    public List<RoomDto> handle(RoomGetAllQuery request) {
         RoomGetAllHandler handler = new RoomGetAllHandler(request, roomMapper, roomRepository);
         return handler.execute();
     }
 
-    public RoomDto execute(RoomGetByIdQuery request) {
+    public RoomDto handle(RoomGetByIdQuery request) {
         RoomGetByIdHandler handler = new RoomGetByIdHandler(request, roomMapper, roomRepository);
         return handler.execute();
     }
 
-    public RoomDto execute(RoomUpdateCommand request) {
+    public RoomDto handle(RoomUpdateCommand request) {
         RoomUpdateHandler handler = new RoomUpdateHandler(request, roomMapper, roomRepository);
         return handler.execute();
     }
 
-    public void execute(RoomDeleteCommand request) {
+    public void handle(RoomDeleteCommand request) {
         RoomDeleteHandler handler = new RoomDeleteHandler(request, roomMapper, roomRepository);
         handler.execute();
     }
