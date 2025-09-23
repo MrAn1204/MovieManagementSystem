@@ -3,7 +3,6 @@ package com.mms.mms_api.business.handler.user;
 import com.mms.mms_api.business.query.user.UserGetByIdQuery;
 import com.mms.mms_api.data.UserRepository;
 import com.mms.mms_api.dto.user.UserDto;
-import com.mms.mms_api.exception.ErrorMessage;
 import com.mms.mms_api.exception.ResourceNotFoundException;
 import com.mms.mms_api.model.User;
 import com.mms.mms_api.util.mapper.UserMapper;
@@ -16,7 +15,7 @@ public class UserGetByIdHandler extends UserBaseHandler<UserGetByIdQuery, UserDt
     @Override
     public UserDto execute() {
         User user = userRepository.findById(request.getId()).orElseThrow(
-                () -> new ResourceNotFoundException(ErrorMessage.USER_NOT_FOUND));
+                () -> new ResourceNotFoundException("user.notFound"));
 
         return userMapper.toDto(user);
     }

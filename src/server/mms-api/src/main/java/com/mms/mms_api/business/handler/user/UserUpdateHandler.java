@@ -6,8 +6,8 @@ import com.mms.mms_api.business.command.user.UserUpdateCommand;
 import com.mms.mms_api.data.RoleRepository;
 import com.mms.mms_api.data.UserRepository;
 import com.mms.mms_api.dto.user.UserDto;
-import com.mms.mms_api.exception.ErrorMessage;
 import com.mms.mms_api.exception.ResourceNotFoundException;
+import com.mms.mms_api.message.UserMessage;
 import com.mms.mms_api.model.Role;
 import com.mms.mms_api.model.User;
 import com.mms.mms_api.util.mapper.UserMapper;
@@ -26,15 +26,8 @@ public class UserUpdateHandler extends UserBaseHandler<UserUpdateCommand, UserDt
     @Override
     public UserDto execute() {
         User user = userRepository.findById(request.getId()).orElseThrow(
-                () -> new ResourceNotFoundException(ErrorMessage.USER_NOT_FOUND));
+                () -> new ResourceNotFoundException(UserMessage.NOT_FOUND));
 
-        UserValidator.validateUsername(request.getUsername());
-        UserValidator.validateFullname(request.getFullname());
-        UserValidator.validatePassword(request.getPassword());
-        UserValidator.validateGender(request.getGender());
-        UserValidator.validateDateOfBirth(request.getDateOfBirth());
-        UserValidator.validatePhoneNumber(request.getPhoneNumber());
-        
         List<String> roleNames = request.getRoles();
         List<Role> mappedRoles = roleRepository.findByNameIn(roleNames);
         UserValidator.validateRoles(roleNames, mappedRoles);

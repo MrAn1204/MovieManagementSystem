@@ -24,13 +24,6 @@ public class UserCreateHandler extends UserBaseHandler<UserCreateCommand, UserDt
     }
 
     public UserDto execute() {
-        UserValidator.validateUsername(request.getUsername());
-        UserValidator.validateFullname(request.getFullname());
-        UserValidator.validatePassword(request.getPassword());
-        UserValidator.validateGender(request.getGender());
-        UserValidator.validateDateOfBirth(request.getDateOfBirth());
-        UserValidator.validatePhoneNumber(request.getPhoneNumber());
-        
         List<String> roleNames = request.getRoles();
         List<Role> mappedRoles = roleRepository.findByNameIn(roleNames);
         UserValidator.validateRoles(roleNames, mappedRoles);
