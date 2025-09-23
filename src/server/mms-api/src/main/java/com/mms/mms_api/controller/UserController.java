@@ -25,6 +25,8 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 
+import jakarta.validation.Valid;
+
 @RestController
 @RequestMapping("/user")
 public class UserController {
@@ -44,7 +46,7 @@ public class UserController {
     }
 
     @PostMapping("/create")
-    public ResponseEntity<UserDto> create(@RequestBody UserCreateCommand command) {
+    public ResponseEntity<UserDto> create(@Valid @RequestBody UserCreateCommand command) {
         UserDto result = userService.handle(command);
 
         return result != null
@@ -62,7 +64,7 @@ public class UserController {
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<UserDto> update(@PathVariable UUID id, @RequestBody UserUpdateCommand command) {
+    public ResponseEntity<UserDto> update(@PathVariable UUID id, @Valid @RequestBody UserUpdateCommand command) {
         command.setId(id);
 
         UserDto updatedUser = userService.handle(command);
