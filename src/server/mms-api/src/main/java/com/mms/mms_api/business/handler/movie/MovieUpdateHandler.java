@@ -48,8 +48,6 @@ public class MovieUpdateHandler extends MovieBaseHandler<MovieUpdateCommand, Mov
         Movie movie = movieRepository.findById(request.getId()).orElseThrow(
                 () -> new ResourceNotFoundException(ErrorMessage.MOVIE_NOT_FOUND));
 
-        MovieValidator.validateName(request.getName());
-
         List<String> genreNames = request.getGenres();
         List<Genre> mappedGenres = genreRepository.findByNameIn(genreNames);
         MovieValidator.validateGenres(genreNames, mappedGenres);

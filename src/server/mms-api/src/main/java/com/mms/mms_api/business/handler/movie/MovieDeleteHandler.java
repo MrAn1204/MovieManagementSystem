@@ -2,8 +2,8 @@ package com.mms.mms_api.business.handler.movie;
 
 import com.mms.mms_api.business.command.movie.MovieDeleteCommand;
 import com.mms.mms_api.data.MovieRepository;
-import com.mms.mms_api.exception.ErrorMessage;
 import com.mms.mms_api.exception.ResourceNotFoundException;
+import com.mms.mms_api.model.Movie;
 
 public class MovieDeleteHandler extends MovieBaseHandler<MovieDeleteCommand, Void> {
     public MovieDeleteHandler(MovieDeleteCommand request, MovieRepository movieRepository) {
@@ -12,11 +12,11 @@ public class MovieDeleteHandler extends MovieBaseHandler<MovieDeleteCommand, Voi
 
     @Override
     public Void execute() {
-        if (!movieRepository.existsById(request.getId())) {
-            throw new ResourceNotFoundException(ErrorMessage.MOVIE_NOT_FOUND);
-        }
+        Movie movie = movieRepository.findById(request.getId()).orElseThrow(
+                () -> new ResourceNotFoundException("movie.notFound"));
 
-        movieRepository.deleteById(request.getId());
+        movieRepository.delete(movie);
+
         return null;
     }
 }

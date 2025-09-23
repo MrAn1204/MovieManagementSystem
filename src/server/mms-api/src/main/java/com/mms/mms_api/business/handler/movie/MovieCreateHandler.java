@@ -43,8 +43,6 @@ public class MovieCreateHandler extends MovieBaseHandler<MovieCreateCommand, Mov
     }
 
     public MovieDto execute() {
-        MovieValidator.validateName(request.getName());
-
         List<String> genreNames = request.getGenres();
         List<Genre> mappedGenres = genreRepository.findByNameIn(genreNames);
         MovieValidator.validateGenres(genreNames, mappedGenres);
