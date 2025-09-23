@@ -3,10 +3,10 @@ package com.mms.mms_api.business.command.user;
 import java.time.LocalDate;
 import java.util.List;
 
+import com.mms.mms_api.annotation.Password;
 import com.mms.mms_api.business.command.BaseUpdateCommand;
 import com.mms.mms_api.common.AppConstant;
 import com.mms.mms_api.model.Gender;
-import com.mms.mms_api.validation.Password;
 
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotEmpty;

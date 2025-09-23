@@ -1,4 +1,4 @@
-package com.mms.mms_api.validation;
+package com.mms.mms_api.annotation;
 
 import jakarta.validation.Constraint;
 import jakarta.validation.Payload;
@@ -8,6 +8,7 @@ import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
 
 import com.mms.mms_api.common.AppConstant;
+import com.mms.mms_api.util.validator.PasswordValidator;
 
 @Constraint(validatedBy = PasswordValidator.class)
 @Target(ElementType.FIELD)

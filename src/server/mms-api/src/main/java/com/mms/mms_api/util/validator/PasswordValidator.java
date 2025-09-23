@@ -1,4 +1,6 @@
-package com.mms.mms_api.validation;
+package com.mms.mms_api.util.validator;
+
+import com.mms.mms_api.annotation.Password;
 
 import jakarta.validation.ConstraintValidator;
 import jakarta.validation.ConstraintValidatorContext;
