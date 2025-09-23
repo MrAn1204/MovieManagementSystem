@@ -4,8 +4,17 @@ import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.ResponseStatus;
 
 @ResponseStatus(value = HttpStatus.NOT_FOUND)
-public class ResourceNotFoundException extends RuntimeException {
-    public ResourceNotFoundException(ErrorMessage message) {
-        super(message.getValue());
+public class ResourceNotFoundException extends ApiException {
+    private static final int STATUS_CODE = HttpStatus.NOT_FOUND.value();
+
+    private static final String ERROR_TYPE = ErrorType.RESOURCE_NOT_FOUND.getValue();
+
+    // TODO: Remove this constructor
+    public ResourceNotFoundException(ErrorMessage errorMessage) {
+        super(errorMessage.getValue(), STATUS_CODE, ERROR_TYPE);
+    }
+
+    public ResourceNotFoundException(String messageKey) {
+        super(messageKey, STATUS_CODE, ERROR_TYPE);
     }
 }
