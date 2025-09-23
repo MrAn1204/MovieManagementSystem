@@ -10,6 +10,8 @@ import com.mms.mms_api.business.service.MovieService;
 import com.mms.mms_api.common.PaginatedResult;
 import com.mms.mms_api.dto.MovieDto;
 
+import jakarta.validation.Valid;
+
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -44,7 +46,7 @@ public class MovieController {
     }
 
     @PostMapping("/create")
-    public ResponseEntity<MovieDto> create(@RequestBody MovieCreateCommand command) {
+    public ResponseEntity<MovieDto> create(@Valid @RequestBody MovieCreateCommand command) {
         MovieDto result = movieService.handle(command);
 
         return result != null
@@ -53,7 +55,7 @@ public class MovieController {
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<MovieDto> update(@PathVariable UUID id, @RequestBody MovieUpdateCommand command) {
+    public ResponseEntity<MovieDto> update(@PathVariable UUID id, @Valid @RequestBody MovieUpdateCommand command) {
         command.setId(id);
 
         MovieDto updatedMovie = movieService.handle(command);
