@@ -7,7 +7,6 @@ import com.mms.mms_api.data.RoleRepository;
 import com.mms.mms_api.data.UserRepository;
 import com.mms.mms_api.dto.user.UserDto;
 import com.mms.mms_api.exception.ResourceNotFoundException;
-import com.mms.mms_api.message.UserMessage;
 import com.mms.mms_api.model.Role;
 import com.mms.mms_api.model.User;
 import com.mms.mms_api.util.mapper.UserMapper;
@@ -26,7 +25,7 @@ public class UserUpdateHandler extends UserBaseHandler<UserUpdateCommand, UserDt
     @Override
     public UserDto execute() {
         User user = userRepository.findById(request.getId()).orElseThrow(
-                () -> new ResourceNotFoundException(UserMessage.NOT_FOUND));
+                () -> new ResourceNotFoundException("user.notFound"));
 
         List<String> roleNames = request.getRoles();
         List<Role> mappedRoles = roleRepository.findByNameIn(roleNames);
