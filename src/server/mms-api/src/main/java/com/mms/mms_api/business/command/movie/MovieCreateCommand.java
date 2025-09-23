@@ -5,6 +5,7 @@ import java.util.List;
 
 import com.mms.mms_api.business.command.BaseCreateCommand;
 
+import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
@@ -13,6 +14,7 @@ import lombok.EqualsAndHashCode;
 @EqualsAndHashCode(callSuper = true)
 @AllArgsConstructor
 public class MovieCreateCommand extends BaseCreateCommand {
+    @NotNull(message = "{movie.name.required}")
     private String name;
 
     private LocalDate releaseDate;
