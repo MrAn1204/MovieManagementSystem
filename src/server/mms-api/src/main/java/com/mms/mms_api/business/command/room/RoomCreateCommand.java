@@ -2,6 +2,7 @@ package com.mms.mms_api.business.command.room;
 
 import com.mms.mms_api.business.command.BaseCreateCommand;
 
+import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
@@ -12,5 +13,6 @@ import lombok.EqualsAndHashCode;
 public class RoomCreateCommand extends BaseCreateCommand {
     private int seatQuantity;
 
+    @NotNull(message = "{room.name.required}")
     private String name;
 }

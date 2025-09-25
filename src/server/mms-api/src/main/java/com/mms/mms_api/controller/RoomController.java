@@ -14,6 +14,7 @@ import com.mms.mms_api.business.query.room.RoomGetByIdQuery;
 import com.mms.mms_api.business.service.RoomService;
 import com.mms.mms_api.dto.RoomDto;
 
+import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
 
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -43,13 +44,13 @@ public class RoomController {
     }
 
     @PostMapping("/create")
-    public ResponseEntity<RoomDto> create(@RequestBody RoomCreateCommand request) {
+    public ResponseEntity<RoomDto> create(@RequestBody @Valid RoomCreateCommand request) {
         RoomDto roomDto = roomService.handle(request);
         return ResponseEntity.ok(roomDto);
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<RoomDto> update(@PathVariable UUID id, @RequestBody RoomUpdateCommand request) {
+    public ResponseEntity<RoomDto> update(@PathVariable UUID id, @RequestBody @Valid RoomUpdateCommand request) {
         request.setId(id);
         RoomDto updatedRoom = roomService.handle(request);
         return ResponseEntity.ok(updatedRoom);
