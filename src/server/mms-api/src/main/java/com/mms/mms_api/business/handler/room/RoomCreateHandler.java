@@ -15,7 +15,6 @@ public class RoomCreateHandler extends RoomBaseHandler<RoomCreateCommand, RoomDt
     @Override
     public RoomDto execute() {
         RoomValidator.validateSeatQuantity(request.getSeatQuantity());
-        RoomValidator.validateName(request.getName());
 
         Room room = roomMapper.toEntity(request);
         
