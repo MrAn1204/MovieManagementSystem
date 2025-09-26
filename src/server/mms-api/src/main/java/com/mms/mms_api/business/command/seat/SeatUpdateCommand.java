@@ -3,8 +3,8 @@ package com.mms.mms_api.business.command.seat;
 import java.util.UUID;
 
 import com.mms.mms_api.business.command.BaseUpdateCommand;
-import com.mms.mms_api.model.SeatType;
 
+import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
@@ -17,8 +17,9 @@ public class SeatUpdateCommand extends BaseUpdateCommand {
 
     private int seatRow;
 
-    private SeatType seatType;
+    private String seatType;
 
+    @NotNull(message = "{seat.name.required}")
     private String name;
 
     private UUID roomId;

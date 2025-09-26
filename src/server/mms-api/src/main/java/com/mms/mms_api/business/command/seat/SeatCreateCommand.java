@@ -3,8 +3,8 @@ package com.mms.mms_api.business.command.seat;
 import java.util.UUID;
 
 import com.mms.mms_api.business.command.BaseCreateCommand;
-import com.mms.mms_api.model.SeatType;
 
+import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
@@ -17,9 +17,11 @@ public class SeatCreateCommand extends BaseCreateCommand {
 
     private int seatRow;
 
-    private SeatType seatType;
+    private String seatType;
 
+    @NotNull(message = "{seat.name.required}")
     private String name;
 
+    @NotNull(message = "{room.notFound}")
     private UUID roomId;
 }
