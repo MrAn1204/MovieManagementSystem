@@ -3,7 +3,6 @@ package com.mms.mms_api.business.handler.seat;
 import com.mms.mms_api.business.command.seat.SeatDeleteCommand;
 import com.mms.mms_api.data.ScheduleSeatRepository;
 import com.mms.mms_api.data.SeatRepository;
-import com.mms.mms_api.exception.ErrorMessage;
 import com.mms.mms_api.exception.ResourceNotFoundException;
 import com.mms.mms_api.model.Seat;
 import com.mms.mms_api.util.mapper.SeatMapper;
@@ -19,11 +18,18 @@ public class SeatDeleteHandler extends SeatBaseHandler<SeatDeleteCommand, Void> 
     @Override
     public Void execute() {
         Seat seat = seatRepository.findById(request.getId())
-                .orElseThrow(() -> new ResourceNotFoundException(ErrorMessage.SEAT_NOT_FOUND));
+                .orElseThrow(() -> new ResourceNotFoundException("seat.notFound"));
 
         scheduleSeatRepository.deleteAll(seat.getScheduleSeats());
 
         seatRepository.delete(seat);
+        
+        Seat linkedSeat = seatRepository.findFirstByLinkedSeat(seat.getId());
+
+        if (linkedSeat != null) {
+            seatRepository.delete(linkedSeat);
+        }
+
         return null;
     }
 }
