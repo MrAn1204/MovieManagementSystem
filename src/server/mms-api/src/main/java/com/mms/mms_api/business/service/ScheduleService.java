@@ -17,7 +17,6 @@ import com.mms.mms_api.business.query.schedule.ScheduleGetByIdQuery;
 import com.mms.mms_api.data.MovieRepository;
 import com.mms.mms_api.data.RoomRepository;
 import com.mms.mms_api.data.ScheduleRepository;
-import com.mms.mms_api.data.SeatRepository;
 import com.mms.mms_api.dto.ScheduleDto;
 import com.mms.mms_api.util.mapper.ScheduleMapper;
 
@@ -34,11 +33,9 @@ public class ScheduleService {
 
     private final RoomRepository roomRepository;
 
-    private final SeatRepository seatRepository;
-
     public ScheduleDto handle(ScheduleCreateCommand request) {
         ScheduleCreateHandler handler = new ScheduleCreateHandler(request, scheduleMapper,
-                scheduleRepository, movieRepository, roomRepository, seatRepository);
+                scheduleRepository, movieRepository, roomRepository);
         return handler.execute();
     }
 
@@ -54,7 +51,7 @@ public class ScheduleService {
 
     public ScheduleDto handle(ScheduleUpdateCommand request) {
         ScheduleUpdateHandler handler = new ScheduleUpdateHandler(request, scheduleMapper, scheduleRepository,
-                movieRepository, roomRepository, seatRepository);
+                movieRepository, roomRepository);
         return handler.execute();
     }
 
