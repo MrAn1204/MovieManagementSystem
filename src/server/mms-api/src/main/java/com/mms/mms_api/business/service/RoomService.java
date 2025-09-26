@@ -17,6 +17,7 @@ import com.mms.mms_api.business.query.room.RoomGetByIdQuery;
 import com.mms.mms_api.data.RoomRepository;
 import com.mms.mms_api.dto.RoomDto;
 import com.mms.mms_api.util.mapper.RoomMapper;
+import com.mms.mms_api.util.mapper.SeatMapper;
 
 import lombok.AllArgsConstructor;
 
@@ -27,13 +28,15 @@ public class RoomService {
 
     private final RoomMapper roomMapper;
 
+    private final SeatMapper seatMapper;
+
     public RoomDto handle(RoomCreateCommand request) {
         RoomCreateHandler handler = new RoomCreateHandler(request, roomMapper, roomRepository);
         return handler.execute();
     }
 
     public List<RoomDto> handle(RoomGetAllQuery request) {
-        RoomGetAllHandler handler = new RoomGetAllHandler(request, roomMapper, roomRepository);
+        RoomGetAllHandler handler = new RoomGetAllHandler(request, roomMapper, seatMapper, roomRepository);
         return handler.execute();
     }
 
