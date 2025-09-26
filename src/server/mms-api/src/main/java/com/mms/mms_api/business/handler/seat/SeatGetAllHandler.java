@@ -14,6 +14,6 @@ public class SeatGetAllHandler extends SeatBaseHandler<SeatGetAllQuery, List<Sea
 
     @Override
     public List<SeatDto> execute() {
-        return seatRepository.findAll().stream().map(seatMapper::toDto).toList();
+        return seatRepository.findByLinkedSeatIsNull().stream().map(seatMapper::toDto).toList();
     }
 }
