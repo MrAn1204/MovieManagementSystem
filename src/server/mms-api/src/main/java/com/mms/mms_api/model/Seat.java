@@ -11,6 +11,7 @@ import lombok.Data;
 import lombok.EqualsAndHashCode;
 
 import java.util.List;
+import java.util.UUID;
 
 @Entity
 @Data
@@ -35,4 +36,6 @@ public class Seat extends BaseEntity {
 
     @OneToMany(mappedBy = "seat")
     private List<ScheduleSeat> scheduleSeats;
+
+    private UUID linkedSeat = null;
 }
