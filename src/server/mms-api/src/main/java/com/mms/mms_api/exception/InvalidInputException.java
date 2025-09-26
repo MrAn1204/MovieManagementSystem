@@ -9,11 +9,6 @@ public class InvalidInputException extends ApiException {
 
     private static final String ERROR_TYPE = ErrorType.INVALID_INPUT.getValue();
 
-    // TODO: Remove this constructor
-    public InvalidInputException(ErrorMessage message) {
-        super(message.getValue(), STATUS_CODE, ERROR_TYPE);
-    }
-
     public InvalidInputException(String message) {
         super(message, STATUS_CODE, ERROR_TYPE);
     }

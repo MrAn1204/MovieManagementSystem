@@ -9,11 +9,6 @@ public class ResourceNotFoundException extends ApiException {
 
     private static final String ERROR_TYPE = ErrorType.RESOURCE_NOT_FOUND.getValue();
 
-    // TODO: Remove this constructor
-    public ResourceNotFoundException(ErrorMessage errorMessage) {
-        super(errorMessage.getValue(), STATUS_CODE, ERROR_TYPE);
-    }
-
     public ResourceNotFoundException(String messageKey) {
         super(messageKey, STATUS_CODE, ERROR_TYPE);
     }
