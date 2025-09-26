@@ -7,7 +7,6 @@ import com.mms.mms_api.data.MovieRepository;
 import com.mms.mms_api.data.StudioRepository;
 import com.mms.mms_api.data.TalentRepository;
 import com.mms.mms_api.dto.MovieDto;
-import com.mms.mms_api.exception.ErrorMessage;
 import com.mms.mms_api.exception.ResourceNotFoundException;
 import com.mms.mms_api.model.Genre;
 import com.mms.mms_api.model.Language;
@@ -46,7 +45,7 @@ public class MovieUpdateHandler extends MovieBaseHandler<MovieUpdateCommand, Mov
     @Override
     public MovieDto execute() {
         Movie movie = movieRepository.findById(request.getId()).orElseThrow(
-                () -> new ResourceNotFoundException(ErrorMessage.MOVIE_NOT_FOUND));
+                () -> new ResourceNotFoundException("movie.notFound"));
 
         List<String> genreNames = request.getGenres();
         List<Genre> mappedGenres = genreRepository.findByNameIn(genreNames);

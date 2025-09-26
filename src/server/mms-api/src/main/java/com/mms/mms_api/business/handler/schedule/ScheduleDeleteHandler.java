@@ -3,7 +3,6 @@ package com.mms.mms_api.business.handler.schedule;
 import com.mms.mms_api.business.command.schedule.ScheduleDeleteCommand;
 import com.mms.mms_api.data.ScheduleRepository;
 import com.mms.mms_api.exception.ResourceNotFoundException;
-import com.mms.mms_api.exception.ErrorMessage;
 
 public class ScheduleDeleteHandler extends ScheduleBaseHandler<ScheduleDeleteCommand, Void> {
 
@@ -14,7 +13,7 @@ public class ScheduleDeleteHandler extends ScheduleBaseHandler<ScheduleDeleteCom
     @Override
     public Void execute() {
         scheduleRepository.findById(request.getId())
-                .orElseThrow(() -> new ResourceNotFoundException(ErrorMessage.SCHEDULE_NOT_FOUND));
+                .orElseThrow(() -> new ResourceNotFoundException("schedule.notFound"));
 
         scheduleRepository.deleteById(request.getId());
 
