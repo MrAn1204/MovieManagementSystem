@@ -7,10 +7,10 @@ import com.mms.mms_api.business.command.schedule.ScheduleCreateCommand;
 import com.mms.mms_api.data.MovieRepository;
 import com.mms.mms_api.data.RoomRepository;
 import com.mms.mms_api.data.ScheduleRepository;
-import com.mms.mms_api.data.SeatRepository;
 import com.mms.mms_api.dto.ScheduleDto;
-import com.mms.mms_api.exception.ErrorMessage;
 import com.mms.mms_api.exception.ResourceNotFoundException;
+import com.mms.mms_api.model.Movie;
+import com.mms.mms_api.model.Room;
 import com.mms.mms_api.model.Schedule;
 import com.mms.mms_api.model.ScheduleSeat;
 import com.mms.mms_api.model.ScheduleSeatId;
@@ -22,35 +22,39 @@ public class ScheduleCreateHandler extends ScheduleBaseHandler<ScheduleCreateCom
 
     private final RoomRepository roomRepository;
 
-    private final SeatRepository seatRepository;
-
     public ScheduleCreateHandler(ScheduleCreateCommand request, ScheduleMapper scheduleMapper,
-            ScheduleRepository scheduleRepository, MovieRepository movieRepository, RoomRepository roomRepository,
-            SeatRepository seatRepository) {
+            ScheduleRepository scheduleRepository, MovieRepository movieRepository, RoomRepository roomRepository) {
         super(request, scheduleMapper, scheduleRepository);
         this.movieRepository = movieRepository;
         this.roomRepository = roomRepository;
-        this.seatRepository = seatRepository;
     }
 
     @Override
     public ScheduleDto execute() {
         Schedule schedule = scheduleMapper.toEntity(request);
 
-        movieRepository.findById(request.getMovieId()).ifPresent(schedule::setMovie);
+        Movie movie = movieRepository.findById(request.getMovieId())
+                .orElseThrow(() -> new ResourceNotFoundException("movie.notFound"));
 
-        roomRepository.findById(request.getRoomId()).ifPresent(schedule::setRoom);
+        Room room = roomRepository.findById(request.getRoomId())
+                .orElseThrow(() -> new ResourceNotFoundException("room.notFound"));
 
-        Seat seat = seatRepository.findById(request.getSeatId())
-                .orElseThrow(() -> new ResourceNotFoundException(ErrorMessage.SEAT_NOT_FOUND));
+        schedule.setMovie(movie);
+        schedule.setRoom(room);
 
         Schedule newSchedule = scheduleRepository.save(schedule);
 
+        List<Seat> seats = room.getSeats();
+
         List<ScheduleSeat> scheduleSeats = new ArrayList<>();
-        ScheduleSeat scheduleSeat = new ScheduleSeat(
-                new ScheduleSeatId(newSchedule.getId(), seat.getId()),
-                false, newSchedule, seat);
-        scheduleSeats.add(scheduleSeat);
+
+        for (Seat seat : seats) {
+            ScheduleSeat scheduleSeat = new ScheduleSeat(
+                    new ScheduleSeatId(schedule.getId(), seat.getId()),
+                    schedule, seat);
+
+            scheduleSeats.add(scheduleSeat);
+        }
 
         newSchedule.setScheduleSeats(scheduleSeats);
         scheduleRepository.save(newSchedule);

@@ -18,6 +18,4 @@ public class ScheduleCreateCommand extends BaseCreateCommand {
     private UUID movieId;
     
     private UUID roomId;
-
-    private UUID seatId;
 }
