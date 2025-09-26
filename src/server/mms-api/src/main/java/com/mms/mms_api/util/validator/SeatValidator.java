@@ -3,34 +3,43 @@ package com.mms.mms_api.util.validator;
 import org.springframework.util.StringUtils;
 
 import com.mms.mms_api.common.AppConstant;
-import com.mms.mms_api.exception.ErrorMessage;
 import com.mms.mms_api.exception.InvalidInputException;
 import com.mms.mms_api.model.SeatType;
 
 public class SeatValidator {
     private SeatValidator() {}
-    
+
     public static void validatePosition(int seatQuantity, int seatColumn, int seatRow) {
         int numberOfColumns = seatQuantity / AppConstant.COLUMN_MAX;
 
         if (seatColumn <= 0 || seatColumn > numberOfColumns) {
-            throw new InvalidInputException(ErrorMessage.COLUMN_INVALID);
+            throw new InvalidInputException("seat.column.invalid");
         }
 
         if (seatRow <= 0 || seatRow > 10) {
-            throw new InvalidInputException(ErrorMessage.ROW_INVALID);
+            throw new InvalidInputException("seat.row.invalid");
         }
     }
 
-    public static void validateSeatType(SeatType seatType) {
-        if (seatType == null) {
-            throw new InvalidInputException(ErrorMessage.SEAT_TYPE_INVALID);
+    public static void validateSeatType(String seatType) {
+        if (!StringUtils.hasText(seatType)) {
+            throw new InvalidInputException("seat.type.invalid");
+        }
+
+        try {
+            SeatType.valueOf(seatType);
+        } catch (IllegalArgumentException e) {
+            throw new InvalidInputException("seat.type.invalid");
         }
     }
 
-    public static void validateName(String name) {
-        if (!StringUtils.hasText(name)) {
-            throw new InvalidInputException(ErrorMessage.NAME_REQUIRED);
+    public static void validateCoupleSeatPosition(int seatColumn, int seatQuantity) {
+        int secondColumn = seatColumn + 1;
+
+        int numberOfColumns = seatQuantity / AppConstant.COLUMN_MAX;
+
+        if (secondColumn > numberOfColumns) {
+            throw new InvalidInputException("seat.column.invalid");
         }
     }
 }

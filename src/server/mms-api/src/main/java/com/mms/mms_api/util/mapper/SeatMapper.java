@@ -15,6 +15,7 @@ public interface SeatMapper {
     @Mapping(target = "id", ignore = true)
     @Mapping(target = "room", ignore = true)
     @Mapping(target = "scheduleSeats", ignore = true)
+    @Mapping(target = "linkedSeat", ignore = true)
     Seat toEntity(SeatCreateCommand command);
 
     @Mapping(target = "roomName", source = "room.name")
@@ -22,5 +23,19 @@ public interface SeatMapper {
 
     @Mapping(target = "room", ignore = true)
     @Mapping(target = "scheduleSeats", ignore = true)
+    @Mapping(target = "linkedSeat", ignore = true)
     void updateEntity(SeatUpdateCommand command, @MappingTarget Seat seat);
+
+    default Seat mapSecondSeat(Seat seat) {
+        Seat secondSeat = new Seat();
+
+        secondSeat.setName(seat.getName());
+        secondSeat.setSeatType(seat.getSeatType());
+        secondSeat.setSeatColumn(seat.getSeatColumn() + 1);
+        secondSeat.setSeatRow(seat.getSeatRow());
+        secondSeat.setRoom(seat.getRoom());
+        secondSeat.setLinkedSeat(seat.getId());
+
+        return secondSeat;
+    }   
 }
