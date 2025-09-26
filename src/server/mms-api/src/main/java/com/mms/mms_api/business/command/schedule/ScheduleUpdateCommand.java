@@ -1,6 +1,7 @@
 package com.mms.mms_api.business.command.schedule;
 
 import java.time.LocalDateTime;
+import java.util.Map;
 import java.util.UUID;
 
 import com.mms.mms_api.business.command.BaseUpdateCommand;
@@ -19,5 +20,5 @@ public class ScheduleUpdateCommand extends BaseUpdateCommand {
     
     private UUID roomId;
 
-    private UUID seatId;
+    private Map<UUID, Boolean> seatStatuses;
 }
