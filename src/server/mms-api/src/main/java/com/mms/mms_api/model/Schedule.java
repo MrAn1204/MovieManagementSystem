@@ -27,4 +27,7 @@ public class Schedule extends BaseEntity {
 
     @OneToMany(mappedBy = "schedule", cascade = CascadeType.ALL)
     private List<ScheduleSeat> scheduleSeats;
+
+    @OneToMany(mappedBy = "schedule")
+    private List<Ticket> tickets;
 }

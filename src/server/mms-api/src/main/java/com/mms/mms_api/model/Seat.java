@@ -38,4 +38,7 @@ public class Seat extends BaseEntity {
     private List<ScheduleSeat> scheduleSeats;
 
     private UUID linkedSeat = null;
+
+    @OneToMany(mappedBy = "seat")
+    private List<Ticket> tickets;
 }
