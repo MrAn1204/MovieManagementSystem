@@ -25,4 +25,8 @@ public class Ticket extends BaseEntity {
     @ManyToOne
     @JoinColumn(name = "seat_id", nullable = false)
     private Seat seat;
+
+    @ManyToOne
+    @JoinColumn(name = "invoice_id", nullable = false)
+    private Invoice invoice;
 }
