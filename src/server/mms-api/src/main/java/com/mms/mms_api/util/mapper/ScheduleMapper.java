@@ -15,7 +15,8 @@ public interface ScheduleMapper {
     @Mapping(target = "movie", ignore = true)
     @Mapping(target = "room", ignore = true)
     @Mapping(target = "scheduleSeats", ignore = true)
-    Schedule toEntity(ScheduleCreateCommand dto);
+    @Mapping(target = "tickets", ignore = true)
+    Schedule toEntity(ScheduleCreateCommand command);
 
     @Mapping(target = "movieName", source = "movie.name")
     @Mapping(target = "roomName", source = "room.name")
@@ -24,5 +25,6 @@ public interface ScheduleMapper {
     @Mapping(target = "movie", ignore = true)
     @Mapping(target = "room", ignore = true)
     @Mapping(target = "scheduleSeats", ignore = true)
+    @Mapping(target = "tickets", ignore = true)
     void updateEntity(ScheduleUpdateCommand command, @MappingTarget Schedule schedule);
 }
