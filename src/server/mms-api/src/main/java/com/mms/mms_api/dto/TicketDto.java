@@ -10,5 +10,7 @@ public class TicketDto {
 
     ScheduleDto schedule;
 
-    SeatDto seat; 
+    SeatDto seat;
+
+    int price;
 }
