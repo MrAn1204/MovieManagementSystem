@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.mms.mms_api.business.command.ticket.TicketCreateCommand;
+import com.mms.mms_api.business.command.ticket.TicketUpdateCommand;
 import com.mms.mms_api.business.query.ticket.TicketGetAllQuery;
 import com.mms.mms_api.business.query.ticket.TicketGetByIdQuery;
 import com.mms.mms_api.business.service.TicketService;
@@ -19,6 +20,7 @@ import com.mms.mms_api.dto.TicketDto;
 import lombok.AllArgsConstructor;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PutMapping;
 
 @RestController
 @RequestMapping("/api/tickets")
@@ -43,6 +45,14 @@ public class TicketController {
     @GetMapping("/{id}")
     public ResponseEntity<TicketDto> getById(@PathVariable UUID id) {
         TicketDto ticket = ticketService.handle(new TicketGetByIdQuery(id));
+
+        return ResponseEntity.ok(ticket);
+    }
+
+    @PutMapping("/{id}")
+    public ResponseEntity<TicketDto> update(@PathVariable UUID id, @RequestBody TicketUpdateCommand request) {
+        request.setId(id);
+        TicketDto ticket = ticketService.handle(request);
 
         return ResponseEntity.ok(ticket);
     }

@@ -5,9 +5,11 @@ import java.util.List;
 import org.springframework.stereotype.Service;
 
 import com.mms.mms_api.business.command.ticket.TicketCreateCommand;
+import com.mms.mms_api.business.command.ticket.TicketUpdateCommand;
 import com.mms.mms_api.business.handler.ticket.TicketCreateHandler;
 import com.mms.mms_api.business.handler.ticket.TicketGetAllHandler;
 import com.mms.mms_api.business.handler.ticket.TicketGetByIdHandler;
+import com.mms.mms_api.business.handler.ticket.TicketUpdateHandler;
 import com.mms.mms_api.business.query.ticket.TicketGetAllQuery;
 import com.mms.mms_api.business.query.ticket.TicketGetByIdQuery;
 import com.mms.mms_api.data.ScheduleRepository;
@@ -26,7 +28,8 @@ public class TicketService {
 
     private final TicketMapper ticketMapper;
 
-    public TicketService(TicketRepository ticketRepository, ScheduleRepository scheduleRepository, SeatRepository seatRepository, TicketMapper ticketMapper) {
+    public TicketService(TicketRepository ticketRepository, ScheduleRepository scheduleRepository,
+            SeatRepository seatRepository, TicketMapper ticketMapper) {
         this.ticketRepository = ticketRepository;
         this.scheduleRepository = scheduleRepository;
         this.seatRepository = seatRepository;
@@ -34,7 +37,8 @@ public class TicketService {
     }
 
     public TicketDto handle(TicketCreateCommand request) {
-        TicketCreateHandler handler = new TicketCreateHandler(request, ticketMapper, ticketRepository, scheduleRepository, seatRepository);
+        TicketCreateHandler handler = new TicketCreateHandler(request, ticketMapper, ticketRepository,
+                scheduleRepository, seatRepository);
         return handler.execute();
     }
 
@@ -45,6 +49,12 @@ public class TicketService {
 
     public TicketDto handle(TicketGetByIdQuery request) {
         TicketGetByIdHandler handler = new TicketGetByIdHandler(request, ticketMapper, ticketRepository);
+        return handler.execute();
+    }
+
+    public TicketDto handle(TicketUpdateCommand request) {
+        TicketUpdateHandler handler = new TicketUpdateHandler(request, ticketMapper, ticketRepository,
+                scheduleRepository, seatRepository);
         return handler.execute();
     }
 }
