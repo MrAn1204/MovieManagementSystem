@@ -5,8 +5,10 @@ import java.util.List;
 import org.springframework.stereotype.Service;
 
 import com.mms.mms_api.business.command.ticket.TicketCreateCommand;
+import com.mms.mms_api.business.command.ticket.TicketDeleteCommand;
 import com.mms.mms_api.business.command.ticket.TicketUpdateCommand;
 import com.mms.mms_api.business.handler.ticket.TicketCreateHandler;
+import com.mms.mms_api.business.handler.ticket.TicketDeleteHandler;
 import com.mms.mms_api.business.handler.ticket.TicketGetAllHandler;
 import com.mms.mms_api.business.handler.ticket.TicketGetByIdHandler;
 import com.mms.mms_api.business.handler.ticket.TicketUpdateHandler;
@@ -56,5 +58,10 @@ public class TicketService {
         TicketUpdateHandler handler = new TicketUpdateHandler(request, ticketMapper, ticketRepository,
                 scheduleRepository, seatRepository);
         return handler.execute();
+    }
+
+    public void handle(TicketDeleteCommand request) {
+        TicketDeleteHandler handler = new TicketDeleteHandler(request, ticketRepository);
+        handler.execute();
     }
 }
