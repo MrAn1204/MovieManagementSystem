@@ -30,6 +30,11 @@ public class InvoiceCreateHandler extends InvoiceBaseHandler<InvoiceCreateComman
         }
 
         Invoice invoice = invoiceMapper.toEntity(request);
+
+        for (Ticket ticket : tickets) {
+            ticket.setInvoice(invoice);
+        }
+
         invoice.setTickets(tickets);
 
         Invoice savedInvoice = invoiceRepository.save(invoice);
