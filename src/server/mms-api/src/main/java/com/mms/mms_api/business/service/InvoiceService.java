@@ -1,0 +1,29 @@
+package com.mms.mms_api.business.service;
+
+import org.springframework.stereotype.Service;
+
+import com.mms.mms_api.business.command.invoice.InvoiceCreateCommand;
+import com.mms.mms_api.business.handler.invoice.InvoiceCreateHandler;
+import com.mms.mms_api.data.InvoiceRepository;
+import com.mms.mms_api.data.TicketRepository;
+import com.mms.mms_api.dto.InvoiceDto;
+import com.mms.mms_api.util.mapper.InvoiceMapper;
+
+import lombok.AllArgsConstructor;
+
+@Service
+@AllArgsConstructor
+public class InvoiceService {
+    private final InvoiceRepository invoiceRepository;
+
+    private final TicketRepository ticketRepository;
+
+    private final InvoiceMapper invoiceMapper;
+
+    public InvoiceDto handle(InvoiceCreateCommand request) {
+        InvoiceCreateHandler handler = new InvoiceCreateHandler(request, invoiceMapper, invoiceRepository,
+                ticketRepository);
+        return handler.execute();
+
+    }
+}
