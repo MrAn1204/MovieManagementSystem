@@ -13,12 +13,15 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.mms.mms_api.business.command.invoice.InvoiceCreateCommand;
+import com.mms.mms_api.business.command.invoice.InvoiceUpdateCommand;
 import com.mms.mms_api.business.query.invoice.InvoiceGetAllQuery;
 import com.mms.mms_api.business.query.invoice.InvoiceGetByIdQuery;
 import com.mms.mms_api.business.service.InvoiceService;
 import com.mms.mms_api.dto.InvoiceDto;
 
 import lombok.AllArgsConstructor;
+import org.springframework.web.bind.annotation.PutMapping;
+
 
 @RestController
 @RequestMapping("/api/invoices")
@@ -42,5 +45,12 @@ public class InvoiceController {
     public ResponseEntity<InvoiceDto> getById(@PathVariable UUID id) {
         InvoiceDto invoice = invoiceService.handle(new InvoiceGetByIdQuery(id));
         return ResponseEntity.ok(invoice);
+    }
+
+    @PutMapping("/{id}")
+    public ResponseEntity<InvoiceDto> update(@PathVariable UUID id, @RequestBody InvoiceUpdateCommand command) {
+        command.setId(id);
+        InvoiceDto updatedInvoice = invoiceService.handle(command);
+        return ResponseEntity.ok(updatedInvoice);
     }
 }

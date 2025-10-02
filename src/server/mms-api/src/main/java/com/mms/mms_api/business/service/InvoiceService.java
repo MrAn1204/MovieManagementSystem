@@ -5,9 +5,11 @@ import java.util.List;
 import org.springframework.stereotype.Service;
 
 import com.mms.mms_api.business.command.invoice.InvoiceCreateCommand;
+import com.mms.mms_api.business.command.invoice.InvoiceUpdateCommand;
 import com.mms.mms_api.business.handler.invoice.InvoiceCreateHandler;
 import com.mms.mms_api.business.handler.invoice.InvoiceGetAllHandler;
 import com.mms.mms_api.business.handler.invoice.InvoiceGetByIdHandler;
+import com.mms.mms_api.business.handler.invoice.InvoiceUpdateHandler;
 import com.mms.mms_api.business.query.invoice.InvoiceGetAllQuery;
 import com.mms.mms_api.business.query.invoice.InvoiceGetByIdQuery;
 import com.mms.mms_api.data.InvoiceRepository;
@@ -40,6 +42,12 @@ public class InvoiceService {
 
     public InvoiceDto handle(InvoiceGetByIdQuery request) {
         InvoiceGetByIdHandler handler = new InvoiceGetByIdHandler(request, invoiceMapper, invoiceRepository);
+        return handler.execute();
+    }
+
+    public InvoiceDto handle(InvoiceUpdateCommand request) {
+        InvoiceUpdateHandler handler = new InvoiceUpdateHandler(request, invoiceMapper, invoiceRepository,
+                ticketRepository);
         return handler.execute();
     }
 }
