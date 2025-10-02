@@ -1,13 +1,20 @@
 package com.mms.mms_api.controller;
 
+import java.util.List;
+import java.util.UUID;
+
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.mms.mms_api.business.command.invoice.InvoiceCreateCommand;
+import com.mms.mms_api.business.query.invoice.InvoiceGetAllQuery;
+import com.mms.mms_api.business.query.invoice.InvoiceGetByIdQuery;
 import com.mms.mms_api.business.service.InvoiceService;
 import com.mms.mms_api.dto.InvoiceDto;
 
@@ -20,8 +27,20 @@ public class InvoiceController {
     private final InvoiceService invoiceService;
 
     @PostMapping("/create")
-    public ResponseEntity<InvoiceDto> createInvoice(@RequestBody InvoiceCreateCommand command) {
+    public ResponseEntity<InvoiceDto> create(@RequestBody InvoiceCreateCommand command) {
         InvoiceDto invoiceDto = invoiceService.handle(command);
         return ResponseEntity.status(HttpStatus.CREATED).body(invoiceDto);
+    }
+
+    @GetMapping
+    public ResponseEntity<List<InvoiceDto>> getAll() {
+        List<InvoiceDto> invoices = invoiceService.handle(new InvoiceGetAllQuery());
+        return ResponseEntity.ok(invoices);
+    }
+
+    @GetMapping("/{id}")
+    public ResponseEntity<InvoiceDto> getById(@PathVariable UUID id) {
+        InvoiceDto invoice = invoiceService.handle(new InvoiceGetByIdQuery(id));
+        return ResponseEntity.ok(invoice);
     }
 }
