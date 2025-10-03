@@ -5,9 +5,11 @@ import java.util.List;
 import org.springframework.stereotype.Service;
 
 import com.mms.mms_api.business.command.promotion.PromotionCreateCommand;
+import com.mms.mms_api.business.command.promotion.PromotionUpdateCommand;
 import com.mms.mms_api.business.handler.promotion.PromotionCreateHandler;
 import com.mms.mms_api.business.handler.promotion.PromotionGetAllHandler;
 import com.mms.mms_api.business.handler.promotion.PromotionGetByIdHandler;
+import com.mms.mms_api.business.handler.promotion.PromotionUpdateHandler;
 import com.mms.mms_api.business.query.promotion.PromotionGetAllQuery;
 import com.mms.mms_api.business.query.promotion.PromotionGetByIdQuery;
 import com.mms.mms_api.data.PromotionRepository;
@@ -39,6 +41,12 @@ public class PromotionService {
 
     public PromotionDto handle(PromotionGetByIdQuery request) {
         PromotionGetByIdHandler handler = new PromotionGetByIdHandler(request, promotionMapper, promotionRepository);
+        return handler.execute();
+    }
+
+    public PromotionDto handle(PromotionUpdateCommand request) {
+        PromotionUpdateHandler handler = new PromotionUpdateHandler(request, promotionMapper, promotionRepository,
+                ticketRepository);
         return handler.execute();
     }
 }

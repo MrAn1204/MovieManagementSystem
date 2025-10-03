@@ -4,6 +4,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.mms.mms_api.business.command.promotion.PromotionCreateCommand;
+import com.mms.mms_api.business.command.promotion.PromotionUpdateCommand;
 import com.mms.mms_api.business.query.promotion.PromotionGetAllQuery;
 import com.mms.mms_api.business.query.promotion.PromotionGetByIdQuery;
 import com.mms.mms_api.business.service.PromotionService;
@@ -20,6 +21,8 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.PutMapping;
+
 
 @RestController
 @RequestMapping("api/promotions")
@@ -44,6 +47,15 @@ public class PromotionController {
     @GetMapping("/{id}")
     public ResponseEntity<PromotionDto> getById(@PathVariable UUID id) {
         PromotionDto promotion = promotionService.handle(new PromotionGetByIdQuery(id));
+
+        return ResponseEntity.ok(promotion);
+    }
+
+    @PutMapping("/{id}")
+    public ResponseEntity<PromotionDto> update(@PathVariable UUID id, @RequestBody PromotionUpdateCommand request) {
+        request.setId(id);
+        
+        PromotionDto promotion = promotionService.handle(request);
 
         return ResponseEntity.ok(promotion);
     }
