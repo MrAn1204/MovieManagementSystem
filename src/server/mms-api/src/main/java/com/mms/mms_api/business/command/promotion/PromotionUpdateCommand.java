@@ -5,6 +5,8 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import java.time.LocalDate;
+import java.util.List;
+import java.util.UUID;
 
 @Data
 @EqualsAndHashCode(callSuper = true)
@@ -20,5 +22,7 @@ public class PromotionUpdateCommand extends BaseUpdateCommand {
 
     private String image;
 
-    private int discount;
+    private double discount;
+
+    private List<UUID> ticketIds;
 }

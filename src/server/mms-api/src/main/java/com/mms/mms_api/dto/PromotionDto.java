@@ -20,7 +20,7 @@ public class PromotionDto {
 
     private String image;
 
-    private int discount;
+    private double discount;
 
     private List<TicketDto> tickets;
 }

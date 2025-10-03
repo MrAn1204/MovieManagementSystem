@@ -26,7 +26,7 @@ public class Promotion extends BaseEntity {
 
     private String image;
 
-    private int discount;
+    private double discount;
 
     @OneToMany(mappedBy = "promotion")
     private List<Ticket> tickets;

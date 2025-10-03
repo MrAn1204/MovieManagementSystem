@@ -22,7 +22,7 @@ public class PromotionCreateCommand extends BaseCreateCommand {
 
     private String image;
 
-    private int discount;
+    private double discount;
 
     private List<UUID> ticketIds;
 }
