@@ -5,8 +5,10 @@ import java.util.List;
 import org.springframework.stereotype.Service;
 
 import com.mms.mms_api.business.command.promotion.PromotionCreateCommand;
+import com.mms.mms_api.business.command.promotion.PromotionDeleteCommand;
 import com.mms.mms_api.business.command.promotion.PromotionUpdateCommand;
 import com.mms.mms_api.business.handler.promotion.PromotionCreateHandler;
+import com.mms.mms_api.business.handler.promotion.PromotionDeleteHandler;
 import com.mms.mms_api.business.handler.promotion.PromotionGetAllHandler;
 import com.mms.mms_api.business.handler.promotion.PromotionGetByIdHandler;
 import com.mms.mms_api.business.handler.promotion.PromotionUpdateHandler;
@@ -48,5 +50,10 @@ public class PromotionService {
         PromotionUpdateHandler handler = new PromotionUpdateHandler(request, promotionMapper, promotionRepository,
                 ticketRepository);
         return handler.execute();
+    }
+
+    public void handle(PromotionDeleteCommand request) {
+        PromotionDeleteHandler handler = new PromotionDeleteHandler(request, promotionRepository);
+        handler.execute();
     }
 }

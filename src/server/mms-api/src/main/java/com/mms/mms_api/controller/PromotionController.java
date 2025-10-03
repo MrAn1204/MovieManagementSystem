@@ -4,6 +4,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.mms.mms_api.business.command.promotion.PromotionCreateCommand;
+import com.mms.mms_api.business.command.promotion.PromotionDeleteCommand;
 import com.mms.mms_api.business.command.promotion.PromotionUpdateCommand;
 import com.mms.mms_api.business.query.promotion.PromotionGetAllQuery;
 import com.mms.mms_api.business.query.promotion.PromotionGetByIdQuery;
@@ -17,6 +18,7 @@ import java.util.UUID;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -58,5 +60,11 @@ public class PromotionController {
         PromotionDto promotion = promotionService.handle(request);
 
         return ResponseEntity.ok(promotion);
+    }
+
+    @DeleteMapping("/{id}")
+    public ResponseEntity<Void> delete(@PathVariable UUID id) {
+        promotionService.handle(new PromotionDeleteCommand(id));
+        return ResponseEntity.noContent().build();
     }
 }
