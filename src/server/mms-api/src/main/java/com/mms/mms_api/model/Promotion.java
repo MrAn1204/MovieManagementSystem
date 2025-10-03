@@ -1,6 +1,6 @@
 package com.mms.mms_api.model;
 
-import java.util.Date;
+import java.time.LocalDate;
 import java.util.List;
 
 import jakarta.persistence.Entity;
@@ -18,9 +18,9 @@ import lombok.NoArgsConstructor;
 public class Promotion extends BaseEntity {
     private String title;
 
-    private Date startDate;
+    private LocalDate startDate;
 
-    private Date endDate;
+    private LocalDate endDate;
 
     private String description;
 
