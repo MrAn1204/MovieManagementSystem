@@ -4,13 +4,20 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.mms.mms_api.business.command.promotion.PromotionCreateCommand;
+import com.mms.mms_api.business.query.promotion.PromotionGetAllQuery;
+import com.mms.mms_api.business.query.promotion.PromotionGetByIdQuery;
 import com.mms.mms_api.business.service.PromotionService;
 import com.mms.mms_api.dto.PromotionDto;
 
 import lombok.AllArgsConstructor;
 
+import java.util.List;
+import java.util.UUID;
+
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 
@@ -27,4 +34,17 @@ public class PromotionController {
         return ResponseEntity.status(HttpStatus.CREATED).body(promotion);
     }
 
+    @GetMapping
+    public ResponseEntity<List<PromotionDto>> getAll() {
+        List<PromotionDto> promotions = promotionService.handle(new PromotionGetAllQuery());
+
+        return ResponseEntity.ok(promotions);
+    }
+
+    @GetMapping("/{id}")
+    public ResponseEntity<PromotionDto> getById(@PathVariable UUID id) {
+        PromotionDto promotion = promotionService.handle(new PromotionGetByIdQuery(id));
+
+        return ResponseEntity.ok(promotion);
+    }
 }
