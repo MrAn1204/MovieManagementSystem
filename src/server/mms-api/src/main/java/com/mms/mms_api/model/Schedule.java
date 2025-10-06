@@ -18,11 +18,11 @@ public class Schedule extends BaseEntity {
     private LocalDateTime showTime;
 
     @ManyToOne
-    @JoinColumn(name = "movie_id")
+    @JoinColumn(name = "movie_id", nullable = false)
     private Movie movie;
 
     @ManyToOne
-    @JoinColumn(name = "room_id")
+    @JoinColumn(name = "room_id", nullable = false)
     private Room room;
 
     @OneToMany(mappedBy = "schedule", cascade = CascadeType.ALL)

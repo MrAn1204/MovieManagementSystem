@@ -31,7 +31,7 @@ public class Seat extends BaseEntity {
     private String name;
 
     @ManyToOne
-    @JoinColumn(name = "room_id")
+    @JoinColumn(name = "room_id", nullable = false)
     private Room room;
 
     @OneToMany(mappedBy = "seat")

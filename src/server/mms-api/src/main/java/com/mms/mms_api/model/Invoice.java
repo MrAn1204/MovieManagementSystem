@@ -2,6 +2,7 @@ package com.mms.mms_api.model;
 
 import java.util.List;
 
+import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.OneToMany;
 import lombok.AllArgsConstructor;
@@ -15,12 +16,14 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 public class Invoice extends BaseEntity {
+    @Column(nullable = false)
     private int totalMoney;
 
-    private int addScore;
+    private int addScore = 0;
 
-    private int useScore;
+    private int useScore = 0;
 
+    @Column(nullable = false)
     private double discount;
 
     @OneToMany(mappedBy = "invoice")

@@ -16,7 +16,7 @@ public class Room extends BaseEntity {
     @Column(nullable = false)
     private int seatQuantity;
 
-    @Column(nullable = false)
+    @Column(unique = true, nullable = false)
     private String name;
 
     @OneToMany(mappedBy = "room", cascade = CascadeType.ALL)
