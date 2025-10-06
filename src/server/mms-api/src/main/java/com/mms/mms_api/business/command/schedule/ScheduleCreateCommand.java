@@ -5,6 +5,7 @@ import java.util.UUID;
 
 import com.mms.mms_api.business.command.BaseCreateCommand;
 
+import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
@@ -14,8 +15,10 @@ import lombok.EqualsAndHashCode;
 @AllArgsConstructor
 public class ScheduleCreateCommand extends BaseCreateCommand {
     private LocalDateTime showTime;
-    
+
+    @NotNull(message = "{schedule.movie.required}")
     private UUID movieId;
-    
+
+    @NotNull(message = "{schedule.room.required}")
     private UUID roomId;
 }

@@ -11,6 +11,7 @@ import lombok.EqualsAndHashCode;
 @EqualsAndHashCode(callSuper = true)
 @AllArgsConstructor
 public class RoomCreateCommand extends BaseCreateCommand {
+    @NotNull(message = "{room.seatQuantity.required}")
     private int seatQuantity;
 
     @NotNull(message = "{room.name.required}")

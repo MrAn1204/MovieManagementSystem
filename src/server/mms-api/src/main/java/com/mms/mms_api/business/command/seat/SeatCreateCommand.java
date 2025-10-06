@@ -2,7 +2,10 @@ package com.mms.mms_api.business.command.seat;
 
 import java.util.UUID;
 
+import org.hibernate.validator.constraints.Range;
+
 import com.mms.mms_api.business.command.BaseCreateCommand;
+import com.mms.mms_api.common.AppConstant;
 
 import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
@@ -13,15 +16,20 @@ import lombok.EqualsAndHashCode;
 @EqualsAndHashCode(callSuper = true)
 @AllArgsConstructor
 public class SeatCreateCommand extends BaseCreateCommand {
+    @NotNull(message = "{seat.column.required}")
+    @Range(min = 1, max = AppConstant.COLUMN_MAX, message = "{seat.column.invalid}")
     private int seatColumn;
 
+    @NotNull(message = "{seat.row.required}")
+    @Range(min = 1, max = AppConstant.ROW_MAX, message = "{seat.row.invalid}")
     private int seatRow;
 
+    @NotNull(message = "{seat.type.required}")
     private String seatType;
 
     @NotNull(message = "{seat.name.required}")
     private String name;
 
-    @NotNull(message = "{room.notFound}")
+    @NotNull(message = "{seat.room.required}")
     private UUID roomId;
 }
