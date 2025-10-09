@@ -10,5 +10,5 @@ import com.mms.mms_api.model.Seat;
 public interface SeatRepository extends JpaRepository<Seat, UUID> {
     List<Seat> findByLinkedSeatIsNull();
 
-    Seat findFirstByLinkedSeat(UUID linkedSeat);
+    Seat findFirstByLinkedSeat(Seat linkedSeat);
 }

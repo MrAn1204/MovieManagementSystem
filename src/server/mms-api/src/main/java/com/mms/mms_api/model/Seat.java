@@ -7,11 +7,11 @@ import jakarta.persistence.Enumerated;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToMany;
+import jakarta.persistence.OneToOne;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 
 import java.util.List;
-import java.util.UUID;
 
 @Entity
 @Data
@@ -37,7 +37,9 @@ public class Seat extends BaseEntity {
     @OneToMany(mappedBy = "seat")
     private List<ScheduleSeat> scheduleSeats;
 
-    private UUID linkedSeat = null;
+    @OneToOne
+    @JoinColumn(name = "linked_seat_id")
+    private Seat linkedSeat = null;
 
     @OneToMany(mappedBy = "seat")
     private List<Ticket> tickets;

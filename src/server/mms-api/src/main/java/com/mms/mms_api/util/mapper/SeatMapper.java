@@ -27,16 +27,18 @@ public interface SeatMapper {
     @Mapping(target = "tickets", ignore = true)
     void updateEntity(SeatUpdateCommand command, @MappingTarget Seat seat);
 
-    default Seat mapSecondSeat(Seat seat) {
-        Seat secondSeat = new Seat();
+    default Seat mapLinkedSeat(Seat mainSeat, Seat secondSeat) {
+        if (secondSeat == null) {
+            secondSeat = new Seat();
+        }
 
-        secondSeat.setName(seat.getName());
-        secondSeat.setSeatType(seat.getSeatType());
-        secondSeat.setSeatColumn(seat.getSeatColumn() + 1);
-        secondSeat.setSeatRow(seat.getSeatRow());
-        secondSeat.setRoom(seat.getRoom());
-        secondSeat.setLinkedSeat(seat.getId());
+        secondSeat.setName(mainSeat.getName());
+        secondSeat.setSeatType(mainSeat.getSeatType());
+        secondSeat.setSeatColumn(mainSeat.getSeatColumn() + 1);
+        secondSeat.setSeatRow(mainSeat.getSeatRow());
+        secondSeat.setRoom(mainSeat.getRoom());
+        secondSeat.setLinkedSeat(mainSeat);
 
         return secondSeat;
-    }   
+    }
 }
