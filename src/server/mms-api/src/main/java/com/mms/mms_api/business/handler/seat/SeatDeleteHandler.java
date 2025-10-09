@@ -7,28 +7,32 @@ import com.mms.mms_api.exception.ResourceNotFoundException;
 import com.mms.mms_api.model.Seat;
 import com.mms.mms_api.util.mapper.SeatMapper;
 
+import jakarta.transaction.Transactional;
+
 public class SeatDeleteHandler extends SeatBaseHandler<SeatDeleteCommand, Void> {
     private final ScheduleSeatRepository scheduleSeatRepository;
 
-    public SeatDeleteHandler(SeatDeleteCommand request, SeatMapper seatMapper, SeatRepository seatRepository, ScheduleSeatRepository scheduleSeatRepository) {
+    public SeatDeleteHandler(SeatDeleteCommand request, SeatMapper seatMapper, SeatRepository seatRepository,
+            ScheduleSeatRepository scheduleSeatRepository) {
         super(request, seatMapper, seatRepository);
         this.scheduleSeatRepository = scheduleSeatRepository;
     }
 
     @Override
+    @Transactional
     public Void execute() {
         Seat seat = seatRepository.findById(request.getId())
                 .orElseThrow(() -> new ResourceNotFoundException("seat.notFound"));
 
         scheduleSeatRepository.deleteAll(seat.getScheduleSeats());
 
-        seatRepository.delete(seat);
-        
-        Seat linkedSeat = seatRepository.findFirstByLinkedSeat(seat.getId());
+        Seat linkedSeat = seatRepository.findFirstByLinkedSeat(seat);
 
         if (linkedSeat != null) {
             seatRepository.delete(linkedSeat);
         }
+
+        seatRepository.delete(seat);
 
         return null;
     }

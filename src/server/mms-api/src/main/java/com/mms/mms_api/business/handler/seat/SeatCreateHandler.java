@@ -2,6 +2,8 @@ package com.mms.mms_api.business.handler.seat;
 
 import java.util.List;
 
+import org.springframework.transaction.annotation.Transactional;
+
 import com.mms.mms_api.business.command.seat.SeatCreateCommand;
 import com.mms.mms_api.data.RoomRepository;
 import com.mms.mms_api.data.SeatRepository;
@@ -24,6 +26,7 @@ public class SeatCreateHandler extends SeatBaseHandler<SeatCreateCommand, SeatDt
     }
 
     @Override
+    @Transactional
     public SeatDto execute() {
         SeatValidator.validateSeatType(request.getSeatType());
 
@@ -37,7 +40,7 @@ public class SeatCreateHandler extends SeatBaseHandler<SeatCreateCommand, SeatDt
         if (existingSeats.size() >= room.getSeatQuantity()) {
             throw new InvalidInputException("room.full");
         }
-        
+
         boolean isPositionTaken = existingSeats.stream()
                 .anyMatch(s -> s.getSeatColumn() == request.getSeatColumn() && s.getSeatRow() == request.getSeatRow());
 
@@ -49,18 +52,16 @@ public class SeatCreateHandler extends SeatBaseHandler<SeatCreateCommand, SeatDt
 
         seat.setRoom(room);
 
-        Seat secondSeat = null;
-        
-        if (seat.getSeatType() == SeatType.COUPLE) {
-            SeatValidator.validateCoupleSeatPosition(request.getSeatColumn(), room.getSeatQuantity());
-            
-            secondSeat = seatMapper.mapSecondSeat(seat);
-        }
-        
         Seat savedSeat = seatRepository.save(seat);
 
+        Seat secondSeat = null;
+
+        if (seat.getSeatType() == SeatType.COUPLE) {
+            secondSeat = linkCoupleSeat(savedSeat, room);
+        }
+
         if (secondSeat != null) {
-            secondSeat.setLinkedSeat(savedSeat.getId());
+            secondSeat.setLinkedSeat(savedSeat);
             seatRepository.save(secondSeat);
         }
 
