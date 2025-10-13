@@ -12,5 +12,7 @@ public class TicketDto {
 
     SeatDto seat;
 
+    PromotionDto promotion;
+
     int price;
 }

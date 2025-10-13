@@ -20,4 +20,6 @@ public class TicketCreateCommand extends BaseCreateCommand {
 
     @NotNull(message = "{ticket.seat.required}")
     private UUID seatId;
+
+    private UUID promotionId;
 }

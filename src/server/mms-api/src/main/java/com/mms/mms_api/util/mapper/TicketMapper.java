@@ -14,11 +14,15 @@ public interface TicketMapper {
     @Mapping(target = "id", ignore = true)
     @Mapping(target = "schedule", ignore = true)
     @Mapping(target = "seat", ignore = true)
+    @Mapping(target = "invoice", ignore = true)
+    @Mapping(target = "promotion", ignore = true)
     Ticket toEntity(TicketCreateCommand command);
 
     TicketDto toDto(Ticket ticket);
 
     @Mapping(target = "schedule", ignore = true)
     @Mapping(target = "seat", ignore = true)
+    @Mapping(target = "invoice", ignore = true)
+    @Mapping(target = "promotion", ignore = true)
     void updateEntity(TicketUpdateCommand command, @MappingTarget Ticket ticket);
 }

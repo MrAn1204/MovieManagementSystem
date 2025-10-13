@@ -14,6 +14,8 @@ import com.mms.mms_api.business.handler.ticket.TicketGetByIdHandler;
 import com.mms.mms_api.business.handler.ticket.TicketUpdateHandler;
 import com.mms.mms_api.business.query.ticket.TicketGetAllQuery;
 import com.mms.mms_api.business.query.ticket.TicketGetByIdQuery;
+import com.mms.mms_api.data.InvoiceRepository;
+import com.mms.mms_api.data.PromotionRepository;
 import com.mms.mms_api.data.ScheduleRepository;
 import com.mms.mms_api.data.SeatRepository;
 import com.mms.mms_api.data.TicketRepository;
@@ -28,19 +30,26 @@ public class TicketService {
 
     private final SeatRepository seatRepository;
 
+    private final InvoiceRepository invoiceRepository;
+
+    private final PromotionRepository promotionRepository;
+
     private final TicketMapper ticketMapper;
 
     public TicketService(TicketRepository ticketRepository, ScheduleRepository scheduleRepository,
-            SeatRepository seatRepository, TicketMapper ticketMapper) {
+            SeatRepository seatRepository, InvoiceRepository invoiceRepository,
+            PromotionRepository promotionRepository, TicketMapper ticketMapper) {
         this.ticketRepository = ticketRepository;
         this.scheduleRepository = scheduleRepository;
         this.seatRepository = seatRepository;
+        this.invoiceRepository = invoiceRepository;
+        this.promotionRepository = promotionRepository;
         this.ticketMapper = ticketMapper;
     }
 
     public TicketDto handle(TicketCreateCommand request) {
         TicketCreateHandler handler = new TicketCreateHandler(request, ticketMapper, ticketRepository,
-                scheduleRepository, seatRepository);
+                scheduleRepository, seatRepository, promotionRepository);
         return handler.execute();
     }
 
@@ -56,7 +65,7 @@ public class TicketService {
 
     public TicketDto handle(TicketUpdateCommand request) {
         TicketUpdateHandler handler = new TicketUpdateHandler(request, ticketMapper, ticketRepository,
-                scheduleRepository, seatRepository);
+                scheduleRepository, seatRepository, invoiceRepository, promotionRepository);
         return handler.execute();
     }
 

@@ -3,10 +3,12 @@ package com.mms.mms_api.business.handler.ticket;
 import com.mms.mms_api.business.command.ticket.TicketCreateCommand;
 import com.mms.mms_api.dto.TicketDto;
 import com.mms.mms_api.exception.ResourceNotFoundException;
+import com.mms.mms_api.data.PromotionRepository;
 import com.mms.mms_api.data.ScheduleRepository;
 import com.mms.mms_api.data.SeatRepository;
 import com.mms.mms_api.data.TicketRepository;
 import com.mms.mms_api.util.mapper.TicketMapper;
+import com.mms.mms_api.model.Promotion;
 import com.mms.mms_api.model.Schedule;
 import com.mms.mms_api.model.Seat;
 import com.mms.mms_api.model.Ticket;
@@ -16,11 +18,15 @@ public class TicketCreateHandler extends BaseTicketHandler<TicketCreateCommand, 
 
     private final SeatRepository seatRepository;
 
+    private final PromotionRepository promotionRepository;
+
     public TicketCreateHandler(TicketCreateCommand request, TicketMapper ticketMapper,
-            TicketRepository ticketRepository, ScheduleRepository scheduleRepository, SeatRepository seatRepository) {
+            TicketRepository ticketRepository, ScheduleRepository scheduleRepository, SeatRepository seatRepository,
+            PromotionRepository promotionRepository) {
         super(request, ticketMapper, ticketRepository);
         this.scheduleRepository = scheduleRepository;
         this.seatRepository = seatRepository;
+        this.promotionRepository = promotionRepository;
     }
 
     @Override
@@ -33,8 +39,12 @@ public class TicketCreateHandler extends BaseTicketHandler<TicketCreateCommand, 
         Seat seat = seatRepository.findById(request.getSeatId())
                 .orElseThrow(() -> new ResourceNotFoundException("seat.notFound"));
 
+        Promotion promotion = promotionRepository.findById(request.getPromotionId())
+                .orElseThrow(() -> new ResourceNotFoundException("promotion.notFound"));
+
         ticket.setSchedule(schedule);
         ticket.setSeat(seat);
+        ticket.setPromotion(promotion);
 
         Ticket savedTicket = ticketRepository.save(ticket);
 
