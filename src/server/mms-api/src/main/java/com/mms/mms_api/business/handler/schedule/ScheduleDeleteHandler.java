@@ -1,5 +1,7 @@
 package com.mms.mms_api.business.handler.schedule;
 
+import org.springframework.transaction.annotation.Transactional;
+
 import com.mms.mms_api.business.command.schedule.ScheduleDeleteCommand;
 import com.mms.mms_api.data.ScheduleRepository;
 import com.mms.mms_api.exception.ResourceNotFoundException;
@@ -11,6 +13,7 @@ public class ScheduleDeleteHandler extends ScheduleBaseHandler<ScheduleDeleteCom
     }
 
     @Override
+    @Transactional
     public Void execute() {
         scheduleRepository.findById(request.getId())
                 .orElseThrow(() -> new ResourceNotFoundException("schedule.notFound"));
