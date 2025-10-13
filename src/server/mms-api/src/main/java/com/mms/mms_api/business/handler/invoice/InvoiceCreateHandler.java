@@ -11,6 +11,8 @@ import com.mms.mms_api.util.mapper.InvoiceMapper;
 
 import java.util.List;
 
+import org.springframework.transaction.annotation.Transactional;
+
 public class InvoiceCreateHandler extends InvoiceBaseHandler<InvoiceCreateCommand, InvoiceDto> {
 
     private final TicketRepository ticketRepository;
@@ -22,6 +24,7 @@ public class InvoiceCreateHandler extends InvoiceBaseHandler<InvoiceCreateComman
     }
 
     @Override
+    @Transactional
     public InvoiceDto execute() {
         List<Ticket> tickets = ticketRepository.findByIdIn(request.getTicketIds());
 
