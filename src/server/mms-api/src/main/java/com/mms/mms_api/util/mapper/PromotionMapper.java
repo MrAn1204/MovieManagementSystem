@@ -9,7 +9,7 @@ import com.mms.mms_api.business.command.promotion.PromotionUpdateCommand;
 import com.mms.mms_api.dto.PromotionDto;
 import com.mms.mms_api.model.Promotion;
 
-@Mapper(componentModel = "spring", uses = { TicketMapper.class })
+@Mapper(componentModel = "spring")
 public interface PromotionMapper {
     @Mapping(target = "id", ignore = true)
     @Mapping(target = "tickets", ignore = true)
@@ -18,5 +18,5 @@ public interface PromotionMapper {
     PromotionDto toDto(Promotion promotion);
 
     @Mapping(target = "tickets", ignore = true)
-    void updateEntity(PromotionUpdateCommand dto, @MappingTarget Promotion promotion);
+    void updateEntity(PromotionUpdateCommand command, @MappingTarget Promotion promotion);
 }

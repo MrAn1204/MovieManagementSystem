@@ -1,7 +1,6 @@
 package com.mms.mms_api.dto;
 
 import java.time.LocalDate;
-import java.util.List;
 import java.util.UUID;
 
 import lombok.Data;
@@ -21,6 +20,4 @@ public class PromotionDto {
     private String image;
 
     private double discount;
-
-    private List<TicketDto> tickets;
 }
