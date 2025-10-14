@@ -47,4 +47,15 @@ public class GlobalExceptionHandler {
 
         return ResponseEntity.status(HttpStatus.valueOf(exception.getStatusCode())).body(errorResponse);
     }
+
+    @ExceptionHandler(IllegalArgumentException.class)
+    public ResponseEntity<ErrorResponse> handleIllegalArgumentException(IllegalArgumentException exception) {
+        ErrorResponse errorResponse = new ErrorResponse(
+                LocalDateTime.now(),
+                HttpStatus.BAD_REQUEST.value(),
+                ErrorType.CONSTRAINT_VIOLATION.getValue(),
+                exception.getMessage());
+
+        return ResponseEntity.badRequest().body(errorResponse);
+    }
 }
