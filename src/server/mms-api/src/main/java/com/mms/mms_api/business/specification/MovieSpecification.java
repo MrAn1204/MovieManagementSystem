@@ -10,6 +10,7 @@ import org.springframework.util.CollectionUtils;
 import org.springframework.util.StringUtils;
 
 import com.mms.mms_api.business.query.movie.MovieSearchQuery;
+import com.mms.mms_api.model.Genre;
 import com.mms.mms_api.model.Language;
 import com.mms.mms_api.model.Movie;
 import com.mms.mms_api.model.Studio;
@@ -39,7 +40,7 @@ public class MovieSpecification implements Specification<Movie> {
             predicates.add(keywordPredicate);
         }
 
-        if (CollectionUtils.isEmpty(criteria.getGenres())) {
+        if (!CollectionUtils.isEmpty(criteria.getGenres())) {
             Predicate genrePredicate = addGenrePredicate(root);
 
             predicates.add(genrePredicate);
@@ -71,7 +72,9 @@ public class MovieSpecification implements Specification<Movie> {
         List<String> searchGenres = criteria.getGenres().stream()
                 .map(genre -> StringUtils.capitalize(genre.toLowerCase())).toList();
 
-        return root.get("language").in(searchGenres);
+        Join<Movie, Genre> genreJoin = root.join("genres");
+
+        return genreJoin.get("name").in(searchGenres);
     }
 
     private Predicate addLanguagePredicate(Root<Movie> root, CriteriaBuilder criteriaBuilder) {
