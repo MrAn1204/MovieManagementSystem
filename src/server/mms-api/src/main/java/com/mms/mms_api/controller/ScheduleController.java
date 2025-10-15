@@ -18,9 +18,12 @@ import com.mms.mms_api.business.command.schedule.ScheduleDeleteCommand;
 import com.mms.mms_api.business.command.schedule.ScheduleUpdateCommand;
 import com.mms.mms_api.business.query.schedule.ScheduleGetAllQuery;
 import com.mms.mms_api.business.query.schedule.ScheduleGetByIdQuery;
+import com.mms.mms_api.business.query.schedule.ScheduleSearchQuery;
 import com.mms.mms_api.business.service.ScheduleService;
+import com.mms.mms_api.common.PaginatedResult;
 import com.mms.mms_api.dto.ScheduleDto;
 
+import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
 
 @RestController
@@ -42,13 +45,13 @@ public class ScheduleController {
     }
 
     @PostMapping("/create")
-    public ResponseEntity<ScheduleDto> create(@RequestBody ScheduleCreateCommand request) {
+    public ResponseEntity<ScheduleDto> create(@Valid @RequestBody ScheduleCreateCommand request) {
         ScheduleDto scheduleDto = scheduleService.handle(request);
         return ResponseEntity.ok(scheduleDto);
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<ScheduleDto> update(@PathVariable UUID id, @RequestBody ScheduleUpdateCommand request) {
+    public ResponseEntity<ScheduleDto> update(@PathVariable UUID id, @Valid @RequestBody ScheduleUpdateCommand request) {
         request.setId(id);
         ScheduleDto updatedSchedule = scheduleService.handle(request);
         return ResponseEntity.ok(updatedSchedule);
@@ -59,4 +62,11 @@ public class ScheduleController {
         scheduleService.handle(new ScheduleDeleteCommand(id));
         return ResponseEntity.noContent().build();
     }
+
+    @GetMapping("/search")
+    public ResponseEntity<PaginatedResult<ScheduleDto>> search(@Valid @RequestBody ScheduleSearchQuery request) {
+        PaginatedResult<ScheduleDto> schedules = scheduleService.handle(request);
+        return ResponseEntity.ok(schedules);
+    }
+    
 }

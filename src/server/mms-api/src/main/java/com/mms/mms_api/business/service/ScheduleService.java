@@ -11,9 +11,12 @@ import com.mms.mms_api.business.handler.schedule.ScheduleCreateHandler;
 import com.mms.mms_api.business.handler.schedule.ScheduleDeleteHandler;
 import com.mms.mms_api.business.handler.schedule.ScheduleGetAllHandler;
 import com.mms.mms_api.business.handler.schedule.ScheduleGetByIdHandler;
+import com.mms.mms_api.business.handler.schedule.ScheduleSearchHandler;
 import com.mms.mms_api.business.handler.schedule.ScheduleUpdateHandler;
 import com.mms.mms_api.business.query.schedule.ScheduleGetAllQuery;
 import com.mms.mms_api.business.query.schedule.ScheduleGetByIdQuery;
+import com.mms.mms_api.business.query.schedule.ScheduleSearchQuery;
+import com.mms.mms_api.common.PaginatedResult;
 import com.mms.mms_api.data.MovieRepository;
 import com.mms.mms_api.data.RoomRepository;
 import com.mms.mms_api.data.ScheduleRepository;
@@ -58,5 +61,10 @@ public class ScheduleService {
     public void handle(ScheduleDeleteCommand request) {
         ScheduleDeleteHandler handler = new ScheduleDeleteHandler(request, scheduleRepository);
         handler.execute();
+    }
+
+    public PaginatedResult<ScheduleDto> handle(ScheduleSearchQuery request) {
+        ScheduleSearchHandler handler = new ScheduleSearchHandler(request, scheduleMapper, scheduleRepository);
+        return handler.execute();
     }
 }
