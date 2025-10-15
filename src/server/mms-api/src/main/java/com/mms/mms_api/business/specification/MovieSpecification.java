@@ -1,9 +1,7 @@
 package com.mms.mms_api.business.specification;
 
-import java.util.ArrayList;
 import java.util.List;
 
-import org.springframework.data.jpa.domain.Specification;
 import org.springframework.lang.NonNull;
 import org.springframework.lang.Nullable;
 import org.springframework.util.CollectionUtils;
@@ -22,40 +20,31 @@ import jakarta.persistence.criteria.Join;
 import jakarta.persistence.criteria.Predicate;
 import jakarta.persistence.criteria.Root;
 
-public class MovieSpecification implements Specification<Movie> {
-    private final MovieSearchQuery criteria;
-
+public class MovieSpecification extends BaseSpecification<Movie, MovieSearchQuery> {
     public MovieSpecification(MovieSearchQuery criteria) {
-        this.criteria = criteria;
+        super(criteria);
     }
 
     @Override
     public Predicate toPredicate(@NonNull Root<Movie> root, @Nullable CriteriaQuery<?> query,
             @NonNull CriteriaBuilder criteriaBuilder) {
-        List<Predicate> predicates = new ArrayList<>();
-
         if (StringUtils.hasText(criteria.getKeyword())) {
-            Predicate keywordPredicate = addKeywordPredicate(root, criteriaBuilder);
-
-            predicates.add(keywordPredicate);
+            addKeywordPredicate(root, criteriaBuilder);
         }
 
         if (!CollectionUtils.isEmpty(criteria.getGenres())) {
-            Predicate genrePredicate = addGenrePredicate(root);
-
-            predicates.add(genrePredicate);
+            addGenrePredicate(root);
         }
 
         if (StringUtils.hasText(criteria.getLanguage())) {
-            Predicate languagePredicate = addLanguagePredicate(root, criteriaBuilder);
-
-            predicates.add(languagePredicate);
+            addLanguagePredicate(root, criteriaBuilder);
         }
 
         return criteriaBuilder.and(predicates.toArray(Predicate[]::new));
     }
 
-    private Predicate addKeywordPredicate(Root<Movie> root, CriteriaBuilder criteriaBuilder) {
+    @Override
+    protected void addKeywordPredicate(Root<Movie> root, CriteriaBuilder criteriaBuilder) {
         String pattern = "%" + criteria.getKeyword().toLowerCase() + "%";
 
         Join<Movie, Studio> studioJoin = root.join("studios");
@@ -65,23 +54,23 @@ public class MovieSpecification implements Specification<Movie> {
         Predicate studioPredicate = criteriaBuilder.like(studioJoin.get("name"), pattern);
         Predicate talentPredicate = criteriaBuilder.like(talentJoin.get("name"), pattern);
 
-        return criteriaBuilder.or(namePredicate, studioPredicate, talentPredicate);
+        predicates.add(criteriaBuilder.or(namePredicate, studioPredicate, talentPredicate));
     }
 
-    private Predicate addGenrePredicate(Root<Movie> root) {
+    private void addGenrePredicate(Root<Movie> root) {
         List<String> searchGenres = criteria.getGenres().stream()
                 .map(genre -> StringUtils.capitalize(genre.toLowerCase())).toList();
 
         Join<Movie, Genre> genreJoin = root.join("genres");
 
-        return genreJoin.get("name").in(searchGenres);
+        predicates.add(genreJoin.get("name").in(searchGenres));
     }
 
-    private Predicate addLanguagePredicate(Root<Movie> root, CriteriaBuilder criteriaBuilder) {
+    private void addLanguagePredicate(Root<Movie> root, CriteriaBuilder criteriaBuilder) {
         String pattern = criteria.getLanguage().toUpperCase();
 
         Join<Movie, Language> languageJoin = root.join("language");
 
-        return criteriaBuilder.equal(languageJoin.get("name"), pattern);
+        predicates.add(criteriaBuilder.equal(languageJoin.get("name"), pattern));
     }
 }
