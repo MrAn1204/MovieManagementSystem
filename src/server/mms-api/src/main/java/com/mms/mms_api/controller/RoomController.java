@@ -11,7 +11,9 @@ import com.mms.mms_api.business.command.room.RoomDeleteCommand;
 import com.mms.mms_api.business.command.room.RoomUpdateCommand;
 import com.mms.mms_api.business.query.room.RoomGetAllQuery;
 import com.mms.mms_api.business.query.room.RoomGetByIdQuery;
+import com.mms.mms_api.business.query.room.RoomSearchQuery;
 import com.mms.mms_api.business.service.RoomService;
+import com.mms.mms_api.common.PaginatedResult;
 import com.mms.mms_api.dto.RoomDto;
 
 import jakarta.validation.Valid;
@@ -23,7 +25,6 @@ import org.springframework.web.bind.annotation.PathVariable;
 import java.util.List;
 import java.util.UUID;
 import org.springframework.web.bind.annotation.PutMapping;
-
 
 @RestController
 @RequestMapping("/api/rooms")
@@ -61,4 +62,12 @@ public class RoomController {
         roomService.handle(new RoomDeleteCommand(id));
         return ResponseEntity.noContent().build();
     }
+
+    @GetMapping("/search")
+    public ResponseEntity<PaginatedResult<RoomDto>> search(@Valid @RequestBody RoomSearchQuery request) {
+        PaginatedResult<RoomDto> result = roomService.handle(request);
+
+        return ResponseEntity.ok(result);
+    }
+
 }
