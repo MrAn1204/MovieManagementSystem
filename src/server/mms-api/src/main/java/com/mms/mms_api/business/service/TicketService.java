@@ -11,9 +11,12 @@ import com.mms.mms_api.business.handler.ticket.TicketCreateHandler;
 import com.mms.mms_api.business.handler.ticket.TicketDeleteHandler;
 import com.mms.mms_api.business.handler.ticket.TicketGetAllHandler;
 import com.mms.mms_api.business.handler.ticket.TicketGetByIdHandler;
+import com.mms.mms_api.business.handler.ticket.TicketSearchHandler;
 import com.mms.mms_api.business.handler.ticket.TicketUpdateHandler;
 import com.mms.mms_api.business.query.ticket.TicketGetAllQuery;
 import com.mms.mms_api.business.query.ticket.TicketGetByIdQuery;
+import com.mms.mms_api.business.query.ticket.TicketSearchQuery;
+import com.mms.mms_api.common.PaginatedResult;
 import com.mms.mms_api.data.InvoiceRepository;
 import com.mms.mms_api.data.PromotionRepository;
 import com.mms.mms_api.data.ScheduleRepository;
@@ -72,5 +75,10 @@ public class TicketService {
     public void handle(TicketDeleteCommand request) {
         TicketDeleteHandler handler = new TicketDeleteHandler(request, ticketRepository);
         handler.execute();
+    }
+
+    public PaginatedResult<TicketDto> handle(TicketSearchQuery request) {
+        TicketSearchHandler handler = new TicketSearchHandler(request, ticketMapper, ticketRepository);
+        return handler.execute();
     }
 }

@@ -15,9 +15,12 @@ import com.mms.mms_api.business.command.ticket.TicketDeleteCommand;
 import com.mms.mms_api.business.command.ticket.TicketUpdateCommand;
 import com.mms.mms_api.business.query.ticket.TicketGetAllQuery;
 import com.mms.mms_api.business.query.ticket.TicketGetByIdQuery;
+import com.mms.mms_api.business.query.ticket.TicketSearchQuery;
 import com.mms.mms_api.business.service.TicketService;
+import com.mms.mms_api.common.PaginatedResult;
 import com.mms.mms_api.dto.TicketDto;
 
+import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
 
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -32,7 +35,7 @@ public class TicketController {
     private final TicketService ticketService;
 
     @PostMapping("/create")
-    public ResponseEntity<TicketDto> create(@RequestBody TicketCreateCommand command) {
+    public ResponseEntity<TicketDto> create(@Valid @RequestBody TicketCreateCommand command) {
         TicketDto ticket = ticketService.handle(command);
 
         return ResponseEntity.status(HttpStatus.CREATED).body(ticket);
@@ -53,7 +56,7 @@ public class TicketController {
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<TicketDto> update(@PathVariable UUID id, @RequestBody TicketUpdateCommand request) {
+    public ResponseEntity<TicketDto> update(@PathVariable UUID id, @Valid @RequestBody TicketUpdateCommand request) {
         request.setId(id);
         TicketDto ticket = ticketService.handle(request);
 
@@ -64,5 +67,11 @@ public class TicketController {
     public ResponseEntity<Void> delete(@PathVariable UUID id) {
         ticketService.handle(new TicketDeleteCommand(id));
         return ResponseEntity.noContent().build();
+    }
+
+    @GetMapping("/search")
+    public ResponseEntity<PaginatedResult<TicketDto>> search(@Valid @RequestBody TicketSearchQuery request) {
+        PaginatedResult<TicketDto> result = ticketService.handle(request);
+        return ResponseEntity.ok(result);
     }
 }
