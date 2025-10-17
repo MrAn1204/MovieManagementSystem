@@ -15,4 +15,8 @@ public class TicketDto {
     PromotionDto promotion;
 
     int price;
+
+    String username;
+
+    String phoneNumber;
 }

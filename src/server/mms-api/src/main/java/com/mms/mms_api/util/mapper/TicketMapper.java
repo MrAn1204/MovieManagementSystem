@@ -18,6 +18,8 @@ public interface TicketMapper {
     @Mapping(target = "promotion", ignore = true)
     Ticket toEntity(TicketCreateCommand command);
 
+    @Mapping(target = "username", source = "ticket.invoice.user.username")
+    @Mapping(target = "phoneNumber", source = "ticket.invoice.user.phoneNumber")
     TicketDto toDto(Ticket ticket);
 
     @Mapping(target = "schedule", ignore = true)
