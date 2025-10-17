@@ -21,6 +21,7 @@ import com.mms.mms_api.business.query.invoice.InvoiceGetByIdQuery;
 import com.mms.mms_api.business.service.InvoiceService;
 import com.mms.mms_api.dto.InvoiceDto;
 
+import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
 import org.springframework.web.bind.annotation.PutMapping;
 
@@ -32,7 +33,7 @@ public class InvoiceController {
     private final InvoiceService invoiceService;
 
     @PostMapping("/create")
-    public ResponseEntity<InvoiceDto> create(@RequestBody InvoiceCreateCommand command) {
+    public ResponseEntity<InvoiceDto> create(@Valid @RequestBody InvoiceCreateCommand command) {
         InvoiceDto invoiceDto = invoiceService.handle(command);
         return ResponseEntity.status(HttpStatus.CREATED).body(invoiceDto);
     }
@@ -50,7 +51,7 @@ public class InvoiceController {
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<InvoiceDto> update(@PathVariable UUID id, @RequestBody InvoiceUpdateCommand command) {
+    public ResponseEntity<InvoiceDto> update(@PathVariable UUID id, @Valid @RequestBody InvoiceUpdateCommand command) {
         command.setId(id);
         InvoiceDto updatedInvoice = invoiceService.handle(command);
         return ResponseEntity.ok(updatedInvoice);

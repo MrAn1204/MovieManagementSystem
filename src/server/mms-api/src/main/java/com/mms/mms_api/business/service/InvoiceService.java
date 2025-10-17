@@ -16,6 +16,7 @@ import com.mms.mms_api.business.query.invoice.InvoiceGetAllQuery;
 import com.mms.mms_api.business.query.invoice.InvoiceGetByIdQuery;
 import com.mms.mms_api.data.InvoiceRepository;
 import com.mms.mms_api.data.TicketRepository;
+import com.mms.mms_api.data.UserRepository;
 import com.mms.mms_api.dto.InvoiceDto;
 import com.mms.mms_api.util.mapper.InvoiceMapper;
 
@@ -30,9 +31,11 @@ public class InvoiceService {
 
     private final InvoiceMapper invoiceMapper;
 
+    private final UserRepository userRepository;
+
     public InvoiceDto handle(InvoiceCreateCommand request) {
         InvoiceCreateHandler handler = new InvoiceCreateHandler(request, invoiceMapper, invoiceRepository,
-                ticketRepository);
+                ticketRepository, userRepository);
         return handler.execute();
 
     }
@@ -49,7 +52,7 @@ public class InvoiceService {
 
     public InvoiceDto handle(InvoiceUpdateCommand request) {
         InvoiceUpdateHandler handler = new InvoiceUpdateHandler(request, invoiceMapper, invoiceRepository,
-                ticketRepository);
+                ticketRepository, userRepository);
         return handler.execute();
     }
 
