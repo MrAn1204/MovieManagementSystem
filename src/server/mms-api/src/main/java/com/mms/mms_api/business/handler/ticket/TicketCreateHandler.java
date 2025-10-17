@@ -2,6 +2,7 @@ package com.mms.mms_api.business.handler.ticket;
 
 import com.mms.mms_api.business.command.ticket.TicketCreateCommand;
 import com.mms.mms_api.dto.TicketDto;
+import com.mms.mms_api.exception.InvalidInputException;
 import com.mms.mms_api.exception.ResourceNotFoundException;
 import com.mms.mms_api.data.PromotionRepository;
 import com.mms.mms_api.data.ScheduleRepository;
@@ -41,6 +42,10 @@ public class TicketCreateHandler extends TicketBaseHandler<TicketCreateCommand, 
 
         Promotion promotion = promotionRepository.findById(request.getPromotionId())
                 .orElseThrow(() -> new ResourceNotFoundException("promotion.notFound"));
+
+        if (seat.getRoom().getId() != schedule.getRoom().getId()) {
+            throw new InvalidInputException("ticket.room.mismatch");
+        }
 
         ticket.setSchedule(schedule);
         ticket.setSeat(seat);
