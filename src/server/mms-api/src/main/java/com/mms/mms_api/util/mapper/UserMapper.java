@@ -3,8 +3,6 @@ package com.mms.mms_api.util.mapper;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 import org.mapstruct.MappingTarget;
-import org.mapstruct.NullValuePropertyMappingStrategy;
-import org.mapstruct.ReportingPolicy;
 
 import com.mms.mms_api.business.command.user.UserCreateCommand;
 import com.mms.mms_api.business.command.user.UserUpdateCommand;
@@ -12,18 +10,18 @@ import com.mms.mms_api.dto.user.UserDto;
 import com.mms.mms_api.model.Role;
 import com.mms.mms_api.model.User;
 
-@Mapper(componentModel = "spring", 
-    nullValuePropertyMappingStrategy = NullValuePropertyMappingStrategy.IGNORE, 
-    unmappedTargetPolicy = ReportingPolicy.IGNORE)
+@Mapper(componentModel = "spring", uses = {InvoiceMapper.class})
 public interface UserMapper {
-    // Roles will be manually mapped in UserCreateHandler
+    @Mapping(target = "id", ignore = true)
     @Mapping(target = "roles", ignore = true)
+    @Mapping(target = "invoices", ignore = true)
+    @Mapping(target = "score", ignore = true)
     User toEntity(UserCreateCommand command);
     
     UserDto toDto(User user);
-    
-    // Roles will be manually mapped in UserUpdateHandler
+
     @Mapping(target = "roles", ignore = true)
+    @Mapping(target = "invoices", ignore = true)
     void updateEntity(UserUpdateCommand command, @MappingTarget User user);
 
     default String roleToString(Role role) {

@@ -13,10 +13,12 @@ import com.mms.mms_api.model.Invoice;
 public interface InvoiceMapper {
     @Mapping(target = "id", ignore = true)
     @Mapping(target = "tickets", ignore = true)
+    @Mapping(target = "user", ignore = true)
     Invoice toEntity(InvoiceCreateCommand command);
 
     InvoiceDto toDto(Invoice invoice);
 
     @Mapping(target = "tickets", ignore = true)
+    @Mapping(target = "user", ignore = true)
     void updateEntity(InvoiceUpdateCommand command, @MappingTarget Invoice invoice);
 }
