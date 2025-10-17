@@ -4,6 +4,7 @@ import java.time.LocalDate;
 import java.util.List;
 import java.util.UUID;
 
+import com.mms.mms_api.dto.InvoiceDto;
 import com.mms.mms_api.model.Gender;
 
 import lombok.AllArgsConstructor;
@@ -35,4 +36,6 @@ public class UserDto {
     private final int score;
 
     private final List<String> roles;
+
+    private final List<InvoiceDto> invoices;
 }
