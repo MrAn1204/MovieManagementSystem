@@ -13,7 +13,7 @@ import com.mms.mms_api.model.Schedule;
 import com.mms.mms_api.model.Seat;
 import com.mms.mms_api.model.Ticket;
 
-public class TicketCreateHandler extends BaseTicketHandler<TicketCreateCommand, TicketDto> {
+public class TicketCreateHandler extends TicketBaseHandler<TicketCreateCommand, TicketDto> {
     private final ScheduleRepository scheduleRepository;
 
     private final SeatRepository seatRepository;

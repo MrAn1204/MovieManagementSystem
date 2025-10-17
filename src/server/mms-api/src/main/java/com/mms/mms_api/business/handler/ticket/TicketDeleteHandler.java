@@ -5,7 +5,7 @@ import com.mms.mms_api.data.TicketRepository;
 import com.mms.mms_api.exception.ResourceNotFoundException;
 import com.mms.mms_api.model.Ticket;
 
-public class TicketDeleteHandler extends BaseTicketHandler<TicketDeleteCommand, Void> {
+public class TicketDeleteHandler extends TicketBaseHandler<TicketDeleteCommand, Void> {
 
     public TicketDeleteHandler(TicketDeleteCommand request, TicketRepository ticketRepository) {
         super(request, null, ticketRepository);

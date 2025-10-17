@@ -8,7 +8,7 @@ import com.mms.mms_api.model.Ticket;
 
 import java.util.List;
 
-public class TicketGetAllHandler extends BaseTicketHandler<TicketGetAllQuery, List<TicketDto>> {
+public class TicketGetAllHandler extends TicketBaseHandler<TicketGetAllQuery, List<TicketDto>> {
 
     public TicketGetAllHandler(TicketGetAllQuery request, TicketMapper ticketMapper, TicketRepository ticketRepository) {
         super(request, ticketMapper, ticketRepository);
