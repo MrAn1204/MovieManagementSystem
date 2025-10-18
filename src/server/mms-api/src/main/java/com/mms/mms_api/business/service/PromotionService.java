@@ -11,9 +11,12 @@ import com.mms.mms_api.business.handler.promotion.PromotionCreateHandler;
 import com.mms.mms_api.business.handler.promotion.PromotionDeleteHandler;
 import com.mms.mms_api.business.handler.promotion.PromotionGetAllHandler;
 import com.mms.mms_api.business.handler.promotion.PromotionGetByIdHandler;
+import com.mms.mms_api.business.handler.promotion.PromotionSearchHandler;
 import com.mms.mms_api.business.handler.promotion.PromotionUpdateHandler;
 import com.mms.mms_api.business.query.promotion.PromotionGetAllQuery;
 import com.mms.mms_api.business.query.promotion.PromotionGetByIdQuery;
+import com.mms.mms_api.business.query.promotion.PromotionSearchQuery;
+import com.mms.mms_api.common.PaginatedResult;
 import com.mms.mms_api.data.PromotionRepository;
 import com.mms.mms_api.data.TicketRepository;
 import com.mms.mms_api.dto.PromotionDto;
@@ -49,6 +52,11 @@ public class PromotionService {
     public PromotionDto handle(PromotionUpdateCommand request) {
         PromotionUpdateHandler handler = new PromotionUpdateHandler(request, promotionMapper, promotionRepository,
                 ticketRepository);
+        return handler.execute();
+    }
+
+    public PaginatedResult<PromotionDto> handle(PromotionSearchQuery request) {
+        PromotionSearchHandler handler = new PromotionSearchHandler(request, promotionMapper, promotionRepository);
         return handler.execute();
     }
 

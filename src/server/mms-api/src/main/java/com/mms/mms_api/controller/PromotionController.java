@@ -8,9 +8,12 @@ import com.mms.mms_api.business.command.promotion.PromotionDeleteCommand;
 import com.mms.mms_api.business.command.promotion.PromotionUpdateCommand;
 import com.mms.mms_api.business.query.promotion.PromotionGetAllQuery;
 import com.mms.mms_api.business.query.promotion.PromotionGetByIdQuery;
+import com.mms.mms_api.business.query.promotion.PromotionSearchQuery;
 import com.mms.mms_api.business.service.PromotionService;
+import com.mms.mms_api.common.PaginatedResult;
 import com.mms.mms_api.dto.PromotionDto;
 
+import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
 
 import java.util.List;
@@ -25,7 +28,6 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.PutMapping;
 
-
 @RestController
 @RequestMapping("api/promotions")
 @AllArgsConstructor
@@ -33,7 +35,7 @@ public class PromotionController {
     private final PromotionService promotionService;
 
     @PostMapping("/create")
-    public ResponseEntity<PromotionDto> create(@RequestBody PromotionCreateCommand request) {
+    public ResponseEntity<PromotionDto> create(@Valid @RequestBody PromotionCreateCommand request) {
         PromotionDto promotion = promotionService.handle(request);
 
         return ResponseEntity.status(HttpStatus.CREATED).body(promotion);
@@ -54,9 +56,9 @@ public class PromotionController {
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<PromotionDto> update(@PathVariable UUID id, @RequestBody PromotionUpdateCommand request) {
+    public ResponseEntity<PromotionDto> update(@PathVariable UUID id, @Valid @RequestBody PromotionUpdateCommand request) {
         request.setId(id);
-        
+
         PromotionDto promotion = promotionService.handle(request);
 
         return ResponseEntity.ok(promotion);
@@ -66,5 +68,12 @@ public class PromotionController {
     public ResponseEntity<Void> delete(@PathVariable UUID id) {
         promotionService.handle(new PromotionDeleteCommand(id));
         return ResponseEntity.noContent().build();
+    }
+
+    @GetMapping("/search")
+    public ResponseEntity<PaginatedResult<PromotionDto>> search(@Valid @RequestBody PromotionSearchQuery request) {
+        PaginatedResult<PromotionDto> result = promotionService.handle(request);
+
+        return ResponseEntity.ok(result);
     }
 }
