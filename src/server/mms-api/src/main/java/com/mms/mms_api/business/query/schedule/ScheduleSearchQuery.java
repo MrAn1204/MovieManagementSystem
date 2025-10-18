@@ -12,7 +12,7 @@ import lombok.EqualsAndHashCode;
 @Data
 @EqualsAndHashCode(callSuper = true)
 public class ScheduleSearchQuery extends BaseSearchQuery {
-    private LocalDate date;
+private LocalDate date;
 
     private LocalTime minTime;
 
@@ -20,9 +20,11 @@ public class ScheduleSearchQuery extends BaseSearchQuery {
 
     private String room;
 
-    @AssertTrue
+    @AssertTrue(message = "{search.timeRange.invalid}")
     public boolean isTimeRangeValid() {
-        return date == null || minTime == null || maxTime == null
-                || (minTime.isBefore(maxTime) || minTime.equals(maxTime));
+        if (date != null && maxTime != null && minTime != null) {
+            return minTime.isBefore(maxTime) || minTime.equals(maxTime);
+        }
+        return true;
     }
 }
