@@ -17,6 +17,7 @@ import com.mms.mms_api.business.query.seat.SeatGetByIdQuery;
 import com.mms.mms_api.business.service.SeatService;
 import com.mms.mms_api.dto.SeatDto;
 
+import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
 
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -31,7 +32,7 @@ public class SeatController {
     private final SeatService seatService;
 
     @PostMapping("/create")
-    public ResponseEntity<SeatDto> create(@RequestBody SeatCreateCommand request) {
+    public ResponseEntity<SeatDto> create(@Valid @RequestBody SeatCreateCommand request) {
         return ResponseEntity.ok(seatService.handle(request));
     }
 
@@ -48,7 +49,7 @@ public class SeatController {
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<SeatDto> update(@PathVariable UUID id, @RequestBody SeatUpdateCommand request) {
+    public ResponseEntity<SeatDto> update(@PathVariable UUID id, @Valid @RequestBody SeatUpdateCommand request) {
         request.setId(id);
         SeatDto updatedSeat = seatService.handle(request);
         if (updatedSeat == null) {
