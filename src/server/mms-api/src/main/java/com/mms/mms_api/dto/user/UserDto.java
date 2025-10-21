@@ -19,8 +19,6 @@ public class UserDto {
 
     private final String fullname;
 
-    private final String password;
-
     private final Gender gender;
 
     private final LocalDate dateOfBirth;
