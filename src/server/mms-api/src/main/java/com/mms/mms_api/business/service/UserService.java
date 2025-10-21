@@ -2,6 +2,7 @@ package com.mms.mms_api.business.service;
 
 import java.util.List;
 
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import com.mms.mms_api.business.command.user.UserCreateCommand;
@@ -33,8 +34,10 @@ public class UserService {
 
     private UserMapper userMapper;
 
+    private PasswordEncoder passwordEncoder;
+
     public UserDto handle(UserCreateCommand request) {
-        UserCreateHandler handler = new UserCreateHandler(request, userMapper, userRepository, roleRepository);
+        UserCreateHandler handler = new UserCreateHandler(request, userMapper, userRepository, roleRepository, passwordEncoder);
 
         return handler.execute();
     }
@@ -52,7 +55,7 @@ public class UserService {
     }
 
     public UserDto handle(UserUpdateCommand request) {
-        UserUpdateHandler handler = new UserUpdateHandler(request, userMapper, userRepository, roleRepository);
+        UserUpdateHandler handler = new UserUpdateHandler(request, userMapper, userRepository, roleRepository, passwordEncoder);
 
         return handler.execute();
     }

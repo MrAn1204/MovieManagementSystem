@@ -2,6 +2,8 @@ package com.mms.mms_api.business.handler.user;
 
 import java.util.List;
 
+import org.springframework.security.crypto.password.PasswordEncoder;
+
 import com.mms.mms_api.business.command.user.UserCreateCommand;
 import com.mms.mms_api.data.RoleRepository;
 import com.mms.mms_api.data.UserRepository;
@@ -14,13 +16,14 @@ import com.mms.mms_api.util.validator.UserValidator;
 public class UserCreateHandler extends UserBaseHandler<UserCreateCommand, UserDto> {
     private RoleRepository roleRepository;
 
+    private PasswordEncoder passwordEncoder;
+
     public UserCreateHandler(
-            UserCreateCommand request,
-            UserMapper userMapper,
-            UserRepository userRepository,
-            RoleRepository roleRepository) {
+            UserCreateCommand request, UserMapper userMapper,
+            UserRepository userRepository, RoleRepository roleRepository, PasswordEncoder passwordEncoder) {
         super(request, userMapper, userRepository);
         this.roleRepository = roleRepository;
+        this.passwordEncoder = passwordEncoder;
     }
 
     public UserDto execute() {
@@ -29,6 +32,7 @@ public class UserCreateHandler extends UserBaseHandler<UserCreateCommand, UserDt
         UserValidator.validateRoles(roleNames, mappedRoles);
 
         User user = userMapper.toEntity(request);
+        user.setPassword(passwordEncoder.encode(user.getPassword()));
 
         user.setRoles(mappedRoles);
 
