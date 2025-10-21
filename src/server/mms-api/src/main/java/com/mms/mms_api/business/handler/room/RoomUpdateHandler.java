@@ -6,7 +6,6 @@ import com.mms.mms_api.dto.RoomDto;
 import com.mms.mms_api.exception.ResourceNotFoundException;
 import com.mms.mms_api.model.Room;
 import com.mms.mms_api.util.mapper.RoomMapper;
-import com.mms.mms_api.util.validator.RoomValidator;
 
 public class RoomUpdateHandler extends RoomBaseHandler<RoomUpdateCommand, RoomDto> {
     public RoomUpdateHandler(RoomUpdateCommand request, RoomMapper roomMapper, RoomRepository roomRepository) {
@@ -17,8 +16,6 @@ public class RoomUpdateHandler extends RoomBaseHandler<RoomUpdateCommand, RoomDt
     public RoomDto execute() {
         Room room = roomRepository.findById(request.getId()).orElseThrow(
                 () -> new ResourceNotFoundException("room.notFound"));
-
-        RoomValidator.validateSeatQuantity(request.getSeatQuantity());
 
         roomMapper.updateEntity(request, room);
 
