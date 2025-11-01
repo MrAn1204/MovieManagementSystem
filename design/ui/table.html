@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Table</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.1/css/all.min.css">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        platinum: '#DCDCDD',
+                        frenchGray: '#C5C3C6',
+                        panyeGray: '#4C5C68',
+                        spaceBlack: '#46494C',
+                        munshellBlue: '#1985A1',
+                        blackEerie: '#1C1C1C',
+                        alabaster: '#ECEBE4',
+                        antiFlashWhite: '#EEF0F2',
+                        ghostWhite: '#FAFAFF'
+                    },
+                },
+            },
+        }
+    </script>
+</head>
+
+<body class="bg-ghostWhite flex flex-col h-screen m-0">
+    <main class="flex flex-1">
+        <div class="w-full h-full flex flex-col space-y-8 justify-center items-center px-4">
+            <!-- Table -->
+            <div class="w-full md:w-11/12 border border-frenchGray rounded-md overflow-auto">
+                <table class="w-full text-nowrap">
+                    <thead class="border-b border-frenchGray text-left">
+                        <tr class="bg-gray-200">
+                            <th class="px-4 py-2">Header 1</th>
+                            <th class="px-4 py-2">Header 2</th>
+                            <th class="px-4 py-2">Header 3</th>
+                            <th></th>
+                        </tr>
+                    </thead>
+                    <tbody class="*:border-b *:border-frenchGray last:*:border-b-0">
+                        <tr class="hover:bg-gray-200">
+                            <td class="px-4 py-2">Data 1</td>
+                            <td class="px-4 py-2">Data 2</td>
+                            <td class="px-4 py-2">Data 3</td>
+                            <td class="px-4 py-2">
+                                <div class="flex justify-center gap-4">
+                                    <button><i class="fa-solid fa-circle-info"></i></button>
+                                    <button><i class="fa-solid fa-pen-to-square"></i></button>
+                                    <button><i class="fa-solid fa-trash"></i></button>
+                                </div>
+                            </td>
+                        </tr>
+                        <tr class="hover:bg-gray-200">
+                            <td class="px-4 py-2">Data 1</td>
+                            <td class="px-4 py-2">Data 2</td>
+                            <td class="px-4 py-2">Data 3</td>
+                            <td class="px-4 py-2">
+                                <div class="flex justify-center gap-4">
+                                    <button><i class="fa-solid fa-circle-info"></i></button>
+                                    <button><i class="fa-solid fa-pen-to-square"></i></button>
+                                    <button><i class="fa-solid fa-trash"></i></button>
+                                </div>
+                            </td>
+                        </tr>
+                        <tr class="hover:bg-gray-200">
+                            <td class="px-4 py-2">Data 1</td>
+                            <td class="px-4 py-2">Data 2</td>
+                            <td class="px-4 py-2">Data 3</td>
+                            <td class="px-4 py-2">
+                                <div class="flex justify-center gap-4">
+                                    <button><i class="fa-solid fa-circle-info"></i></button>
+                                    <button><i class="fa-solid fa-pen-to-square"></i></button>
+                                    <button><i class="fa-solid fa-trash"></i></button>
+                                </div>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <!-- Pagination -->
+            <div class="flex md:flex-row flex-col w-11/12 justify-between items-center">
+                <div class="min-w-fit p-2">
+                    <p>1 - 10 of 50 entries</p>
+                    <div class="flex justify-center md:justify-start">
+                        <label for="pages" class="mr-2">Page size:</label>
+                        <select id="entries" name="entries" class="border border-frenchGray rounded-md ">
+                            <option value="10">10</option>
+                            <option value="25">25</option>
+                            <option value="50">50</option>
+                            <option value="100">100</option>
+                        </select>
+                    </div>
+                </div>
+                
+
+                <div class="hidden md:flex gap-2 p-2 justify-center ">
+                    <button class="rounded-md border border-slate-300 p-2 text-center text-sm transition-all shadow-sm hover:shadow-lg text-slate-600 hover:text-white hover:bg-slate-800 hover:border-slate-800 focus:text-white focus:bg-slate-800 focus:border-slate-800 active:border-slate-800 active:text-white active:bg-slate-800 disabled:pointer-events-none disabled:opacity-50 disabled:shadow-none">
+                        Prev
+                    </button>
+                    <div class="flex items-center justify-center gap-2">
+                        <button class="w-10 rounded-md bg-slate-800 p-2 border border-transparent text-center text-sm text-white transition-all shadow-md hover:shadow-lg focus:bg-slate-700 focus:shadow-none active:bg-slate-700 hover:bg-slate-700 active:shadow-none disabled:pointer-events-none disabled:opacity-50 disabled:shadow-none">
+                            1
+                        </button>
+                        <button class="w-10 rounded-md border border-slate-300 p-2 text-center text-sm transition-all shadow-sm hover:shadow-lg text-slate-600 hover:text-white hover:bg-slate-800 hover:border-slate-800 focus:text-white focus:bg-slate-800 focus:border-slate-800 active:border-slate-800 active:text-white active:bg-slate-800 disabled:pointer-events-none disabled:opacity-50 disabled:shadow-none">
+                            2
+                        </button>
+                        <button class="w-10 rounded-md border border-slate-300 p-2 text-center text-sm transition-all shadow-sm hover:shadow-lg text-slate-600 hover:text-white hover:bg-slate-800 hover:border-slate-800 focus:text-white focus:bg-slate-800 focus:border-slate-800 active:border-slate-800 active:text-white active:bg-slate-800 disabled:pointer-events-none disabled:opacity-50 disabled:shadow-none">
+                            3
+                        </button>
+                        <button class="md:hi w-10 rounded-md border border-slate-300 p-2 text-center text-sm transition-all shadow-sm hover:shadow-lg text-slate-600 hover:text-white hover:bg-slate-800 hover:border-slate-800 focus:text-white focus:bg-slate-800 focus:border-slate-800 active:border-slate-800 active:text-white active:bg-slate-800 disabled:pointer-events-none disabled:opacity-50 disabled:shadow-none">
+                            4
+                        </button>
+                        <span class="w-10 rounded-md border border-slate-300 p-2 text-center text-sm shadow-sm text-slate-600">
+                            ...
+                        </span>
+                        <button class="w-10 rounded-md border border-slate-300 p-2 text-center text-sm transition-all shadow-sm hover:shadow-lg text-slate-600 hover:text-white hover:bg-slate-800 hover:border-slate-800 focus:text-white focus:bg-slate-800 focus:border-slate-800 active:border-slate-800 active:text-white active:bg-slate-800 disabled:pointer-events-none disabled:opacity-50 disabled:shadow-none">
+                            10
+                        </button>
+                    </div>
+                    <button class="rounded-md border border-slate-300 p-2 text-center text-sm transition-all shadow-sm hover:shadow-lg text-slate-600 hover:text-white hover:bg-slate-800 hover:border-slate-800 focus:text-white focus:bg-slate-800 focus:border-slate-800 active:border-slate-800 active:text-white active:bg-slate-800 disabled:pointer-events-none disabled:opacity-50 disabled:shadow-none">
+                        Next
+                    </button>
+                </div>
+                
+                <div class="flex md:hidden items-center gap-4">
+                    <button disabled class="rounded-md border border-slate-300 p-2 text-center text-sm transition-all shadow-sm hover:shadow-lg text-slate-600 hover:text-white hover:bg-slate-800 hover:border-slate-800 focus:text-white focus:bg-slate-800 focus:border-slate-800 active:border-slate-800 active:text-white active:bg-slate-800 disabled:pointer-events-none disabled:opacity-50 disabled:shadow-none" type="button">
+                        Prev
+                    </button>
+                    
+                    <p class="text-slate-600">
+                        Page <strong class="text-slate-800">1</strong> of <strong class="text-slate-800">10</strong>
+                    </p>
+                    
+                    <button class="rounded-md border border-slate-300 p-2 text-center text-sm transition-all shadow-sm hover:shadow-lg text-slate-600 hover:text-white hover:bg-slate-800 hover:border-slate-800 focus:text-white focus:bg-slate-800 focus:border-slate-800 active:border-slate-800 active:text-white active:bg-slate-800 disabled:pointer-events-none disabled:opacity-50 disabled:shadow-none" type="button">
+                        Next
+                    </button>
+                </div>
+            </div>
+        </div>
+    </main>
+</body>
+
+</html>
