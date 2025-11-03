@@ -7,34 +7,16 @@
     <title>Table</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.1/css/all.min.css">
     <script src="https://cdn.tailwindcss.com"></script>
-    <script>
-        tailwind.config = {
-            theme: {
-                extend: {
-                    colors: {
-                        platinum: '#DCDCDD',
-                        frenchGray: '#C5C3C6',
-                        panyeGray: '#4C5C68',
-                        spaceBlack: '#46494C',
-                        munshellBlue: '#1985A1',
-                        blackEerie: '#1C1C1C',
-                        alabaster: '#ECEBE4',
-                        antiFlashWhite: '#EEF0F2',
-                        ghostWhite: '#FAFAFF'
-                    },
-                },
-            },
-        }
-    </script>
+    <script src="tailwind.config.js"></script>
 </head>
 
-<body class="bg-ghostWhite flex flex-col h-screen m-0">
+<body class="bg-ghost-white flex flex-col h-screen m-0">
     <main class="flex flex-1">
         <div class="w-full h-full flex flex-col space-y-8 justify-center items-center px-4">
             <!-- Table -->
-            <div class="w-full md:w-11/12 border border-frenchGray rounded-md overflow-auto">
+            <div class="w-full md:w-11/12 border border-french-gray rounded-md overflow-auto">
                 <table class="w-full text-nowrap">
-                    <thead class="border-b border-frenchGray text-left">
+                    <thead class="border-b border-french-gray text-left">
                         <tr class="bg-gray-200">
                             <th class="px-4 py-2">Header 1</th>
                             <th class="px-4 py-2">Header 2</th>
@@ -42,7 +24,7 @@
                             <th></th>
                         </tr>
                     </thead>
-                    <tbody class="*:border-b *:border-frenchGray last:*:border-b-0">
+                    <tbody class="*:border-b *:border-french-gray last:*:border-b-0">
                         <tr class="hover:bg-gray-200">
                             <td class="px-4 py-2">Data 1</td>
                             <td class="px-4 py-2">Data 2</td>
@@ -89,7 +71,7 @@
                     <p>1 - 10 of 50 entries</p>
                     <div class="flex justify-center md:justify-start">
                         <label for="pages" class="mr-2">Page size:</label>
-                        <select id="entries" name="entries" class="border border-frenchGray rounded-md ">
+                        <select id="entries" name="entries" class="border border-french-gray rounded-md ">
                             <option value="10">10</option>
                             <option value="25">25</option>
                             <option value="50">50</option>

@@ -13,6 +13,6 @@ function toggleFilter() {
     const filterButton = document.getElementsByClassName('filter-button')[0];
     
     filter.classList.toggle('hidden');
-    filterButton.classList.toggle('bg-munshellBlue');
+    filterButton.classList.toggle('bg-munshell-blue');
     filterButton.classList.toggle('text-white');
 }
