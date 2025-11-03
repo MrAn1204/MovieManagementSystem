@@ -9,6 +9,8 @@ tailwind.config = {
                 'anti-flash-white': '#EEF0F2',
                 'ghost-white': '#FAFAFF',
                 'cerulean': '#006992',
+                'vermilion': '#FF3C38',
+                'chili-red': '#E03616',
             },
         },
     },
