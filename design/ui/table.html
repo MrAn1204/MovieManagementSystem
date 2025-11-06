@@ -14,115 +14,201 @@
     <main class="flex flex-1">
         <div class="w-full h-full flex flex-col space-y-8 justify-center items-center px-4">
             <!-- Table -->
-            <div class="w-full md:w-11/12 border border-french-gray rounded-md overflow-auto">
-                <table class="w-full text-nowrap bg-anti-flash-white">
-                    <thead class="border-b border-french-gray text-left">
-                        <tr class="bg-platinum/75">
-                            <th class="px-4 py-2">Header 1</th>
-                            <th class="px-4 py-2">Header 2</th>
-                            <th class="px-4 py-2">Header 3</th>
-                            <th></th>
-                        </tr>
-                    </thead>
-                    <tbody class="*:border-b *:border-french-gray last:*:border-b-0">
-                        <tr class="hover:bg-platinum/50">
-                            <td class="px-4 py-2">Data 1</td>
-                            <td class="px-4 py-2">Data 2</td>
-                            <td class="px-4 py-2">Data 3</td>
-                            <td class="px-4 py-2">
-                                <div class="flex justify-center gap-4">
-                                    <button><i class="fa-solid fa-circle-info"></i></button>
-                                    <button><i class="fa-solid fa-pen-to-square"></i></button>
-                                    <button><i class="fa-solid fa-trash"></i></button>
-                                </div>
-                            </td>
-                        </tr>
-                        <tr class="hover:bg-platinum/50">
-                            <td class="px-4 py-2">Data 1</td>
-                            <td class="px-4 py-2">Data 2</td>
-                            <td class="px-4 py-2">Data 3</td>
-                            <td class="px-4 py-2">
-                                <div class="flex justify-center gap-4">
-                                    <button><i class="fa-solid fa-circle-info"></i></button>
-                                    <button><i class="fa-solid fa-pen-to-square"></i></button>
-                                    <button><i class="fa-solid fa-trash"></i></button>
-                                </div>
-                            </td>
-                        </tr>
-                        <tr class="hover:bg-platinum/50">
-                            <td class="px-4 py-2">Data 1</td>
-                            <td class="px-4 py-2">Data 2</td>
-                            <td class="px-4 py-2">Data 3</td>
-                            <td class="px-4 py-2">
-                                <div class="flex justify-center gap-4">
-                                    <button><i class="fa-solid fa-circle-info"></i></button>
-                                    <button><i class="fa-solid fa-pen-to-square"></i></button>
-                                    <button><i class="fa-solid fa-trash"></i></button>
-                                </div>
-                            </td>
-                        </tr>
-                    </tbody>
-                </table>
-            </div>
-
-            <!-- Pagination -->
-            <div class="flex md:flex-row flex-col w-11/12 justify-between items-center">
-                <div class="min-w-fit p-2">
-                    <p>1 - 10 of 50 entries</p>
-                    <div class="flex justify-center md:justify-start">
-                        <label for="pages" class="mr-2">Page size:</label>
-                        <select id="entries" name="entries" class="border border-french-gray rounded-md ">
-                            <option value="10">10</option>
-                            <option value="25">25</option>
-                            <option value="50">50</option>
-                            <option value="100">100</option>
-                        </select>
+            <div class="w-full md:w-11/12 max-h-[50%] space-y-4">
+                <div class="overflow-auto max-h-[70%]">
+                    <table class="w-full border border-french-gray border-french-gray text-nowrap bg-anti-flash-white">
+                        <thead class="border-b border-french-gray text-left">
+                            <tr class="bg-platinum/75">
+                                <th class="px-4 py-2">Header 1</th>
+                                <th class="px-4 py-2">Header 2</th>
+                                <th class="px-4 py-2">Header 3</th>
+                                <th></th>
+                            </tr>
+                        </thead>
+                        <tbody class="*:border-b *:border-french-gray last:*:border-b-0">
+                            <tr class="hover:bg-platinum/50">
+                                <td class="px-4 py-2">Data 1</td>
+                                <td class="px-4 py-2">Data 2</td>
+                                <td class="px-4 py-2">Data 3</td>
+                                <td class="px-4 py-2">
+                                    <div class="flex justify-center gap-4">
+                                        <button><i class="fa-solid fa-circle-info"></i></button>
+                                        <button><i class="fa-solid fa-pen-to-square"></i></button>
+                                        <button><i class="fa-solid fa-trash"></i></button>
+                                    </div>
+                                </td>
+                            </tr>
+                            <tr class="hover:bg-platinum/50">
+                                <td class="px-4 py-2">Data 1</td>
+                                <td class="px-4 py-2">Data 2</td>
+                                <td class="px-4 py-2">Data 3</td>
+                                <td class="px-4 py-2">
+                                    <div class="flex justify-center gap-4">
+                                        <button><i class="fa-solid fa-circle-info"></i></button>
+                                        <button><i class="fa-solid fa-pen-to-square"></i></button>
+                                        <button><i class="fa-solid fa-trash"></i></button>
+                                    </div>
+                                </td>
+                            </tr>
+                            <tr class="hover:bg-platinum/50">
+                                <td class="px-4 py-2">Data 1</td>
+                                <td class="px-4 py-2">Data 2</td>
+                                <td class="px-4 py-2">Data 3</td>
+                                <td class="px-4 py-2">
+                                    <div class="flex justify-center gap-4">
+                                        <button><i class="fa-solid fa-circle-info"></i></button>
+                                        <button><i class="fa-solid fa-pen-to-square"></i></button>
+                                        <button><i class="fa-solid fa-trash"></i></button>
+                                    </div>
+                                </td>
+                            </tr>
+                            <tr class="hover:bg-platinum/50">
+                                <td class="px-4 py-2">Data 1</td>
+                                <td class="px-4 py-2">Data 2</td>
+                                <td class="px-4 py-2">Data 3</td>
+                                <td class="px-4 py-2">
+                                    <div class="flex justify-center gap-4">
+                                        <button><i class="fa-solid fa-circle-info"></i></button>
+                                        <button><i class="fa-solid fa-pen-to-square"></i></button>
+                                        <button><i class="fa-solid fa-trash"></i></button>
+                                    </div>
+                                </td>
+                            </tr>
+                            <tr class="hover:bg-platinum/50">
+                                <td class="px-4 py-2">Data 1</td>
+                                <td class="px-4 py-2">Data 2</td>
+                                <td class="px-4 py-2">Data 3</td>
+                                <td class="px-4 py-2">
+                                    <div class="flex justify-center gap-4">
+                                        <button><i class="fa-solid fa-circle-info"></i></button>
+                                        <button><i class="fa-solid fa-pen-to-square"></i></button>
+                                        <button><i class="fa-solid fa-trash"></i></button>
+                                    </div>
+                                </td>
+                            </tr>
+                            <tr class="hover:bg-platinum/50">
+                                <td class="px-4 py-2">Data 1</td>
+                                <td class="px-4 py-2">Data 2</td>
+                                <td class="px-4 py-2">Data 3</td>
+                                <td class="px-4 py-2">
+                                    <div class="flex justify-center gap-4">
+                                        <button><i class="fa-solid fa-circle-info"></i></button>
+                                        <button><i class="fa-solid fa-pen-to-square"></i></button>
+                                        <button><i class="fa-solid fa-trash"></i></button>
+                                    </div>
+                                </td>
+                            </tr>
+                            <tr class="hover:bg-platinum/50">
+                                <td class="px-4 py-2">Data 1</td>
+                                <td class="px-4 py-2">Data 2</td>
+                                <td class="px-4 py-2">Data 3</td>
+                                <td class="px-4 py-2">
+                                    <div class="flex justify-center gap-4">
+                                        <button><i class="fa-solid fa-circle-info"></i></button>
+                                        <button><i class="fa-solid fa-pen-to-square"></i></button>
+                                        <button><i class="fa-solid fa-trash"></i></button>
+                                    </div>
+                                </td>
+                            </tr>
+                            <tr class="hover:bg-platinum/50">
+                                <td class="px-4 py-2">Data 1</td>
+                                <td class="px-4 py-2">Data 2</td>
+                                <td class="px-4 py-2">Data 3</td>
+                                <td class="px-4 py-2">
+                                    <div class="flex justify-center gap-4">
+                                        <button><i class="fa-solid fa-circle-info"></i></button>
+                                        <button><i class="fa-solid fa-pen-to-square"></i></button>
+                                        <button><i class="fa-solid fa-trash"></i></button>
+                                    </div>
+                                </td>
+                            </tr>
+                            <tr class="hover:bg-platinum/50">
+                                <td class="px-4 py-2">Data 1</td>
+                                <td class="px-4 py-2">Data 2</td>
+                                <td class="px-4 py-2">Data 3</td>
+                                <td class="px-4 py-2">
+                                    <div class="flex justify-center gap-4">
+                                        <button><i class="fa-solid fa-circle-info"></i></button>
+                                        <button><i class="fa-solid fa-pen-to-square"></i></button>
+                                        <button><i class="fa-solid fa-trash"></i></button>
+                                    </div>
+                                </td>
+                            </tr>
+                            <tr class="hover:bg-platinum/50">
+                                <td class="px-4 py-2">Data 1</td>
+                                <td class="px-4 py-2">Data 2</td>
+                                <td class="px-4 py-2">Data 3</td>
+                                <td class="px-4 py-2">
+                                    <div class="flex justify-center gap-4">
+                                        <button><i class="fa-solid fa-circle-info"></i></button>
+                                        <button><i class="fa-solid fa-pen-to-square"></i></button>
+                                        <button><i class="fa-solid fa-trash"></i></button>
+                                    </div>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+    
+                <!-- Pagination -->
+                <div class="flex md:flex-row flex-col w-11/12 justify-between items-center py-4">
+                    <div class="min-w-fit p-2">
+                        <p>1 - 10 of 50 entries</p>
+                        <div class="flex justify-center md:justify-start">
+                            <label for="pages" class="mr-2">Page size:</label>
+                            <select id="entries" name="entries" class="border border-french-gray rounded-md ">
+                                <option value="10">10</option>
+                                <option value="25">25</option>
+                                <option value="50">50</option>
+                                <option value="100">100</option>
+                            </select>
+                        </div>
+                    </div>
+    
+                    <div class="hidden md:flex gap-2 p-2 justify-center ">
+                        <button class="rounded-md border border-french-gray p-2 text-center text-sm transition-all shadow-sm hover:shadow-lg hover:text-white hover:bg-space-black hover:border-space-black focus:text-white focus:bg-space-black focus:border-space-black active:border-space-black active:text-white active:bg-space-black disabled:pointer-events-none disabled:opacity-50 disabled:shadow-none">
+                            Prev
+                        </button>
+                        <div class="flex items-center justify-center gap-2">
+                            <button class="w-10 rounded-md bg-space-black p-2 border border-transparent text-center text-sm text-white transition-all shadow-md hover:shadow-lg focus:bg-space-black focus:shadow-none active:bg-space-black hover:bg-space-black active:shadow-none disabled:pointer-events-none disabled:opacity-50 disabled:shadow-none">
+                                1
+                            </button>
+                            <button class="w-10 rounded-md border border-french-gray p-2 text-center text-sm transition-all shadow-sm hover:shadow-lg hover:text-white hover:bg-space-black hover:border-space-black focus:text-white focus:bg-space-black focus:border-space-black active:border-space-black active:text-white active:bg-space-black disabled:pointer-events-none disabled:opacity-50 disabled:shadow-none">
+                                2
+                            </button>
+                            <button class="w-10 rounded-md border border-french-gray p-2 text-center text-sm transition-all shadow-sm hover:shadow-lg hover:text-white hover:bg-space-black hover:border-space-black focus:text-white focus:bg-space-black focus:border-space-black active:border-space-black active:text-white active:bg-space-black disabled:pointer-events-none disabled:opacity-50 disabled:shadow-none">
+                                3
+                            </button>
+                            <button class="md:hi w-10 rounded-md border border-french-gray p-2 text-center text-sm transition-all shadow-sm hover:shadow-lg hover:text-white hover:bg-space-black hover:border-space-black focus:text-white focus:bg-space-black focus:border-space-black active:border-space-black active:text-white active:bg-space-black disabled:pointer-events-none disabled:opacity-50 disabled:shadow-none">
+                                4
+                            </button>
+                            <span class="w-10 rounded-md border border-french-gray p-2 text-center text-sm shadow-sm">
+                                ...
+                            </span>
+                            <button class="w-10 rounded-md border border-french-gray p-2 text-center text-sm transition-all shadow-sm hover:shadow-lg hover:text-white hover:bg-space-black hover:border-space-black focus:text-white focus:bg-space-black focus:border-space-black active:border-space-black active:text-white active:bg-space-black disabled:pointer-events-none disabled:opacity-50 disabled:shadow-none">
+                                10
+                            </button>
+                        </div>
+                        <button class="rounded-md border border-french-gray p-2 text-center text-sm transition-all shadow-sm hover:shadow-lg hover:text-white hover:bg-space-black hover:border-space-black focus:text-white focus:bg-space-black focus:border-space-black active:border-space-black active:text-white active:bg-space-black disabled:pointer-events-none disabled:opacity-50 disabled:shadow-none">
+                            Next
+                        </button>
+                    </div>
+                    
+                    <div class="flex md:hidden items-center gap-4">
+                        <button disabled class="rounded-md border border-french-gray p-2 text-center text-sm transition-all shadow-sm hover:shadow-lg hover:text-white hover:bg-space-black hover:border-space-black focus:text-white focus:bg-space-black focus:border-space-black active:border-space-black active:text-white active:bg-space-black disabled:pointer-events-none disabled:opacity-50 disabled:shadow-none" type="button">
+                            Prev
+                        </button>
+                        
+                        <p>
+                            Page <strong>1</strong> of <strong>10</strong>
+                        </p>
+                        
+                        <button class="rounded-md border border-french-gray p-2 text-center text-sm transition-all shadow-sm hover:shadow-lg hover:text-white hover:bg-space-black hover:border-space-black focus:text-white focus:bg-space-black focus:border-space-black active:border-space-black active:text-white active:bg-space-black disabled:pointer-events-none disabled:opacity-50 disabled:shadow-none" type="button">
+                            Next
+                        </button>
                     </div>
                 </div>
-                
 
-                <div class="hidden md:flex gap-2 p-2 justify-center ">
-                    <button class="rounded-md border border-french-gray p-2 text-center text-sm transition-all shadow-sm hover:shadow-lg hover:text-white hover:bg-space-black hover:border-space-black focus:text-white focus:bg-space-black focus:border-space-black active:border-space-black active:text-white active:bg-space-black disabled:pointer-events-none disabled:opacity-50 disabled:shadow-none">
-                        Prev
-                    </button>
-                    <div class="flex items-center justify-center gap-2">
-                        <button class="w-10 rounded-md bg-space-black p-2 border border-transparent text-center text-sm text-white transition-all shadow-md hover:shadow-lg focus:bg-space-black focus:shadow-none active:bg-space-black hover:bg-space-black active:shadow-none disabled:pointer-events-none disabled:opacity-50 disabled:shadow-none">
-                            1
-                        </button>
-                        <button class="w-10 rounded-md border border-french-gray p-2 text-center text-sm transition-all shadow-sm hover:shadow-lg hover:text-white hover:bg-space-black hover:border-space-black focus:text-white focus:bg-space-black focus:border-space-black active:border-space-black active:text-white active:bg-space-black disabled:pointer-events-none disabled:opacity-50 disabled:shadow-none">
-                            2
-                        </button>
-                        <button class="w-10 rounded-md border border-french-gray p-2 text-center text-sm transition-all shadow-sm hover:shadow-lg hover:text-white hover:bg-space-black hover:border-space-black focus:text-white focus:bg-space-black focus:border-space-black active:border-space-black active:text-white active:bg-space-black disabled:pointer-events-none disabled:opacity-50 disabled:shadow-none">
-                            3
-                        </button>
-                        <button class="md:hi w-10 rounded-md border border-french-gray p-2 text-center text-sm transition-all shadow-sm hover:shadow-lg hover:text-white hover:bg-space-black hover:border-space-black focus:text-white focus:bg-space-black focus:border-space-black active:border-space-black active:text-white active:bg-space-black disabled:pointer-events-none disabled:opacity-50 disabled:shadow-none">
-                            4
-                        </button>
-                        <span class="w-10 rounded-md border border-french-gray p-2 text-center text-sm shadow-sm">
-                            ...
-                        </span>
-                        <button class="w-10 rounded-md border border-french-gray p-2 text-center text-sm transition-all shadow-sm hover:shadow-lg hover:text-white hover:bg-space-black hover:border-space-black focus:text-white focus:bg-space-black focus:border-space-black active:border-space-black active:text-white active:bg-space-black disabled:pointer-events-none disabled:opacity-50 disabled:shadow-none">
-                            10
-                        </button>
-                    </div>
-                    <button class="rounded-md border border-french-gray p-2 text-center text-sm transition-all shadow-sm hover:shadow-lg hover:text-white hover:bg-space-black hover:border-space-black focus:text-white focus:bg-space-black focus:border-space-black active:border-space-black active:text-white active:bg-space-black disabled:pointer-events-none disabled:opacity-50 disabled:shadow-none">
-                        Next
-                    </button>
-                </div>
-                
-                <div class="flex md:hidden items-center gap-4">
-                    <button disabled class="rounded-md border border-french-gray p-2 text-center text-sm transition-all shadow-sm hover:shadow-lg hover:text-white hover:bg-space-black hover:border-space-black focus:text-white focus:bg-space-black focus:border-space-black active:border-space-black active:text-white active:bg-space-black disabled:pointer-events-none disabled:opacity-50 disabled:shadow-none" type="button">
-                        Prev
-                    </button>
-                    
-                    <p>
-                        Page <strong>1</strong> of <strong>10</strong>
-                    </p>
-                    
-                    <button class="rounded-md border border-french-gray p-2 text-center text-sm transition-all shadow-sm hover:shadow-lg hover:text-white hover:bg-space-black hover:border-space-black focus:text-white focus:bg-space-black focus:border-space-black active:border-space-black active:text-white active:bg-space-black disabled:pointer-events-none disabled:opacity-50 disabled:shadow-none" type="button">
-                        Next
-                    </button>
-                </div>
             </div>
         </div>
     </main>
