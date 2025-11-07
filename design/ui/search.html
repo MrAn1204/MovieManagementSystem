@@ -13,7 +13,7 @@
 
 <body class="bg-ghost-white flex flex-col h-screen m-0 text-space-black">
     <main class="flex flex-1">
-        <div class="w-full h-full flex flex-col space-y-8 justify-center items-center px-4">
+        <div class="w-full h-full flex flex-col justify-center items-center px-4">
             <!-- Search Bar -->
             <form action="" method="get" class="flex flex-col w-full md:w-11/12 max-h-[45%] md:max-h-[50%] py-4 space-y-4 overflow-y-auto">
                 <div class="flex gap-4 flex-col md:flex-row">
@@ -43,8 +43,8 @@
                     </div>
                 </div>
 
-                <div class="filter hidden space-y-4 overflow-y-auto">
-                    <hr class="border-french-gray">
+                <hr class="border-french-gray">
+                <div class="filter space-y-4 overflow-y-auto transition-all duration-500 ease-in-out max-h-0 opacity-0">
                     <div class="flex gap-4 *:flex-1 flex-wrap">
                         <select name="firstField" id="firstField" class="px-4 py-2 border border-french-gray rounded-md focus:outline-none focus:ring-2 focus:ring-munshell-blue">
                             <option value="" selected>Any [Field] 1</option>
@@ -114,7 +114,7 @@
                         </div>
                     </div>
                 </div>
-                <hr class="border-french-gray">
+                <hr id="filter-bottom" class="hidden border-french-gray">
             </form>
         </div>
     </main>

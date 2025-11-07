@@ -11,10 +11,13 @@ function toggleSidebar() {
 function toggleFilter() {
     const filter = document.getElementsByClassName('filter')[0];
     const filterButton = document.getElementsByClassName('filter-button')[0];
+    const filterBottom = document.getElementById('filter-bottom');
     
-    filter.classList.toggle('hidden');
+    filter.classList.toggle('max-h-full');
+    filter.classList.toggle('opacity-100');
     filterButton.classList.toggle('bg-munshell-blue');
     filterButton.classList.toggle('text-white');
+    filterBottom.classList.toggle('hidden');
 }
 
 function toggleOrder() {
