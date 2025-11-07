@@ -16,3 +16,11 @@ function toggleFilter() {
     filterButton.classList.toggle('bg-munshell-blue');
     filterButton.classList.toggle('text-white');
 }
+
+function toggleOrder() {
+    const iconAsc = document.getElementById('icon-asc');
+    const iconDesc = document.getElementById('icon-desc');
+
+    iconAsc.classList.toggle('hidden');
+    iconDesc.classList.toggle('hidden');
+}
