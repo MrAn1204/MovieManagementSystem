@@ -15,24 +15,25 @@
     <main class="flex flex-1">
         <div class="w-full h-full flex flex-col space-y-8 justify-center items-center px-4">
             <!-- Search Bar -->
-            <form action="" method="get" class="flex flex-col w-full md:w-11/12 max-h-[50%] py-4 space-y-4 overflow-y-auto">
+            <form action="" method="get" class="flex flex-col w-full md:w-11/12 max-h-[45%] md:max-h-[50%] py-4 space-y-4 overflow-y-auto">
                 <div class="flex gap-4 flex-col md:flex-row">
-                    <div class="flex flex-1">
+                    <div class="flex grow-[5]">
                         <input type="text" name="keyword" placeholder="Search..." class="w-full px-4 py-2 border border-french-gray rounded-l-md focus:outline-none focus:ring-2 focus:ring-munshell-blue">
                         <button type="submit" class="px-4 py-2 bg-munshell-blue text-white rounded-r-md hover:bg-cerulean focus:outline-none focus:ring-2 focus:ring-munshell-blue">Search</button>
                     </div>
 
-                    <select name="order" id="order" class="w-full md:w-36 px-4 py-2 border border-french-gray rounded-md focus:outline-none focus:ring-2 focus:ring-munshell-blue">
-                        <option value="" disabled selected hidden>Order by</option>
-                        <option value="option1">Option 1</option>
-                        <option value="option2">Option 2</option>
-                        <option value="option3">Option 3</option>
-                    </select>
-
-                    <button type="button" class="filter-button w-full md:w-24 border border-munshell-blue rounded-md text-munshell-blue focus:outline-none" onclick="toggleFilter()">
-                        <i class="fa-solid fa-filter"></i>
-                        <span>Filters</span>
-                    </button>
+                    <div class="flex gap-4 grow">
+                        <select name="order" id="order" class="grow-[2] px-4 py-2 border border-french-gray rounded-md focus:outline-none focus:ring-2 focus:ring-munshell-blue">
+                            <option value="" disabled selected hidden>Order by</option>
+                            <option value="option1">Option 1</option>
+                            <option value="option2">Option 2</option>
+                            <option value="option3">Option 3</option>
+                        </select>
+    
+                        <button type="button" class="filter-button grow border border-munshell-blue rounded-md text-munshell-blue focus:outline-none" onclick="toggleFilter()">
+                            <i class="fa-solid fa-filter"></i>
+                        </button>
+                    </div>
                 </div>
 
                 <div class="filter hidden space-y-4 overflow-y-auto">

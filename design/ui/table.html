@@ -14,7 +14,7 @@
     <main class="flex flex-1">
         <div class="w-full h-full flex flex-col space-y-8 justify-center items-center px-4">
             <!-- Table -->
-            <div class="w-full md:w-11/12 max-h-[50%] space-y-4">
+            <div class="w-full md:w-11/12 max-h-[45%] md:max-h-[50%]">
                 <div class="overflow-auto max-h-[70%]">
                     <table class="w-full border border-french-gray border-french-gray text-nowrap bg-anti-flash-white">
                         <thead class="border-b border-french-gray text-left">
@@ -151,10 +151,10 @@
                 </div>
     
                 <!-- Pagination -->
-                <div class="flex md:flex-row flex-col w-11/12 justify-between items-center py-4">
-                    <div class="min-w-fit p-2">
+                <div class="flex md:flex-row flex-col justify-between items-center gap-4 py-4">
+                    <div class="w-full flex md:flex-col flex-row justify-between *:flex-1 gap-4 md:gap-0">
                         <p>1 - 10 of 50 entries</p>
-                        <div class="flex justify-center md:justify-start">
+                        <div class="h-fit flex flex-wrap items-center justify-end md:justify-start">
                             <label for="pages" class="mr-2">Page size:</label>
                             <select id="entries" name="entries" class="border border-french-gray rounded-md ">
                                 <option value="10">10</option>
@@ -165,7 +165,7 @@
                         </div>
                     </div>
     
-                    <div class="hidden md:flex gap-2 p-2 justify-center ">
+                    <div class="hidden md:flex gap-2 justify-center">
                         <button class="rounded-md border border-french-gray p-2 text-center text-sm transition-all shadow-sm hover:shadow-lg hover:text-white hover:bg-space-black hover:border-space-black focus:text-white focus:bg-space-black focus:border-space-black active:border-space-black active:text-white active:bg-space-black disabled:pointer-events-none disabled:opacity-50 disabled:shadow-none">
                             Prev
                         </button>
@@ -208,7 +208,6 @@
                         </button>
                     </div>
                 </div>
-
             </div>
         </div>
     </main>
