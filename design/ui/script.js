@@ -31,8 +31,12 @@ function toggleFilter() {
 
     filter.classList.toggle('max-h-full');
     filter.classList.toggle('opacity-100');
+    
     filterButton.classList.toggle('bg-munshell-blue');
     filterButton.classList.toggle('text-white');
+    filterButton.classList.toggle('hover:bg-platinum/50');
+    filterButton.classList.toggle('hover:bg-cerulean');
+    
     filterBottom.classList.toggle('hidden');
 }
 
