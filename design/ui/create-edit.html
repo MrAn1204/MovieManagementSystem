@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Create/Edit</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.1/css/all.min.css">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="tailwind.config.js"></script>
+    <script src="script.js"></script>
+</head>
+
+<body class="bg-ghost-white flex flex-col h-screen m-0 text-space-black">
+    <main class="flex flex-1">
+        <div class="w-full min-w-0 h-full flex flex-col justify-center items-center px-4">
+            <form class="w-full max-w-4xl bg-white p-4 sm:p-8 rounded-lg shadow-md space-y-8">
+                <h2 class="text-2xl font-semibold text-center">Create/Edit [Entity]</h2>
+                <div class="grid grid-cols-1 sm:grid-cols-2 gap-8 w-full sm:last:*:col-span-2">
+                    <div class="row-span-3 flex flex-col max-h-[262px] items-center gap-2">
+                        <div class="w-full ">
+                            <label for="imageUpload" class="min-w-fit text-center"><strong>Upload Image:</strong></label>
+                            <input type="file" id="imageUpload" accept="image/*" class="w-full">
+                        </div>
+
+                        <img id="imagePreview" src="https://dummyimage.com/300x400.png/dddddd/000000" alt="thumbnail" class="min-h-0 rounded-md">
+                    </div>
+                    <div class="flex flex-col">
+                        <span class="font-medium">Field 1</span>
+                        <input type="text" name="field1" id="field1" class="px-4 py-2 border border-french-gray rounded-md focus:outline-none focus:ring-2 focus:ring-munshell-blue">
+                    </div>
+                    <div class="flex flex-col">
+                        <span class="font-medium">Field 2</span>
+                        <input type="text" name="field2" id="field2" class="px-4 py-2 border border-french-gray rounded-md focus:outline-none focus:ring-2 focus:ring-munshell-blue">
+                    </div>
+                    <div class="flex flex-col">
+                        <span class="font-medium">Field 3</span>
+                        <input type="text" name="field3" id="field3" class="px-4 py-2 border border-french-gray rounded-md focus:outline-none focus:ring-2 focus:ring-munshell-blue">
+                    </div>
+                    <div class="flex flex-col">
+                        <span class="font-medium">Field 4</span>
+                        <input type="text" name="field4" id="field4" class="px-4 py-2 border border-french-gray rounded-md focus:outline-none focus:ring-2 focus:ring-munshell-blue">
+                    </div>
+                    <div class="flex flex-col">
+                        <span class="font-medium">Field 5</span>
+                        <input type="text" name="field5" id="field5" class="px-4 py-2 border border-french-gray rounded-md focus:outline-none focus:ring-2 focus:ring-munshell-blue">
+                    </div>
+                    <div class="flex flex-col">
+                        <span class="font-medium">Field 6</span>
+                        <input type="text" name="field6" id="field6" class="px-4 py-2 border border-french-gray rounded-md focus:outline-none focus:ring-2 focus:ring-munshell-blue">
+                    </div>
+                    <div class="flex flex-col">
+                        <span class="font-medium">Field 7</span>
+                        <input type="text" name="field7" id="field7" class="px-4 py-2 border border-french-gray rounded-md focus:outline-none focus:ring-2 focus:ring-munshell-blue">
+                    </div>
+                    <div class="flex flex-col">
+                        <span class="font-medium">Field 8</span>
+                        <input type="text" name="field8" id="field8" class="px-4 py-2 border border-french-gray rounded-md focus:outline-none focus:ring-2 focus:ring-munshell-blue">
+                    </div>
+                </div>
+
+                <div class="flex flex-wrap justify-center gap-4">
+                    <button type="submit" class="px-4 py-2 bg-munshell-blue text-white rounded-md hover:bg-cerulean focus:outline-none focus:ring-2 focus:ring-munshell-blue">Save Changes</button>
+                    <button type="reset" class="px-4 py-2 border border-munshell-blue rounded-md text-munshell-blue focus:outline-none" onclick="document.getElementById('imagePreview').src='https://dummyimage.com/300x400.png/dddddd/000000'">Reset</button>
+                </div>
+            </form>
+        </div>
+    </main>
+</body>
+
+</html>
