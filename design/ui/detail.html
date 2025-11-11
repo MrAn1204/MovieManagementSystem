@@ -13,43 +13,56 @@
 <body class="bg-ghost-white flex flex-col h-screen m-0 text-space-black">
     <main class="flex flex-1">
         <div class="w-full min-w-0 h-full flex flex-col justify-center items-center px-4">
-            <div class="w-full max-w-4xl bg-white p-4 sm:p-8 rounded-lg shadow-md space-y-8">
-                <h2 class="text-2xl font-semibold text-center">[Entity] Detail</h2>
-                <div class="grid grid-cols-1 sm:grid-cols-2 gap-8 w-full sm:last:*:col-span-2">
-                    <div class="row-span-3 flex flex-col max-h-52 items-center">
-                        <img src="https://dummyimage.com/300x400.png/dddddd/000000" alt="thumbnail" class="min-h-0 rounded-md">
+            <div class="w-full max-w-6xl bg-white p-4 md:p-8 rounded-lg shadow-md space-y-8">
+                <div class="flex flex-wrap items-center relative pr-8 sm:pr-0">
+                    <h2 class="flex-1 text-2xl font-semibold sm:text-center">[Entity] Detail</h2>
+                    <button class="absolute -right-2 w-10 h-10 hover:bg-platinum/50">
+                        <i class="fa-solid fa-xmark"></i>
+                    </button>
+                </div>
+                
+                <div class="flex flex-col md:flex-row items-center gap-8">
+                    <div class="flex flex-1 justify-center">
+                        <img src="https://dummyimage.com/300x400.png/dddddd/000000" alt="thumbnail" class="max-h-48 md:max-h-72 rounded-md">
                     </div>
-                    <div class="flex flex-col">
-                        <span class="font-medium">Field 1</span>
-                        <span>Value 1</span>
-                    </div>
-                    <div class="flex flex-col">
-                        <span class="font-medium">Field 2</span>
-                        <span>Value 2</span>
-                    </div>
-                    <div class="flex flex-col">
-                        <span class="font-medium">Field 3</span>
-                        <span>Value 3</span>
-                    </div>
-                    <div class="flex flex-col">
-                        <span class="font-medium">Field 4</span>
-                        <span>Value 4</span>
-                    </div>
-                    <div class="flex flex-col">
-                        <span class="font-medium">Field 5</span>
-                        <span>Value 5</span>
-                    </div>
-                    <div class="flex flex-col">
-                        <span class="font-medium">Field 6</span>
-                        <span>Value 6</span>
-                    </div>
-                    <div class="flex flex-col">
-                        <span class="font-medium">Field 7</span>
-                        <span>Value 7</span>
-                    </div>
-                    <div class="flex flex-col">
-                        <span class="font-medium">Field 8</span>
-                        <span>Value 8</span>
+
+                    <div class="w-full flex-[2] gap-8 grid grid-cols-1 sm:grid-cols-2">
+                        <div class="flex flex-col">
+                            <span class="font-medium">Field 1</span>
+                            <span>Value 1</span>
+                        </div>
+                        <div class="flex flex-col">
+                            <span class="font-medium">Field 2</span>
+                            <span>Value 2</span>
+                        </div>
+                        <div class="flex flex-col">
+                            <span class="font-medium">Field 3</span>
+                            <span>Value 3</span>
+                        </div>
+                        <div class="flex flex-col">
+                            <span class="font-medium">Field 4</span>
+                            <span>Value 4</span>
+                        </div>
+                        <div class="flex flex-col">
+                            <span class="font-medium">Field 5</span>
+                            <span>Value 5</span>
+                        </div>
+                        <div class="flex flex-col">
+                            <span class="font-medium">Field 6</span>
+                            <span>Value 6</span>
+                        </div>
+                        <div class="flex flex-col">
+                            <span class="font-medium">Field 7</span>
+                            <span>Value 7</span>
+                        </div>
+                        <div class="flex flex-col">
+                            <span class="font-medium">Field 8</span>
+                            <span>Value 8</span>
+                        </div>
+                        <div class="flex flex-col sm:last:col-span-2">
+                            <span class="font-medium">Field 9</span>
+                            <span>Value 9</span>
+                        </div>
                     </div>
                 </div>
             </div>
