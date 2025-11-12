@@ -14,16 +14,18 @@
     <main class="flex flex-1">
         <div class="w-full min-w-0 h-full flex flex-col justify-center items-center px-4">
             <div class="w-full max-w-6xl bg-white p-4 md:p-8 rounded-lg shadow-md space-y-8">
-                <div class="flex flex-wrap items-center relative pr-8 sm:pr-0">
-                    <h2 class="flex-1 text-2xl font-semibold sm:text-center">[Entity] Detail</h2>
-                    <button class="absolute -right-2 w-10 h-10 hover:bg-platinum/50">
-                        <i class="fa-solid fa-xmark"></i>
-                    </button>
+                <div class="flex flex-wrap-reverse items-center relative">
+                    <h2 class="sm:flex-1 text-2xl font-semibold sm:text-center overflow-hidden">[Entity] Details</h2>
+                    <div class="sm:absolute sm:right-0 flex flex-1 justify-end">
+                        <button class="w-10 h-10 hover:bg-platinum/50">
+                            <i class="fa-solid fa-xmark"></i>
+                        </button>
+                    </div>
                 </div>
                 
                 <div class="flex flex-col md:flex-row items-center gap-8">
                     <div class="flex flex-1 justify-center">
-                        <img src="https://dummyimage.com/300x400.png/dddddd/000000" alt="thumbnail" class="max-h-48 md:max-h-72 rounded-md">
+                        <img src="https://dummyimage.com/300x400/dddddd/000000&text=No+Image" alt="thumbnail" class="max-h-48 md:max-h-72 rounded-md">
                     </div>
 
                     <div class="w-full flex-[2] gap-8 grid grid-cols-1 sm:grid-cols-2">
