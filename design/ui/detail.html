@@ -8,68 +8,74 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.1/css/all.min.css">
     <script src="https://cdn.tailwindcss.com"></script>
     <script src="tailwind.config.js"></script>
+    <script src="script.js"></script>
 </head>
 
 <body class="bg-ghost-white flex flex-col h-screen m-0 text-space-black">
-    <main class="flex flex-1">
-        <div class="w-full min-w-0 h-full flex flex-col justify-center items-center px-4">
-            <div class="w-full max-w-6xl bg-white p-4 md:p-8 rounded-lg shadow-md space-y-8">
-                <div class="flex flex-wrap-reverse items-center relative">
-                    <h2 class="sm:flex-1 text-2xl font-semibold sm:text-center overflow-hidden">[Entity] Details</h2>
-                    <div class="sm:absolute sm:right-0 flex flex-1 justify-end">
-                        <button class="w-10 h-10 hover:bg-platinum/50">
-                            <i class="fa-solid fa-xmark"></i>
-                        </button>
-                    </div>
-                </div>
-                
-                <div class="flex flex-col md:flex-row items-center gap-8">
-                    <div class="flex flex-1 justify-center">
-                        <img src="https://dummyimage.com/300x400/dddddd/000000&text=No+Image" alt="thumbnail" class="max-h-48 md:max-h-72 rounded-md">
-                    </div>
+    <main class="flex flex-1 overflow-auto">
+        <div class="w-full flex flex-col justify-center items-center space-y-4">
+            <p class="italic">Click on the button below to see detail template</p>
+            <button type="button" class="px-4 py-2 bg-munshell-blue text-white rounded-md hover:bg-cerulean focus:outline-none focus:ring-2 focus:ring-munshell-blue" onclick="toggleDetailModal()">Click me!</button>
+        </div>
+    </main>
 
-                    <div class="w-full flex-[2] gap-8 grid grid-cols-1 sm:grid-cols-2">
-                        <div class="flex flex-col">
-                            <span class="font-medium">Field 1</span>
-                            <span>Value 1</span>
-                        </div>
-                        <div class="flex flex-col">
-                            <span class="font-medium">Field 2</span>
-                            <span>Value 2</span>
-                        </div>
-                        <div class="flex flex-col">
-                            <span class="font-medium">Field 3</span>
-                            <span>Value 3</span>
-                        </div>
-                        <div class="flex flex-col">
-                            <span class="font-medium">Field 4</span>
-                            <span>Value 4</span>
-                        </div>
-                        <div class="flex flex-col">
-                            <span class="font-medium">Field 5</span>
-                            <span>Value 5</span>
-                        </div>
-                        <div class="flex flex-col">
-                            <span class="font-medium">Field 6</span>
-                            <span>Value 6</span>
-                        </div>
-                        <div class="flex flex-col">
-                            <span class="font-medium">Field 7</span>
-                            <span>Value 7</span>
-                        </div>
-                        <div class="flex flex-col">
-                            <span class="font-medium">Field 8</span>
-                            <span>Value 8</span>
-                        </div>
-                        <div class="flex flex-col sm:last:col-span-2">
-                            <span class="font-medium">Field 9</span>
-                            <span>Value 9</span>
-                        </div>
+    <div class="detail-modal absolute w-full h-full flex justify-center items-center bg-space-black/50 z-50">
+        <div class="w-full max-h-full overflow-auto max-w-6xl bg-white p-4 md:p-8 rounded-lg shadow-md space-y-8">
+            <div class="flex flex-wrap-reverse items-center relative">
+                <h2 class="sm:flex-1 text-2xl font-semibold sm:text-center overflow-hidden">[Entity] Details</h2>
+                <div class="sm:absolute sm:right-0 flex flex-1 justify-end">
+                    <button class="w-10 h-10 hover:bg-platinum/50" onclick="toggleDetailModal()">
+                        <i class="fa-solid fa-xmark"></i>
+                    </button>
+                </div>
+            </div>
+            
+            <div class="flex flex-col md:flex-row items-center gap-8">
+                <div class="flex flex-1 justify-center">
+                    <img src="https://dummyimage.com/300x400/dddddd/000000&text=No+Image" alt="thumbnail" class="max-h-48 md:max-h-72 rounded-md">
+                </div>
+
+                <div class="w-full flex-[2] gap-8 grid grid-cols-1 sm:grid-cols-2">
+                    <div class="flex flex-col">
+                        <span class="font-medium">Field 1</span>
+                        <span>Value 1</span>
+                    </div>
+                    <div class="flex flex-col">
+                        <span class="font-medium">Field 2</span>
+                        <span>Value 2</span>
+                    </div>
+                    <div class="flex flex-col">
+                        <span class="font-medium">Field 3</span>
+                        <span>Value 3</span>
+                    </div>
+                    <div class="flex flex-col">
+                        <span class="font-medium">Field 4</span>
+                        <span>Value 4</span>
+                    </div>
+                    <div class="flex flex-col">
+                        <span class="font-medium">Field 5</span>
+                        <span>Value 5</span>
+                    </div>
+                    <div class="flex flex-col">
+                        <span class="font-medium">Field 6</span>
+                        <span>Value 6</span>
+                    </div>
+                    <div class="flex flex-col">
+                        <span class="font-medium">Field 7</span>
+                        <span>Value 7</span>
+                    </div>
+                    <div class="flex flex-col">
+                        <span class="font-medium">Field 8</span>
+                        <span>Value 8</span>
+                    </div>
+                    <div class="flex flex-col sm:last:col-span-2">
+                        <span class="font-medium">Field 9</span>
+                        <span>Value 9</span>
                     </div>
                 </div>
             </div>
         </div>
-    </main>
+    </div>
 </body>
 
 </html>
