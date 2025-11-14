@@ -68,3 +68,55 @@ function toggleEditModal() {
     editModal.classList.toggle('hidden');
     editModal.classList.toggle('flex');
 }
+
+function onSubmit(event) {
+    event.preventDefault();
+
+    for (const errorText of document.getElementsByClassName('error-text')) {
+        errorText.classList.add('hidden');
+    }
+
+    const editForm = document.forms.item('edit-form');
+    const formData = new FormData(editForm);
+
+    let formValid = true;
+
+    if (formData.get('field1') === null || formData.get('field1').trim() === '') {
+        const field1Error = document.getElementById('field1-error');
+        field1Error.classList.remove('hidden');
+        formValid = false;
+    }
+
+    if (formData.get('field2') === null || formData.get('field2').trim() === '') {
+        const field2Error = document.getElementById('field2-error');
+        field2Error.classList.remove('hidden');
+        formValid = false;
+    }
+
+    if (formValid) {
+        editForm.submit();
+    }
+}
+
+
+function toggleOptionDropdown(name) {
+    const dropdown = document.getElementById(name);
+
+    dropdown.classList.toggle('hidden');
+}
+
+function updateSelected(target, displayId) {
+    const display = document.getElementById(displayId);
+
+    if (target.checked) {
+        const span = document.createElement('span');
+        span.textContent = target.value;
+        display.appendChild(span);
+    } else {
+        for (const span of display.querySelectorAll('span')) {
+            if (span.textContent === target.value) {
+                span.remove();
+            }
+        }
+    }
+}
