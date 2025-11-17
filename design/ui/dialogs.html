@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dialogs</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.1/css/all.min.css">
+    <link rel="stylesheet" href="style.css">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="tailwind.config.js"></script>
+    <script src="script.js"></script>
+</head>
+
+<body class="bg-ghost-white flex flex-col h-screen m-0 text-space-black">
+    <main class="flex flex-1 overflow-auto">
+        <div class="w-full flex flex-col justify-center items-center space-y-4">
+            <p class="italic">Click on a button below to see dialog template</p>
+            <div class="grid grid-cols-2 gap-4">
+                <button type="button" class="px-4 py-2 text-white rounded-md bg-carrot-orange-500 hover:bg-carrot-orange-600 focus:outline-none focus:ring-2 focus:ring-carrot-orange" onclick="toggleModal('warning-modal')">Warning</button>
+                <button type="button" class="px-4 py-2 text-white rounded-md bg-vermilion-500 hover:bg-vermilion-600 focus:outline-none focus:ring-2 focus:ring-vermilion" onclick="toggleModal('danger-modal')">Danger</button>
+                <button type="button" class="px-4 py-2 text-white rounded-md bg-bright-fern-500 hover:bg-bright-fern-600 focus:outline-none focus:ring-2 focus:ring-bright-fern" onclick="toggleModal('success-modal')">Success</button>
+                <button type="button" class="px-4 py-2 text-white rounded-md bg-steel-blue-500 hover:bg-steel-blue-600 focus:outline-none focus:ring-2 focus:ring-steel-blue" onclick="toggleModal('info-modal')">Info</button>
+            </div>
+        </div>
+    </main>
+
+    <div class="hidden warning-modal absolute w-full h-full justify-center items-center bg-space-black/50 z-50">
+        <div class="flex sm:flex-row flex-col items-center sm:items-start gap-2 sm:gap-4 mx-auto max-w-lg rounded-lg border border-stone bg-ghost-white p-4 shadow-lg">
+            <span class="size-8 min-w-8 flex items-center justify-center rounded-full bg-carrot-orange text-white">
+                <i class="fa-solid fa-exclamation"></i>
+            </span>
+            <div class="flex flex-col items-center sm:items-start">
+                <p class="font-bold text-lg text-carrot-orange">Warning</p>
+
+                <p class="pt-2 pb-4">
+                    Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod
+                    tempor incididunt ut labore et dolore?
+                </p>
+                
+                <div class="flex flex-col sm:flex-row-reverse gap-3 w-full">
+                    <button type="button" class="rounded-lg text-white bg-carrot-orange-500 hover:bg-carrot-orange-600 px-4 py-2 text-center text-sm font-semibold">
+                        Confirm
+                    </button>
+    
+                    <button type="button" onclick="toggleModal('warning-modal')" class="border border-platinum-300 rounded-lg hover:bg-platinum-100 px-4 py-2 text-center text-sm font-semibold">
+                        Cancel
+                    </button>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+    <div class="hidden danger-modal absolute w-full h-full justify-center items-center bg-space-black/50 z-50">
+        <div class="flex sm:flex-row flex-col items-center sm:items-start gap-2 sm:gap-4 mx-auto max-w-lg rounded-lg border border-stone bg-ghost-white p-4 shadow-lg">
+            <span class="size-8 min-w-8 flex items-center justify-center rounded-full bg-vermilion text-white">
+                <i class="fa-solid fa-xmark"></i>
+            </span>
+            <div class="flex flex-col items-center sm:items-start">
+                <p class="font-bold text-lg text-vermilion">Error</p>
+
+                <p class="pt-2 pb-4">
+                    Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod
+                    tempor incididunt ut labore et dolore?
+                </p>
+                
+                <div class="flex flex-col sm:flex-row-reverse gap-3 w-full">
+                    <button type="button" class="rounded-lg text-white bg-vermilion-500 hover:bg-vermilion-600 px-4 py-2 text-center text-sm font-semibold">
+                        Confirm
+                    </button>
+    
+                    <button type="button" onclick="toggleModal('danger-modal')" class="border border-platinum-300 rounded-lg hover:bg-platinum-100 px-4 py-2 text-center text-sm font-semibold">
+                        Cancel
+                    </button>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+    <div class="hidden success-modal absolute w-full h-full justify-center items-center bg-space-black/50 z-50">
+        <div class="flex sm:flex-row flex-col items-center sm:items-start gap-2 sm:gap-4 mx-auto max-w-lg rounded-lg border border-stone bg-ghost-white p-4 shadow-lg">
+            <span class="size-8 min-w-8 flex items-center justify-center rounded-full bg-bright-fern text-white">
+                <i class="fa-solid fa-check"></i>
+            </span>
+            <div class="flex flex-col items-center sm:items-start">
+                <p class="font-bold text-lg text-bright-fern">Success</p>
+
+                <p class="pt-2 pb-4">
+                    Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod
+                    tempor incididunt ut labore et dolore?
+                </p>
+                
+                <div class="flex flex-col sm:flex-row-reverse gap-3 w-full">
+                    <button type="button" class="rounded-lg text-white bg-bright-fern-500 hover:bg-bright-fern-600 px-4 py-2 text-center text-sm font-semibold">
+                        Confirm
+                    </button>
+    
+                    <button type="button" onclick="toggleModal('success-modal')" class="border border-platinum-300 rounded-lg hover:bg-platinum-100 px-4 py-2 text-center text-sm font-semibold">
+                        Cancel
+                    </button>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+    <div class="hidden info-modal absolute w-full h-full justify-center items-center bg-space-black/50 z-50">
+        <div class="flex sm:flex-row flex-col items-center sm:items-start gap-2 sm:gap-4 mx-auto max-w-lg rounded-lg border border-stone bg-ghost-white p-4 shadow-lg">
+            <span class="size-8 min-w-8 flex items-center justify-center rounded-full bg-steel-blue text-white">
+                <i class="fa-solid fa-info"></i>
+            </span>
+            <div class="flex flex-col items-center sm:items-start">
+                <p class="font-bold text-lg text-steel-blue">Note</p>
+
+                <p class="pt-2 pb-4">
+                    Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod
+                    tempor incididunt ut labore et dolore?
+                </p>
+                
+                <div class="flex flex-col sm:flex-row-reverse gap-3 w-full">
+                    <button type="button" class="rounded-lg text-white bg-steel-blue-500 hover:bg-steel-blue-600 px-4 py-2 text-center text-sm font-semibold">
+                        Confirm
+                    </button>
+    
+                    <button type="button" onclick="toggleModal('info-modal')" class="border border-platinum-300 rounded-lg hover:bg-platinum-100 px-4 py-2 text-center text-sm font-semibold">
+                        Cancel
+                    </button>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</body>
+
+</html>

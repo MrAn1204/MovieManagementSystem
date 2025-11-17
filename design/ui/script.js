@@ -34,8 +34,8 @@ function toggleFilter() {
     
     filterButton.classList.toggle('bg-steel-blue-500');
     filterButton.classList.toggle('text-white');
-    filterButton.classList.toggle('hover:bg-platinum/50');
-    filterButton.classList.toggle('hover:bg-cerulean');
+    filterButton.classList.toggle('hover:bg-platinum-100');
+    filterButton.classList.toggle('hover:bg-steel-blue-600');
     
     filterBottom.classList.toggle('hidden');
 }
@@ -67,6 +67,13 @@ function toggleEditModal() {
     
     editModal.classList.toggle('hidden');
     editModal.classList.toggle('flex');
+}
+
+function toggleModal(modalName) {
+    const modal = document.getElementsByClassName(modalName)[0];
+    
+    modal.classList.toggle('hidden');
+    modal.classList.toggle('flex');
 }
 
 function onSubmit(event) {
