@@ -48,27 +48,6 @@ function toggleOrder() {
     iconDesc.classList.toggle('hidden');
 }
 
-function toggleDetailModal() {
-    const detailModal = document.getElementsByClassName('detail-modal')[0];
-    
-    detailModal.classList.toggle('hidden');
-    detailModal.classList.toggle('flex');
-}
-
-function toggleCreateModal() {
-    const createModal = document.getElementsByClassName('create-modal')[0];
-    
-    createModal.classList.toggle('hidden');
-    createModal.classList.toggle('flex');
-}
-
-function toggleEditModal() {
-    const editModal = document.getElementsByClassName('edit-modal')[0];
-    
-    editModal.classList.toggle('hidden');
-    editModal.classList.toggle('flex');
-}
-
 function toggleModal(modalName) {
     const modal = document.getElementsByClassName(modalName)[0];
     

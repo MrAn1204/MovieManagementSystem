@@ -16,7 +16,7 @@
     <main class="flex flex-1 overflow-auto">
         <div class="w-full flex flex-col justify-center items-center space-y-4">
             <p class="italic">Click on the button below to see detail template</p>
-            <button type="button" class="px-4 py-2 text-white rounded-md bg-steel-blue-500 hover:bg-steel-blue-600 focus:outline-none focus:ring-2 focus:ring-steel-blue" onclick="toggleEditModal()">Click me!</button>
+            <button type="button" class="px-4 py-2 text-white rounded-md bg-steel-blue-500 hover:bg-steel-blue-600 focus:outline-none focus:ring-2 focus:ring-steel-blue" onclick="toggleModal('edit-modal')">Click me!</button>
         </div>
     </main>
 
@@ -25,7 +25,7 @@
             <div class="flex flex-wrap-reverse items-center relative">
                 <h2 class="sm:flex-1 text-2xl font-semibold sm:text-center overflow-hidden">Create/Edit [Entity]</h2>
                 <div class="sm:absolute sm:right-0 flex flex-1 justify-end">
-                    <button type="button" class="w-10 h-10 hover:bg-platinum-100" onclick="toggleEditModal()">
+                    <button type="button" class="w-10 h-10 hover:bg-platinum-100" onclick="toggleModal('edit-modal')">
                         <i class="fa-solid fa-xmark"></i>
                     </button>
                 </div>
