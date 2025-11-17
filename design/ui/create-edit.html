@@ -16,16 +16,16 @@
     <main class="flex flex-1 overflow-auto">
         <div class="w-full flex flex-col justify-center items-center space-y-4">
             <p class="italic">Click on the button below to see detail template</p>
-            <button type="button" class="px-4 py-2 bg-munshell-blue text-white rounded-md hover:bg-cerulean focus:outline-none focus:ring-2 focus:ring-munshell-blue" onclick="toggleEditModal()">Click me!</button>
+            <button type="button" class="px-4 py-2 text-white rounded-md bg-steel-blue-500 hover:bg-steel-blue-600 focus:outline-none focus:ring-2 focus:ring-steel-blue" onclick="toggleEditModal()">Click me!</button>
         </div>
     </main>
 
     <div class="edit-modal absolute w-full h-full flex justify-center items-center bg-space-black/50 z-50">
-        <form class="edit-form w-full max-h-full overflow-auto max-w-6xl bg-white p-4 md:p-8 rounded-lg shadow-md space-y-8">
+        <form class="edit-form w-full max-h-full overflow-auto max-w-6xl bg-ghost-white p-4 md:p-8 rounded-lg shadow-md space-y-8">
             <div class="flex flex-wrap-reverse items-center relative">
                 <h2 class="sm:flex-1 text-2xl font-semibold sm:text-center overflow-hidden">Create/Edit [Entity]</h2>
                 <div class="sm:absolute sm:right-0 flex flex-1 justify-end">
-                    <button type="button" class="w-10 h-10 hover:bg-platinum/50" onclick="toggleEditModal()">
+                    <button type="button" class="w-10 h-10 hover:bg-platinum-100" onclick="toggleEditModal()">
                         <i class="fa-solid fa-xmark"></i>
                     </button>
                 </div>
@@ -48,14 +48,14 @@
                 <div class="w-full flex-[2] gap-8 grid grid-cols-1 sm:grid-cols-2">
                     <div class="flex flex-col">
                         <label for="field1" class="font-medium">Field 1*</label>
-                        <input type="text" value="Value 1" name="field1" id="field1" class="px-4 py-2 border border-french-gray rounded-md focus:outline-none focus:ring-2 focus:ring-munshell-blue">
+                        <input type="text" value="Value 1" name="field1" id="field1" class="px-4 py-2 border border-platinum-300 rounded-md focus:outline-none focus:ring-2 focus:ring-steel-blue">
                         <span id="field1-error" class="error-text hidden italic text-sm text-vermilion">Field 1 is required</span>
                     </div>
                     <div class="flex flex-col relative">
                         <label for="field2" class="font-medium">Field 2*</label>
-                        <button type="button" onclick="toggleOptionDropdown('field2-dropdown')" class="flex-1 px-4 py-2 pr-8 border border-french-gray rounded-md focus:outline-none focus:ring-2 focus:ring-munshell-blue">
+                        <button type="button" onclick="toggleOptionDropdown('field2-dropdown')" class="flex-1 px-4 py-2 pr-8 border border-platinum-300 rounded-md focus:outline-none focus:ring-2 focus:ring-steel-blue">
                             <input type="hidden" value="" name="field2" id="field2">
-                            <div id="field2-display" class="min-h-6 flex flex-wrap gap-2 *:bg-platinum *:px-1 *:rounded-md">
+                            <div id="field2-display" class="min-h-6 flex flex-wrap gap-2 *:bg-platinum-200 *:px-1 *:rounded-md">
                                 <span>Option 1</span>
                             </div>
                         </button>
@@ -84,11 +84,11 @@
                     </div>
                     <div class="flex flex-col">
                         <label for="field3" class="font-medium">Field 3</label>
-                        <input type="text" name="field3" id="field3" class="px-4 py-2 border border-french-gray rounded-md focus:outline-none focus:ring-2 focus:ring-munshell-blue">
+                        <input type="text" name="field3" id="field3" class="px-4 py-2 border border-platinum-300 rounded-md focus:outline-none focus:ring-2 focus:ring-steel-blue">
                     </div>
                     <div class="flex flex-col relative">
                         <label for="field4" class="font-medium">Field 4</label>
-                        <select value="" name="field4" id="field4" class="appearance-none px-4 py-2 pr-8 border border-french-gray rounded-md focus:outline-none focus:ring-2 focus:ring-munshell-blue">
+                        <select value="" name="field4" id="field4" class="appearance-none px-4 py-2 pr-8 border border-platinum-300 rounded-md focus:outline-none focus:ring-2 focus:ring-steel-blue">
                             <option value="" disabled selected hidden></option>
                             <option value="option1">Option 1</option>
                             <option value="option2">Option 2</option>
@@ -98,30 +98,30 @@
                     </div>
                     <div class="flex flex-col">
                         <label for="field5" class="font-medium">Field 5</label>
-                        <input type="datetime-local" name="field5" id="field5" class="px-4 py-2 border border-french-gray rounded-md focus:outline-none focus:ring-2 focus:ring-munshell-blue">
+                        <input type="datetime-local" name="field5" id="field5" class="px-4 py-2 border border-platinum-300 rounded-md focus:outline-none focus:ring-2 focus:ring-steel-blue">
                     </div>
                     <div class="flex flex-col">
                         <label for="field6" class="font-medium">Field 6</label>
-                        <input type="date" name="field6" id="field6" class="px-4 py-2 border border-french-gray rounded-md focus:outline-none focus:ring-2 focus:ring-munshell-blue">
+                        <input type="date" name="field6" id="field6" class="px-4 py-2 border border-platinum-300 rounded-md focus:outline-none focus:ring-2 focus:ring-steel-blue">
                     </div>
                     <div class="flex flex-col">
                         <label for="field7" class="font-medium">Field 7</label>
-                        <input type="time" name="field7" id="field7" class="px-4 py-2 border border-french-gray rounded-md focus:outline-none focus:ring-2 focus:ring-munshell-blue">
+                        <input type="time" name="field7" id="field7" class="px-4 py-2 border border-platinum-300 rounded-md focus:outline-none focus:ring-2 focus:ring-steel-blue">
                     </div>
                     <div class="flex flex-col">
                         <label for="field8" class="font-medium">Field 8</label>
-                        <input type="time" name="field8" id="field8" class="px-4 py-2 border border-french-gray rounded-md focus:outline-none focus:ring-2 focus:ring-munshell-blue">
+                        <input type="time" name="field8" id="field8" class="px-4 py-2 border border-platinum-300 rounded-md focus:outline-none focus:ring-2 focus:ring-steel-blue">
                     </div>
                     <div class="flex flex-col sm:col-span-2">
                         <label for="field9" class="font-medium">Field 9</label>
-                        <input type="text" name="field9" id="field9" class="px-4 py-2 border border-french-gray rounded-md focus:outline-none focus:ring-2 focus:ring-munshell-blue">
+                        <input type="text" name="field9" id="field9" class="px-4 py-2 border border-platinum-300 rounded-md focus:outline-none focus:ring-2 focus:ring-steel-blue">
                     </div>
                 </div>
             </div>
 
             <div class="flex flex-wrap justify-center gap-4">
-                <button type="button" onclick="onSubmit(event)" class="px-4 py-2 bg-munshell-blue text-white rounded-md hover:bg-cerulean focus:outline-none focus:ring-2 focus:ring-munshell-blue">Save Changes</button>
-                <button type="reset" class="px-4 py-2 border border-munshell-blue rounded-md hover:bg-platinum/50 text-munshell-blue focus:outline-none">Reset</button>
+                <button type="button" onclick="onSubmit(event)" class="px-4 py-2 text-white rounded-md bg-steel-blue-500 hover:bg-steel-blue-600 focus:outline-none focus:ring-2 focus:ring-steel-blue">Save Changes</button>
+                <button type="reset" class="px-4 py-2 border border-steel-blue rounded-md hover:bg-platinum-100 text-steel-blue focus:outline-none">Reset</button>
             </div>
         </form>
     </div>

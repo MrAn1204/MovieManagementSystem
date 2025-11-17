@@ -18,18 +18,18 @@
             <form action="" method="get" class="flex flex-col w-full md:w-11/12 max-h-[45%] md:max-h-[50%] py-4 space-y-4 overflow-y-auto">
                 <div class="flex gap-4 flex-col md:flex-row">
                     <div class="flex grow-[3]">
-                        <input type="text" name="keyword" placeholder="Search..." class="w-full px-4 py-2 border border-french-gray rounded-l-md focus:outline-none focus:ring-2 focus:ring-munshell-blue">
-                        <button type="submit" class="px-4 py-2 bg-munshell-blue text-white rounded-r-md hover:bg-cerulean focus:outline-none focus:ring-2 focus:ring-munshell-blue">Search</button>
+                        <input type="text" name="keyword" placeholder="Search..." class="w-full px-4 py-2 border border-platinum-300 rounded-l-md focus:outline-none focus:ring-2 focus:ring-steel-blue">
+                        <button type="submit" class="px-4 py-2 text-white rounded-r-md bg-steel-blue hover:bg-steel-blue-600 focus:outline-none focus:ring-2 focus:ring-steel-blue">Search</button>
                     </div>
 
                     <div class="flex gap-4 grow">
                         <div class="flex grow">
-                            <button type="button" class="order-button w-1/4 max-w-12 border bg-white border-french-gray rounded-tl-md rounded-bl-md text-munshell-blue focus:outline-none" onclick="toggleOrder()">
+                            <button type="button" class="order-button w-1/4 max-w-12 border bg-white border-platinum-300 rounded-tl-md rounded-bl-md text-steel-blue focus:outline-none" onclick="toggleOrder()">
                                 <i id="icon-asc" class="fa-solid fa-arrow-up-short-wide"></i>
                                 <i id="icon-desc" class="fa-solid fa-arrow-down-short-wide hidden"></i>
                             </button>
 
-                            <select name="order" id="order" class="grow p-2 border border-l-0 rounded-tr-md rounded-br-md border-french-gray focus:outline-none focus:ring-2 focus:ring-munshell-blue">
+                            <select name="order" id="order" class="grow p-2 border border-l-0 rounded-tr-md rounded-br-md border-platinum-300 focus:outline-none focus:ring-2 focus:ring-steel-blue">
                                 <option value="" disabled selected hidden>Order by</option>
                                 <option value="option1">Option 1</option>
                                 <option value="option2">Option 2</option>
@@ -37,37 +37,37 @@
                             </select>
                         </div>
     
-                        <button type="button" class="filter-button grow max-w-12 border border-munshell-blue rounded-md hover:bg-platinum/50 text-munshell-blue focus:outline-none" onclick="toggleFilter()">
+                        <button type="button" class="filter-button grow max-w-12 border border-steel-blue rounded-md hover:bg-platinum-100 text-steel-blue focus:outline-none" onclick="toggleFilter()">
                             <i class="fa-solid fa-filter"></i>
                         </button>
                     </div>
                 </div>
 
-                <hr class="border-french-gray">
+                <hr class="border-platinum-300">
                 <div class="filter space-y-4 overflow-y-auto transition-all duration-500 ease-in-out max-h-0 opacity-0">
                     <div class="flex gap-4 *:flex-1 flex-wrap">
-                        <select name="firstField" id="firstField" class="px-4 py-2 border border-french-gray rounded-md focus:outline-none focus:ring-2 focus:ring-munshell-blue">
+                        <select name="firstField" id="firstField" class="px-4 py-2 border border-platinum-300 rounded-md focus:outline-none focus:ring-2 focus:ring-steel-blue">
                             <option value="" selected>Any [Field] 1</option>
                             <option value="option1">Option 1</option>
                             <option value="option2">Option 2</option>
                             <option value="option3">Option 3</option>
                         </select>
 
-                        <select name="secondField" id="secondField" class="px-4 py-2 border border-french-gray rounded-md focus:outline-none focus:ring-2 focus:ring-munshell-blue">
+                        <select name="secondField" id="secondField" class="px-4 py-2 border border-platinum-300 rounded-md focus:outline-none focus:ring-2 focus:ring-steel-blue">
                             <option value="" selected>Any [Field] 2</option>
                             <option value="option1">Option 1</option>
                             <option value="option2">Option 2</option>
                             <option value="option3">Option 3</option>
                         </select>
 
-                        <select name="thirdField" id="thirdField" class="px-4 py-2 border border-french-gray rounded-md focus:outline-none focus:ring-2 focus:ring-munshell-blue">
+                        <select name="thirdField" id="thirdField" class="px-4 py-2 border border-platinum-300 rounded-md focus:outline-none focus:ring-2 focus:ring-steel-blue">
                             <option value="" selected>Any [Field] 3</option>
                             <option value="option1">Option 1</option>
                             <option value="option2">Option 2</option>
                             <option value="option3">Option 3</option>
                         </select>
 
-                        <select name="fourthField" id="fourthField" class="px-4 py-2 border border-french-gray rounded-md focus:outline-none focus:ring-2 focus:ring-munshell-blue">
+                        <select name="fourthField" id="fourthField" class="px-4 py-2 border border-platinum-300 rounded-md focus:outline-none focus:ring-2 focus:ring-steel-blue">
                             <option value="" selected>Any [Field] 4</option>
                             <option value="option1">Option 1</option>
                             <option value="option2">Option 2</option>
@@ -77,44 +77,44 @@
 
                     <!-- Date time selector -->
                     <div>
-                        <label for="dateTime" class="block font-medium text-gray-700">On:</label>
-                        <input type="datetime-local" name="dateTime" id="dateTime" class="w-full px-4 py-2 border border-french-gray rounded-md focus:outline-none focus:ring-2 focus:ring-munshell-blue">
+                        <label for="dateTime" class="block font-medium">On:</label>
+                        <input type="datetime-local" name="dateTime" id="dateTime" class="w-full px-4 py-2 border border-platinum-300 rounded-md focus:outline-none focus:ring-2 focus:ring-steel-blue">
                     </div>
                     
                     <!-- Date range selector -->
                     <div class="flex *:flex-1 flex-wrap gap-4 items-center">
                         <div>
-                            <label for="startDate" class="block font-medium text-gray-700">From:</label>
-                            <input type="date" name="startDate" id="startDate" class="w-full px-4 py-2 border border-french-gray rounded-md focus:outline-none focus:ring-2 focus:ring-munshell-blue">
+                            <label for="startDate" class="block font-medium">From:</label>
+                            <input type="date" name="startDate" id="startDate" class="w-full px-4 py-2 border border-platinum-300 rounded-md focus:outline-none focus:ring-2 focus:ring-steel-blue">
                         </div>
 
                         <div>
-                            <label for="endDate" class="block font-medium text-gray-700">To:</label>
-                            <input type="date" name="endDate" id="endDate" class="w-full px-4 py-2 border border-french-gray rounded-md focus:outline-none focus:ring-2 focus:ring-munshell-blue">
+                            <label for="endDate" class="block font-medium">To:</label>
+                            <input type="date" name="endDate" id="endDate" class="w-full px-4 py-2 border border-platinum-300 rounded-md focus:outline-none focus:ring-2 focus:ring-steel-blue">
                         </div>
                     </div>
 
                     <!-- Date & time range selector -->
                     <div class="flex flex-wrap gap-4 items-center">
                         <div class="grow">
-                            <label for="date" class="block font-medium text-gray-700">On:</label>
-                            <input type="date" name="date" id="date" class="w-full px-4 py-2 border border-french-gray rounded-md focus:outline-none focus:ring-2 focus:ring-munshell-blue">
+                            <label for="date" class="block font-medium">On:</label>
+                            <input type="date" name="date" id="date" class="w-full px-4 py-2 border border-platinum-300 rounded-md focus:outline-none focus:ring-2 focus:ring-steel-blue">
                         </div>
                         
                         <div class="grow-[2] flex *:flex-1 gap-4 flex-wrap">
                             <div>
-                                <label for="startTime" class="block font-medium text-gray-700">From:</label>
-                                <input type="time" name="startTime" id="startTime" class="w-full px-4 py-2 border border-french-gray rounded-md focus:outline-none focus:ring-2 focus:ring-munshell-blue">
+                                <label for="startTime" class="block font-medium">From:</label>
+                                <input type="time" name="startTime" id="startTime" class="w-full px-4 py-2 border border-platinum-300 rounded-md focus:outline-none focus:ring-2 focus:ring-steel-blue">
                             </div>
     
                             <div>
-                                <label for="endTime" class="block font-medium text-gray-700">To:</label>
-                                <input type="time" name="endTime" id="endTime" class="w-full px-4 py-2 border border-french-gray rounded-md focus:outline-none focus:ring-2 focus:ring-munshell-blue">
+                                <label for="endTime" class="block font-medium">To:</label>
+                                <input type="time" name="endTime" id="endTime" class="w-full px-4 py-2 border border-platinum-300 rounded-md focus:outline-none focus:ring-2 focus:ring-steel-blue">
                             </div>
                         </div>
                     </div>
                 </div>
-                <hr id="filter-bottom" class="hidden border-french-gray">
+                <hr id="filter-bottom" class="hidden border-platinum-300">
             </form>
         </div>
     </main>
