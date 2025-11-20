@@ -12,11 +12,17 @@
 
 <body class="bg-ghost-white flex flex-col h-screen m-0 text-space-black">
     <main class="flex flex-1">
-        <div class="w-full min-w-0 h-full flex flex-col justify-center items-center px-4">
+        <div class="w-full flex flex-col items-center justify-center px-4 py-2 overflow-auto">
             <!-- Table -->
-            <div class="w-full md:w-11/12 max-h-[45%] md:max-h-[50%]">
-                <div class="overflow-auto max-h-[70%]">
-                    <table class="w-full border border-platinum-300 text-nowrap bg-platinum-50">
+            <div id="table-container" class="flex flex-col flex-1 min-h-0 w-full md:w-11/12">
+                <div>
+                    <button class="px-2 py-1 bg-bright-fern-500 hover:bg-bright-fern-600 text-white font-semibold">
+                        <i class="fa-solid fa-plus"></i>
+                        <span>Add</span>
+                    </button>
+                </div>
+                <div class="overflow-auto border border-platinum-300">
+                    <table class="w-full text-nowrap bg-platinum-50">
                         <thead class="border-b border-platinum-300 text-left">
                             <tr class="bg-platinum-200">
                                 <th class="px-4 py-2">Header 1</th>
@@ -32,9 +38,9 @@
                                 <td class="px-4 py-2">Data 3</td>
                                 <td class="px-4 py-2">
                                     <div class="flex justify-center gap-4">
-                                        <button><i class="fa-solid fa-circle-info"></i></button>
-                                        <button><i class="fa-solid fa-pen-to-square"></i></button>
-                                        <button><i class="fa-solid fa-trash"></i></button>
+                                        <button><i class="fa-solid fa-circle-info text-steel-blue"></i></button>
+                                        <button><i class="fa-solid fa-pen-to-square text-carrot-orange"></i></button>
+                                        <button><i class="fa-solid fa-trash text-vermilion"></i></button>
                                     </div>
                                 </td>
                             </tr>
@@ -44,9 +50,9 @@
                                 <td class="px-4 py-2">Data 3</td>
                                 <td class="px-4 py-2">
                                     <div class="flex justify-center gap-4">
-                                        <button><i class="fa-solid fa-circle-info"></i></button>
-                                        <button><i class="fa-solid fa-pen-to-square"></i></button>
-                                        <button><i class="fa-solid fa-trash"></i></button>
+                                        <button><i class="fa-solid fa-circle-info text-steel-blue"></i></button>
+                                        <button><i class="fa-solid fa-pen-to-square text-carrot-orange"></i></button>
+                                        <button><i class="fa-solid fa-trash text-vermilion"></i></button>
                                     </div>
                                 </td>
                             </tr>
@@ -56,9 +62,9 @@
                                 <td class="px-4 py-2">Data 3</td>
                                 <td class="px-4 py-2">
                                     <div class="flex justify-center gap-4">
-                                        <button><i class="fa-solid fa-circle-info"></i></button>
-                                        <button><i class="fa-solid fa-pen-to-square"></i></button>
-                                        <button><i class="fa-solid fa-trash"></i></button>
+                                        <button><i class="fa-solid fa-circle-info text-steel-blue"></i></button>
+                                        <button><i class="fa-solid fa-pen-to-square text-carrot-orange"></i></button>
+                                        <button><i class="fa-solid fa-trash text-vermilion"></i></button>
                                     </div>
                                 </td>
                             </tr>
@@ -68,9 +74,9 @@
                                 <td class="px-4 py-2">Data 3</td>
                                 <td class="px-4 py-2">
                                     <div class="flex justify-center gap-4">
-                                        <button><i class="fa-solid fa-circle-info"></i></button>
-                                        <button><i class="fa-solid fa-pen-to-square"></i></button>
-                                        <button><i class="fa-solid fa-trash"></i></button>
+                                        <button><i class="fa-solid fa-circle-info text-steel-blue"></i></button>
+                                        <button><i class="fa-solid fa-pen-to-square text-carrot-orange"></i></button>
+                                        <button><i class="fa-solid fa-trash text-vermilion"></i></button>
                                     </div>
                                 </td>
                             </tr>
@@ -80,9 +86,9 @@
                                 <td class="px-4 py-2">Data 3</td>
                                 <td class="px-4 py-2">
                                     <div class="flex justify-center gap-4">
-                                        <button><i class="fa-solid fa-circle-info"></i></button>
-                                        <button><i class="fa-solid fa-pen-to-square"></i></button>
-                                        <button><i class="fa-solid fa-trash"></i></button>
+                                        <button><i class="fa-solid fa-circle-info text-steel-blue"></i></button>
+                                        <button><i class="fa-solid fa-pen-to-square text-carrot-orange"></i></button>
+                                        <button><i class="fa-solid fa-trash text-vermilion"></i></button>
                                     </div>
                                 </td>
                             </tr>
@@ -92,9 +98,9 @@
                                 <td class="px-4 py-2">Data 3</td>
                                 <td class="px-4 py-2">
                                     <div class="flex justify-center gap-4">
-                                        <button><i class="fa-solid fa-circle-info"></i></button>
-                                        <button><i class="fa-solid fa-pen-to-square"></i></button>
-                                        <button><i class="fa-solid fa-trash"></i></button>
+                                        <button><i class="fa-solid fa-circle-info text-steel-blue"></i></button>
+                                        <button><i class="fa-solid fa-pen-to-square text-carrot-orange"></i></button>
+                                        <button><i class="fa-solid fa-trash text-vermilion"></i></button>
                                     </div>
                                 </td>
                             </tr>
@@ -104,9 +110,9 @@
                                 <td class="px-4 py-2">Data 3</td>
                                 <td class="px-4 py-2">
                                     <div class="flex justify-center gap-4">
-                                        <button><i class="fa-solid fa-circle-info"></i></button>
-                                        <button><i class="fa-solid fa-pen-to-square"></i></button>
-                                        <button><i class="fa-solid fa-trash"></i></button>
+                                        <button><i class="fa-solid fa-circle-info text-steel-blue"></i></button>
+                                        <button><i class="fa-solid fa-pen-to-square text-carrot-orange"></i></button>
+                                        <button><i class="fa-solid fa-trash text-vermilion"></i></button>
                                     </div>
                                 </td>
                             </tr>
@@ -116,9 +122,9 @@
                                 <td class="px-4 py-2">Data 3</td>
                                 <td class="px-4 py-2">
                                     <div class="flex justify-center gap-4">
-                                        <button><i class="fa-solid fa-circle-info"></i></button>
-                                        <button><i class="fa-solid fa-pen-to-square"></i></button>
-                                        <button><i class="fa-solid fa-trash"></i></button>
+                                        <button><i class="fa-solid fa-circle-info text-steel-blue"></i></button>
+                                        <button><i class="fa-solid fa-pen-to-square text-carrot-orange"></i></button>
+                                        <button><i class="fa-solid fa-trash text-vermilion"></i></button>
                                     </div>
                                 </td>
                             </tr>
@@ -128,9 +134,9 @@
                                 <td class="px-4 py-2">Data 3</td>
                                 <td class="px-4 py-2">
                                     <div class="flex justify-center gap-4">
-                                        <button><i class="fa-solid fa-circle-info"></i></button>
-                                        <button><i class="fa-solid fa-pen-to-square"></i></button>
-                                        <button><i class="fa-solid fa-trash"></i></button>
+                                        <button><i class="fa-solid fa-circle-info text-steel-blue"></i></button>
+                                        <button><i class="fa-solid fa-pen-to-square text-carrot-orange"></i></button>
+                                        <button><i class="fa-solid fa-trash text-vermilion"></i></button>
                                     </div>
                                 </td>
                             </tr>
@@ -140,9 +146,9 @@
                                 <td class="px-4 py-2">Data 3</td>
                                 <td class="px-4 py-2">
                                     <div class="flex justify-center gap-4">
-                                        <button><i class="fa-solid fa-circle-info"></i></button>
-                                        <button><i class="fa-solid fa-pen-to-square"></i></button>
-                                        <button><i class="fa-solid fa-trash"></i></button>
+                                        <button><i class="fa-solid fa-circle-info text-steel-blue"></i></button>
+                                        <button><i class="fa-solid fa-pen-to-square text-carrot-orange"></i></button>
+                                        <button><i class="fa-solid fa-trash text-vermilion"></i></button>
                                     </div>
                                 </td>
                             </tr>
@@ -151,8 +157,8 @@
                 </div>
     
                 <!-- Pagination -->
-                <div class="flex md:flex-row flex-col justify-between items-center gap-4 pt-4">
-                    <div class="w-full flex md:flex-col flex-row justify-between *:flex-1 gap-4 md:gap-0">
+                <div class="flex md:flex-row flex-col justify-between items-center pt-2 gap-2">
+                    <div class="w-full flex md:flex-col flex-row justify-between gap-4 md:gap-0">
                         <p>1 - 10 of 50 entries</p>
                         <div class="h-fit flex flex-wrap items-center justify-end md:justify-start">
                             <label for="pages" class="mr-2">Page size:</label>
@@ -194,12 +200,12 @@
                         </button>
                     </div>
                     
-                    <div class="flex md:hidden items-center gap-4">
+                    <div class="flex md:hidden gap-2 items-center">
                         <button disabled class="rounded-md border border-platinum-300 p-2 text-center text-sm transition-all shadow-sm hover:shadow-lg hover:text-white hover:bg-space-black hover:border-space-black focus:text-white focus:bg-space-black focus:border-space-black active:border-space-black active:text-white active:bg-space-black disabled:pointer-events-none disabled:opacity-50 disabled:shadow-none" type="button">
                             Prev
                         </button>
                         
-                        <p>
+                        <p class="text-center">
                             Page <strong>1</strong> of <strong>10</strong>
                         </p>
                         
@@ -207,6 +213,7 @@
                             Next
                         </button>
                     </div>
+
                 </div>
             </div>
         </div>
