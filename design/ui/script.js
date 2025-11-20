@@ -93,6 +93,7 @@ function toggleOptionDropdown(name) {
 
 function updateSelected(target, displayId) {
     const display = document.getElementById(displayId);
+    const field2 = document.getElementById('field2');
 
     if (target.checked) {
         const span = document.createElement('span');
@@ -102,7 +103,11 @@ function updateSelected(target, displayId) {
         for (const span of display.querySelectorAll('span')) {
             if (span.textContent === target.value) {
                 span.remove();
+                break;
             }
         }
     }
+
+    const checked = Array.from(display.querySelectorAll('span')).map(span => span.textContent);
+    field2.value = checked.join(',');
 }

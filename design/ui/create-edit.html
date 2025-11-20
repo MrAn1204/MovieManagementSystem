@@ -51,35 +51,37 @@
                         <input type="text" value="Value 1" name="field1" id="field1" class="px-4 py-2 border border-platinum-300 rounded-md focus:outline-none focus:ring-2 focus:ring-steel-blue">
                         <span id="field1-error" class="error-text hidden italic text-sm text-vermilion">Field 1 is required</span>
                     </div>
-                    <div class="flex flex-col relative">
-                        <label for="field2" class="font-medium">Field 2*</label>
-                        <button type="button" onclick="toggleOptionDropdown('field2-dropdown')" class="flex-1 px-4 py-2 pr-8 border border-platinum-300 rounded-md focus:outline-none focus:ring-2 focus:ring-steel-blue">
-                            <input type="hidden" value="" name="field2" id="field2">
-                            <div id="field2-display" class="min-h-6 flex flex-wrap gap-2 *:bg-platinum-200 *:px-1 *:rounded-md">
-                                <span>Option 1</span>
-                            </div>
-                        </button>
-                        <span class="absolute top-1/2 right-4 pointer-events-none"><i class="fa-solid fa-angle-down"></i></span>
-                        <ul id="field2-dropdown" class="dropdown hidden absolute top-full z-10 w-full bg-white border border-black">
-                            <li class="flex items-center w-full p-2 space-x-2">
-                                <input onchange="updateSelected(event.target, 'field2-display')" id="option1" name="option1" type="checkbox" value="Option 1" checked>
-                                <label for="option1">
-                                    Option 1
-                                </label>
-                            </li>
-                            <li class="flex items-center w-full p-2 space-x-2">
-                                <input onchange="updateSelected(event.target, 'field2-display')" id="option2" name="option2" type="checkbox" value="Option 2">
-                                <label for="option2">
-                                    Option 2
-                                </label>
-                            </li>
-                            <li class="flex items-center w-full p-2 space-x-2">
-                                <input onchange="updateSelected(event.target, 'field2-display')" id="option3" name="option3" type="checkbox" value="Option 3">
-                                <label for="option3">
-                                    Option 3
-                                </label>
-                            </li>
-                        </ul>
+                    <div class="flex flex-col">
+                        <div class="flex flex-col relative">
+                            <label for="field2" class="font-medium">Field 2*</label>
+                            <button type="button" onclick="toggleOptionDropdown('field2-dropdown')" class="flex-1 bg-white px-4 py-2 pr-8 border border-platinum-300 rounded-md focus:outline-none focus:ring-2 focus:ring-steel-blue">
+                                <input type="hidden" value="Option 1" name="field2" id="field2">
+                                <div id="field2-display" class="min-h-6 flex flex-wrap gap-2 *:bg-platinum-200 *:px-1 *:rounded-md">
+                                    <span>Option 1</span>
+                                </div>
+                            </button>
+                            <span class="absolute top-1/2 right-4 pointer-events-none"><i class="fa-solid fa-angle-down"></i></span>
+                            <ul id="field2-dropdown" class="dropdown hidden absolute top-full z-10 w-full bg-white border border-black">
+                                <li class="flex items-center w-full p-2 space-x-2">
+                                    <input onchange="updateSelected(event.target, 'field2-display')" id="option1" name="option1" type="checkbox" value="Option 1" checked>
+                                    <label for="option1">
+                                        Option 1
+                                    </label>
+                                </li>
+                                <li class="flex items-center w-full p-2 space-x-2">
+                                    <input onchange="updateSelected(event.target, 'field2-display')" id="option2" name="option2" type="checkbox" value="Option 2">
+                                    <label for="option2">
+                                        Option 2
+                                    </label>
+                                </li>
+                                <li class="flex items-center w-full p-2 space-x-2">
+                                    <input onchange="updateSelected(event.target, 'field2-display')" id="option3" name="option3" type="checkbox" value="Option 3">
+                                    <label for="option3">
+                                        Option 3
+                                    </label>
+                                </li>
+                            </ul>
+                        </div>
                         <span id="field2-error" class="error-text hidden italic text-sm text-vermilion">Field 2 is required</span>
                     </div>
                     <div class="flex flex-col">
