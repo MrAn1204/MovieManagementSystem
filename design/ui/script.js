@@ -25,7 +25,7 @@ function toggleSidebar() {
 }
 
 function toggleFilter() {
-    const filter = document.getElementsByClassName('filter')[0];
+    const filter = document.getElementById('filter-container');
     const filterButton = document.getElementsByClassName('filter-button')[0];
     const filterBottom = document.getElementById('filter-bottom');
 

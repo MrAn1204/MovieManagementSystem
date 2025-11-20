@@ -13,13 +13,15 @@
 
 <body class="bg-ghost-white flex flex-col h-screen m-0 text-space-black">
     <main class="flex flex-1">
-        <div class="w-full min-w-0 h-full flex flex-col justify-center items-center px-4">
+        <div class="w-full flex flex-col items-center px-4 py-2 overflow-auto">
             <!-- Search Bar -->
-            <form action="" method="get" class="flex flex-col w-full md:w-11/12 max-h-[45%] md:max-h-[50%] py-4 space-y-4 overflow-y-auto">
-                <div class="flex gap-4 flex-col md:flex-row">
+            <form action="" method="get" class="flex flex-col w-full md:w-11/12 space-y-4 max-h-[50%]">
+                <div class="flex gap-4 flex-wrap">
                     <div class="flex grow-[3]">
                         <input type="text" name="keyword" placeholder="Search..." class="w-full px-4 py-2 border border-platinum-300 rounded-l-md focus:outline-none focus:ring-2 focus:ring-steel-blue">
-                        <button type="submit" class="px-4 py-2 text-white rounded-r-md bg-steel-blue hover:bg-steel-blue-600 focus:outline-none focus:ring-2 focus:ring-steel-blue">Search</button>
+                        <button type="submit" class="px-4 py-2 text-white rounded-r-md bg-steel-blue hover:bg-steel-blue-600 focus:outline-none focus:ring-2 focus:ring-steel-blue">
+                            <i class="fa-solid fa-magnifying-glass"></i>
+                        </button>
                     </div>
 
                     <div class="flex gap-4 grow">
@@ -44,7 +46,7 @@
                 </div>
 
                 <hr class="border-platinum-300">
-                <div class="filter space-y-4 overflow-y-auto transition-all duration-500 ease-in-out max-h-0 opacity-0">
+                <div id="filter-container" class="space-y-4 overflow-y-auto transition-all duration-500 ease-in-out max-h-0 opacity-0">
                     <div class="flex gap-4 *:flex-1 flex-wrap">
                         <select name="firstField" id="firstField" class="px-4 py-2 border border-platinum-300 rounded-md focus:outline-none focus:ring-2 focus:ring-steel-blue">
                             <option value="" selected>Any [Field] 1</option>
@@ -114,7 +116,7 @@
                         </div>
                     </div>
                 </div>
-                <hr id="filter-bottom" class="hidden border-platinum-300">
+                <hr id="filter-bottom" class="hidden border-platinum-300 pb-4">
             </form>
         </div>
     </main>
