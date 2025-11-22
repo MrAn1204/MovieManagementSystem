@@ -77,6 +77,98 @@
                         </select>
                     </div>
 
+                    <div class="flex md:flex-row flex-col gap-4 *:grow *:min-w-[calc(50%-8px)] md:flex-wrap flex-nowrap">
+                        <div class="flex flex-col relative">
+                            <label for="field5" class="font-medium">Field 5</label>
+                            <button type="button" onclick="toggleOptionDropdown('field5-dropdown')" class="flex-1 bg-white flex flex-col px-4 py-2 border border-platinum-300 rounded-md focus:outline-none focus:ring-2 focus:ring-steel-blue">
+                                <input type="hidden" value="" name="field5" id="field5">
+                                <div id="field5-display" class="overflow-auto min-h-6 flex flex-wrap gap-2 *:bg-platinum-200 *:px-1 *:rounded-md">
+                                </div>
+                            </button>
+                            <span class="absolute top-1/2 right-0 pointer-events-none"><i class="fa-solid fa-angle-down"></i></span>
+                            <ul id="field5-dropdown" class="dropdown left-0 hidden absolute top-full z-10 w-full bg-white border border-black">
+                                <li class="flex items-center w-full p-2 space-x-2">
+                                    <input onchange="updateSelected(event.target, 'field5-display')" id="option1" name="option1" type="checkbox" value="Option 1">
+                                    <label for="option1">
+                                        Option 1
+                                    </label>
+                                </li>
+                                <li class="flex items-center w-full p-2 space-x-2">
+                                    <input onchange="updateSelected(event.target, 'field5-display')" id="option2" name="option2" type="checkbox" value="Option 2">
+                                    <label for="option2">
+                                        Option 2
+                                    </label>
+                                </li>
+                                <li class="flex items-center w-full p-2 space-x-2">
+                                    <input onchange="updateSelected(event.target, 'field5-display')" id="option3" name="option3" type="checkbox" value="Option 3">
+                                    <label for="option3">
+                                        Option 3
+                                    </label>
+                                </li>
+                            </ul>
+                        </div>
+
+                        <div class="flex flex-col relative">
+                            <label for="field6" class="font-medium">Field 6</label>
+                            <button type="button" onclick="toggleOptionDropdown('field6-dropdown')" class="flex-1 bg-white flex flex-col px-4 py-2 border border-platinum-300 rounded-md focus:outline-none focus:ring-2 focus:ring-steel-blue">
+                                <input type="hidden" value="" name="field6" id="field6">
+                                <div id="field6-display" class="overflow-auto min-h-6 flex flex-wrap gap-2 *:bg-platinum-200 *:px-1 *:rounded-md">
+                                </div>
+                            </button>
+                            <span class="absolute top-1/2 right-0 pointer-events-none"><i class="fa-solid fa-angle-down"></i></span>
+                            <ul id="field6-dropdown" class="dropdown left-0 hidden absolute top-full z-10 w-full bg-white border border-black">
+                                <li class="flex items-center w-full p-2 space-x-2">
+                                    <input onchange="updateSelected(event.target, 'field6-display')" id="option4" name="option4" type="checkbox" value="Option 4">
+                                    <label for="option4">
+                                        Option 4
+                                    </label>
+                                </li>
+                                <li class="flex items-center w-full p-2 space-x-2">
+                                    <input onchange="updateSelected(event.target, 'field6-display')" id="option5" name="option5" type="checkbox" value="Option 5">
+                                    <label for="option5">
+                                        Option 5
+                                    </label>
+                                </li>
+                                <li class="flex items-center w-full p-2 space-x-2">
+                                    <input onchange="updateSelected(event.target, 'field6-display')" id="option6" name="option6" type="checkbox" value="Option 6">
+                                    <label for="option6">
+                                        Option 6
+                                    </label>
+                                </li>
+                            </ul>
+                        </div>
+
+                        <div class="flex flex-col relative">
+                            <label for="field7" class="font-medium">Field 7</label>
+                            <button type="button" onclick="toggleOptionDropdown('field7-dropdown')" class="flex-1 bg-white flex flex-col px-4 py-2 border border-platinum-300 rounded-md focus:outline-none focus:ring-2 focus:ring-steel-blue">
+                                <input type="hidden" value="" name="field7" id="field7">
+                                <div id="field7-display" class="overflow-auto min-h-6 flex flex-wrap gap-2 *:bg-platinum-200 *:px-1 *:rounded-md">
+                                </div>
+                            </button>
+                            <span class="absolute top-1/2 right-0 pointer-events-none"><i class="fa-solid fa-angle-down"></i></span>
+                            <ul id="field7-dropdown" class="dropdown left-0 hidden absolute top-full z-10 w-full bg-white border border-black">
+                                <li class="flex items-center w-full p-2 space-x-2">
+                                    <input onchange="updateSelected(event.target, 'field7-display')" id="option7" name="option7" type="checkbox" value="Option 7">
+                                    <label for="option7">
+                                        Option 7
+                                    </label>
+                                </li>
+                                <li class="flex items-center w-full p-2 space-x-2">
+                                    <input onchange="updateSelected(event.target, 'field7-display')" id="option8" name="option8" type="checkbox" value="Option 8">
+                                    <label for="option8">
+                                        Option 8
+                                    </label>
+                                </li>
+                                <li class="flex items-center w-full p-2 space-x-2">
+                                    <input onchange="updateSelected(event.target, 'field7-display')" id="option9" name="option9" type="checkbox" value="Option 9">
+                                    <label for="option9">
+                                        Option 9
+                                    </label>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+
                     <!-- Date time selector -->
                     <div>
                         <label for="dateTime" class="block font-medium">On:</label>
