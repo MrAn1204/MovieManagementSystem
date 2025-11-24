@@ -11,7 +11,7 @@
 </head>
 
 <body class="bg-ghost-white flex flex-col h-screen m-0 text-space-black">
-    <main class="flex flex-1">
+    <main class="flex flex-1 overflow-auto">
         <div class="w-full flex flex-col items-center justify-center px-4 py-2 overflow-auto">
             <!-- Table -->
             <div id="table-container" class="flex flex-col flex-1 min-h-0 w-full md:w-11/12">
@@ -158,9 +158,24 @@
     
                 <!-- Pagination -->
                 <div class="flex md:flex-row flex-col justify-between items-center pt-2 gap-2">
-                    <div class="w-full flex md:flex-col flex-row justify-between gap-4 md:gap-0">
-                        <p>1 - 10 of 50 entries</p>
-                        <div class="h-fit flex flex-wrap items-center justify-end md:justify-start">
+                    <div class="w-full flex md:flex-col md:items-baseline items-center flex-row gap-x-4 md:gap-0 flex-wrap">
+                        <p class="flex-1 min-w-fit">1 - 10 of 50 entries</p>
+                        
+                        <div class="w-full sm:w-fit flex md:hidden gap-2 items-center justify-center sm:order-2 order-3">
+                            <button disabled class="rounded-md border border-platinum-300 p-2 text-center text-sm transition-all shadow-sm hover:shadow-lg hover:text-white hover:bg-space-black hover:border-space-black focus:text-white focus:bg-space-black focus:border-space-black active:border-space-black active:text-white active:bg-space-black disabled:pointer-events-none disabled:opacity-50 disabled:shadow-none" type="button">
+                                Prev
+                            </button>
+                            
+                            <p class="text-center">
+                                Page <strong>1</strong> of <strong>10</strong>
+                            </p>
+                            
+                            <button class="rounded-md border border-platinum-300 p-2 text-center text-sm transition-all shadow-sm hover:shadow-lg hover:text-white hover:bg-space-black hover:border-space-black focus:text-white focus:bg-space-black focus:border-space-black active:border-space-black active:text-white active:bg-space-black disabled:pointer-events-none disabled:opacity-50 disabled:shadow-none" type="button">
+                                Next
+                            </button>
+                        </div>
+                        
+                        <div class="flex-1 min-w-fit flex flex-wrap items-center justify-end md:justify-start sm:order-3 order-2">
                             <label for="pages" class="mr-2">Page size:</label>
                             <select id="pages" name="pages" class="border border-platinum-300 rounded-md ">
                                 <option value="10">10</option>
@@ -199,21 +214,6 @@
                             Next
                         </button>
                     </div>
-                    
-                    <div class="flex md:hidden gap-2 items-center">
-                        <button disabled class="rounded-md border border-platinum-300 p-2 text-center text-sm transition-all shadow-sm hover:shadow-lg hover:text-white hover:bg-space-black hover:border-space-black focus:text-white focus:bg-space-black focus:border-space-black active:border-space-black active:text-white active:bg-space-black disabled:pointer-events-none disabled:opacity-50 disabled:shadow-none" type="button">
-                            Prev
-                        </button>
-                        
-                        <p class="text-center">
-                            Page <strong>1</strong> of <strong>10</strong>
-                        </p>
-                        
-                        <button class="rounded-md border border-platinum-300 p-2 text-center text-sm transition-all shadow-sm hover:shadow-lg hover:text-white hover:bg-space-black hover:border-space-black focus:text-white focus:bg-space-black focus:border-space-black active:border-space-black active:text-white active:bg-space-black disabled:pointer-events-none disabled:opacity-50 disabled:shadow-none" type="button">
-                            Next
-                        </button>
-                    </div>
-
                 </div>
             </div>
         </div>
