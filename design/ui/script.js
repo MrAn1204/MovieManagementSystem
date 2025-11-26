@@ -29,7 +29,7 @@ function toggleFilter() {
     const filterButton = document.getElementsByClassName('filter-button')[0];
     const filterBottom = document.getElementById('filter-bottom');
 
-    filter.classList.toggle('max-h-full');
+    filter.classList.toggle('h-screen');
     filter.classList.toggle('opacity-100');
     
     filterButton.classList.toggle('bg-steel-blue-500');

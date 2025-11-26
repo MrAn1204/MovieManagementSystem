@@ -12,14 +12,14 @@
 </head>
 
 <body class="bg-ghost-white flex flex-col h-screen m-0 text-space-black">
-    <main class="flex flex-1">
-        <div class="w-full flex flex-col items-center px-4 py-2 overflow-auto">
+    <main class="flex flex-1 overflow-auto">
+        <div class="w-full flex flex-col items-center px-4 py-2 overflow-hidden">
             <!-- Search Bar -->
-            <form action="" method="get" class="flex flex-col w-full md:w-11/12 space-y-4 max-h-[50%]">
+            <form action="" method="get" id="search-container" class="flex flex-col w-full md:w-11/12 sm:max-h-[50%] max-h-full">
                 <div class="flex gap-4 flex-wrap">
                     <div class="flex grow-[3]">
                         <input type="text" name="keyword" placeholder="Search..." class="w-full px-4 py-2 border border-platinum-300 rounded-l-md focus:outline-none focus:ring-2 focus:ring-steel-blue">
-                        <button type="submit" class="px-4 py-2 text-white rounded-r-md bg-steel-blue hover:bg-steel-blue-600 focus:outline-none focus:ring-2 focus:ring-steel-blue">
+                        <button type="submit" class="w-12 text-white rounded-r-md bg-steel-blue hover:bg-steel-blue-600 focus:outline-none focus:ring-2 focus:ring-steel-blue">
                             <i class="fa-solid fa-magnifying-glass"></i>
                         </button>
                     </div>
@@ -31,7 +31,7 @@
                                 <i id="icon-desc" class="fa-solid fa-arrow-down-short-wide hidden"></i>
                             </button>
 
-                            <select name="order" id="order" class="grow p-2 border border-l-0 rounded-tr-md rounded-br-md border-platinum-300 focus:outline-none focus:ring-2 focus:ring-steel-blue">
+                            <select name="order" id="order" class="w-full p-2 border border-l-0 rounded-tr-md rounded-br-md border-platinum-300 focus:outline-none focus:ring-2 focus:ring-steel-blue">
                                 <option value="" disabled selected hidden>Order by</option>
                                 <option value="option1">Option 1</option>
                                 <option value="option2">Option 2</option>
@@ -39,105 +39,49 @@
                             </select>
                         </div>
     
-                        <button type="button" class="filter-button grow max-w-12 border border-steel-blue rounded-md hover:bg-platinum-100 text-steel-blue focus:outline-none" onclick="toggleFilter()">
+                        <button type="button" class="filter-button w-1/4 max-w-12 border border-steel-blue rounded-md hover:bg-platinum-100 text-steel-blue focus:outline-none" onclick="toggleFilter()">
                             <i class="fa-solid fa-filter"></i>
                         </button>
                     </div>
                 </div>
 
-                <hr class="border-platinum-300">
-                <div id="filter-container" class="space-y-4 overflow-y-auto transition-all duration-500 ease-in-out max-h-0 opacity-0">
-                    <div class="flex gap-4 *:flex-1 flex-wrap">
-                        <select name="firstField" id="firstField" class="px-4 py-2 border border-platinum-300 rounded-md focus:outline-none focus:ring-2 focus:ring-steel-blue">
+                <hr class="my-4 border-platinum-300">
+                <div id="filter-container" class="space-y-4 overflow-y-auto transition-all duration-500 ease-in-out h-0 sm:max-h-fit opacity-0">
+                    <div class="flex gap-4 *:flex-1 *:min-w-40 flex-wrap">
+                        <select name="field1" id="field1" class="px-4 py-2 border border-platinum-300 rounded-md focus:outline-none focus:ring-2 focus:ring-steel-blue">
                             <option value="" selected>Any [Field] 1</option>
                             <option value="option1">Option 1</option>
                             <option value="option2">Option 2</option>
                             <option value="option3">Option 3</option>
                         </select>
 
-                        <select name="secondField" id="secondField" class="px-4 py-2 border border-platinum-300 rounded-md focus:outline-none focus:ring-2 focus:ring-steel-blue">
+                        <select name="field2" id="field2" class="px-4 py-2 border border-platinum-300 rounded-md focus:outline-none focus:ring-2 focus:ring-steel-blue">
                             <option value="" selected>Any [Field] 2</option>
                             <option value="option1">Option 1</option>
                             <option value="option2">Option 2</option>
                             <option value="option3">Option 3</option>
                         </select>
 
-                        <select name="thirdField" id="thirdField" class="px-4 py-2 border border-platinum-300 rounded-md focus:outline-none focus:ring-2 focus:ring-steel-blue">
+                        <select name="field3" id="field3" class="px-4 py-2 border border-platinum-300 rounded-md focus:outline-none focus:ring-2 focus:ring-steel-blue">
                             <option value="" selected>Any [Field] 3</option>
                             <option value="option1">Option 1</option>
                             <option value="option2">Option 2</option>
                             <option value="option3">Option 3</option>
                         </select>
 
-                        <select name="fourthField" id="fourthField" class="px-4 py-2 border border-platinum-300 rounded-md focus:outline-none focus:ring-2 focus:ring-steel-blue">
+                        <select name="field4" id="field4" class="px-4 py-2 border border-platinum-300 rounded-md focus:outline-none focus:ring-2 focus:ring-steel-blue">
                             <option value="" selected>Any [Field] 4</option>
                             <option value="option1">Option 1</option>
                             <option value="option2">Option 2</option>
                             <option value="option3">Option 3</option>
                         </select>
+                        
+                        <input type="number" name="field5" id="field5" placeholder="[Field] 5" class="px-4 py-2 border border-platinum-300 rounded-md focus:outline-none focus:ring-2 focus:ring-steel-blue">
+                        
+                        <input type="number" name="field6" id="field6" placeholder="[Field] 6" class="px-4 py-2 border border-platinum-300 rounded-md focus:outline-none focus:ring-2 focus:ring-steel-blue">
                     </div>
 
                     <div class="flex md:flex-row flex-col gap-4 *:grow *:min-w-[calc(50%-8px)] md:flex-wrap flex-nowrap">
-                        <div class="flex flex-col relative">
-                            <label for="field5" class="font-medium">Field 5</label>
-                            <button type="button" onclick="toggleOptionDropdown('field5-dropdown')" class="flex-1 bg-white flex flex-col px-4 py-2 border border-platinum-300 rounded-md focus:outline-none focus:ring-2 focus:ring-steel-blue">
-                                <input hidden value="" name="field5" id="field5">
-                                <div id="field5-display" class="overflow-auto min-h-6 flex flex-wrap gap-2 *:bg-platinum-200 *:px-1 *:rounded-md">
-                                </div>
-                            </button>
-                            <span class="absolute top-1/2 right-0 pointer-events-none"><i class="fa-solid fa-angle-down"></i></span>
-                            <ul id="field5-dropdown" class="dropdown left-0 hidden absolute top-full z-10 w-full bg-white border border-black">
-                                <li class="flex items-center w-full p-2 space-x-2">
-                                    <input onchange="updateSelected(event.target, 'field5-display')" id="option1" name="option1" type="checkbox" value="Option 1">
-                                    <label for="option1">
-                                        Option 1
-                                    </label>
-                                </li>
-                                <li class="flex items-center w-full p-2 space-x-2">
-                                    <input onchange="updateSelected(event.target, 'field5-display')" id="option2" name="option2" type="checkbox" value="Option 2">
-                                    <label for="option2">
-                                        Option 2
-                                    </label>
-                                </li>
-                                <li class="flex items-center w-full p-2 space-x-2">
-                                    <input onchange="updateSelected(event.target, 'field5-display')" id="option3" name="option3" type="checkbox" value="Option 3">
-                                    <label for="option3">
-                                        Option 3
-                                    </label>
-                                </li>
-                            </ul>
-                        </div>
-
-                        <div class="flex flex-col relative">
-                            <label for="field6" class="font-medium">Field 6</label>
-                            <button type="button" onclick="toggleOptionDropdown('field6-dropdown')" class="flex-1 bg-white flex flex-col px-4 py-2 border border-platinum-300 rounded-md focus:outline-none focus:ring-2 focus:ring-steel-blue">
-                                <input hidden value="" name="field6" id="field6">
-                                <div id="field6-display" class="overflow-auto min-h-6 flex flex-wrap gap-2 *:bg-platinum-200 *:px-1 *:rounded-md">
-                                </div>
-                            </button>
-                            <span class="absolute top-1/2 right-0 pointer-events-none"><i class="fa-solid fa-angle-down"></i></span>
-                            <ul id="field6-dropdown" class="dropdown left-0 hidden absolute top-full z-10 w-full bg-white border border-black">
-                                <li class="flex items-center w-full p-2 space-x-2">
-                                    <input onchange="updateSelected(event.target, 'field6-display')" id="option4" name="option4" type="checkbox" value="Option 4">
-                                    <label for="option4">
-                                        Option 4
-                                    </label>
-                                </li>
-                                <li class="flex items-center w-full p-2 space-x-2">
-                                    <input onchange="updateSelected(event.target, 'field6-display')" id="option5" name="option5" type="checkbox" value="Option 5">
-                                    <label for="option5">
-                                        Option 5
-                                    </label>
-                                </li>
-                                <li class="flex items-center w-full p-2 space-x-2">
-                                    <input onchange="updateSelected(event.target, 'field6-display')" id="option6" name="option6" type="checkbox" value="Option 6">
-                                    <label for="option6">
-                                        Option 6
-                                    </label>
-                                </li>
-                            </ul>
-                        </div>
-
                         <div class="flex flex-col relative">
                             <label for="field7" class="font-medium">Field 7</label>
                             <button type="button" onclick="toggleOptionDropdown('field7-dropdown')" class="flex-1 bg-white flex flex-col px-4 py-2 border border-platinum-300 rounded-md focus:outline-none focus:ring-2 focus:ring-steel-blue">
@@ -148,19 +92,79 @@
                             <span class="absolute top-1/2 right-0 pointer-events-none"><i class="fa-solid fa-angle-down"></i></span>
                             <ul id="field7-dropdown" class="dropdown left-0 hidden absolute top-full z-10 w-full bg-white border border-black">
                                 <li class="flex items-center w-full p-2 space-x-2">
-                                    <input onchange="updateSelected(event.target, 'field7-display')" id="option7" name="option7" type="checkbox" value="Option 7">
+                                    <input onchange="updateSelected(event.target, 'field7-display')" id="option1" name="option1" type="checkbox" value="Option 1">
+                                    <label for="option1">
+                                        Option 1
+                                    </label>
+                                </li>
+                                <li class="flex items-center w-full p-2 space-x-2">
+                                    <input onchange="updateSelected(event.target, 'field7-display')" id="option2" name="option2" type="checkbox" value="Option 2">
+                                    <label for="option2">
+                                        Option 2
+                                    </label>
+                                </li>
+                                <li class="flex items-center w-full p-2 space-x-2">
+                                    <input onchange="updateSelected(event.target, 'field7-display')" id="option3" name="option3" type="checkbox" value="Option 3">
+                                    <label for="option3">
+                                        Option 3
+                                    </label>
+                                </li>
+                            </ul>
+                        </div>
+
+                        <div class="flex flex-col relative">
+                            <label for="field8" class="font-medium">Field 8</label>
+                            <button type="button" onclick="toggleOptionDropdown('field8-dropdown')" class="flex-1 bg-white flex flex-col px-4 py-2 border border-platinum-300 rounded-md focus:outline-none focus:ring-2 focus:ring-steel-blue">
+                                <input hidden value="" name="field8" id="field8">
+                                <div id="field8-display" class="overflow-auto min-h-6 flex flex-wrap gap-2 *:bg-platinum-200 *:px-1 *:rounded-md">
+                                </div>
+                            </button>
+                            <span class="absolute top-1/2 right-0 pointer-events-none"><i class="fa-solid fa-angle-down"></i></span>
+                            <ul id="field8-dropdown" class="dropdown left-0 hidden absolute top-full z-10 w-full bg-white border border-black">
+                                <li class="flex items-center w-full p-2 space-x-2">
+                                    <input onchange="updateSelected(event.target, 'field8-display')" id="option4" name="option4" type="checkbox" value="Option 4">
+                                    <label for="option4">
+                                        Option 4
+                                    </label>
+                                </li>
+                                <li class="flex items-center w-full p-2 space-x-2">
+                                    <input onchange="updateSelected(event.target, 'field8-display')" id="option5" name="option5" type="checkbox" value="Option 5">
+                                    <label for="option5">
+                                        Option 5
+                                    </label>
+                                </li>
+                                <li class="flex items-center w-full p-2 space-x-2">
+                                    <input onchange="updateSelected(event.target, 'field8-display')" id="option6" name="option6" type="checkbox" value="Option 6">
+                                    <label for="option6">
+                                        Option 6
+                                    </label>
+                                </li>
+                            </ul>
+                        </div>
+
+                        <div class="flex flex-col relative">
+                            <label for="field9" class="font-medium">Field 9</label>
+                            <button type="button" onclick="toggleOptionDropdown('field9-dropdown')" class="flex-1 bg-white flex flex-col px-4 py-2 border border-platinum-300 rounded-md focus:outline-none focus:ring-2 focus:ring-steel-blue">
+                                <input hidden value="" name="field9" id="field9">
+                                <div id="field9-display" class="overflow-auto min-h-6 flex flex-wrap gap-2 *:bg-platinum-200 *:px-1 *:rounded-md">
+                                </div>
+                            </button>
+                            <span class="absolute top-1/2 right-0 pointer-events-none"><i class="fa-solid fa-angle-down"></i></span>
+                            <ul id="field9-dropdown" class="dropdown left-0 hidden absolute top-full z-10 w-full bg-white border border-black">
+                                <li class="flex items-center w-full p-2 space-x-2">
+                                    <input onchange="updateSelected(event.target, 'field9-display')" id="option7" name="option7" type="checkbox" value="Option 7">
                                     <label for="option7">
                                         Option 7
                                     </label>
                                 </li>
                                 <li class="flex items-center w-full p-2 space-x-2">
-                                    <input onchange="updateSelected(event.target, 'field7-display')" id="option8" name="option8" type="checkbox" value="Option 8">
+                                    <input onchange="updateSelected(event.target, 'field9-display')" id="option8" name="option8" type="checkbox" value="Option 8">
                                     <label for="option8">
                                         Option 8
                                     </label>
                                 </li>
                                 <li class="flex items-center w-full p-2 space-x-2">
-                                    <input onchange="updateSelected(event.target, 'field7-display')" id="option9" name="option9" type="checkbox" value="Option 9">
+                                    <input onchange="updateSelected(event.target, 'field9-display')" id="option9" name="option9" type="checkbox" value="Option 9">
                                     <label for="option9">
                                         Option 9
                                     </label>
@@ -208,7 +212,7 @@
                         </div>
                     </div>
                 </div>
-                <hr id="filter-bottom" class="hidden border-platinum-300 pb-4">
+                <hr id="filter-bottom" class="hidden my-4 border-platinum-300">
             </form>
         </div>
     </main>
