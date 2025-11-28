@@ -6,6 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Search</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.1/css/all.min.css">
+    <link href="https://cdn.jsdelivr.net/npm/flowbite@3.1.2/dist/flowbite.min.css" rel="stylesheet" />
     <script src="https://cdn.tailwindcss.com"></script>
     <script src="tailwind.config.js"></script>
     <script src="script.js"></script>
@@ -15,11 +16,11 @@
     <main class="flex flex-1 overflow-auto">
         <div class="w-full flex flex-col items-center px-4 py-2 overflow-hidden">
             <!-- Search Bar -->
-            <form action="" method="get" id="search-container" class="flex flex-col w-full md:w-11/12 sm:max-h-[50%] max-h-full">
-                <div class="flex gap-4 flex-wrap">
+            <form action="" method="get" id="search-container" class="flex flex-col w-full md:w-11/12 lg:max-h-[50%] max-h-screen">
+                <div class="flex gap-4 sm:flex-row flex-col">
                     <div class="flex grow-[3]">
                         <input type="text" name="keyword" placeholder="Search..." class="w-full px-4 py-2 border border-platinum-300 rounded-l-md focus:outline-none focus:ring-2 focus:ring-steel-blue">
-                        <button type="submit" class="w-12 text-white rounded-r-md bg-steel-blue hover:bg-steel-blue-600 focus:outline-none focus:ring-2 focus:ring-steel-blue">
+                        <button type="submit" class="w-12 text-white rounded-r-md bg-steel-blue hover:bg-steel-blue-500 focus:outline-none focus:ring-2 focus:ring-steel-blue">
                             <i class="fa-solid fa-magnifying-glass"></i>
                         </button>
                     </div>
@@ -46,7 +47,7 @@
                 </div>
 
                 <hr class="my-4 border-platinum-300">
-                <div id="filter-container" class="space-y-4 overflow-y-auto transition-all duration-500 ease-in-out h-0 sm:max-h-fit opacity-0">
+                <div id="filter-container" class="space-y-4 overflow-y-auto transition-all duration-500 ease-in-out h-0 opacity-0">
                     <div class="flex gap-4 *:flex-1 *:min-w-40 flex-wrap">
                         <select name="field1" id="field1" class="px-4 py-2 border border-platinum-300 rounded-md focus:outline-none focus:ring-2 focus:ring-steel-blue">
                             <option value="" selected>Any [Field] 1</option>
@@ -82,94 +83,220 @@
                     </div>
 
                     <div class="flex md:flex-row flex-col gap-4 *:grow *:min-w-[calc(50%-8px)] md:flex-wrap flex-nowrap">
-                        <div class="flex flex-col relative">
+                        <div class="flex flex-col">
                             <label for="field7" class="font-medium">Field 7</label>
-                            <button type="button" onclick="toggleOptionDropdown('field7-dropdown')" class="flex-1 bg-white flex flex-col px-4 py-2 border border-platinum-300 rounded-md focus:outline-none focus:ring-2 focus:ring-steel-blue">
+                            <button id="field7-button" data-dropdown-toggle="field7-dropdown" data-dropdown-placement="bottom" class="flex-1 bg-white flex flex-col px-4 py-2 border border-platinum-300 rounded-md focus:outline-none focus:ring-2 focus:ring-steel-blue" type="button">
                                 <input hidden value="" name="field7" id="field7">
                                 <div id="field7-display" class="overflow-auto min-h-6 flex flex-wrap gap-2 *:bg-platinum-200 *:px-1 *:rounded-md">
                                 </div>
                             </button>
-                            <span class="absolute top-1/2 right-0 pointer-events-none"><i class="fa-solid fa-angle-down"></i></span>
-                            <ul id="field7-dropdown" class="dropdown max-h-32 overflow-auto left-0 hidden absolute top-full z-10 w-full bg-white border border-black">
-                                <li class="flex items-center w-full p-2 space-x-2">
-                                    <input onchange="updateSelected(event.target, 'field7-display')" id="option1" name="option1" type="checkbox" value="Option 1">
-                                    <label for="option1">
-                                        Option 1
-                                    </label>
-                                </li>
-                                <li class="flex items-center w-full p-2 space-x-2">
-                                    <input onchange="updateSelected(event.target, 'field7-display')" id="option2" name="option2" type="checkbox" value="Option 2">
-                                    <label for="option2">
-                                        Option 2
-                                    </label>
-                                </li>
-                                <li class="flex items-center w-full p-2 space-x-2">
-                                    <input onchange="updateSelected(event.target, 'field7-display')" id="option3" name="option3" type="checkbox" value="Option 3">
-                                    <label for="option3">
-                                        Option 3
-                                    </label>
-                                </li>
-                            </ul>
+
+                            <div id="field7-dropdown" class="z-10 hidden bg-white rounded-lg shadow-sm w-60 border border-platinum-300">
+                                <div class="p-3">
+                                    <label for="field7-search" class="sr-only">Search</label>
+                                    <div class="relative">
+                                        <div class="absolute inset-y-0 rtl:inset-r-0 start-0 flex items-center ps-3 pointer-events-none">
+                                            <i class="fa-solid fa-magnifying-glass w-4 h-4 text-platinum-500"></i>
+                                        </div>
+                                        <input type="text" id="field7-search" class="block w-full p-2 ps-10 text-sm border border-platinum-300 rounded-lg focus:ring-steel-blue-500 focus:border-steel-blue-500" placeholder="Search...">
+                                    </div>
+                                </div>
+                                <ul class="h-48 px-3 pb-3 overflow-y-auto text-sm text-platinum-700" aria-labelledby="field7-button">
+                                    <li>
+                                        <div class="flex items-center ps-2 rounded-sm hover:bg-platinum-100">
+                                            <input onchange="updateSelected(event.target, 'field7', 'field7-display')" id="checkbox-item-1" type="checkbox" value="Option 1" class="w-4 h-4 text-steel-blue-500 bg-platinum-50 border border-platinum-300 rounded-sm focus:ring-steel-blue-500 focus:ring-2">
+                                            <label for="checkbox-item-1" class="w-full py-2 ms-2 text-sm font-medium rounded-sm">Option 1</label>
+                                        </div>
+                                    </li>
+                                    <li>
+                                        <div class="flex items-center ps-2 rounded-sm hover:bg-platinum-100">
+                                            <input onchange="updateSelected(event.target, 'field7', 'field7-display')" id="checkbox-item-2" type="checkbox" value="Option 2" class="w-4 h-4 text-steel-blue-500 bg-platinum-50 border border-platinum-300 rounded-sm focus:ring-steel-blue-500 focus:ring-2">
+                                            <label for="checkbox-item-2" class="w-full py-2 ms-2 text-sm font-medium rounded-sm">Option 2</label>
+                                        </div>
+                                    </li>
+                                    <li>
+                                        <div class="flex items-center ps-2 rounded-sm hover:bg-platinum-100">
+                                            <input onchange="updateSelected(event.target, 'field7', 'field7-display')" id="checkbox-item-3" type="checkbox" value="Option 3" class="w-4 h-4 text-steel-blue-500 bg-platinum-50 border border-platinum-300 rounded-sm focus:ring-steel-blue-500 focus:ring-2">
+                                            <label for="checkbox-item-3" class="w-full py-2 ms-2 text-sm font-medium rounded-sm">Option 3</label>
+                                        </div>
+                                    </li>
+                                    <li>
+                                        <div class="flex items-center ps-2 rounded-sm hover:bg-platinum-100">
+                                            <input onchange="updateSelected(event.target, 'field7', 'field7-display')" id="checkbox-item-4" type="checkbox" value="Option 4" class="w-4 h-4 text-steel-blue-500 bg-platinum-50 border border-platinum-300 rounded-sm focus:ring-steel-blue-500 focus:ring-2">
+                                            <label for="checkbox-item-4" class="w-full py-2 ms-2 text-sm font-medium rounded-sm">Option 4</label>
+                                        </div>
+                                    </li>
+                                    <li>
+                                        <div class="flex items-center ps-2 rounded-sm hover:bg-platinum-100">
+                                            <input onchange="updateSelected(event.target, 'field7', 'field7-display')" id="checkbox-item-5" type="checkbox" value="Option 5" class="w-4 h-4 text-steel-blue-500 bg-platinum-50 border border-platinum-300 rounded-sm focus:ring-steel-blue-500 focus:ring-2">
+                                            <label for="checkbox-item-5" class="w-full py-2 ms-2 text-sm font-medium rounded-sm">Option 5</label>
+                                        </div>
+                                    </li>
+                                    <li>
+                                        <div class="flex items-center ps-2 rounded-sm hover:bg-platinum-100">
+                                            <input onchange="updateSelected(event.target, 'field7', 'field7-display')" id="checkbox-item-6" type="checkbox" value="Option 6" class="w-4 h-4 text-steel-blue-500 bg-platinum-50 border border-platinum-300 rounded-sm focus:ring-steel-blue-500 focus:ring-2">
+                                            <label for="checkbox-item-6" class="w-full py-2 ms-2 text-sm font-medium rounded-sm">Option 6</label>
+                                        </div>
+                                    </li>
+                                    <li>
+                                        <div class="flex items-center ps-2 rounded-sm hover:bg-platinum-100">
+                                            <input onchange="updateSelected(event.target, 'field7', 'field7-display')" id="checkbox-item-7" type="checkbox" value="Option 7" class="w-4 h-4 text-steel-blue-500 bg-platinum-50 border border-platinum-300 rounded-sm focus:ring-steel-blue-500 focus:ring-2">
+                                            <label for="checkbox-item-7" class="w-full py-2 ms-2 text-sm font-medium rounded-sm">Option 7</label>
+                                        </div>
+                                    </li>
+                                </ul>
+                                <div class="flex items-center text-white p-3 border-t border-platinum-200 rounded-b-lg">
+                                    <button class="w-full py-1 text-sm font-medium bg-vermilion-500 rounded-lg hover:bg-vermilion-600">
+                                        <i class="fa-regular fa-square-minus"></i>
+                                        Clear all
+                                    </button>
+                                </div>
+                            </a>
+                            </div>
                         </div>
 
-                        <div class="flex flex-col relative">
+                        <div class="flex flex-col">
                             <label for="field8" class="font-medium">Field 8</label>
-                            <button type="button" onclick="toggleOptionDropdown('field8-dropdown')" class="flex-1 bg-white flex flex-col px-4 py-2 border border-platinum-300 rounded-md focus:outline-none focus:ring-2 focus:ring-steel-blue">
+                            <button id="field8-button" data-dropdown-toggle="field8-dropdown" data-dropdown-placement="bottom" class="flex-1 bg-white flex flex-col px-4 py-2 border border-platinum-300 rounded-md focus:outline-none focus:ring-2 focus:ring-steel-blue" type="button">
                                 <input hidden value="" name="field8" id="field8">
                                 <div id="field8-display" class="overflow-auto min-h-6 flex flex-wrap gap-2 *:bg-platinum-200 *:px-1 *:rounded-md">
                                 </div>
                             </button>
-                            <span class="absolute top-1/2 right-0 pointer-events-none"><i class="fa-solid fa-angle-down"></i></span>
-                            <ul id="field8-dropdown" class="dropdown max-h-32 overflow-auto left-0 hidden absolute top-full z-10 w-full bg-white border border-black">
-                                <li class="flex items-center w-full p-2 space-x-2">
-                                    <input onchange="updateSelected(event.target, 'field8-display')" id="option4" name="option4" type="checkbox" value="Option 4">
-                                    <label for="option4">
-                                        Option 4
-                                    </label>
-                                </li>
-                                <li class="flex items-center w-full p-2 space-x-2">
-                                    <input onchange="updateSelected(event.target, 'field8-display')" id="option5" name="option5" type="checkbox" value="Option 5">
-                                    <label for="option5">
-                                        Option 5
-                                    </label>
-                                </li>
-                                <li class="flex items-center w-full p-2 space-x-2">
-                                    <input onchange="updateSelected(event.target, 'field8-display')" id="option6" name="option6" type="checkbox" value="Option 6">
-                                    <label for="option6">
-                                        Option 6
-                                    </label>
-                                </li>
-                            </ul>
+
+                            <div id="field8-dropdown" class="z-10 hidden bg-white rounded-lg shadow-sm w-60 border border-platinum-300">
+                                <div class="p-3">
+                                    <label for="field8-search" class="sr-only">Search</label>
+                                    <div class="relative">
+                                        <div class="absolute inset-y-0 rtl:inset-r-0 start-0 flex items-center ps-3 pointer-events-none">
+                                            <i class="fa-solid fa-magnifying-glass w-4 h-4 text-platinum-500"></i>
+                                        </div>
+                                        <input type="text" id="field8-search" class="block w-full p-2 ps-10 text-sm border border-platinum-300 rounded-lg focus:ring-steel-blue-500 focus:border-steel-blue-500" placeholder="Search...">
+                                    </div>
+                                </div>
+                                <ul class="h-48 px-3 pb-3 overflow-y-auto text-sm text-platinum-700" aria-labelledby="field8-button">
+                                    <li>
+                                        <div class="flex items-center ps-2 rounded-sm hover:bg-platinum-100">
+                                            <input onchange="updateSelected(event.target, 'field8', 'field8-display')" id="checkbox-item-8" type="checkbox" value="Option 8" class="w-4 h-4 text-steel-blue-500 bg-platinum-50 border border-platinum-300 rounded-sm focus:ring-steel-blue-500 focus:ring-2">
+                                            <label for="checkbox-item-8" class="w-full py-2 ms-2 text-sm font-medium rounded-sm">Option 8</label>
+                                        </div>
+                                    </li>
+                                    <li>
+                                        <div class="flex items-center ps-2 rounded-sm hover:bg-platinum-100">
+                                            <input onchange="updateSelected(event.target, 'field8', 'field8-display')" id="checkbox-item-9" type="checkbox" value="Option 9" class="w-4 h-4 text-steel-blue-500 bg-platinum-50 border border-platinum-300 rounded-sm focus:ring-steel-blue-500 focus:ring-2">
+                                            <label for="checkbox-item-9" class="w-full py-2 ms-2 text-sm font-medium rounded-sm">Option 9</label>
+                                        </div>
+                                    </li>
+                                    <li>
+                                        <div class="flex items-center ps-2 rounded-sm hover:bg-platinum-100">
+                                            <input onchange="updateSelected(event.target, 'field8', 'field8-display')" id="checkbox-item-10" type="checkbox" value="Option 10" class="w-4 h-4 text-steel-blue-500 bg-platinum-50 border border-platinum-300 rounded-sm focus:ring-steel-blue-500 focus:ring-2">
+                                            <label for="checkbox-item-10" class="w-full py-2 ms-2 text-sm font-medium rounded-sm">Option 10</label>
+                                        </div>
+                                    </li>
+                                    <li>
+                                        <div class="flex items-center ps-2 rounded-sm hover:bg-platinum-100">
+                                            <input onchange="updateSelected(event.target, 'field8', 'field8-display')" id="checkbox-item-11" type="checkbox" value="Option 11" class="w-4 h-4 text-steel-blue-500 bg-platinum-50 border border-platinum-300 rounded-sm focus:ring-steel-blue-500 focus:ring-2">
+                                            <label for="checkbox-item-11" class="w-full py-2 ms-2 text-sm font-medium rounded-sm">Option 11</label>
+                                        </div>
+                                    </li>
+                                    <li>
+                                        <div class="flex items-center ps-2 rounded-sm hover:bg-platinum-100">
+                                            <input onchange="updateSelected(event.target, 'field8', 'field8-display')" id="checkbox-item-12" type="checkbox" value="Option 12" class="w-4 h-4 text-steel-blue-1200 bg-platinum-50 border border-platinum-300 rounded-sm focus:ring-steel-blue-500 focus:ring-2">
+                                            <label for="checkbox-item-12" class="w-full py-2 ms-2 text-sm font-medium rounded-sm">Option 12</label>
+                                        </div>
+                                    </li>
+                                    <li>
+                                        <div class="flex items-center ps-2 rounded-sm hover:bg-platinum-100">
+                                            <input onchange="updateSelected(event.target, 'field8', 'field8-display')" id="checkbox-item-13" type="checkbox" value="Option 13" class="w-4 h-4 text-steel-blue-500 bg-platinum-50 border border-platinum-300 rounded-sm focus:ring-steel-blue-500 focus:ring-2">
+                                            <label for="checkbox-item-13" class="w-full py-2 ms-2 text-sm font-medium rounded-sm">Option 13</label>
+                                        </div>
+                                    </li>
+                                    <li>
+                                        <div class="flex items-center ps-2 rounded-sm hover:bg-platinum-100">
+                                            <input onchange="updateSelected(event.target, 'field8', 'field8-display')" id="checkbox-item-14" type="checkbox" value="Option 14" class="w-4 h-4 text-steel-blue-500 bg-platinum-50 border border-platinum-300 rounded-sm focus:ring-steel-blue-500 focus:ring-2">
+                                            <label for="checkbox-item-14" class="w-full py-2 ms-2 text-sm font-medium rounded-sm">Option 14</label>
+                                        </div>
+                                    </li>
+                                </ul>
+                                <div class="flex items-center text-white p-3 border-t border-platinum-200 rounded-b-lg">
+                                    <button class="w-full py-1 text-sm font-medium bg-vermilion-500 rounded-lg hover:bg-vermilion-600">
+                                        <i class="fa-regular fa-square-minus"></i>
+                                        Clear all
+                                    </button>
+                                </div>
+                            </a>
+                            </div>
                         </div>
 
-                        <div class="flex flex-col relative">
+                        <div class="flex flex-col">
                             <label for="field9" class="font-medium">Field 9</label>
-                            <button type="button" onclick="toggleOptionDropdown('field9-dropdown')" class="flex-1 bg-white flex flex-col px-4 py-2 border border-platinum-300 rounded-md focus:outline-none focus:ring-2 focus:ring-steel-blue">
+                            <button id="field9-button" data-dropdown-toggle="field9-dropdown" data-dropdown-placement="bottom" class="flex-1 bg-white flex flex-col px-4 py-2 border border-platinum-300 rounded-md focus:outline-none focus:ring-2 focus:ring-steel-blue" type="button">
                                 <input hidden value="" name="field9" id="field9">
                                 <div id="field9-display" class="overflow-auto min-h-6 flex flex-wrap gap-2 *:bg-platinum-200 *:px-1 *:rounded-md">
                                 </div>
                             </button>
-                            <span class="absolute top-1/2 right-0 pointer-events-none"><i class="fa-solid fa-angle-down"></i></span>
-                            <ul id="field9-dropdown" class="dropdown max-h-32 overflow-auto left-0 hidden absolute top-full z-10 w-full bg-white border border-black">
-                                <li class="flex items-center w-full p-2 space-x-2">
-                                    <input onchange="updateSelected(event.target, 'field9-display')" id="option7" name="option7" type="checkbox" value="Option 7">
-                                    <label for="option7">
-                                        Option 7
-                                    </label>
-                                </li>
-                                <li class="flex items-center w-full p-2 space-x-2">
-                                    <input onchange="updateSelected(event.target, 'field9-display')" id="option8" name="option8" type="checkbox" value="Option 8">
-                                    <label for="option8">
-                                        Option 8
-                                    </label>
-                                </li>
-                                <li class="flex items-center w-full p-2 space-x-2">
-                                    <input onchange="updateSelected(event.target, 'field9-display')" id="option9" name="option9" type="checkbox" value="Option 9">
-                                    <label for="option9">
-                                        Option 9
-                                    </label>
-                                </li>
-                            </ul>
+
+                            <div id="field9-dropdown" class="z-10 hidden bg-white rounded-lg shadow-sm w-60 border border-platinum-300">
+                                <div class="p-3">
+                                    <label for="field9-search" class="sr-only">Search</label>
+                                    <div class="relative">
+                                        <div class="absolute inset-y-0 rtl:inset-r-0 start-0 flex items-center ps-3 pointer-events-none">
+                                            <i class="fa-solid fa-magnifying-glass w-4 h-4 text-platinum-500"></i>
+                                        </div>
+                                        <input type="text" id="field9-search" class="block w-full p-2 ps-10 text-sm border border-platinum-300 rounded-lg focus:ring-steel-blue-500 focus:border-steel-blue-500" placeholder="Search...">
+                                    </div>
+                                </div>
+                                <ul class="h-48 px-3 pb-3 overflow-y-auto text-sm text-platinum-700" aria-labelledby="field9-button">
+                                    <li>
+                                        <div class="flex items-center ps-2 rounded-sm hover:bg-platinum-100">
+                                            <input onchange="updateSelected(event.target, 'field9', 'field9-display')" id="checkbox-item-15" type="checkbox" value="Option 15" class="w-4 h-4 text-steel-blue-500 bg-platinum-50 border border-platinum-300 rounded-sm focus:ring-steel-blue-500 focus:ring-2">
+                                            <label for="checkbox-item-15" class="w-full py-2 ms-2 text-sm font-medium rounded-sm">Option 15</label>
+                                        </div>
+                                    </li>
+                                    <li>
+                                        <div class="flex items-center ps-2 rounded-sm hover:bg-platinum-100">
+                                            <input onchange="updateSelected(event.target, 'field9', 'field9-display')" id="checkbox-item-16" type="checkbox" value="Option 16" class="w-4 h-4 text-steel-blue-500 bg-platinum-50 border border-platinum-300 rounded-sm focus:ring-steel-blue-500 focus:ring-2">
+                                            <label for="checkbox-item-16" class="w-full py-2 ms-2 text-sm font-medium rounded-sm">Option 16</label>
+                                        </div>
+                                    </li>
+                                    <li>
+                                        <div class="flex items-center ps-2 rounded-sm hover:bg-platinum-100">
+                                            <input onchange="updateSelected(event.target, 'field9', 'field9-display')" id="checkbox-item-17" type="checkbox" value="Option 17" class="w-4 h-4 text-steel-blue-500 bg-platinum-50 border border-platinum-300 rounded-sm focus:ring-steel-blue-500 focus:ring-2">
+                                            <label for="checkbox-item-17" class="w-full py-2 ms-2 text-sm font-medium rounded-sm">Option 17</label>
+                                        </div>
+                                    </li>
+                                    <li>
+                                        <div class="flex items-center ps-2 rounded-sm hover:bg-platinum-100">
+                                            <input onchange="updateSelected(event.target, 'field9', 'field9-display')" id="checkbox-item-18" type="checkbox" value="Option 18" class="w-4 h-4 text-steel-blue-500 bg-platinum-50 border border-platinum-300 rounded-sm focus:ring-steel-blue-500 focus:ring-2">
+                                            <label for="checkbox-item-18" class="w-full py-2 ms-2 text-sm font-medium rounded-sm">Option 18</label>
+                                        </div>
+                                    </li>
+                                    <li>
+                                        <div class="flex items-center ps-2 rounded-sm hover:bg-platinum-100">
+                                            <input onchange="updateSelected(event.target, 'field9', 'field9-display')" id="checkbox-item-19" type="checkbox" value="Option 19" class="w-4 h-4 text-steel-blue-500 bg-platinum-50 border border-platinum-300 rounded-sm focus:ring-steel-blue-500 focus:ring-2">
+                                            <label for="checkbox-item-19" class="w-full py-2 ms-2 text-sm font-medium rounded-sm">Option 19</label>
+                                        </div>
+                                    </li>
+                                    <li>
+                                        <div class="flex items-center ps-2 rounded-sm hover:bg-platinum-100">
+                                            <input onchange="updateSelected(event.target, 'field9', 'field9-display')" id="checkbox-item-20" type="checkbox" value="Option 20" class="w-4 h-4 text-steel-blue-500 bg-platinum-50 border border-platinum-300 rounded-sm focus:ring-steel-blue-500 focus:ring-2">
+                                            <label for="checkbox-item-20" class="w-full py-2 ms-2 text-sm font-medium rounded-sm">Option 20</label>
+                                        </div>
+                                    </li>
+                                    <li>
+                                        <div class="flex items-center ps-2 rounded-sm hover:bg-platinum-100">
+                                            <input onchange="updateSelected(event.target, 'field9', 'field9-display')" id="checkbox-item-21" type="checkbox" value="Option 21" class="w-4 h-4 text-steel-blue-500 bg-platinum-50 border border-platinum-300 rounded-sm focus:ring-steel-blue-500 focus:ring-2">
+                                            <label for="checkbox-item-21" class="w-full py-2 ms-2 text-sm font-medium rounded-sm">Option 21</label>
+                                        </div>
+                                    </li>
+                                </ul>
+                                <div class="flex items-center text-white p-3 border-t border-platinum-200 rounded-b-lg">
+                                    <button class="w-full py-1 text-sm font-medium bg-vermilion-500 rounded-lg hover:bg-vermilion-600">
+                                        <i class="fa-regular fa-square-minus"></i>
+                                        Clear all
+                                    </button>
+                                </div>
+                            </a>
+                            </div>
                         </div>
                     </div>
 
@@ -216,6 +343,7 @@
             </form>
         </div>
     </main>
+    <script src="https://cdn.jsdelivr.net/npm/flowbite@3.1.2/dist/flowbite.min.js"></script>
 </body>
 
 </html>
