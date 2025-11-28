@@ -7,6 +7,7 @@
     <title>Create/Edit</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.1/css/all.min.css">
     <link rel="stylesheet" href="style.css">
+    <link href="https://cdn.jsdelivr.net/npm/flowbite@3.1.2/dist/flowbite.min.css" rel="stylesheet" />
     <script src="https://cdn.tailwindcss.com"></script>
     <script src="tailwind.config.js"></script>
     <script src="script.js"></script>
@@ -52,35 +53,73 @@
                         <span id="field1-error" class="error-text hidden italic text-sm text-vermilion">Field 1 is required</span>
                     </div>
                     <div class="flex flex-col">
-                        <div class="flex flex-col relative">
-                            <label for="field2" class="font-medium">Field 2*</label>
-                            <button type="button" onclick="toggleOptionDropdown('field2-dropdown')" class="flex-1 bg-white px-4 py-2 pr-8 border border-platinum-300 rounded-md focus:outline-none focus:ring-2 focus:ring-steel-blue">
-                                <input type="hidden" value="Option 1" name="field2" id="field2">
-                                <div id="field2-display" class="min-h-6 flex flex-wrap gap-2 *:bg-platinum-200 *:px-1 *:rounded-md">
-                                    <span>Option 1</span>
+                        <label for="field2" class="font-medium">Field 2*</label>
+                        <button id="field2-button" data-dropdown-toggle="field2-dropdown" data-dropdown-placement="bottom" class="bg-white flex flex-col px-4 py-2 border border-platinum-300 rounded-md focus:outline-none focus:ring-2 focus:ring-steel-blue" type="button">
+                            <input hidden value="" name="field2" id="field2">
+                            <div id="field2-display" class="overflow-auto min-h-6 flex flex-wrap gap-2 *:bg-platinum-200 *:px-1 *:rounded-md">
+                            </div>
+                        </button>
+
+                        <div id="field2-dropdown" class="z-10 hidden bg-white rounded-lg shadow-sm w-60 border border-platinum-300">
+                            <div class="p-3">
+                                <label for="field2-search" class="sr-only">Search</label>
+                                <div class="relative">
+                                    <div class="absolute inset-y-0 rtl:inset-r-0 start-0 flex items-center ps-3 pointer-events-none">
+                                        <i class="fa-solid fa-magnifying-glass w-4 h-4 text-platinum-500"></i>
+                                    </div>
+                                    <input type="text" id="field2-search" class="block w-full p-2 ps-10 text-sm border border-platinum-300 rounded-lg focus:ring-steel-blue-500 focus:border-steel-blue-500" placeholder="Search...">
                                 </div>
-                            </button>
-                            <span class="absolute top-1/2 right-4 pointer-events-none"><i class="fa-solid fa-angle-down"></i></span>
-                            <ul id="field2-dropdown" class="dropdown hidden absolute top-full z-10 w-full bg-white border border-black">
-                                <li class="flex items-center w-full p-2 space-x-2">
-                                    <input onchange="updateSelected(event.target, 'field2-display')" id="option1" name="option1" type="checkbox" value="Option 1" checked>
-                                    <label for="option1">
-                                        Option 1
-                                    </label>
+                            </div>
+                            <ul class="h-48 px-3 pb-3 overflow-y-auto text-sm text-platinum-700" aria-labelledby="field2-button">
+                                <li>
+                                    <div class="flex items-center ps-2 rounded-sm hover:bg-platinum-100">
+                                        <input onchange="updateSelected(event.target, 'field2', 'field2-display')" id="checkbox-item-1" type="checkbox" value="Option 1" class="w-4 h-4 text-steel-blue-500 bg-platinum-50 border border-platinum-300 rounded-sm focus:ring-steel-blue-500 focus:ring-2">
+                                        <label for="checkbox-item-1" class="w-full py-2 ms-2 text-sm font-medium rounded-sm">Option 1</label>
+                                    </div>
                                 </li>
-                                <li class="flex items-center w-full p-2 space-x-2">
-                                    <input onchange="updateSelected(event.target, 'field2-display')" id="option2" name="option2" type="checkbox" value="Option 2">
-                                    <label for="option2">
-                                        Option 2
-                                    </label>
+                                <li>
+                                    <div class="flex items-center ps-2 rounded-sm hover:bg-platinum-100">
+                                        <input onchange="updateSelected(event.target, 'field2', 'field2-display')" id="checkbox-item-2" type="checkbox" value="Option 2" class="w-4 h-4 text-steel-blue-500 bg-platinum-50 border border-platinum-300 rounded-sm focus:ring-steel-blue-500 focus:ring-2">
+                                        <label for="checkbox-item-2" class="w-full py-2 ms-2 text-sm font-medium rounded-sm">Option 2</label>
+                                    </div>
                                 </li>
-                                <li class="flex items-center w-full p-2 space-x-2">
-                                    <input onchange="updateSelected(event.target, 'field2-display')" id="option3" name="option3" type="checkbox" value="Option 3">
-                                    <label for="option3">
-                                        Option 3
-                                    </label>
+                                <li>
+                                    <div class="flex items-center ps-2 rounded-sm hover:bg-platinum-100">
+                                        <input onchange="updateSelected(event.target, 'field2', 'field2-display')" id="checkbox-item-3" type="checkbox" value="Option 3" class="w-4 h-4 text-steel-blue-500 bg-platinum-50 border border-platinum-300 rounded-sm focus:ring-steel-blue-500 focus:ring-2">
+                                        <label for="checkbox-item-3" class="w-full py-2 ms-2 text-sm font-medium rounded-sm">Option 3</label>
+                                    </div>
+                                </li>
+                                <li>
+                                    <div class="flex items-center ps-2 rounded-sm hover:bg-platinum-100">
+                                        <input onchange="updateSelected(event.target, 'field2', 'field2-display')" id="checkbox-item-4" type="checkbox" value="Option 4" class="w-4 h-4 text-steel-blue-500 bg-platinum-50 border border-platinum-300 rounded-sm focus:ring-steel-blue-500 focus:ring-2">
+                                        <label for="checkbox-item-4" class="w-full py-2 ms-2 text-sm font-medium rounded-sm">Option 4</label>
+                                    </div>
+                                </li>
+                                <li>
+                                    <div class="flex items-center ps-2 rounded-sm hover:bg-platinum-100">
+                                        <input onchange="updateSelected(event.target, 'field2', 'field2-display')" id="checkbox-item-5" type="checkbox" value="Option 5" class="w-4 h-4 text-steel-blue-500 bg-platinum-50 border border-platinum-300 rounded-sm focus:ring-steel-blue-500 focus:ring-2">
+                                        <label for="checkbox-item-5" class="w-full py-2 ms-2 text-sm font-medium rounded-sm">Option 5</label>
+                                    </div>
+                                </li>
+                                <li>
+                                    <div class="flex items-center ps-2 rounded-sm hover:bg-platinum-100">
+                                        <input onchange="updateSelected(event.target, 'field2', 'field2-display')" id="checkbox-item-6" type="checkbox" value="Option 6" class="w-4 h-4 text-steel-blue-500 bg-platinum-50 border border-platinum-300 rounded-sm focus:ring-steel-blue-500 focus:ring-2">
+                                        <label for="checkbox-item-6" class="w-full py-2 ms-2 text-sm font-medium rounded-sm">Option 6</label>
+                                    </div>
+                                </li>
+                                <li>
+                                    <div class="flex items-center ps-2 rounded-sm hover:bg-platinum-100">
+                                        <input onchange="updateSelected(event.target, 'field2', 'field2-display')" id="checkbox-item-7" type="checkbox" value="Option 7" class="w-4 h-4 text-steel-blue-500 bg-platinum-50 border border-platinum-300 rounded-sm focus:ring-steel-blue-500 focus:ring-2">
+                                        <label for="checkbox-item-7" class="w-full py-2 ms-2 text-sm font-medium rounded-sm">Option 7</label>
+                                    </div>
                                 </li>
                             </ul>
+                            <div class="flex items-center text-white p-3 border-t border-platinum-200 rounded-b-lg">
+                                <button class="w-full py-1 text-sm font-medium bg-vermilion-500 rounded-lg hover:bg-vermilion-600">
+                                    <i class="fa-regular fa-square-minus"></i>
+                                    Clear all
+                                </button>
+                            </div>
                         </div>
                         <span id="field2-error" class="error-text hidden italic text-sm text-vermilion">Field 2 is required</span>
                     </div>
@@ -96,7 +135,6 @@
                             <option value="option2">Option 2</option>
                             <option value="option3">Option 3</option>
                         </select>
-                        <span class="absolute top-1/2 right-4 pointer-events-none"><i class="fa-solid fa-angle-down"></i></span>
                     </div>
                     <div class="flex flex-col">
                         <label for="field5" class="font-medium">Field 5</label>
@@ -127,6 +165,7 @@
             </div>
         </form>
     </div>
+    <script src="https://cdn.jsdelivr.net/npm/flowbite@3.1.2/dist/flowbite.min.js"></script>
 </body>
 
 </html>
