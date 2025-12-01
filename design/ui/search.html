@@ -16,7 +16,7 @@
     <main class="flex flex-1 overflow-auto">
         <div class="w-full flex flex-col items-center px-4 py-2 overflow-hidden">
             <!-- Search Bar -->
-            <form action="" method="get" id="search-container" class="flex flex-col w-full md:w-11/12 lg:max-h-[50%] max-h-screen">
+            <form action="" method="get" id="search-container" class="flex flex-col w-full md:w-11/12 lg:max-h-[50%] max-h-full">
                 <div class="flex gap-4 sm:flex-row flex-col">
                     <div class="flex grow-[3]">
                         <input type="text" name="keyword" placeholder="Search..." class="w-full px-4 py-2 border border-platinum-300 rounded-l-md focus:outline-none focus:ring-2 focus:ring-steel-blue">
@@ -47,7 +47,7 @@
                 </div>
 
                 <hr class="my-4 border-platinum-300">
-                <div id="filter-container" class="space-y-4 overflow-y-auto transition-all duration-500 ease-in-out h-0 opacity-0">
+                <div id="filter-container" class="space-y-4 overflow-y-auto transition-all duration-500 ease-in-out h-0 lg:max-h-fit opacity-0">
                     <div class="flex gap-4 *:flex-1 *:min-w-40 flex-wrap">
                         <select name="field1" id="field1" class="px-4 py-2 border border-platinum-300 rounded-md focus:outline-none focus:ring-2 focus:ring-steel-blue">
                             <option value="" selected>Any [Field] 1</option>
@@ -340,6 +340,10 @@
                 </div>
                 <hr id="filter-bottom" class="hidden my-4 border-platinum-300">
             </form>
+
+            <div>
+                content
+            </div>
         </div>
     </main>
     <script src="https://cdn.jsdelivr.net/npm/flowbite@3.1.2/dist/flowbite.min.js"></script>
