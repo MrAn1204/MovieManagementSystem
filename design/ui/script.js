@@ -62,8 +62,8 @@ function onSubmit(event) {
         errorText.classList.add('hidden');
     }
 
-    const editForm = document.forms.item('edit-form');
-    const formData = new FormData(editForm);
+    const form = document.getElementById('create-edit-form');
+    const formData = new FormData(form);
 
     let formValid = true;
 
@@ -80,7 +80,7 @@ function onSubmit(event) {
     }
 
     if (formValid) {
-        editForm.submit();
+        form.submit();
     }
 }
 
