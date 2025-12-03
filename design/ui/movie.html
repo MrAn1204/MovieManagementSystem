@@ -10,6 +10,7 @@
     <script src="https://cdn.tailwindcss.com"></script>
     <script src="tailwind.config.js"></script>
     <script src="script.js"></script>
+    <script src="movieScript.js"></script>
 </head>
 
 <body class="bg-ghost-white flex flex-col h-screen m-0 text-space-black">
@@ -130,7 +131,7 @@
                 <hr class="my-4 border-platinum-300">
                 <div id="filter-container" class="space-y-4 overflow-y-auto transition-all duration-500 ease-in-out h-0 lg:max-h-fit opacity-0">
                     <div class="flex gap-4 *:flex-1 *:min-w-40 flex-wrap">
-                        <select name="language" id="language" class="px-4 py-2 border border-platinum-300 rounded-md focus:outline-none focus:ring-2 focus:ring-steel-blue">
+                        <select name="search-language" id="search-language" class="px-4 py-2 border border-platinum-300 rounded-md focus:outline-none focus:ring-2 focus:ring-steel-blue">
                             <option value="" selected>Any language</option>
                             <option value="english">English</option>
                             <option value="japanese">Japanese</option>
@@ -142,87 +143,87 @@
 
                     <div class="flex md:flex-row flex-col gap-4 *:grow *:min-w-[calc((100%-32px)/3)] md:flex-wrap flex-nowrap">
                         <div class="flex flex-col">
-                            <label for="genre" class="font-medium">Genre</label>
-                            <button button id="genre-button" data-dropdown-toggle="genre-dropdown" data-dropdown-placement="bottom" class="relative bg-white flex flex-col px-4 py-2 border border-platinum-300 rounded-md focus:outline-none focus:ring-2 focus:ring-steel-blue" type="button">
-                                <input hidden value="" name="genre" id="genre">
-                                <div id="genre-display" class="overflow-auto min-h-6 flex flex-wrap gap-2 *:bg-platinum-200 *:px-1 *:rounded-md">
+                            <label for="filter-genre" class="font-medium">Genre</label>
+                            <button button id="filter-genre-button" data-dropdown-toggle="filter-genre-dropdown" data-dropdown-placement="bottom" class="relative bg-white flex flex-col px-4 py-2 border border-platinum-300 rounded-md focus:outline-none focus:ring-2 focus:ring-steel-blue" type="button">
+                                <input hidden value="" name="filter-genre" id="filter-genre">
+                                <div id="filter-genre-display" class="overflow-auto min-h-6 flex flex-wrap gap-2 *:bg-platinum-200 *:px-1 *:rounded-md">
                                 </div>
                                 <span class="absolute right-2 pointer-events-none"><i class="fa-solid fa-angle-down"></i></span>
                             </button>
-                            <div id="genre-dropdown" class="z-20 hidden bg-white rounded-lg shadow-sm w-60 border border-platinum-300">
+                            <div id="filter-genre-dropdown" class="z-20 hidden bg-white rounded-lg shadow-sm w-60 border border-platinum-300">
                                 <div class="p-3">
-                                    <label for="genre-search" class="sr-only">Search</label>
+                                    <label for="filter-genre-search" class="sr-only">Search</label>
                                     <div class="relative">
                                         <div class="absolute inset-y-0 start-0 flex items-center ps-3 pointer-events-none">
                                             <i class="fa-solid fa-magnifying-glass w-4 h-4 text-platinum-500"></i>
                                         </div>
-                                        <input type="text" id="genre-search" class="block w-full p-2 ps-10 text-sm border border-platinum-300 rounded-lg focus:ring-steel-blue-500 focus:border-steel-blue-500" placeholder="Search...">
+                                        <input type="text" id="filter-genre-search" class="block w-full p-2 ps-10 text-sm border border-platinum-300 rounded-lg focus:ring-steel-blue-500 focus:border-steel-blue-500" placeholder="Search...">
                                     </div>
                                 </div>
-                                <ul class="h-48 px-3 pb-3 overflow-y-auto text-sm text-platinum-700" aria-labelledby="genre-button">
+                                <ul class="h-48 px-3 pb-3 overflow-y-auto text-sm text-platinum-700" aria-labelledby="filter-genre-button">
                                     <li>
                                         <div class="flex items-center ps-2 rounded-sm hover:bg-platinum-100">
-                                            <input onchange="updateSelected(event.target, 'genre', 'genre-display')" id="genre1" type="checkbox" value="Action" class="w-4 h-4 text-steel-blue-500 bg-platinum-50 border border-platinum-300 rounded-sm focus:ring-steel-blue-500 focus:ring-2">
-                                            <label for="genre1" class="w-full py-2 ms-2 text-sm font-medium rounded-sm">Action</label>
+                                            <input onchange="updateSelected(event.target, 'genre', 'filter-genre-display')" id="filter-genre-1" type="checkbox" value="Action" class="w-4 h-4 text-steel-blue-500 bg-platinum-50 border border-platinum-300 rounded-sm focus:ring-steel-blue-500 focus:ring-2">
+                                            <label for="filter-genre-1" class="w-full py-2 ms-2 text-sm font-medium rounded-sm">Action</label>
                                         </div>
                                     </li>
                                     <li>
                                         <div class="flex items-center ps-2 rounded-sm hover:bg-platinum-100">
-                                            <input onchange="updateSelected(event.target, 'genre', 'genre-display')" id="genre2" type="checkbox" value="Adventure" class="w-4 h-4 text-steel-blue-500 bg-platinum-50 border border-platinum-300 rounded-sm focus:ring-steel-blue-500 focus:ring-2">
-                                            <label for="genre2" class="w-full py-2 ms-2 text-sm font-medium rounded-sm">Adventure</label>
+                                            <input onchange="updateSelected(event.target, 'genre', 'filter-genre-display')" id="filter-genre-2" type="checkbox" value="Adventure" class="w-4 h-4 text-steel-blue-500 bg-platinum-50 border border-platinum-300 rounded-sm focus:ring-steel-blue-500 focus:ring-2">
+                                            <label for="filter-genre-2" class="w-full py-2 ms-2 text-sm font-medium rounded-sm">Adventure</label>
                                         </div>
                                     </li>
                                     <li>
                                         <div class="flex items-center ps-2 rounded-sm hover:bg-platinum-100">
-                                            <input onchange="updateSelected(event.target, 'genre', 'genre-display')" id="genre3" type="checkbox" value="Comedy" class="w-4 h-4 text-steel-blue-500 bg-platinum-50 border border-platinum-300 rounded-sm focus:ring-steel-blue-500 focus:ring-2">
-                                            <label for="genre3" class="w-full py-2 ms-2 text-sm font-medium rounded-sm">Comedy</label>
+                                            <input onchange="updateSelected(event.target, 'genre', 'filter-genre-display')" id="filter-genre-3" type="checkbox" value="Comedy" class="w-4 h-4 text-steel-blue-500 bg-platinum-50 border border-platinum-300 rounded-sm focus:ring-steel-blue-500 focus:ring-2">
+                                            <label for="filter-genre-3" class="w-full py-2 ms-2 text-sm font-medium rounded-sm">Comedy</label>
                                         </div>
                                     </li>
                                     <li>
                                         <div class="flex items-center ps-2 rounded-sm hover:bg-platinum-100">
-                                            <input onchange="updateSelected(event.target, 'genre', 'genre-display')" id="genre4" type="checkbox" value="Drama" class="w-4 h-4 text-steel-blue-500 bg-platinum-50 border border-platinum-300 rounded-sm focus:ring-steel-blue-500 focus:ring-2">
-                                            <label for="genre4" class="w-full py-2 ms-2 text-sm font-medium rounded-sm">Drama</label>
+                                            <input onchange="updateSelected(event.target, 'genre', 'filter-genre-display')" id="filter-genre-4" type="checkbox" value="Drama" class="w-4 h-4 text-steel-blue-500 bg-platinum-50 border border-platinum-300 rounded-sm focus:ring-steel-blue-500 focus:ring-2">
+                                            <label for="filter-genre-4" class="w-full py-2 ms-2 text-sm font-medium rounded-sm">Drama</label>
                                         </div>
                                     </li>
                                     <li>
                                         <div class="flex items-center ps-2 rounded-sm hover:bg-platinum-100">
-                                            <input onchange="updateSelected(event.target, 'genre', 'genre-display')" id="genre5" type="checkbox" value="Documentary" class="w-4 h-4 text-steel-blue-500 bg-platinum-50 border border-platinum-300 rounded-sm focus:ring-steel-blue-500 focus:ring-2">
-                                            <label for="genre5" class="w-full py-2 ms-2 text-sm font-medium rounded-sm">Documentary</label>
+                                            <input onchange="updateSelected(event.target, 'genre', 'filter-genre-display')" id="filter-genre-5" type="checkbox" value="Documentary" class="w-4 h-4 text-steel-blue-500 bg-platinum-50 border border-platinum-300 rounded-sm focus:ring-steel-blue-500 focus:ring-2">
+                                            <label for="filter-genre-5" class="w-full py-2 ms-2 text-sm font-medium rounded-sm">Documentary</label>
                                         </div>
                                     </li>
                                     <li>
                                         <div class="flex items-center ps-2 rounded-sm hover:bg-platinum-100">
-                                            <input onchange="updateSelected(event.target, 'genre', 'genre-display')" id="genre6" type="checkbox" value="Fantasy" class="w-4 h-4 text-steel-blue-500 bg-platinum-50 border border-platinum-300 rounded-sm focus:ring-steel-blue-500 focus:ring-2">
-                                            <label for="genre6" class="w-full py-2 ms-2 text-sm font-medium rounded-sm">Fantasy</label>
+                                            <input onchange="updateSelected(event.target, 'genre', 'filter-genre-display')" id="filter-genre-6" type="checkbox" value="Fantasy" class="w-4 h-4 text-steel-blue-500 bg-platinum-50 border border-platinum-300 rounded-sm focus:ring-steel-blue-500 focus:ring-2">
+                                            <label for="filter-genre-6" class="w-full py-2 ms-2 text-sm font-medium rounded-sm">Fantasy</label>
                                         </div>
                                     </li>
                                     <li>
                                         <div class="flex items-center ps-2 rounded-sm hover:bg-platinum-100">
-                                            <input onchange="updateSelected(event.target, 'genre', 'genre-display')" id="genre7" type="checkbox" value="Horror" class="w-4 h-4 text-steel-blue-500 bg-platinum-50 border border-platinum-300 rounded-sm focus:ring-steel-blue-500 focus:ring-2">
-                                            <label for="genre7" class="w-full py-2 ms-2 text-sm font-medium rounded-sm">Horror</label>
+                                            <input onchange="updateSelected(event.target, 'genre', 'filter-genre-display')" id="filter-genre-7" type="checkbox" value="Horror" class="w-4 h-4 text-steel-blue-500 bg-platinum-50 border border-platinum-300 rounded-sm focus:ring-steel-blue-500 focus:ring-2">
+                                            <label for="filter-genre-7" class="w-full py-2 ms-2 text-sm font-medium rounded-sm">Horror</label>
                                         </div>
                                     </li>
                                     <li>
                                         <div class="flex items-center ps-2 rounded-sm hover:bg-platinum-100">
-                                            <input onchange="updateSelected(event.target, 'genre', 'genre-display')" id="genre8" type="checkbox" value="Romance" class="w-4 h-4 text-steel-blue-500 bg-platinum-50 border border-platinum-300 rounded-sm focus:ring-steel-blue-500 focus:ring-2">
-                                            <label for="genre8" class="w-full py-2 ms-2 text-sm font-medium rounded-sm">Romance</label>
+                                            <input onchange="updateSelected(event.target, 'genre', 'filter-genre-display')" id="filter-genre-8" type="checkbox" value="Romance" class="w-4 h-4 text-steel-blue-500 bg-platinum-50 border border-platinum-300 rounded-sm focus:ring-steel-blue-500 focus:ring-2">
+                                            <label for="filter-genre-8" class="w-full py-2 ms-2 text-sm font-medium rounded-sm">Romance</label>
                                         </div>
                                     </li>
                                     <li>
                                         <div class="flex items-center ps-2 rounded-sm hover:bg-platinum-100">
-                                            <input onchange="updateSelected(event.target, 'genre', 'genre-display')" id="genre9" type="checkbox" value="Sci-Fi" class="w-4 h-4 text-steel-blue-500 bg-platinum-50 border border-platinum-300 rounded-sm focus:ring-steel-blue-500 focus:ring-2">
-                                            <label for="genre9" class="w-full py-2 ms-2 text-sm font-medium rounded-sm">Sci-Fi</label>
+                                            <input onchange="updateSelected(event.target, 'genre', 'filter-genre-display')" id="filter-genre-9" type="checkbox" value="Sci-Fi" class="w-4 h-4 text-steel-blue-500 bg-platinum-50 border border-platinum-300 rounded-sm focus:ring-steel-blue-500 focus:ring-2">
+                                            <label for="filter-genre-9" class="w-full py-2 ms-2 text-sm font-medium rounded-sm">Sci-Fi</label>
                                         </div>
                                     </li>
                                     <li>
                                         <div class="flex items-center ps-2 rounded-sm hover:bg-platinum-100">
-                                            <input onchange="updateSelected(event.target, 'genre', 'genre-display')" id="genre10" type="checkbox" value="Thriller" class="w-4 h-4 text-steel-blue-500 bg-platinum-50 border border-platinum-300 rounded-sm focus:ring-steel-blue-500 focus:ring-2">
-                                            <label for="genre10" class="w-full py-2 ms-2 text-sm font-medium rounded-sm">Thriller</label>
+                                            <input onchange="updateSelected(event.target, 'genre', 'filter-genre-display')" id="filter-genre-10" type="checkbox" value="Thriller" class="w-4 h-4 text-steel-blue-500 bg-platinum-50 border border-platinum-300 rounded-sm focus:ring-steel-blue-500 focus:ring-2">
+                                            <label for="filter-genre-10" class="w-full py-2 ms-2 text-sm font-medium rounded-sm">Thriller</label>
                                         </div>
                                     </li>
                                 </ul>
                                 <div class="flex items-center text-white p-3 border-t border-platinum-200 rounded-b-lg">
-                                    <button type="button" class="w-full py-1 text-sm font-medium bg-vermilion-500 rounded-lg hover:bg-vermilion-600" onclick="clearSelected('genre', 'genre-display')">
+                                    <button type="button" class="w-full py-1 text-sm font-medium bg-vermilion-500 rounded-lg hover:bg-vermilion-600" onclick="clearSelected('genre', 'filter-genre-display')">
                                         <i class="fa-regular fa-square-minus"></i>
                                         Clear all
                                     </button>
@@ -231,57 +232,57 @@
                         </div>
 
                         <div class="flex flex-col">
-                            <label for="studio" class="font-medium">Studio</label>
-                            <button id="studio-button" data-dropdown-toggle="studio-dropdown" data-dropdown-placement="bottom" type="button" class="relative bg-white flex flex-col px-4 py-2 border border-platinum-300 rounded-md focus:outline-none focus:ring-2 focus:ring-steel-blue">
-                                <input hidden value="" name="studio" id="studio">
-                                <div id="studio-display" class="overflow-auto min-h-6 flex flex-wrap gap-2 *:bg-platinum-200 *:px-1 *:rounded-md">
+                            <label for="filter-studio" class="font-medium">Studio</label>
+                            <button id="filter-studio-button" data-dropdown-toggle="filter-studio-dropdown" data-dropdown-placement="bottom" type="button" class="relative bg-white flex flex-col px-4 py-2 border border-platinum-300 rounded-md focus:outline-none focus:ring-2 focus:ring-steel-blue">
+                                <input hidden value="" name="filter-studio" id="filter-studio">
+                                <div id="filter-studio-display" class="overflow-auto min-h-6 flex flex-wrap gap-2 *:bg-platinum-200 *:px-1 *:rounded-md">
                                 </div>
                                 <span class="absolute right-2 pointer-events-none"><i class="fa-solid fa-angle-down"></i></span>
                             </button>
-                            <div id="studio-dropdown" class="z-20 hidden bg-white rounded-lg shadow-sm w-60 border border-platinum-300">
+                            <div id="filter-studio-dropdown" class="z-20 hidden bg-white rounded-lg shadow-sm w-60 border border-platinum-300">
                                 <div class="p-3">
-                                    <label for="studio-search" class="sr-only">Search</label>
+                                    <label for="filter-studio-search" class="sr-only">Search</label>
                                     <div class="relative">
                                         <div class="absolute inset-y-0 start-0 flex items-center ps-3 pointer-events-none">
                                             <i class="fa-solid fa-magnifying-glass w-4 h-4 text-platinum-500"></i>
                                         </div>
-                                        <input type="text" id="studio-search" class="block w-full p-2 ps-10 text-sm border border-platinum-300 rounded-lg focus:ring-steel-blue-500 focus:border-steel-blue-500" placeholder="Search...">
+                                        <input type="text" id="filter-studio-search" class="block w-full p-2 ps-10 text-sm border border-platinum-300 rounded-lg focus:ring-steel-blue-500 focus:border-steel-blue-500" placeholder="Search...">
                                     </div>
                                 </div>
-                                <ul class="h-48 px-3 pb-3 overflow-y-auto text-sm text-platinum-700" aria-labelledby="studio-button">
+                                <ul class="h-48 px-3 pb-3 overflow-y-auto text-sm text-platinum-700" aria-labelledby="filter-studio-button">
                                     <li>
                                         <div class="flex items-center ps-2 rounded-sm hover:bg-platinum-100">
-                                            <input onchange="updateSelected(event.target, 'studio', 'studio-display')" id="studio1" type="checkbox" value="DreamWorks" class="w-4 h-4 text-steel-blue-500 bg-platinum-50 border border-platinum-300 rounded-sm focus:ring-steel-blue-500 focus:ring-2">
-                                            <label for="studio1" class="w-full py-2 ms-2 text-sm font-medium rounded-sm">DreamWorks</label>
+                                            <input onchange="updateSelected(event.target, 'studio', 'filter-studio-display')" id="filter-studio-1" type="checkbox" value="DreamWorks" class="w-4 h-4 text-steel-blue-500 bg-platinum-50 border border-platinum-300 rounded-sm focus:ring-steel-blue-500 focus:ring-2">
+                                            <label for="filter-studio-1" class="w-full py-2 ms-2 text-sm font-medium rounded-sm">DreamWorks</label>
                                         </div>
                                     </li>
                                     <li>
                                         <div class="flex items-center ps-2 rounded-sm hover:bg-platinum-100">
-                                            <input onchange="updateSelected(event.target, 'studio', 'studio-display')" id="studio2" type="checkbox" value="Warner Bros" class="w-4 h-4 text-steel-blue-500 bg-platinum-50 border border-platinum-300 rounded-sm focus:ring-steel-blue-500 focus:ring-2">
-                                            <label for="studio2" class="w-full py-2 ms-2 text-sm font-medium rounded-sm">Warner Bros</label>
+                                            <input onchange="updateSelected(event.target, 'studio', 'filter-studio-display')" id="filter-studio-2" type="checkbox" value="Warner Bros" class="w-4 h-4 text-steel-blue-500 bg-platinum-50 border border-platinum-300 rounded-sm focus:ring-steel-blue-500 focus:ring-2">
+                                            <label for="filter-studio-2" class="w-full py-2 ms-2 text-sm font-medium rounded-sm">Warner Bros</label>
                                         </div>
                                     </li>
                                     <li>
                                         <div class="flex items-center ps-2 rounded-sm hover:bg-platinum-100">
-                                            <input onchange="updateSelected(event.target, 'studio', 'studio-display')" id="studio3" type="checkbox" value="Universal Pictures" class="w-4 h-4 text-steel-blue-500 bg-platinum-50 border border-platinum-300 rounded-sm focus:ring-steel-blue-500 focus:ring-2">
-                                            <label for="studio3" class="w-full py-2 ms-2 text-sm font-medium rounded-sm">Universal Pictures</label>
+                                            <input onchange="updateSelected(event.target, 'studio', 'filter-studio-display')" id="filter-studio-3" type="checkbox" value="Universal Pictures" class="w-4 h-4 text-steel-blue-500 bg-platinum-50 border border-platinum-300 rounded-sm focus:ring-steel-blue-500 focus:ring-2">
+                                            <label for="filter-studio-3" class="w-full py-2 ms-2 text-sm font-medium rounded-sm">Universal Pictures</label>
                                         </div>
                                     </li>
                                     <li>
                                         <div class="flex items-center ps-2 rounded-sm hover:bg-platinum-100">
-                                            <input onchange="updateSelected(event.target, 'studio', 'studio-display')" id="studio4" type="checkbox" value="Paramount Pictures" class="w-4 h-4 text-steel-blue-500 bg-platinum-50 border border-platinum-300 rounded-sm focus:ring-steel-blue-500 focus:ring-2">
-                                            <label for="studio4" class="w-full py-2 ms-2 text-sm font-medium rounded-sm">Paramount Pictures</label>
+                                            <input onchange="updateSelected(event.target, 'studio', 'filter-studio-display')" id="filter-studio-4" type="checkbox" value="Paramount Pictures" class="w-4 h-4 text-steel-blue-500 bg-platinum-50 border border-platinum-300 rounded-sm focus:ring-steel-blue-500 focus:ring-2">
+                                            <label for="filter-studio-4" class="w-full py-2 ms-2 text-sm font-medium rounded-sm">Paramount Pictures</label>
                                         </div>
                                     </li>
                                     <li>
                                         <div class="flex items-center ps-2 rounded-sm hover:bg-platinum-100">
-                                            <input onchange="updateSelected(event.target, 'studio', 'studio-display')" id="studio5" type="checkbox" value="20th Century Fox" class="w-4 h-4 text-steel-blue-500 bg-platinum-50 border border-platinum-300 rounded-sm focus:ring-steel-blue-500 focus:ring-2">
-                                            <label for="studio5" class="w-full py-2 ms-2 text-sm font-medium rounded-sm">20th Century Fox</label>
+                                            <input onchange="updateSelected(event.target, 'studio', 'filter-studio-display')" id="filter-studio-5" type="checkbox" value="20th Century Fox" class="w-4 h-4 text-steel-blue-500 bg-platinum-50 border border-platinum-300 rounded-sm focus:ring-steel-blue-500 focus:ring-2">
+                                            <label for="filter-studio-5" class="w-full py-2 ms-2 text-sm font-medium rounded-sm">20th Century Fox</label>
                                         </div>
                                     </li>
                                 </ul>
                                 <div class="flex items-center text-white p-3 border-t border-platinum-200 rounded-b-lg">
-                                    <button type="button" class="w-full py-1 text-sm font-medium bg-vermilion-500 rounded-lg hover:bg-vermilion-600" onclick="clearSelected('studio', 'studio-display')">
+                                    <button type="button" class="w-full py-1 text-sm font-medium bg-vermilion-500 rounded-lg hover:bg-vermilion-600" onclick="clearSelected('studio', 'filter-studio-display')">
                                         <i class="fa-regular fa-square-minus"></i>
                                         Clear all
                                     </button>
@@ -308,7 +309,7 @@
             <!-- Table -->
             <div id="table-container" class="flex flex-col flex-1 min-h-0 w-full md:w-11/12">
                 <div>
-                    <button class="px-2 py-1 bg-bright-fern-500 hover:bg-bright-fern-600 text-white font-semibold">
+                    <button type="button" onclick="toggleCreate()" class="px-2 py-1 bg-bright-fern-500 hover:bg-bright-fern-600 text-white font-semibold">
                         <i class="fa-solid fa-plus"></i>
                         <span>Add</span>
                     </button>
@@ -336,9 +337,9 @@
                                 <td class="px-4 py-2">Japanese</td>
                                 <td>
                                     <div class="flex justify-evenly">
-                                        <button><i class="fa-solid fa-circle-info text-steel-blue"></i></button>
-                                        <button><i class="fa-solid fa-pen-to-square text-carrot-orange"></i></button>
-                                        <button><i class="fa-solid fa-trash text-vermilion"></i></button>
+                                        <button type="button" onclick="toggleModal('detail-modal')"><i class="fa-solid fa-circle-info text-steel-blue"></i></button>
+                                        <button type="button" onclick="toggleEdit()"><i class="fa-solid fa-pen-to-square text-carrot-orange"></i></button>
+                                        <button type="button" onclick="toggleModal('delete-modal')"><i class="fa-solid fa-trash text-vermilion"></i></button>
                                     </div>
                                 </td>
                             </tr>
@@ -352,9 +353,9 @@
                                 <td class="px-4 py-2">Vietnamese</td>
                                 <td>
                                     <div class="flex justify-evenly">
-                                        <button><i class="fa-solid fa-circle-info text-steel-blue"></i></button>
-                                        <button><i class="fa-solid fa-pen-to-square text-carrot-orange"></i></button>
-                                        <button><i class="fa-solid fa-trash text-vermilion"></i></button>
+                                        <button type="button" onclick="toggleModal('detail-modal')"><i class="fa-solid fa-circle-info text-steel-blue"></i></button>
+                                        <button type="button" onclick="toggleEdit()"><i class="fa-solid fa-pen-to-square text-carrot-orange"></i></button>
+                                        <button type="button" onclick="toggleModal('delete-modal')"><i class="fa-solid fa-trash text-vermilion"></i></button>
                                     </div>
                                 </td>
                             </tr>
@@ -368,9 +369,9 @@
                                 <td class="px-4 py-2">French</td>
                                 <td>
                                     <div class="flex justify-evenly">
-                                        <button><i class="fa-solid fa-circle-info text-steel-blue"></i></button>
-                                        <button><i class="fa-solid fa-pen-to-square text-carrot-orange"></i></button>
-                                        <button><i class="fa-solid fa-trash text-vermilion"></i></button>
+                                        <button type="button" onclick="toggleModal('detail-modal')"><i class="fa-solid fa-circle-info text-steel-blue"></i></button>
+                                        <button type="button" onclick="toggleEdit()"><i class="fa-solid fa-pen-to-square text-carrot-orange"></i></button>
+                                        <button type="button" onclick="toggleModal('delete-modal')"><i class="fa-solid fa-trash text-vermilion"></i></button>
                                     </div>
                                 </td>
                             </tr>
@@ -384,9 +385,9 @@
                                 <td class="px-4 py-2">English</td>
                                 <td>
                                     <div class="flex justify-evenly">
-                                        <button><i class="fa-solid fa-circle-info text-steel-blue"></i></button>
-                                        <button><i class="fa-solid fa-pen-to-square text-carrot-orange"></i></button>
-                                        <button><i class="fa-solid fa-trash text-vermilion"></i></button>
+                                        <button type="button" onclick="toggleModal('detail-modal')"><i class="fa-solid fa-circle-info text-steel-blue"></i></button>
+                                        <button type="button" onclick="toggleEdit()"><i class="fa-solid fa-pen-to-square text-carrot-orange"></i></button>
+                                        <button type="button" onclick="toggleModal('delete-modal')"><i class="fa-solid fa-trash text-vermilion"></i></button>
                                     </div>
                                 </td>
                             </tr>
@@ -400,9 +401,9 @@
                                 <td class="px-4 py-2">French</td>
                                 <td>
                                     <div class="flex justify-evenly">
-                                        <button><i class="fa-solid fa-circle-info text-steel-blue"></i></button>
-                                        <button><i class="fa-solid fa-pen-to-square text-carrot-orange"></i></button>
-                                        <button><i class="fa-solid fa-trash text-vermilion"></i></button>
+                                        <button type="button" onclick="toggleModal('detail-modal')"><i class="fa-solid fa-circle-info text-steel-blue"></i></button>
+                                        <button type="button" onclick="toggleEdit()"><i class="fa-solid fa-pen-to-square text-carrot-orange"></i></button>
+                                        <button type="button" onclick="toggleModal('delete-modal')"><i class="fa-solid fa-trash text-vermilion"></i></button>
                                     </div>
                                 </td>
                             </tr>
@@ -416,9 +417,9 @@
                                 <td class="px-4 py-2">French</td>
                                 <td>
                                     <div class="flex justify-evenly">
-                                        <button><i class="fa-solid fa-circle-info text-steel-blue"></i></button>
-                                        <button><i class="fa-solid fa-pen-to-square text-carrot-orange"></i></button>
-                                        <button><i class="fa-solid fa-trash text-vermilion"></i></button>
+                                        <button type="button" onclick="toggleModal('detail-modal')"><i class="fa-solid fa-circle-info text-steel-blue"></i></button>
+                                        <button type="button" onclick="toggleEdit()"><i class="fa-solid fa-pen-to-square text-carrot-orange"></i></button>
+                                        <button type="button" onclick="toggleModal('delete-modal')"><i class="fa-solid fa-trash text-vermilion"></i></button>
                                     </div>
                                 </td>
                             </tr>
@@ -432,9 +433,9 @@
                                 <td class="px-4 py-2">Spanish</td>
                                 <td>
                                     <div class="flex justify-evenly">
-                                        <button><i class="fa-solid fa-circle-info text-steel-blue"></i></button>
-                                        <button><i class="fa-solid fa-pen-to-square text-carrot-orange"></i></button>
-                                        <button><i class="fa-solid fa-trash text-vermilion"></i></button>
+                                        <button type="button" onclick="toggleModal('detail-modal')"><i class="fa-solid fa-circle-info text-steel-blue"></i></button>
+                                        <button type="button" onclick="toggleEdit()"><i class="fa-solid fa-pen-to-square text-carrot-orange"></i></button>
+                                        <button type="button" onclick="toggleModal('delete-modal')"><i class="fa-solid fa-trash text-vermilion"></i></button>
                                     </div>
                                 </td>
                             </tr>
@@ -448,9 +449,9 @@
                                 <td class="px-4 py-2">Vietnamese</td>
                                 <td>
                                     <div class="flex justify-evenly">
-                                        <button><i class="fa-solid fa-circle-info text-steel-blue"></i></button>
-                                        <button><i class="fa-solid fa-pen-to-square text-carrot-orange"></i></button>
-                                        <button><i class="fa-solid fa-trash text-vermilion"></i></button>
+                                        <button type="button" onclick="toggleModal('detail-modal')"><i class="fa-solid fa-circle-info text-steel-blue"></i></button>
+                                        <button type="button" onclick="toggleEdit()"><i class="fa-solid fa-pen-to-square text-carrot-orange"></i></button>
+                                        <button type="button" onclick="toggleModal('delete-modal')"><i class="fa-solid fa-trash text-vermilion"></i></button>
                                     </div>
                                 </td>
                             </tr>
@@ -464,9 +465,9 @@
                                 <td class="px-4 py-2">French</td>
                                 <td>
                                     <div class="flex justify-evenly">
-                                        <button><i class="fa-solid fa-circle-info text-steel-blue"></i></button>
-                                        <button><i class="fa-solid fa-pen-to-square text-carrot-orange"></i></button>
-                                        <button><i class="fa-solid fa-trash text-vermilion"></i></button>
+                                        <button type="button" onclick="toggleModal('detail-modal')"><i class="fa-solid fa-circle-info text-steel-blue"></i></button>
+                                        <button type="button" onclick="toggleEdit()"><i class="fa-solid fa-pen-to-square text-carrot-orange"></i></button>
+                                        <button type="button" onclick="toggleModal('delete-modal')"><i class="fa-solid fa-trash text-vermilion"></i></button>
                                     </div>
                                 </td>
                             </tr>
@@ -480,9 +481,9 @@
                                 <td class="px-4 py-2">French</td>
                                 <td>
                                     <div class="flex justify-evenly">
-                                        <button><i class="fa-solid fa-circle-info text-steel-blue"></i></button>
-                                        <button><i class="fa-solid fa-pen-to-square text-carrot-orange"></i></button>
-                                        <button><i class="fa-solid fa-trash text-vermilion"></i></button>
+                                        <button type="button" onclick="toggleModal('detail-modal')"><i class="fa-solid fa-circle-info text-steel-blue"></i></button>
+                                        <button type="button" onclick="toggleEdit()"><i class="fa-solid fa-pen-to-square text-carrot-orange"></i></button>
+                                        <button type="button" onclick="toggleModal('delete-modal')"><i class="fa-solid fa-trash text-vermilion"></i></button>
                                     </div>
                                 </td>
                             </tr>
@@ -552,6 +553,359 @@
             </div>
         </div>
     </main>
+
+    <div class="detail-modal absolute w-full h-full hidden justify-center items-center bg-space-black/50 z-50">
+        <div class="w-full max-h-full overflow-auto max-w-6xl bg-ghost-white p-4 md:p-8 rounded-lg shadow-md space-y-8">
+            <div class="flex flex-wrap-reverse items-center relative">
+                <h2 class="sm:flex-1 text-2xl font-semibold sm:text-center overflow-hidden">Movie Details</h2>
+                <div class="sm:absolute sm:right-0 flex flex-1 justify-end">
+                    <button class="w-10 h-10 hover:bg-platinum-100" onclick="toggleModal('detail-modal')">
+                        <i class="fa-solid fa-xmark"></i>
+                    </button>
+                </div>
+            </div>
+            
+            <div class="flex flex-col md:flex-row items-center gap-8">
+                <div class="flex flex-1 justify-center">
+                    <img src="https://dummyimage.com/300x400/dddddd/000000&text=No+Image" alt="thumbnail" class="max-h-48 md:max-h-72 rounded-md">
+                </div>
+
+                <div class="w-full flex-[2] gap-8 grid grid-cols-1 sm:grid-cols-2">
+                    <div class="flex flex-col">
+                        <span class="font-medium">Name</span>
+                        <span>Lorem.</span>
+                    </div>
+                    <div class="flex flex-col">
+                        <span class="font-medium">Language</span>
+                        <span>English</span>
+                    </div>
+                    <div class="flex flex-col">
+                        <span class="font-medium">Genre</span>
+                        <span>Action, Adventure</span>
+                    </div>
+                    <div class="flex flex-col">
+                        <span class="font-medium">Studio</span>
+                        <span>Paramount Pictures</span>
+                    </div>
+                    <div class="flex flex-col">
+                        <span class="font-medium">Talent</span>
+                        <span>---</span>
+                    </div>
+                    <div class="flex flex-col">
+                        <span class="font-medium">Duration</span>
+                        <span>120</span>
+                    </div>
+                    <div class="flex flex-col">
+                        <span class="font-medium">Release Date</span>
+                        <span>2025-01-01</span>
+                    </div>
+                    <div class="flex flex-col sm:last:col-span-2">
+                        <span class="font-medium">Content</span>
+                        <span>Lorem ipsum dolor sit amet consectetur adipisicing elit. Unde itaque voluptatum laborum nostrum adipisci magni atque deserunt. Iure placeat sed corporis qui pariatur impedit, distinctio, ratione odit odio necessitatibus magni.</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="flex justify-center gap-4 *:w-20">
+                <button type="button" onclick="toggleModal('detail-modal'); toggleEdit()" class="px-4 py-2 text-white rounded-md bg-steel-blue-500 hover:bg-steel-blue-600 focus:outline-none focus:ring-2 focus:ring-steel-blue">Edit</button>
+                <button type="button" onclick="toggleModal('delete-modal')" class="px-4 py-2 text-white rounded-md bg-vermilion-500 hover:bg-vermilion-600 focus:outline-none focus:ring-2 focus:ring-vermilion">Delete</button>
+            </div>
+        </div>
+    </div>
+
+    <div class="create-edit-modal absolute w-full h-full hidden justify-center items-center bg-space-black/50 z-50">
+        <form id="create-edit-form" class="w-full max-h-full overflow-auto max-w-6xl bg-ghost-white p-4 md:p-8 rounded-lg shadow-md space-y-8">
+            <div class="flex flex-wrap-reverse items-center relative">
+                <h2 id="create-edit-title" class="sm:flex-1 text-2xl font-semibold sm:text-center overflow-hidden">Create/Edit [Entity]</h2>
+                <div class="sm:absolute sm:right-0 flex flex-1 justify-end">
+                    <button type="button" class="w-10 h-10 hover:bg-platinum-100" onclick="toggleForm()">
+                        <i class="fa-solid fa-xmark"></i>
+                    </button>
+                </div>
+            </div>
+
+            <div class="flex flex-col md:flex-row items-center gap-8">
+                <div class="flex-1">
+                    <div class="flex flex-col items-center">
+                        <label for="thumbnail" class="font-medium">Image</label>
+                        
+                        <div class="flex justify-center relative">
+                            <input type="file" id="thumbnail" accept="image/*" class="w-full h-full opacity-0 absolute cursor-pointer">
+                            <img id="imagePreview" src="https://dummyimage.com/300x400/dddddd/000000&text=No+Image" alt="thumbnail" class="max-h-48 md:max-h-72 rounded-md">
+                        </div>
+
+                        <p class="text-center text-sm italic">Click on the image to upload</p>
+                    </div>
+                </div>
+
+                <div class="w-full flex-[2] gap-4 grid grid-cols-1 sm:grid-cols-2">
+                    <div class="flex flex-col">
+                        <label for="name" class="font-medium">Name*</label>
+                        <input type="text" value="" name="name" id="name" class="px-4 py-2 border border-platinum-300 rounded-md focus:outline-none focus:ring-2 focus:ring-steel-blue">
+                        <span id="name-error" class="error-text hidden italic text-sm text-vermilion">Name is required</span>
+                    </div>
+                    <div class="flex flex-col">
+                        <label for="language" class="font-medium">Language</label>
+                        <select value="" name="language" id="language" class="appearance-none px-4 py-2 pr-8 border border-platinum-300 rounded-md focus:outline-none focus:ring-2 focus:ring-steel-blue">
+                            <option value="" disabled selected hidden></option>
+                            <option value="english">English</option>
+                            <option value="japanese">Japanese</option>
+                            <option value="spanish">Spanish</option>
+                            <option value="french">French</option>
+                            <option value="vietnamese">Vietnamese</option>
+                        </select>
+                    </div>
+                    <div class="flex flex-col">
+                        <label for="genre" class="font-medium">Genre</label>
+                        <button id="genre-button" data-dropdown-toggle="genre-dropdown" data-dropdown-placement="bottom" class="bg-white flex flex-col px-4 py-2 border border-platinum-300 rounded-md focus:outline-none focus:ring-2 focus:ring-steel-blue" type="button">
+                            <input hidden value="" name="genre" id="genre">
+                            <div id="genre-display" class="overflow-auto min-h-6 flex flex-wrap gap-2 *:bg-platinum-200 *:px-1 *:rounded-md">
+                            </div>
+                        </button>
+
+                        <div id="genre-dropdown" class="z-10 hidden bg-white rounded-lg shadow-sm w-60 border border-platinum-300">
+                            <div class="p-3">
+                                <label for="genre-search" class="sr-only">Search</label>
+                                <div class="relative">
+                                    <div class="absolute inset-y-0 rtl:inset-r-0 start-0 flex items-center ps-3 pointer-events-none">
+                                        <i class="fa-solid fa-magnifying-glass w-4 h-4 text-platinum-500"></i>
+                                    </div>
+                                    <input type="text" id="genre-search" class="block w-full p-2 ps-10 text-sm border border-platinum-300 rounded-lg focus:ring-steel-blue-500 focus:border-steel-blue-500" placeholder="Search...">
+                                </div>
+                            </div>
+                            <ul class="h-48 px-3 pb-3 overflow-y-auto text-sm text-platinum-700" aria-labelledby="genre-button">
+                                <li>
+                                    <div class="flex items-center ps-2 rounded-sm hover:bg-platinum-100">
+                                        <input onchange="updateSelected(event.target, 'genre', 'genre-display')" id="genre-1" type="checkbox" value="Action" class="w-4 h-4 text-steel-blue-500 bg-platinum-50 border border-platinum-300 rounded-sm focus:ring-steel-blue-500 focus:ring-2">
+                                        <label for="genre-1" class="w-full py-2 ms-2 text-sm font-medium rounded-sm">Action</label>
+                                    </div>
+                                </li>
+                                <li>
+                                    <div class="flex items-center ps-2 rounded-sm hover:bg-platinum-100">
+                                        <input onchange="updateSelected(event.target, 'genre', 'genre-display')" id="genre-2" type="checkbox" value="Adventure" class="w-4 h-4 text-steel-blue-500 bg-platinum-50 border border-platinum-300 rounded-sm focus:ring-steel-blue-500 focus:ring-2">
+                                        <label for="genre-2" class="w-full py-2 ms-2 text-sm font-medium rounded-sm">Adventure</label>
+                                    </div>
+                                </li>
+                                <li>
+                                    <div class="flex items-center ps-2 rounded-sm hover:bg-platinum-100">
+                                        <input onchange="updateSelected(event.target, 'genre', 'genre-display')" id="genre-3" type="checkbox" value="Comedy" class="w-4 h-4 text-steel-blue-500 bg-platinum-50 border border-platinum-300 rounded-sm focus:ring-steel-blue-500 focus:ring-2">
+                                        <label for="genre-3" class="w-full py-2 ms-2 text-sm font-medium rounded-sm">Comedy</label>
+                                    </div>
+                                </li>
+                                <li>
+                                    <div class="flex items-center ps-2 rounded-sm hover:bg-platinum-100">
+                                        <input onchange="updateSelected(event.target, 'genre', 'genre-display')" id="genre-4" type="checkbox" value="Drama" class="w-4 h-4 text-steel-blue-500 bg-platinum-50 border border-platinum-300 rounded-sm focus:ring-steel-blue-500 focus:ring-2">
+                                        <label for="genre-4" class="w-full py-2 ms-2 text-sm font-medium rounded-sm">Drama</label>
+                                    </div>
+                                </li>
+                                <li>
+                                    <div class="flex items-center ps-2 rounded-sm hover:bg-platinum-100">
+                                        <input onchange="updateSelected(event.target, 'genre', 'genre-display')" id="genre-5" type="checkbox" value="Documentary" class="w-4 h-4 text-steel-blue-500 bg-platinum-50 border border-platinum-300 rounded-sm focus:ring-steel-blue-500 focus:ring-2">
+                                        <label for="genre-5" class="w-full py-2 ms-2 text-sm font-medium rounded-sm">Documentary</label>
+                                    </div>
+                                </li>
+                                <li>
+                                    <div class="flex items-center ps-2 rounded-sm hover:bg-platinum-100">
+                                        <input onchange="updateSelected(event.target, 'genre', 'genre-display')" id="genre-6" type="checkbox" value="Fantasy" class="w-4 h-4 text-steel-blue-500 bg-platinum-50 border border-platinum-300 rounded-sm focus:ring-steel-blue-500 focus:ring-2">
+                                        <label for="genre-6" class="w-full py-2 ms-2 text-sm font-medium rounded-sm">Fantasy</label>
+                                    </div>
+                                </li>
+                                <li>
+                                    <div class="flex items-center ps-2 rounded-sm hover:bg-platinum-100">
+                                        <input onchange="updateSelected(event.target, 'genre', 'genre-display')" id="genre-7" type="checkbox" value="Horror" class="w-4 h-4 text-steel-blue-500 bg-platinum-50 border border-platinum-300 rounded-sm focus:ring-steel-blue-500 focus:ring-2">
+                                        <label for="genre-7" class="w-full py-2 ms-2 text-sm font-medium rounded-sm">Horror</label>
+                                    </div>
+                                </li>
+                                <li>
+                                    <div class="flex items-center ps-2 rounded-sm hover:bg-platinum-100">
+                                        <input onchange="updateSelected(event.target, 'genre', 'genre-display')" id="genre-8" type="checkbox" value="Romance" class="w-4 h-4 text-steel-blue-500 bg-platinum-50 border border-platinum-300 rounded-sm focus:ring-steel-blue-500 focus:ring-2">
+                                        <label for="genre-8" class="w-full py-2 ms-2 text-sm font-medium rounded-sm">Romance</label>
+                                    </div>
+                                </li>
+                                <li>
+                                    <div class="flex items-center ps-2 rounded-sm hover:bg-platinum-100">
+                                        <input onchange="updateSelected(event.target, 'genre', 'genre-display')" id="genre-9" type="checkbox" value="Sci-Fi" class="w-4 h-4 text-steel-blue-500 bg-platinum-50 border border-platinum-300 rounded-sm focus:ring-steel-blue-500 focus:ring-2">
+                                        <label for="genre-9" class="w-full py-2 ms-2 text-sm font-medium rounded-sm">Sci-Fi</label>
+                                    </div>
+                                </li>
+                                <li>
+                                    <div class="flex items-center ps-2 rounded-sm hover:bg-platinum-100">
+                                        <input onchange="updateSelected(event.target, 'genre', 'genre-display')" id="genre-10" type="checkbox" value="Thriller" class="w-4 h-4 text-steel-blue-500 bg-platinum-50 border border-platinum-300 rounded-sm focus:ring-steel-blue-500 focus:ring-2">
+                                        <label for="genre-10" class="w-full py-2 ms-2 text-sm font-medium rounded-sm">Thriller</label>
+                                    </div>
+                                </li>
+                            </ul>
+                            <div class="flex items-center text-white p-3 border-t border-platinum-200 rounded-b-lg">
+                                <button class="w-full py-1 text-sm font-medium bg-vermilion-500 rounded-lg hover:bg-vermilion-600">
+                                    <i class="fa-regular fa-square-minus"></i>
+                                    Clear all
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="flex flex-col">
+                        <label for="studio" class="font-medium">Studio</label>
+                        <button id="studio-button" data-dropdown-toggle="studio-dropdown" data-dropdown-placement="bottom" class="bg-white flex flex-col px-4 py-2 border border-platinum-300 rounded-md focus:outline-none focus:ring-2 focus:ring-steel-blue" type="button">
+                            <input hidden value="" name="studio" id="studio">
+                            <div id="studio-display" class="overflow-auto min-h-6 flex flex-wrap gap-2 *:bg-platinum-200 *:px-1 *:rounded-md">
+                            </div>
+                        </button>
+
+                        <div id="studio-dropdown" class="z-10 hidden bg-white rounded-lg shadow-sm w-60 border border-platinum-300">
+                            <div class="p-3">
+                                <label for="studio-search" class="sr-only">Search</label>
+                                <div class="relative">
+                                    <div class="absolute inset-y-0 rtl:inset-r-0 start-0 flex items-center ps-3 pointer-events-none">
+                                        <i class="fa-solid fa-magnifying-glass w-4 h-4 text-platinum-500"></i>
+                                    </div>
+                                    <input type="text" id="studio-search" class="block w-full p-2 ps-10 text-sm border border-platinum-300 rounded-lg focus:ring-steel-blue-500 focus:border-steel-blue-500" placeholder="Search...">
+                                </div>
+                            </div>
+                            <ul class="h-48 px-3 pb-3 overflow-y-auto text-sm text-platinum-700" aria-labelledby="studio-button">
+                                <li>
+                                    <div class="flex items-center ps-2 rounded-sm hover:bg-platinum-100">
+                                        <input onchange="updateSelected(event.target, 'studio', 'studio-display')" id="studio-1" type="checkbox" value="DreamWorks" class="w-4 h-4 text-steel-blue-500 bg-platinum-50 border border-platinum-300 rounded-sm focus:ring-steel-blue-500 focus:ring-2">
+                                        <label for="studio-1" class="w-full py-2 ms-2 text-sm font-medium rounded-sm">DreamWorks</label>
+                                    </div>
+                                </li>
+                                <li>
+                                    <div class="flex items-center ps-2 rounded-sm hover:bg-platinum-100">
+                                        <input onchange="updateSelected(event.target, 'studio', 'studio-display')" id="studio-2" type="checkbox" value="Warner Bros" class="w-4 h-4 text-steel-blue-500 bg-platinum-50 border border-platinum-300 rounded-sm focus:ring-steel-blue-500 focus:ring-2">
+                                        <label for="studio-2" class="w-full py-2 ms-2 text-sm font-medium rounded-sm">Warner Bros</label>
+                                    </div>
+                                </li>
+                                <li>
+                                    <div class="flex items-center ps-2 rounded-sm hover:bg-platinum-100">
+                                        <input onchange="updateSelected(event.target, 'studio', 'studio-display')" id="studio-3" type="checkbox" value="Universal Pictures" class="w-4 h-4 text-steel-blue-500 bg-platinum-50 border border-platinum-300 rounded-sm focus:ring-steel-blue-500 focus:ring-2">
+                                        <label for="studio-3" class="w-full py-2 ms-2 text-sm font-medium rounded-sm">Universal Pictures</label>
+                                    </div>
+                                </li>
+                                <li>
+                                    <div class="flex items-center ps-2 rounded-sm hover:bg-platinum-100">
+                                        <input onchange="updateSelected(event.target, 'studio', 'studio-display')" id="studio-4" type="checkbox" value="Paramount Pictures" class="w-4 h-4 text-steel-blue-500 bg-platinum-50 border border-platinum-300 rounded-sm focus:ring-steel-blue-500 focus:ring-2">
+                                        <label for="studio-4" class="w-full py-2 ms-2 text-sm font-medium rounded-sm">Paramount Pictures</label>
+                                    </div>
+                                </li>
+                                <li>
+                                    <div class="flex items-center ps-2 rounded-sm hover:bg-platinum-100">
+                                        <input onchange="updateSelected(event.target, 'studio', 'studio-display')" id="studio-5" type="checkbox" value="20th Century Fox" class="w-4 h-4 text-steel-blue-500 bg-platinum-50 border border-platinum-300 rounded-sm focus:ring-steel-blue-500 focus:ring-2">
+                                        <label for="studio-5" class="w-full py-2 ms-2 text-sm font-medium rounded-sm">20th Century Fox</label>
+                                    </div>
+                                </li>
+                            </ul>
+                            <div class="flex items-center text-white p-3 border-t border-platinum-200 rounded-b-lg">
+                                <button class="w-full py-1 text-sm font-medium bg-vermilion-500 rounded-lg hover:bg-vermilion-600">
+                                    <i class="fa-regular fa-square-minus"></i>
+                                    Clear all
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="flex flex-col">
+                        <label for="talent" class="font-medium">Talent</label>
+                        <button id="talent-button" data-dropdown-toggle="talent-dropdown" data-dropdown-placement="bottom" class="bg-white flex flex-col px-4 py-2 border border-platinum-300 rounded-md focus:outline-none focus:ring-2 focus:ring-steel-blue" type="button">
+                            <input hidden value="" name="talent" id="talent">
+                            <div id="talent-display" class="overflow-auto min-h-6 flex flex-wrap gap-2 *:bg-platinum-200 *:px-1 *:rounded-md">
+                            </div>
+                        </button>
+
+                        <div id="talent-dropdown" class="z-10 hidden bg-white rounded-lg shadow-sm w-60 border border-platinum-300">
+                            <div class="p-3">
+                                <label for="talent-search" class="sr-only">Search</label>
+                                <div class="relative">
+                                    <div class="absolute inset-y-0 rtl:inset-r-0 start-0 flex items-center ps-3 pointer-events-none">
+                                        <i class="fa-solid fa-magnifying-glass w-4 h-4 text-platinum-500"></i>
+                                    </div>
+                                    <input type="text" id="talent-search" class="block w-full p-2 ps-10 text-sm border border-platinum-300 rounded-lg focus:ring-steel-blue-500 focus:border-steel-blue-500" placeholder="Search...">
+                                </div>
+                            </div>
+                            <ul class="h-48 px-3 pb-3 overflow-y-auto text-sm text-platinum-700" aria-labelledby="talent-button">
+                                <li>
+                                    <div class="flex items-center ps-2 rounded-sm hover:bg-platinum-100">
+                                        <input onchange="updateSelected(event.target, 'talent', 'talent-display')" id="talent-1" type="checkbox" value="Brad Pitt" class="w-4 h-4 text-steel-blue-500 bg-platinum-50 border border-platinum-300 rounded-sm focus:ring-steel-blue-500 focus:ring-2">
+                                        <label for="talent-1" class="w-full py-2 ms-2 text-sm font-medium rounded-sm">Brad Pitt</label>
+                                    </div>
+                                </li>
+                                <li>
+                                    <div class="flex items-center ps-2 rounded-sm hover:bg-platinum-100">
+                                        <input onchange="updateSelected(event.target, 'talent', 'talent-display')" id="talent-2" type="checkbox" value="Meryl Streep" class="w-4 h-4 text-steel-blue-500 bg-platinum-50 border border-platinum-300 rounded-sm focus:ring-steel-blue-500 focus:ring-2">
+                                        <label for="talent-2" class="w-full py-2 ms-2 text-sm font-medium rounded-sm">Meryl Streep</label>
+                                    </div>
+                                </li>
+                                <li>
+                                    <div class="flex items-center ps-2 rounded-sm hover:bg-platinum-100">
+                                        <input onchange="updateSelected(event.target, 'talent', 'talent-display')" id="talent-3" type="checkbox" value="Jennifer Lawrence" class="w-4 h-4 text-steel-blue-500 bg-platinum-50 border border-platinum-300 rounded-sm focus:ring-steel-blue-500 focus:ring-2">
+                                        <label for="talent-3" class="w-full py-2 ms-2 text-sm font-medium rounded-sm">Jennifer Lawrence</label>
+                                    </div>
+                                </li>
+                                <li>
+                                    <div class="flex items-center ps-2 rounded-sm hover:bg-platinum-100">
+                                        <input onchange="updateSelected(event.target, 'talent', 'talent-display')" id="talent-4" type="checkbox" value="Leonardo DiCaprio" class="w-4 h-4 text-steel-blue-500 bg-platinum-50 border border-platinum-300 rounded-sm focus:ring-steel-blue-500 focus:ring-2">
+                                        <label for="talent-4" class="w-full py-2 ms-2 text-sm font-medium rounded-sm">Leonardo DiCaprio</label>
+                                    </div>
+                                </li>
+                                <li>
+                                    <div class="flex items-center ps-2 rounded-sm hover:bg-platinum-100">
+                                        <input onchange="updateSelected(event.target, 'talent', 'talent-display')" id="talent-5" type="checkbox" value="Tom Hanks" class="w-4 h-4 text-steel-blue-500 bg-platinum-50 border border-platinum-300 rounded-sm focus:ring-steel-blue-500 focus:ring-2">
+                                        <label for="talent-5" class="w-full py-2 ms-2 text-sm font-medium rounded-sm">Tom Hanks</label>
+                                    </div>
+                                </li>
+                            </ul>
+                            <div class="flex items-center text-white p-3 border-t border-platinum-200 rounded-b-lg">
+                                <button class="w-full py-1 text-sm font-medium bg-vermilion-500 rounded-lg hover:bg-vermilion-600">
+                                    <i class="fa-regular fa-square-minus"></i>
+                                    Clear all
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="flex flex-col">
+                        <label for="duration" class="font-medium">Duration</label>
+                        <input type="number" value="" name="duration" id="duration" class="px-4 py-2 border border-platinum-300 rounded-md focus:outline-none focus:ring-2 focus:ring-steel-blue">
+                    </div>
+                    <div class="flex flex-col sm:col-span-2">
+                        <label for="release-date" class="font-medium">Release Date</label>
+                        <input type="date" name="release-date" id="release-date" class="px-4 py-2 border border-platinum-300 rounded-md focus:outline-none focus:ring-2 focus:ring-steel-blue">
+                    </div>
+                    <div class="flex flex-col sm:col-span-2">
+                        <label for="content" class="font-medium">Content</label>
+                        <textarea name="content" id="content" rows="5" class="px-4 py-2 border border-platinum-300 rounded-md focus:outline-none focus:ring-2 focus:ring-steel-blue"></textarea>
+                    </div>
+                </div>
+            </div>
+
+            <div class="flex justify-center gap-4 *:w-20">
+                <button type="button" onclick="submitForm(event)" class="px-4 py-2 text-white rounded-md bg-steel-blue-500 hover:bg-steel-blue-600 focus:outline-none focus:ring-2 focus:ring-steel-blue">Save</button>
+                <button type="reset" onclick="resetForm()" class="px-4 py-2 border border-steel-blue rounded-md hover:bg-platinum-100 text-steel-blue focus:outline-none">Reset</button>
+            </div>
+        </form>
+    </div>
+
+    <div class="hidden delete-modal absolute w-full h-full justify-center items-center bg-space-black/50 z-50">
+        <div class="flex sm:flex-row flex-col items-center sm:items-start gap-2 sm:gap-4 mx-auto max-w-lg rounded-lg border border-stone bg-ghost-white p-4 shadow-lg">
+            <span class="size-8 min-w-8 flex items-center justify-center rounded-full bg-carrot-orange text-white">
+                <i class="fa-solid fa-exclamation"></i>
+            </span>
+            <div class="flex flex-col items-center sm:items-start">
+                <p class="font-bold text-lg text-carrot-orange">Warning</p>
+
+                <p class="pt-2 pb-4">
+                    Are you sure you want to delete this item?
+                </p>
+                
+                <div class="flex flex-col sm:flex-row-reverse gap-3 w-full">
+                    <button type="button" class="rounded-lg text-white bg-carrot-orange-500 hover:bg-carrot-orange-600 px-4 py-2 text-center text-sm font-semibold">
+                        Confirm
+                    </button>
+    
+                    <button type="button" onclick="toggleModal('delete-modal')" class="border border-platinum-300 rounded-lg hover:bg-platinum-100 px-4 py-2 text-center text-sm font-semibold">
+                        Cancel
+                    </button>
+                </div>
+            </div>
+
+        </div>
+    </div>
     <script src="https://cdn.jsdelivr.net/npm/flowbite@3.1.2/dist/flowbite.min.js"></script>
 </body>
 
