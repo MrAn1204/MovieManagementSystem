@@ -84,6 +84,23 @@ function onSubmit(event) {
     }
 }
 
+function onReset(displayIds = []) {
+    const form = document.getElementById('create-edit-form');
+    const imagePreview = document.getElementById('imagePreview');
+    
+    form.reset();
+    imagePreview.src = 'https://dummyimage.com/300x400/dddddd/000000&text=No+Image';
+
+    for (const displayId of displayIds) {
+        const display = document.getElementById(displayId);
+        display.innerHTML = '';
+    }
+}
+
+function toggleCreateEditForm() {
+    onReset(['field2-display']);
+    toggleModal('create-edit-modal');
+}
 
 function toggleOptionDropdown(name) {
     const dropdown = document.getElementById(name);
@@ -97,7 +114,9 @@ function updateSelected(target, inputId, displayId) {
 
     if (target.checked) {
         const span = document.createElement('span');
-        span.textContent = target.value;
+        const label = document.querySelector(`label[for="${target.id}"]`);
+        
+        span.textContent = label.textContent;
         display.appendChild(span);
     } else {
         for (const span of display.querySelectorAll('span')) {

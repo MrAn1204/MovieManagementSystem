@@ -26,7 +26,7 @@
             <div class="flex flex-wrap-reverse items-center relative">
                 <h2 class="sm:flex-1 text-2xl font-semibold sm:text-center overflow-hidden">Create/Edit [Entity]</h2>
                 <div class="sm:absolute sm:right-0 flex flex-1 justify-end">
-                    <button type="button" class="w-10 h-10 hover:bg-platinum-100" onclick="toggleModal('create-edit-modal')">
+                    <button type="button" class="w-10 h-10 hover:bg-platinum-100" onclick="toggleCreateEditForm()">
                         <i class="fa-solid fa-xmark"></i>
                     </button>
                 </div>
@@ -161,7 +161,7 @@
 
             <div class="flex justify-center gap-4 *:w-20">
                 <button type="button" onclick="onSubmit(event)" class="px-4 py-2 text-white rounded-md bg-steel-blue-500 hover:bg-steel-blue-600 focus:outline-none focus:ring-2 focus:ring-steel-blue">Save</button>
-                <button type="reset" class="px-4 py-2 border border-steel-blue rounded-md hover:bg-platinum-100 text-steel-blue focus:outline-none">Reset</button>
+                <button type="reset" onclick="onReset(['field2-display'])" class="px-4 py-2 border border-steel-blue rounded-md hover:bg-platinum-100 text-steel-blue focus:outline-none">Reset</button>
             </div>
         </form>
     </div>
