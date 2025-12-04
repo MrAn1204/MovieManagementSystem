@@ -15,8 +15,6 @@ function submitForm(event) {
     const form = document.getElementById('create-edit-form');
     const formData = new FormData(form);
 
-    console.log(formData.get('name'));
-
     let formValid = true;
 
     if (formData.get('name') === null || formData.get('name').trim() === '') {
