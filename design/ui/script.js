@@ -89,11 +89,17 @@ function onReset(displayIds = []) {
     const imagePreview = document.getElementById('imagePreview');
     
     form.reset();
-    imagePreview.src = 'https://dummyimage.com/300x400/dddddd/000000&text=No+Image';
+    if (imagePreview) {
+        imagePreview.src = 'https://dummyimage.com/300x400/dddddd/000000&text=No+Image';
+    }
 
     for (const displayId of displayIds) {
         const display = document.getElementById(displayId);
         display.innerHTML = '';
+    }
+
+    for (const errorText of document.getElementsByClassName('error-text')) {
+        errorText.classList.add('hidden');
     }
 }
 
