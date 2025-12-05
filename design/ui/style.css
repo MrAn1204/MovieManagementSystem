@@ -1,1 +1,45 @@
 @import "tailwindcss";
+
+.seat {
+    background-color: #ececed; /* platinum-100 */ 
+}
+
+.seat:hover {
+    background-color: #dcdcdd; /* platinum-200 */
+}
+
+.seat-occupied {
+    background-color: #3c9a1f; /* bright-fern-600 */
+    color: #FAFAFF;
+}
+
+.seat-occupied:hover {
+    background-color: #31791c; /* bright-fern-700 */
+}
+
+.seat-couple {
+    background-color: #ed1915; /* vermilion-600 */
+    color: #FAFAFF;
+}
+
+.seat-couple:hover {
+    background-color: #c8110d; /* vermilion-700 */
+}
+
+.seat-premium {
+    background-color: #de6e18; /* carrot-orange-600 */
+    color: #FAFAFF;
+}
+
+.seat-premium:hover {
+    background-color: #b85416; /* carrot-orange-700 */
+}
+
+.seat-accessible {
+    background-color: #2967a0; /* steel-blue-600 */
+    color: #FAFAFF;
+}
+
+.seat-accessible:hover {
+    background-color: #225282; /* steel-blue-700 */
+}
