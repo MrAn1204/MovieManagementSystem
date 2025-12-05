@@ -1,0 +1,562 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Room</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.1/css/all.min.css">
+    <link href="https://cdn.jsdelivr.net/npm/flowbite@3.1.2/dist/flowbite.min.css" rel="stylesheet" />
+    <link rel="stylesheet" href="style.css">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="tailwind.config.js"></script>
+    <script src="script.js"></script>
+    <script src="roomScript.js"></script>
+</head>
+
+<body class="bg-ghost-white flex flex-col h-screen m-0 text-space-black">
+    <header class="bg-platinum-50 h-12 w-full border-platinum-300 border-b py-0.5 lg:hidden">
+        <div class="relative">
+            <button id="expand" class="absolute left-2 hover:bg-platinum-100 w-10 h-10"
+                onclick="toggleSidebar()">
+                <i class="fa-solid fa-bars"></i>
+            </button>
+    
+            <div class="flex justify-center">
+                <img src="../MMS_transparent.png" alt="Logo" class="w-16" />
+            </div>
+
+        </div>
+    </header>
+
+    <main class="flex flex-1 overflow-auto">
+        <div id="overlay" class="hidden fixed w-full h-full bg-space-black/50 z-30 lg:hidden">
+            <button class="w-full h-full cursor-default" onclick="toggleSidebar()"></button>
+        </div>
+
+        <!-- Sidebar -->
+        <aside class="flex bg-platinum-50 transition-all duration-500 ease-in-out -left-64 lg:left-0 absolute z-40 lg:relative lg:h-full h-[calc(100vh-48px)] w-64 lg:min-w-64 flex-col border-r border-platinum-300 py-4 items-center">
+            <div>
+                <img src="../MMS_transparent.png" alt="Logo" class="hidden lg:block w-32" />
+            </div>
+            
+            <nav class="flex-1 w-full overflow-auto">
+                <ul class="p-4 space-y-4 text-2xl">
+                    <li class="rounded-md px-4 py-1 overflow-hidden hover:bg-platinum-100 hover:cursor-pointer">
+                        <a href="#home" class="space-x-4">
+                            <i class="fa-solid fa-house"></i>
+                            <span>Home</span>
+                        </a>
+                    </li>
+                    <li class="rounded-md px-4 py-1 overflow-hidden hover:bg-platinum-100 hover:cursor-pointer">
+                        <a href="#movie" class="space-x-4">
+                            <i class="fa-solid fa-film"></i>
+                            <span>Movie</span>
+                        </a>
+                    </li>
+                    <li class="rounded-md px-4 py-1 overflow-hidden hover:bg-platinum-100 hover:cursor-pointer">
+                        <a href="#schedule" class="space-x-4">
+                            <i class="fa-solid fa-calendar"></i>
+                            <span>Schedule</span>
+                        </a>
+                    </li>
+                    <li class="rounded-md px-4 py-1 overflow-hidden bg-platinum-200 hover:cursor-pointer">
+                        <a href="#room" class="space-x-4">
+                            <i class="fa-solid fa-door-closed"></i>
+                            <span>Room</span>
+                        </a>
+                    </li>
+                    <li class="rounded-md px-4 py-1 overflow-hidden hover:bg-platinum-100 hover:cursor-pointer">
+                        <a href="#promotion" class="space-x-4">
+                            <i class="fa-solid fa-percent"></i>
+                            <span>Promotion</span>
+                        </a>
+                    </li>
+                    <li class="rounded-md px-4 py-1 overflow-hidden hover:bg-platinum-100 hover:cursor-pointer">
+                        <a href="#user" class="space-x-4">
+                            <i class="fa-solid fa-users"></i>
+                            <span>User</span>
+                        </a>
+                    </li>
+                </ul>
+            </nav>
+
+            <div class="flex flex-col w-full justify-evenly overflow-hidden px-2">
+                <hr class="border-platinum-300">
+                <div class="w-full flex items-center p-2">
+                    <img src="../user-solid-full.svg" alt="user_pfp" class="w-1/6 rounded-full" />
+                    <div class="px-2">
+                        <p class="font-bold">John Doe</p>
+                        <p class="text-sm">john.doe@example.com</p>
+                    </div>
+                </div>
+                <button class="px-2 text-white rounded-md bg-vermilion-500 hover:bg-vermilion-600">
+                    <i class="fa-solid fa-right-from-bracket"></i> Log Out
+                </button>
+            </div>
+        </aside>
+
+        <div class="w-full flex flex-col items-center justify-center m-2 overflow-hidden">
+            <!-- Search Bar -->
+            <form action="" method="get" id="search-container" class="flex flex-col w-full md:w-11/12 lg:max-h-[50%] max-h-full">
+                <div class="flex gap-4 flex-wrap">
+                    <div class="flex grow-[3]">
+                        <input type="text" name="keyword" placeholder="Search..." class="w-full px-4 py-2 border border-platinum-300 rounded-l-md focus:outline-none focus:ring-2 focus:ring-steel-blue">
+                        <button type="submit" class="w-12 text-white rounded-r-md bg-steel-blue hover:bg-steel-blue-600 focus:outline-none focus:ring-2 focus:ring-steel-blue">
+                            <i class="fa-solid fa-magnifying-glass"></i>
+                        </button>
+                    </div>
+
+                    <div class="flex gap-4 grow">
+                        <div class="flex grow">
+                            <button type="button" class="order-button w-1/4 max-w-12 border bg-white border-platinum-300 rounded-tl-md rounded-bl-md text-steel-blue focus:outline-none" onclick="toggleOrder()">
+                                <i id="icon-asc" class="fa-solid fa-arrow-up-short-wide"></i>
+                                <i id="icon-desc" class="fa-solid fa-arrow-down-short-wide hidden"></i>
+                            </button>
+
+                            <select name="order" id="order" class="w-full p-2 border border-l-0 rounded-tr-md rounded-br-md border-platinum-300 focus:outline-none focus:ring-2 focus:ring-steel-blue">
+                                <option value="" disabled selected hidden>Order by</option>
+                                <option value="">Default</option>
+                                <option value="name">Name</option>
+                                <option value="seatQuantity">Seat quantity</option>
+                            </select>
+                        </div>
+    
+                        <button type="button" class="filter-button w-1/4 max-w-12 border border-steel-blue rounded-md hover:bg-platinum-100 text-steel-blue focus:outline-none" onclick="toggleFilter()">
+                            <i class="fa-solid fa-filter"></i>
+                        </button>
+                    </div>
+                </div>
+
+                <hr class="my-4 border-platinum-300">
+                <div id="filter-container" class="space-y-4 overflow-y-auto transition-all duration-500 ease-in-out h-0 lg:max-h-fit opacity-0">
+                    <div class="flex gap-4 *:flex-1 *:min-w-40 flex-wrap items-end">
+                        <select name="filter-room" id="filter-room" class="h-fit px-4 py-2 border border-platinum-300 rounded-md focus:outline-none focus:ring-2 focus:ring-steel-blue">
+                            <option value="" selected>Any room</option>
+                        </select>
+                    </div>
+
+                    <div class="flex *:grow flex-wrap gap-4 items-center">
+                        <div class="flex flex-col">
+                            <label for="filter-seatQuantityMin" class="block font-medium">Minimum seat quantity</label>
+                            <select name="filter-seatQuantityMin" id="filter-seatQuantityMin" class="px-4 py-2 border border-platinum-300 rounded-md focus:outline-none focus:ring-2 focus:ring-steel-blue">
+                                <option value="" selected>-</option>
+                                <option value="40">40</option>
+                                <option value="60">60</option>
+                                <option value="80">80</option>
+                                <option value="120">120</option>
+                                <option value="160">160</option>
+                                <option value="200">200</option>
+                            </select>
+                        </div>
+
+                        <div class="flex flex-col">
+                            <label for="filter-seatQuantityMax" class="block font-medium">Maximum seat quantity</label>
+                            <select name="filter-seatQuantityMax" id="filter-seatQuantityMax" class="px-4 py-2 border border-platinum-300 rounded-md focus:outline-none focus:ring-2 focus:ring-steel-blue">
+                                <option value="" selected>-</option>
+                                <option value="40">40</option>
+                                <option value="60">60</option>
+                                <option value="80">80</option>
+                                <option value="120">120</option>
+                                <option value="160">160</option>
+                                <option value="200">200</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+                <hr id="filter-bottom" class="hidden my-4 border-platinum-300">
+            </form>
+            
+            <!-- Table -->
+            <div id="table-container" class="flex flex-col flex-1 min-h-0 w-full md:w-11/12">
+                <div>
+                    <button type="button" onclick="toggleCreate()" class="px-2 py-1 bg-bright-fern-500 hover:bg-bright-fern-600 text-white font-semibold">
+                        <i class="fa-solid fa-plus"></i>
+                        <span>Add</span>
+                    </button>
+                </div>
+                <div class="overflow-auto border border-platinum-300">
+                    <table class="w-full bg-platinum-50 border-separate border-spacing-0">
+                        <thead class="text-left sticky top-0 z-10">
+                            <tr class="bg-platinum-200 *:border-b *:border-platinum-300 last:*:border-l last:*:sticky last:*:right-0 last:*:bg-platinum-200">
+                                <th class="min-w-40 px-4 py-2">Name</th>
+                                <th class="min-w-40 px-4 py-2">Seat Quantity</th>
+                                <th class="min-w-24 w-24"></th>
+                            </tr>
+                        </thead>
+                        <tbody class="*:*:border-b *:*:border-platinum-300 last:*:*:border-l *:last:*:border-b-0">
+                            <tr class="hover:bg-platinum-100 last:*:sticky last:*:right-0 last:*:bg-platinum-50 last:*:hover:bg-platinum-100">
+                                <td class="px-4 py-2">Oak</td>
+                                <td class="px-4 py-2">40</td>
+                                <td>
+                                    <div class="flex justify-evenly">
+                                        <button type="button" onclick="toggleModal('detail-modal')"><i class="fa-solid fa-circle-info text-steel-blue"></i></button>
+                                        <button type="button" onclick="toggleEdit()"><i class="fa-solid fa-pen-to-square text-carrot-orange"></i></button>
+                                        <button type="button" onclick="toggleModal('delete-modal')"><i class="fa-solid fa-trash text-vermilion"></i></button>
+                                    </div>
+                                </td>
+                            </tr>
+                            <tr class="hover:bg-platinum-100 last:*:sticky last:*:right-0 last:*:bg-platinum-50 last:*:hover:bg-platinum-100">
+                                <td class="px-4 py-2">Maple</td>
+                                <td class="px-4 py-2">200</td>
+                                <td>
+                                    <div class="flex justify-evenly">
+                                        <button type="button" onclick="toggleModal('detail-modal')"><i class="fa-solid fa-circle-info text-steel-blue"></i></button>
+                                        <button type="button" onclick="toggleEdit()"><i class="fa-solid fa-pen-to-square text-carrot-orange"></i></button>
+                                        <button type="button" onclick="toggleModal('delete-modal')"><i class="fa-solid fa-trash text-vermilion"></i></button>
+                                    </div>
+                                </td>
+                            </tr>
+                            <tr class="hover:bg-platinum-100 last:*:sticky last:*:right-0 last:*:bg-platinum-50 last:*:hover:bg-platinum-100">
+                                <td class="px-4 py-2">Pine</td>
+                                <td class="px-4 py-2">60</td>
+                                <td>
+                                    <div class="flex justify-evenly">
+                                        <button type="button" onclick="toggleModal('detail-modal')"><i class="fa-solid fa-circle-info text-steel-blue"></i></button>
+                                        <button type="button" onclick="toggleEdit()"><i class="fa-solid fa-pen-to-square text-carrot-orange"></i></button>
+                                        <button type="button" onclick="toggleModal('delete-modal')"><i class="fa-solid fa-trash text-vermilion"></i></button>
+                                    </div>
+                                </td>
+                            </tr>
+                            <tr class="hover:bg-platinum-100 last:*:sticky last:*:right-0 last:*:bg-platinum-50 last:*:hover:bg-platinum-100">
+                                <td class="px-4 py-2">Birch</td>
+                                <td class="px-4 py-2">80</td>
+                                <td>
+                                    <div class="flex justify-evenly">
+                                        <button type="button" onclick="toggleModal('detail-modal')"><i class="fa-solid fa-circle-info text-steel-blue"></i></button>
+                                        <button type="button" onclick="toggleEdit()"><i class="fa-solid fa-pen-to-square text-carrot-orange"></i></button>
+                                        <button type="button" onclick="toggleModal('delete-modal')"><i class="fa-solid fa-trash text-vermilion"></i></button>
+                                    </div>
+                                </td>
+                            </tr>
+                            <tr class="hover:bg-platinum-100 last:*:sticky last:*:right-0 last:*:bg-platinum-50 last:*:hover:bg-platinum-100">
+                                <td class="px-4 py-2">Willow</td>
+                                <td class="px-4 py-2">60</td>
+                                <td>
+                                    <div class="flex justify-evenly">
+                                        <button type="button" onclick="toggleModal('detail-modal')"><i class="fa-solid fa-circle-info text-steel-blue"></i></button>
+                                        <button type="button" onclick="toggleEdit()"><i class="fa-solid fa-pen-to-square text-carrot-orange"></i></button>
+                                        <button type="button" onclick="toggleModal('delete-modal')"><i class="fa-solid fa-trash text-vermilion"></i></button>
+                                    </div>
+                                </td>
+                            </tr>
+                            <tr class="hover:bg-platinum-100 last:*:sticky last:*:right-0 last:*:bg-platinum-50 last:*:hover:bg-platinum-100">
+                                <td class="px-4 py-2">Cedar</td>
+                                <td class="px-4 py-2">80</td>
+                                <td>
+                                    <div class="flex justify-evenly">
+                                        <button type="button" onclick="toggleModal('detail-modal')"><i class="fa-solid fa-circle-info text-steel-blue"></i></button>
+                                        <button type="button" onclick="toggleEdit()"><i class="fa-solid fa-pen-to-square text-carrot-orange"></i></button>
+                                        <button type="button" onclick="toggleModal('delete-modal')"><i class="fa-solid fa-trash text-vermilion"></i></button>
+                                    </div>
+                                </td>
+                            </tr>
+                            <tr class="hover:bg-platinum-100 last:*:sticky last:*:right-0 last:*:bg-platinum-50 last:*:hover:bg-platinum-100">
+                                <td class="px-4 py-2">Ash</td>
+                                <td class="px-4 py-2">60</td>
+                                <td>
+                                    <div class="flex justify-evenly">
+                                        <button type="button" onclick="toggleModal('detail-modal')"><i class="fa-solid fa-circle-info text-steel-blue"></i></button>
+                                        <button type="button" onclick="toggleEdit()"><i class="fa-solid fa-pen-to-square text-carrot-orange"></i></button>
+                                        <button type="button" onclick="toggleModal('delete-modal')"><i class="fa-solid fa-trash text-vermilion"></i></button>
+                                    </div>
+                                </td>
+                            </tr>
+                            <tr class="hover:bg-platinum-100 last:*:sticky last:*:right-0 last:*:bg-platinum-50 last:*:hover:bg-platinum-100">
+                                <td class="px-4 py-2">Poplar</td>
+                                <td class="px-4 py-2">60</td>
+                                <td>
+                                    <div class="flex justify-evenly">
+                                        <button type="button" onclick="toggleModal('detail-modal')"><i class="fa-solid fa-circle-info text-steel-blue"></i></button>
+                                        <button type="button" onclick="toggleEdit()"><i class="fa-solid fa-pen-to-square text-carrot-orange"></i></button>
+                                        <button type="button" onclick="toggleModal('delete-modal')"><i class="fa-solid fa-trash text-vermilion"></i></button>
+                                    </div>
+                                </td>
+                            </tr>
+                            <tr class="hover:bg-platinum-100 last:*:sticky last:*:right-0 last:*:bg-platinum-50 last:*:hover:bg-platinum-100">
+                                <td class="px-4 py-2">Fir</td>
+                                <td class="px-4 py-2">160</td>
+                                <td>
+                                    <div class="flex justify-evenly">
+                                        <button type="button" onclick="toggleModal('detail-modal')"><i class="fa-solid fa-circle-info text-steel-blue"></i></button>
+                                        <button type="button" onclick="toggleEdit()"><i class="fa-solid fa-pen-to-square text-carrot-orange"></i></button>
+                                        <button type="button" onclick="toggleModal('delete-modal')"><i class="fa-solid fa-trash text-vermilion"></i></button>
+                                    </div>
+                                </td>
+                            </tr>
+                            <tr class="hover:bg-platinum-100 last:*:sticky last:*:right-0 last:*:bg-platinum-50 last:*:hover:bg-platinum-100">
+                                <td class="px-4 py-2">Spruce</td>
+                                <td class="px-4 py-2">60</td>
+                                <td>
+                                    <div class="flex justify-evenly">
+                                        <button type="button" onclick="toggleModal('detail-modal')"><i class="fa-solid fa-circle-info text-steel-blue"></i></button>
+                                        <button type="button" onclick="toggleEdit()"><i class="fa-solid fa-pen-to-square text-carrot-orange"></i></button>
+                                        <button type="button" onclick="toggleModal('delete-modal')"><i class="fa-solid fa-trash text-vermilion"></i></button>
+                                    </div>
+                                </td>
+                            </tr>
+                            <tr class="hover:bg-platinum-100 last:*:sticky last:*:right-0 last:*:bg-platinum-50 last:*:hover:bg-platinum-100">
+                                <td class="px-4 py-2">Elm</td>
+                                <td class="px-4 py-2">80</td>
+                                <td>
+                                    <div class="flex justify-evenly">
+                                        <button type="button" onclick="toggleModal('detail-modal')"><i class="fa-solid fa-circle-info text-steel-blue"></i></button>
+                                        <button type="button" onclick="toggleEdit()"><i class="fa-solid fa-pen-to-square text-carrot-orange"></i></button>
+                                        <button type="button" onclick="toggleModal('delete-modal')"><i class="fa-solid fa-trash text-vermilion"></i></button>
+                                    </div>
+                                </td>
+                            </tr>
+                            <tr class="hover:bg-platinum-100 last:*:sticky last:*:right-0 last:*:bg-platinum-50 last:*:hover:bg-platinum-100">
+                                <td class="px-4 py-2">Sycamore</td>
+                                <td class="px-4 py-2">80</td>
+                                <td>
+                                    <div class="flex justify-evenly">
+                                        <button type="button" onclick="toggleModal('detail-modal')"><i class="fa-solid fa-circle-info text-steel-blue"></i></button>
+                                        <button type="button" onclick="toggleEdit()"><i class="fa-solid fa-pen-to-square text-carrot-orange"></i></button>
+                                        <button type="button" onclick="toggleModal('delete-modal')"><i class="fa-solid fa-trash text-vermilion"></i></button>
+                                    </div>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+    
+                <!-- Pagination -->
+                <div class="flex md:flex-row flex-col justify-between items-center pt-2 gap-2">
+                    <div class="w-full flex md:flex-col md:items-baseline items-center flex-row gap-2 md:gap-0 flex-wrap">
+                        <p class="flex-1 min-w-fit">1 - 10 of 50 entries</p>
+                        
+                        <div class="w-full sm:w-fit flex md:hidden gap-2 items-center justify-center sm:order-2 order-3">
+                            <button disabled class="rounded-md border border-platinum-300 p-2 text-center text-sm transition-all shadow-sm hover:shadow-lg hover:text-white hover:bg-space-black hover:border-space-black focus:text-white focus:bg-space-black focus:border-space-black active:border-space-black active:text-white active:bg-space-black disabled:pointer-events-none disabled:opacity-50 disabled:shadow-none" type="button">
+                                Prev
+                            </button>
+                            
+                            <p class="text-center">
+                                Page <strong>1</strong> of <strong>10</strong>
+                            </p>
+                            
+                            <button class="rounded-md border border-platinum-300 p-2 text-center text-sm transition-all shadow-sm hover:shadow-lg hover:text-white hover:bg-space-black hover:border-space-black focus:text-white focus:bg-space-black focus:border-space-black active:border-space-black active:text-white active:bg-space-black disabled:pointer-events-none disabled:opacity-50 disabled:shadow-none" type="button">
+                                Next
+                            </button>
+                        </div>
+                        
+                        <div class="flex-1 min-w-fit flex flex-wrap items-center justify-end md:justify-start sm:order-3 order-2">
+                            <label for="pages" class="mr-2">Page size:</label>
+                            <select id="pages" name="pages" class="border border-platinum-300 rounded-md w-16 px-2">
+                                <option value="10">10</option>
+                                <option value="25">25</option>
+                                <option value="50">50</option>
+                                <option value="100">100</option>
+                            </select>
+                        </div>
+                    </div>
+    
+                    <div class="hidden md:flex gap-2 justify-center">
+                        <button class="rounded-md border border-platinum-300 p-2 text-center text-sm transition-all shadow-sm hover:shadow-lg hover:text-white hover:bg-space-black hover:border-space-black focus:text-white focus:bg-space-black focus:border-space-black active:border-space-black active:text-white active:bg-space-black disabled:pointer-events-none disabled:opacity-50 disabled:shadow-none">
+                            Prev
+                        </button>
+                        <div class="flex items-center justify-center gap-2">
+                            <button class="w-10 rounded-md bg-space-black p-2 border border-transparent text-center text-sm text-white transition-all shadow-md hover:shadow-lg focus:bg-space-black focus:shadow-none active:bg-space-black hover:bg-space-black active:shadow-none disabled:pointer-events-none disabled:opacity-50 disabled:shadow-none">
+                                1
+                            </button>
+                            <button class="w-10 rounded-md border border-platinum-300 p-2 text-center text-sm transition-all shadow-sm hover:shadow-lg hover:text-white hover:bg-space-black hover:border-space-black focus:text-white focus:bg-space-black focus:border-space-black active:border-space-black active:text-white active:bg-space-black disabled:pointer-events-none disabled:opacity-50 disabled:shadow-none">
+                                2
+                            </button>
+                            <button class="w-10 rounded-md border border-platinum-300 p-2 text-center text-sm transition-all shadow-sm hover:shadow-lg hover:text-white hover:bg-space-black hover:border-space-black focus:text-white focus:bg-space-black focus:border-space-black active:border-space-black active:text-white active:bg-space-black disabled:pointer-events-none disabled:opacity-50 disabled:shadow-none">
+                                3
+                            </button>
+                            <button class="md:hi w-10 rounded-md border border-platinum-300 p-2 text-center text-sm transition-all shadow-sm hover:shadow-lg hover:text-white hover:bg-space-black hover:border-space-black focus:text-white focus:bg-space-black focus:border-space-black active:border-space-black active:text-white active:bg-space-black disabled:pointer-events-none disabled:opacity-50 disabled:shadow-none">
+                                4
+                            </button>
+                            <span class="w-10 rounded-md border border-platinum-300 p-2 text-center text-sm shadow-sm">
+                                ...
+                            </span>
+                            <button class="w-10 rounded-md border border-platinum-300 p-2 text-center text-sm transition-all shadow-sm hover:shadow-lg hover:text-white hover:bg-space-black hover:border-space-black focus:text-white focus:bg-space-black focus:border-space-black active:border-space-black active:text-white active:bg-space-black disabled:pointer-events-none disabled:opacity-50 disabled:shadow-none">
+                                10
+                            </button>
+                        </div>
+                        <button class="rounded-md border border-platinum-300 p-2 text-center text-sm transition-all shadow-sm hover:shadow-lg hover:text-white hover:bg-space-black hover:border-space-black focus:text-white focus:bg-space-black focus:border-space-black active:border-space-black active:text-white active:bg-space-black disabled:pointer-events-none disabled:opacity-50 disabled:shadow-none">
+                            Next
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <div class="detail-modal absolute w-full h-full hidden justify-center items-center bg-space-black/50 z-50">
+        <div class="w-fit max-h-full overflow-auto max-w-6xl bg-ghost-white p-4 md:p-8 pt-2 md:pt-4 rounded-lg shadow-md flex flex-col items-center justify-center">
+            <div class="mb-8 w-full flex flex-wrap-reverse items-center relative">
+                <h2 class="sm:flex-1 text-2xl font-semibold sm:text-center overflow-hidden">Room Details</h2>
+                <div class="sm:absolute -right-2 flex flex-1 justify-end">
+                    <button class="w-10 h-10 hover:bg-platinum-100" onclick="toggleModal('detail-modal')">
+                        <i class="fa-solid fa-xmark"></i>
+                    </button>
+                </div>
+            </div>
+
+            <div class="w-full flex flex-col md:flex-row items-center gap-8">
+                <div class="w-full flex-[2] gap-8 grid grid-cols-1 sm:grid-cols-2">
+                    <div class="flex flex-col">
+                        <span class="font-medium">Name</span>
+                        <span>Lorem.</span>
+                    </div>
+                    <div class="flex flex-col">
+                        <span class="font-medium">Seat quantity</span>
+                        <span>40</span>
+                    </div>
+                </div>
+            </div>
+
+            <hr class="w-full border-platinum-300 my-4">
+            
+            <div class="mb-4 border-8 border-platinum-300 bg-platinum-100 w-full flex justify-center">
+                <p class="italic">Screen</p>
+            </div>
+
+            <div class="flex overflow-x-auto">
+                <div class="shrink-0 grid grid-cols-10 gap-2 *:border *:border-platinum-300 *:size-12 *:rounded-md ">
+                    <button class="seat-accessible">A1</button>
+                    <button class="seat-couple">A2</button>
+                    <button class="seat-couple">A3</button>
+                    <button class="seat-premium">A4</button>
+                    <button class="seat-premium">A5</button>
+                    <button class="seat-premium">A6</button>
+                    <button class="seat-premium">A7</button>
+                    <button class="seat-couple">A8</button>
+                    <button class="seat-couple">A9</button>
+                    <button class="seat-accessible">A10</button>
+
+                    <button class="seat-accessible">B1</button>
+                    <button class="seat-couple">B2</button>
+                    <button class="seat-couple">B3</button>
+                    <button class="seat-premium">B4</button>
+                    <button class="seat-premium">B5</button>
+                    <button class="seat-premium">B6</button>
+                    <button class="seat-premium">B7</button>
+                    <button class="seat-couple">B8</button>
+                    <button class="seat-couple">B9</button>
+                    <button class="seat-accessible">B10</button>
+                    
+                    <button class="seat-accessible">C1</button>
+                    <button class="seat-couple">C2</button>
+                    <button class="seat-couple">C3</button>
+                    <button class="seat">C4</button>
+                    <button class="seat">C5</button>
+                    <button class="seat">C6</button>
+                    <button class="seat">C7</button>
+                    <button class="seat-couple">C8</button>
+                    <button class="seat-couple">C9</button>
+                    <button class="seat-accessible">C10</button>
+
+                    <button class="seat-accessible">D1</button>
+                    <button class="seat">D2</button>
+                    <button class="seat">D3</button>
+                    <button class="seat">D4</button>
+                    <button class="seat">D5</button>
+                    <button class="seat">D6</button>
+                    <button class="seat">D7</button>
+                    <button class="seat">D8</button>
+                    <button class="seat">D9</button>
+                    <button class="seat-accessible">D10</button>
+                </div>
+            </div>
+
+            <hr class="w-full border-platinum-300 my-4">
+
+            <div class="mb-4  flex flex-wrap justify-center gap-x-8 gap-y-2 *:flex *:items-center *:flex-1 *:max-w-28 *:gap-2">
+                <div>
+                    <div class="size-4 border border-platinum-300 bg-platinum-100"></div>
+                    <span>Standard</span>
+                </div>
+                <div>
+                    <div class="size-4 border border-platinum-300 bg-carrot-orange-600"></div>
+                    <span>Premium</span>
+                </div>
+                <div>
+                    <div class="size-4 border border-platinum-300 bg-vermilion-600"></div>
+                    <span>Couple</span>
+                </div>
+                <div>
+                    <span class="size-4 border border-platinum-300 bg-steel-blue-600"></span>
+                    <span>Accessible</span>
+                </div>
+            </div>
+
+            <div class="flex justify-center gap-4 *:w-20">
+                <button type="button" onclick="toggleModal('detail-modal'); toggleEdit()" class="px-4 py-2 text-white rounded-md bg-steel-blue-500 hover:bg-steel-blue-600 focus:outline-none focus:ring-2 focus:ring-steel-blue">Edit</button>
+                <button type="button" onclick="toggleModal('delete-modal')" class="px-4 py-2 text-white rounded-md bg-vermilion-500 hover:bg-vermilion-600 focus:outline-none focus:ring-2 focus:ring-vermilion">Delete</button>
+            </div>
+        </div>
+    </div>
+
+    <div class="create-edit-modal absolute w-full h-full hidden justify-center items-center bg-space-black/50 z-50">
+        <form id="create-edit-form" class="w-full max-h-full overflow-auto max-w-6xl bg-ghost-white p-4 md:p-8 rounded-lg shadow-md space-y-8">
+            <div class="flex flex-wrap-reverse items-center relative">
+                <h2 id="create-edit-title" class="sm:flex-1 text-2xl font-semibold sm:text-center overflow-hidden">Create/Edit [Entity]</h2>
+                <div class="sm:absolute sm:right-0 flex flex-1 justify-end">
+                    <button type="button" class="w-10 h-10 hover:bg-platinum-100" onclick="toggleForm()">
+                        <i class="fa-solid fa-xmark"></i>
+                    </button>
+                </div>
+            </div>
+
+            <div class="flex flex-col md:flex-row items-center gap-8">
+                <div class="w-full flex-[2] gap-4 grid grid-cols-1 sm:grid-cols-2">
+                    <div class="flex flex-col">
+                        <label for="name" class="font-medium">Name*</label>
+                        <input type="text" value="" name="name" id="name" class="px-4 py-2 border border-platinum-300 rounded-md focus:outline-none focus:ring-2 focus:ring-steel-blue">
+                        <span id="name-error" class="error-text hidden italic text-sm text-vermilion">Name is required</span>
+                    </div>
+                    <div class="flex flex-col">
+                        <label for="seatQuantity" class="font-medium">Seat quantity*</label>
+                        <select value="" name="seatQuantity" id="seatQuantity" class="appearance-none px-4 py-2 pr-8 border border-platinum-300 rounded-md focus:outline-none focus:ring-2 focus:ring-steel-blue">
+                            <option value="" disabled selected hidden></option>
+                            <option value="40">40</option>
+                            <option value="60">60</option>
+                            <option value="80">80</option>
+                            <option value="120">120</option>
+                            <option value="160">160</option>
+                            <option value="200">200</option>
+                        </select>
+                        <span id="seatQuantity-error" class="error-text hidden italic text-sm text-vermilion">Seat quantity is required</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="flex justify-center gap-4 *:w-20">
+                <button type="button" onclick="submitForm(event)" class="px-4 py-2 text-white rounded-md bg-steel-blue-500 hover:bg-steel-blue-600 focus:outline-none focus:ring-2 focus:ring-steel-blue">Save</button>
+                <button type="reset" onclick="resetForm()" class="px-4 py-2 border border-steel-blue rounded-md hover:bg-platinum-100 text-steel-blue focus:outline-none">Reset</button>
+            </div>
+        </form>
+    </div>
+
+    <div class="hidden delete-modal absolute w-full h-full justify-center items-center bg-space-black/50 z-50">
+        <div class="flex sm:flex-row flex-col items-center sm:items-start gap-2 sm:gap-4 mx-auto max-w-lg rounded-lg border border-stone bg-ghost-white p-4 shadow-lg">
+            <span class="size-8 min-w-8 flex items-center justify-center rounded-full bg-carrot-orange text-white">
+                <i class="fa-solid fa-exclamation"></i>
+            </span>
+            <div class="flex flex-col items-center sm:items-start">
+                <p class="font-bold text-lg text-carrot-orange">Warning</p>
+
+                <p class="pt-2 pb-4">
+                    Are you sure you want to delete this item?
+                </p>
+                
+                <div class="flex flex-col sm:flex-row-reverse gap-3 w-full">
+                    <button type="button" class="rounded-lg text-white bg-carrot-orange-500 hover:bg-carrot-orange-600 px-4 py-2 text-center text-sm font-semibold">
+                        Confirm
+                    </button>
+    
+                    <button type="button" onclick="toggleModal('delete-modal')" class="border border-platinum-300 rounded-lg hover:bg-platinum-100 px-4 py-2 text-center text-sm font-semibold">
+                        Cancel
+                    </button>
+                </div>
+            </div>
+
+        </div>
+    </div>
+    <script src="https://cdn.jsdelivr.net/npm/flowbite@3.1.2/dist/flowbite.min.js"></script>
+</body>
+
+</html>
