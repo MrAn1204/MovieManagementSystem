@@ -14,73 +14,89 @@
 
 <body class="bg-ghost-white flex flex-col h-screen m-0 text-space-black">
     <main class="flex flex-1 overflow-auto">
-        <div class="w-full flex flex-col items-center m-2 overflow-hidden">
-            <div class="w-full h-full flex flex-col items-center justify-center">
-                <div class="bg-platinum-200 p-2 rounded-md max-w-[560px] w-full flex justify-center">
-                    <p>Screen</p>
-                </div>
-                <div class="flex overflow-x-auto my-12">
-                    <div class="shrink-0 grid grid-cols-10 gap-2 *:border *:border-platinum-300 *:size-12 *:rounded-md ">
-                        <button class="seat-accessible">A1</button>
-                        <button class="seat-couple">A2</button>
-                        <button class="seat-couple">A3</button>
-                        <button class="seat-premium">A4</button>
-                        <button class="seat-premium">A5</button>
-                        <button class="seat-premium">A6</button>
-                        <button class="seat-premium">A7</button>
-                        <button class="seat">A8</button>
-                        <button class="seat-occupied">A9</button>
-                        <button class="seat-accessible">A10</button>
-
-                        <button class="seat-accessible">B1</button>
-                        <button class="seat-occupied">B2</button>
-                        <button class="seat-occupied">B3</button>
-                        <button class="seat">B4</button>
-                        <button class="seat">B5</button>
-                        <button class="seat">B6</button>
-                        <button class="seat">B7</button>
-                        <button class="seat">B8</button>
-                        <button class="seat">B9</button>
-                        <button class="seat-accessible">B10</button>
-
-                        <button class="seat-accessible">C1</button>
-                        <button class="seat-couple">C2</button>
-                        <button class="seat-couple">C3</button>
-                        <button class="seat">C4</button>
-                        <button class="seat">C5</button>
-                        <button class="seat">C6</button>
-                        <button class="seat">C7</button>
-                        <button class="seat-occupied">C8</button>
-                        <button class="seat">C9</button>
-                        <button class="seat-occupied">C10</button>
-                    </div>
-                </div>
-                <div class="flex flex-wrap justify-center gap-x-8 gap-y-2 *:flex *:items-center *:gap-2 *:">
-                    <div>
-                        <div class="size-4 border border-platinum-300 bg-platinum-100"></div>
-                        <span>Available</span>
-                    </div>
-                    <div>
-                        <div class="size-4 border border-platinum-300 bg-bright-fern-600"></div>
-                        <span>Occupied</span>
-                    </div>
-                    <div>
-                        <div class="size-4 border border-platinum-300 bg-carrot-orange-600"></div>
-                        <span>Premium</span>
-                    </div>
-                    <div>
-                        <div class="size-4 border border-platinum-300 bg-vermilion-600"></div>
-                        <span>Couple</span>
-                    </div>
-                    <div>
-                        <span class="size-4 border border-platinum-300 bg-steel-blue-600"></span>
-                        <span>Accessible</span>
-                    </div>
-                </div>
-            </div>
+        <div class="w-full flex flex-col items-center justify-center m-2 overflow-hidden">
+            <button type="button" onclick="toggleModal('seat-modal')" class="px-4 py-2 text-white rounded-md bg-steel-blue-500 hover:bg-steel-blue-600 focus:outline-none focus:ring-2 focus:ring-steel-blue">View seats</button>
         </div>
     </main>
 
+    <div class="seat-modal absolute w-full h-full flex justify-center items-center bg-space-black/50 z-50">
+        <div class="w-fit max-h-full overflow-auto max-w-6xl bg-ghost-white p-4 md:p-8 pt-2 md:pt-4 rounded-lg shadow-md flex flex-col items-center justify-center">
+            <div class="w-full flex flex-wrap-reverse items-center relative">
+                <h2 class="sm:flex-1 text-2xl font-semibold sm:text-center overflow-hidden">Seat Map</h2>
+                <div class="sm:absolute -right-2 flex flex-1 justify-end">
+                    <button class="w-10 h-10 hover:bg-platinum-100" onclick="toggleModal('seat-modal')">
+                        <i class="fa-solid fa-xmark"></i>
+                    </button>
+                </div>
+            </div>
+
+            <div class="my-4 border-8 border-platinum-300 bg-platinum-100 w-full flex justify-center">
+                <p class="italic">Screen</p>
+            </div>
+
+            <div class="flex overflow-x-auto">
+                <div class="shrink-0 grid grid-cols-10 gap-2 *:border *:border-platinum-300 *:size-12 *:rounded-md ">
+                    <button class="seat-accessible">A1</button>
+                    <button class="seat-couple">A2</button>
+                    <button class="seat-couple">A3</button>
+                    <button class="seat-premium">A4</button>
+                    <button class="seat-premium">A5</button>
+                    <button class="seat-premium">A6</button>
+                    <button class="seat-premium">A7</button>
+                    <button class="seat">A8</button>
+                    <button class="seat-occupied">A9</button>
+                    <button class="seat-accessible">A10</button>
+
+                    <button class="seat-accessible">B1</button>
+                    <button class="seat-occupied">B2</button>
+                    <button class="seat-occupied">B3</button>
+                    <button class="seat">B4</button>
+                    <button class="seat">B5</button>
+                    <button class="seat">B6</button>
+                    <button class="seat">B7</button>
+                    <button class="seat">B8</button>
+                    <button class="seat">B9</button>
+                    <button class="seat-accessible">B10</button>
+                    
+                    <button class="seat-accessible">C1</button>
+                    <button class="seat-couple">C2</button>
+                    <button class="seat-couple">C3</button>
+                    <button class="seat">C4</button>
+                    <button class="seat">C5</button>
+                    <button class="seat">C6</button>
+                    <button class="seat">C7</button>
+                    <button class="seat-occupied">C8</button>
+                    <button class="seat">C9</button>
+                    <button class="seat-occupied">C10</button>
+                </div>
+            </div>
+
+            <hr class="w-full border-platinum-300 my-4">
+
+            <div class="flex flex-wrap justify-center gap-x-8 gap-y-2 *:flex *:items-center *:flex-1 *:max-w-28 *:gap-2">
+                <div>
+                    <div class="size-4 border border-platinum-300 bg-platinum-100"></div>
+                    <span>Available</span>
+                </div>
+                <div>
+                    <div class="size-4 border border-platinum-300 bg-bright-fern-600"></div>
+                    <span>Occupied</span>
+                </div>
+                <div>
+                    <div class="size-4 border border-platinum-300 bg-carrot-orange-600"></div>
+                    <span>Premium</span>
+                </div>
+                <div>
+                    <div class="size-4 border border-platinum-300 bg-vermilion-600"></div>
+                    <span>Couple</span>
+                </div>
+                <div>
+                    <span class="size-4 border border-platinum-300 bg-steel-blue-600"></span>
+                    <span>Accessible</span>
+                </div>
+            </div>
+        </div>
+    </div>
 </body>
 
 </html>
