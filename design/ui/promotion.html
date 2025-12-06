@@ -298,8 +298,8 @@
     </main>
 
     <div class="detail-modal absolute w-full h-full hidden justify-center items-center bg-space-black/50 z-50">
-        <div class="w-full max-h-full overflow-auto max-w-6xl bg-ghost-white p-4 md:p-8 rounded-lg shadow-md space-y-8">
-            <div class="flex flex-wrap-reverse items-center relative">
+        <div class="w-full max-h-full overflow-auto max-w-4xl bg-ghost-white p-4 md:p-8 rounded-lg shadow-md flex flex-col items-center">
+            <div class="mb-8 w-full flex flex-wrap-reverse items-center relative">
                 <h2 class="sm:flex-1 text-2xl font-semibold sm:text-center overflow-hidden">Promotion Details</h2>
                 <div class="sm:absolute sm:right-0 flex flex-1 justify-end">
                     <button class="w-10 h-10 hover:bg-platinum-100" onclick="toggleModal('detail-modal')">
@@ -308,12 +308,12 @@
                 </div>
             </div>
             
-            <div class="flex flex-col md:flex-row items-center gap-8">
-                <div class="flex flex-1 justify-center">
+            <div class="w-full flex flex-col md:flex-row items-center gap-8">
+                <div class="flex justify-center">
                     <img src="https://dummyimage.com/300x400/dddddd/000000&text=No+Image" alt="thumbnail" class="max-h-48 md:max-h-72 rounded-md">
                 </div>
 
-                <div class="w-full flex-[2] gap-8 grid grid-cols-1 sm:grid-cols-2">
+                <div class="w-full flex-1 gap-8 grid grid-cols-1 sm:grid-cols-2">
                     <div class="flex flex-col">
                         <span class="font-medium">Title</span>
                         <span>Lorem ipsum dolor sit amet</span>
@@ -337,7 +337,7 @@
                 </div>
             </div>
 
-            <div class="flex justify-center gap-4 *:w-20">
+            <div class="mt-8 flex justify-center gap-4 *:w-20">
                 <button type="button" onclick="toggleModal('detail-modal'); toggleEdit()" class="px-4 py-2 text-white rounded-md bg-steel-blue-500 hover:bg-steel-blue-600 focus:outline-none focus:ring-2 focus:ring-steel-blue">Edit</button>
                 <button type="button" onclick="toggleModal('delete-modal')" class="px-4 py-2 text-white rounded-md bg-vermilion-500 hover:bg-vermilion-600 focus:outline-none focus:ring-2 focus:ring-vermilion">Delete</button>
             </div>
@@ -345,8 +345,8 @@
     </div>
 
     <div class="create-edit-modal absolute w-full h-full hidden justify-center items-center bg-space-black/50 z-50">
-        <form id="create-edit-form" class="w-full max-h-full overflow-auto max-w-6xl bg-ghost-white p-4 md:p-8 rounded-lg shadow-md space-y-8">
-            <div class="flex flex-wrap-reverse items-center relative">
+        <form id="create-edit-form" class="w-full max-h-full overflow-auto max-w-6xl bg-ghost-white p-4 md:p-8 rounded-lg shadow-md flex flex-col items-center">
+            <div class="mb-8 w-full flex flex-wrap-reverse items-center relative">
                 <h2 id="create-edit-title" class="sm:flex-1 text-2xl font-semibold sm:text-center overflow-hidden">Create/Edit [Entity]</h2>
                 <div class="sm:absolute sm:right-0 flex flex-1 justify-end">
                     <button type="button" class="w-10 h-10 hover:bg-platinum-100" onclick="toggleForm()">
@@ -355,21 +355,19 @@
                 </div>
             </div>
 
-            <div class="flex flex-col md:flex-row items-center gap-8">
-                <div class="flex-1">
-                    <div class="flex flex-col items-center">
-                        <label for="imageUpload" class="font-medium">Image</label>
-                        
-                        <div class="flex justify-center relative">
-                            <input type="file" id="imageUpload" accept="image/*" class="w-full h-full opacity-0 absolute cursor-pointer">
-                            <img id="imagePreview" src="https://dummyimage.com/300x400/dddddd/000000&text=No+Image" alt="thumbnail" class="max-h-48 md:max-h-72 rounded-md">
-                        </div>
-
-                        <p class="text-center text-sm italic">Click on the image to upload</p>
+            <div class="w-full flex flex-col md:flex-row items-center gap-8">
+                <div class="flex flex-col items-center">
+                    <label for="imageUpload" class="font-medium">Image</label>
+                    
+                    <div class="flex justify-center relative">
+                        <input type="file" id="imageUpload" accept="image/*" class="w-full h-full opacity-0 absolute cursor-pointer">
+                        <img id="imagePreview" src="https://dummyimage.com/300x400/dddddd/000000&text=No+Image" alt="thumbnail" class="max-h-48 md:max-h-72 rounded-md">
                     </div>
+
+                    <p class="text-center text-sm italic">Click on the image to upload</p>
                 </div>
 
-                <div class="w-full flex-[2] gap-4 grid grid-cols-1 sm:grid-cols-2">
+                <div class="w-full flex-1 gap-4 grid grid-cols-1 sm:grid-cols-2">
                     <div class="flex flex-col">
                         <label for="title" class="font-medium">Title*</label>
                         <input type="text" value="" name="title" id="title" class="px-4 py-2 border border-platinum-300 rounded-md focus:outline-none focus:ring-2 focus:ring-steel-blue">
@@ -397,7 +395,7 @@
                 </div>
             </div>
 
-            <div class="flex justify-center gap-4 *:w-20">
+            <div class="mt-8 flex justify-center gap-4 *:w-20">
                 <button type="button" onclick="submitForm(event)" class="px-4 py-2 text-white rounded-md bg-steel-blue-500 hover:bg-steel-blue-600 focus:outline-none focus:ring-2 focus:ring-steel-blue">Save</button>
                 <button type="reset" onclick="resetForm()" class="px-4 py-2 border border-steel-blue rounded-md hover:bg-platinum-100 text-steel-blue focus:outline-none">Reset</button>
             </div>

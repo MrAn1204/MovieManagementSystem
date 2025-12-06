@@ -22,8 +22,8 @@
     </main>
 
     <div class="create-edit-modal absolute w-full h-full flex justify-center items-center bg-space-black/50 z-50">
-        <form id="create-edit-form" class="w-full max-h-full overflow-auto max-w-6xl bg-ghost-white p-4 md:p-8 rounded-lg shadow-md space-y-8">
-            <div class="flex flex-wrap-reverse items-center relative">
+        <form id="create-edit-form" class="w-full max-h-full overflow-auto max-w-6xl bg-ghost-white p-4 md:p-8 rounded-lg shadow-md flex flex-col items-center">
+            <div class="mb-8 w-full flex flex-wrap-reverse items-center relative">
                 <h2 class="sm:flex-1 text-2xl font-semibold sm:text-center overflow-hidden">Create/Edit [Entity]</h2>
                 <div class="sm:absolute sm:right-0 flex flex-1 justify-end">
                     <button type="button" class="w-10 h-10 hover:bg-platinum-100" onclick="toggleCreateEditForm()">
@@ -32,21 +32,19 @@
                 </div>
             </div>
 
-            <div class="flex flex-col md:flex-row items-center gap-8">
-                <div class="flex-1">
-                    <div class="flex flex-col items-center">
-                        <label for="imageUpload" class="font-medium">Image</label>
-                        
-                        <div class="flex justify-center relative">
-                            <input type="file" id="imageUpload" accept="image/*" class="w-full h-full opacity-0 absolute cursor-pointer">
-                            <img id="imagePreview" src="https://dummyimage.com/300x400/dddddd/000000&text=No+Image" alt="thumbnail" class="max-h-48 md:max-h-72 rounded-md">
-                        </div>
-
-                        <p class="text-center text-sm italic">Click on the image to upload</p>
+            <div class="w-full flex flex-col md:flex-row items-center gap-8">
+                <div class="flex flex-col items-center">
+                    <label for="imageUpload" class="font-medium">Image</label>
+                    
+                    <div class="flex justify-center relative">
+                        <input type="file" id="imageUpload" accept="image/*" class="w-full h-full opacity-0 absolute cursor-pointer">
+                        <img id="imagePreview" src="https://dummyimage.com/300x400/dddddd/000000&text=No+Image" alt="thumbnail" class="max-h-48 md:max-h-72 rounded-md">
                     </div>
+
+                    <p class="text-center text-sm italic">Click on the image to upload</p>
                 </div>
 
-                <div class="w-full flex-[2] gap-4 grid grid-cols-1 sm:grid-cols-2">
+                <div class="w-full flex-1 gap-4 grid grid-cols-1 sm:grid-cols-2">
                     <div class="flex flex-col">
                         <label for="field1" class="font-medium">Field 1*</label>
                         <input type="text" value="Value 1" name="field1" id="field1" class="px-4 py-2 border border-platinum-300 rounded-md focus:outline-none focus:ring-2 focus:ring-steel-blue">
@@ -54,10 +52,11 @@
                     </div>
                     <div class="flex flex-col">
                         <label for="field2" class="font-medium">Field 2*</label>
-                        <button id="field2-button" data-dropdown-toggle="field2-dropdown" data-dropdown-placement="bottom" class="bg-white flex flex-col px-4 py-2 border border-platinum-300 rounded-md focus:outline-none focus:ring-2 focus:ring-steel-blue" type="button">
+                        <button id="field2-button" data-dropdown-toggle="field2-dropdown" data-dropdown-placement="bottom" class="relative bg-white flex flex-col px-4 py-2 border border-platinum-300 rounded-md focus:outline-none focus:ring-2 focus:ring-steel-blue" type="button">
                             <input hidden value="" name="field2" id="field2">
                             <div id="field2-display" class="overflow-auto min-h-6 flex flex-wrap gap-2 *:bg-platinum-200 *:px-1 *:rounded-md">
                             </div>
+                            <span class="absolute right-2 pointer-events-none"><i class="fa-solid fa-angle-down"></i></span>
                         </button>
 
                         <div id="field2-dropdown" class="z-10 hidden bg-white rounded-lg shadow-sm w-60 border border-platinum-300">
@@ -159,7 +158,7 @@
                 </div>
             </div>
 
-            <div class="flex justify-center gap-4 *:w-20">
+            <div class="mt-8 flex justify-center gap-4 *:w-20">
                 <button type="button" onclick="onSubmit(event)" class="px-4 py-2 text-white rounded-md bg-steel-blue-500 hover:bg-steel-blue-600 focus:outline-none focus:ring-2 focus:ring-steel-blue">Save</button>
                 <button type="reset" onclick="onReset(['field2-display'])" class="px-4 py-2 border border-steel-blue rounded-md hover:bg-platinum-100 text-steel-blue focus:outline-none">Reset</button>
             </div>
