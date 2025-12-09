@@ -7,10 +7,12 @@
     <title>Schedule</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.1/css/all.min.css">
     <link href="https://cdn.jsdelivr.net/npm/flowbite@3.1.2/dist/flowbite.min.css" rel="stylesheet" />
+    <link rel="stylesheet" href="style.css">
     <script src="https://cdn.tailwindcss.com"></script>
     <script src="tailwind.config.js"></script>
     <script src="script.js"></script>
     <script src="scheduleScript.js"></script>
+    <script src="seatScript.js"></script>
 </head>
 
 <body class="bg-ghost-white flex flex-col h-screen m-0 text-space-black">
@@ -410,6 +412,76 @@
                 </div>
             </div>
 
+            <hr class="my-4 w-full border-platinum-300">
+
+            <div class="flex flex-col items-center gap-4">
+                <div class="border-8 border-platinum-300 bg-platinum-100 w-full flex justify-center">
+                    <p class="italic">Screen</p>
+                </div>
+
+                <div class="flex overflow-x-auto">
+                    <div class="shrink-0 grid grid-cols-10 gap-2 *:border *:border-platinum-300 *:size-12 *:rounded-md ">
+                        <button onclick="toggleModal('seat-detail-modal')" class="seat-accessible">A1</button>
+                        <button onclick="toggleModal('seat-detail-modal')" class="seat-couple">A2</button>
+                        <button onclick="toggleModal('seat-detail-modal')" class="seat-couple">A3</button>
+                        <button onclick="toggleModal('seat-detail-modal')" class="seat-premium">A4</button>
+                        <button onclick="toggleModal('seat-detail-modal')" class="seat-premium">A5</button>
+                        <button onclick="toggleModal('seat-detail-modal')" class="seat-premium">A6</button>
+                        <button onclick="toggleModal('seat-detail-modal')" class="seat-premium">A7</button>
+                        <button onclick="toggleModal('seat-detail-modal')" class="seat">A8</button>
+                        <button onclick="toggleModal('seat-detail-modal')" class="seat-occupied">A9</button>
+                        <button onclick="toggleModal('seat-detail-modal')" class="seat-accessible">A10</button>
+
+                        <button onclick="toggleModal('seat-detail-modal')" class="seat-accessible">B1</button>
+                        <button onclick="toggleModal('seat-detail-modal')" class="seat-occupied">B2</button>
+                        <button onclick="toggleModal('seat-detail-modal')" class="seat-occupied">B3</button>
+                        <button onclick="toggleModal('seat-detail-modal')" class="seat">B4</button>
+                        <button onclick="toggleModal('seat-detail-modal')" class="seat">B5</button>
+                        <button onclick="toggleModal('seat-detail-modal')" class="seat">B6</button>
+                        <button onclick="toggleModal('seat-detail-modal')" class="seat">B7</button>
+                        <button onclick="toggleModal('seat-detail-modal')" class="seat">B8</button>
+                        <button onclick="toggleModal('seat-detail-modal')" class="seat">B9</button>
+                        <button onclick="toggleModal('seat-detail-modal')" class="seat-accessible">B10</button>
+                        
+                        <button onclick="toggleModal('seat-detail-modal')" class="seat-accessible">C1</button>
+                        <button onclick="toggleModal('seat-detail-modal')" class="seat-couple">C2</button>
+                        <button onclick="toggleModal('seat-detail-modal')" class="seat-couple">C3</button>
+                        <button onclick="toggleModal('seat-detail-modal')" class="seat">C4</button>
+                        <button onclick="toggleModal('seat-detail-modal')" class="seat">C5</button>
+                        <button onclick="toggleModal('seat-detail-modal')" class="seat">C6</button>
+                        <button onclick="toggleModal('seat-detail-modal')" class="seat">C7</button>
+                        <button onclick="toggleModal('seat-detail-modal')" class="seat-occupied">C8</button>
+                        <button onclick="toggleModal('seat-detail-modal')" class="seat">C9</button>
+                        <button onclick="toggleModal('seat-detail-modal')" class="seat-occupied">C10</button>
+                    </div>
+                </div>
+
+                <hr class="w-full border-platinum-300">
+
+                <div class="flex flex-wrap justify-center gap-x-8 gap-y-2 *:flex *:items-center *:flex-1 *:max-w-[100px] *:gap-2">
+                    <div>
+                        <span class="size-4 border border-platinum-300 bg-platinum-100"></span>
+                        <span>Standard</span>
+                    </div>
+                    <div>
+                        <div class="size-4 border border-platinum-300 bg-bright-fern-600"></div>
+                        <span>Occupied</span>
+                    </div>
+                    <div>
+                        <div class="size-4 border border-platinum-300 bg-carrot-orange-600"></div>
+                        <span>Premium</span>
+                    </div>
+                    <div>
+                        <div class="size-4 border border-platinum-300 bg-vermilion-600"></div>
+                        <span>Couple</span>
+                    </div>
+                    <div>
+                        <span class="size-4 border border-platinum-300 bg-steel-blue-600"></span>
+                        <span>Accessible</span>
+                    </div>
+                </div>
+            </div>
+
             <div class="mt-8 flex justify-center gap-4 *:w-20">
                 <button type="button" onclick="toggleModal('detail-modal'); toggleEdit()" class="px-4 py-2 text-white rounded-md bg-steel-blue-500 hover:bg-steel-blue-600 focus:outline-none focus:ring-2 focus:ring-steel-blue">Edit</button>
                 <button type="button" onclick="toggleModal('delete-modal')" class="px-4 py-2 text-white rounded-md bg-vermilion-500 hover:bg-vermilion-600 focus:outline-none focus:ring-2 focus:ring-vermilion">Delete</button>
@@ -501,6 +573,100 @@
             </div>
 
         </div>
+    </div>
+
+    <div class="seat-detail-modal absolute w-full h-full hidden justify-center items-center bg-space-black/50 z-50">
+        <div class="w-full max-h-full overflow-auto max-w-2xl bg-ghost-white p-4 md:p-8 rounded-lg shadow-md flex flex-col items-center">
+            <div class="mb-8 w-full flex flex-wrap-reverse items-center relative">
+                <h2 class="sm:flex-1 text-2xl font-semibold sm:text-center overflow-hidden">Seat Details</h2>
+                <div class="sm:absolute right-0 flex flex-1 justify-end">
+                    <button class="w-10 h-10 hover:bg-platinum-100" onclick="toggleModal('seat-detail-modal')">
+                        <i class="fa-solid fa-xmark"></i>
+                    </button>
+                </div>
+            </div>
+
+            <div class="w-full sm:h-72 flex sm:flex-wrap flex-col gap-8">
+                <div class="flex-1 gap-8 grid grid-cols-2">
+                    <div class="flex flex-col">
+                        <span class="font-medium">Name</span>
+                        <span>A1</span>
+                    </div>
+                    <div class="flex flex-col">
+                        <span class="font-medium">Type</span>
+                        <span>Accessible</span>
+                    </div>
+                    <div class="flex flex-col">
+                        <span class="font-medium">Row</span>
+                        <span>1</span>
+                    </div>
+                    <div class="flex flex-col">
+                        <span class="font-medium">Column</span>
+                        <span>1</span>
+                    </div>
+                    <div class="flex flex-col">
+                        <span class="font-medium">Status</span>
+                        <span>Available</span>
+                    </div>
+                </div>
+
+                <div class="flex-1 flex justify-center items-end gap-4 *:w-20">
+                    <button type="button" onclick="toggleModal('seat-detail-modal'); toggleEditSeat()" class="px-4 py-2 text-white rounded-md bg-steel-blue-500 hover:bg-steel-blue-600 focus:outline-none focus:ring-2 focus:ring-steel-blue">Edit</button>
+                    <button type="button" onclick="toggleModal('delete-modal')" class="px-4 py-2 text-white rounded-md bg-vermilion-500 hover:bg-vermilion-600 focus:outline-none focus:ring-2 focus:ring-vermilion">Delete</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="seat-create-edit-modal absolute w-full h-full hidden justify-center items-center bg-space-black/50 z-50">
+        <form id="seat-create-edit-form" class="w-full max-h-full overflow-auto max-w-2xl bg-ghost-white p-4 md:p-8 rounded-lg shadow-md flex flex-col items-center">
+            <div class="mb-8 w-full flex flex-wrap-reverse items-center relative">
+                <h2 id="seat-create-edit-title" class="sm:flex-1 text-2xl font-semibold sm:text-center overflow-hidden">Create/Edit Seat</h2>
+                <div class="sm:absolute sm:right-0 flex flex-1 justify-end">
+                    <button type="button" class="w-10 h-10 hover:bg-platinum-100" onclick="toggleSeatForm()">
+                        <i class="fa-solid fa-xmark"></i>
+                    </button>
+                </div>
+            </div>
+
+            <div class="w-full flex flex-col md:flex-row items-center gap-8">
+                <div class="w-full flex-1 gap-4 grid grid-cols-1 sm:grid-cols-2">
+                    <div class="flex flex-col">
+                        <label for="seatName" class="font-medium">Name*</label>
+                        <input type="text" value="" name="seatName" id="seatName" class="px-4 py-2 border border-platinum-300 rounded-md focus:outline-none focus:ring-2 focus:ring-steel-blue">
+                        <span id="seatName-error" class="error-text hidden italic text-sm text-vermilion">Name is required</span>
+                    </div>
+                    
+                    <div class="flex flex-col">
+                        <label for="seatType" class="font-medium">Type*</label>
+                        <select value="" name="seatType" id="seatType" class="appearance-none px-4 py-2 pr-8 border border-platinum-300 rounded-md focus:outline-none focus:ring-2 focus:ring-steel-blue">
+                            <option value="standard" selected>Standard</option>
+                            <option value="premium">Premium</option>
+                            <option value="couple">Couple</option>
+                            <option value="accessible">Accessible</option>
+                        </select>
+                        <span id="seatType-error" class="error-text hidden italic text-sm text-vermilion">Type is required</span>
+                    </div>
+                    
+                    <div class="flex flex-col">
+                        <label for="seatRow" class="font-medium">Row</label>
+                        <input type="number" name="seatRow" id="seatRow" class="px-4 py-2 border border-platinum-300 rounded-md focus:outline-none focus:ring-2 focus:ring-steel-blue">
+                        <span id="seatRow-error" class="error-text hidden italic text-sm text-vermilion">Row is required</span>
+                    </div>
+
+                    <div class="flex flex-col">
+                        <label for="seatColumn" class="font-medium">Column</label>
+                        <input type="number" name="seatColumn" id="seatColumn" class="px-4 py-2 border border-platinum-300 rounded-md focus:outline-none focus:ring-2 focus:ring-steel-blue">
+                        <span id="seatColumn-error" class="error-text hidden italic text-sm text-vermilion">Column is required</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="mt-8 flex justify-center gap-4 *:w-20">
+                <button type="button" onclick="submitSeatForm(event)" class="px-4 py-2 text-white rounded-md bg-steel-blue-500 hover:bg-steel-blue-600 focus:outline-none focus:ring-2 focus:ring-steel-blue">Save</button>
+                <button type="reset" class="px-4 py-2 border border-steel-blue rounded-md hover:bg-platinum-100 text-steel-blue focus:outline-none">Reset</button>
+            </div>
+        </form>
     </div>
     <script src="https://cdn.jsdelivr.net/npm/flowbite@3.1.2/dist/flowbite.min.js"></script>
 </body>
