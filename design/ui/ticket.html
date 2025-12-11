@@ -1,0 +1,469 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ticket</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.1/css/all.min.css">
+    <link href="https://cdn.jsdelivr.net/npm/flowbite@3.1.2/dist/flowbite.min.css" rel="stylesheet" />
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="tailwind.config.js"></script>
+    <script src="script.js"></script>
+    <script src="userScript.js"></script>
+</head>
+
+<body class="bg-ghost-white flex flex-col h-screen m-0 text-space-black">
+    <header class="bg-platinum-50 h-12 w-full border-platinum-300 border-b py-0.5 lg:hidden">
+        <div class="relative">
+            <button id="expand" class="absolute left-2 hover:bg-platinum-100 w-10 h-10"
+                onclick="toggleSidebar()">
+                <i class="fa-solid fa-bars"></i>
+            </button>
+    
+            <div class="flex justify-center">
+                <img src="../MMS_transparent.png" alt="Logo" class="w-16" />
+            </div>
+
+        </div>
+    </header>
+
+    <main class="flex flex-1 overflow-auto">
+        <div id="overlay" class="hidden fixed w-full h-full bg-space-black/50 z-30 lg:hidden">
+            <button class="w-full h-full cursor-default" onclick="toggleSidebar()"></button>
+        </div>
+
+        <!-- Sidebar -->
+        <aside class="flex bg-platinum-50 transition-all duration-500 ease-in-out -left-64 lg:left-0 absolute z-40 lg:relative lg:h-full h-[calc(100vh-48px)] w-64 lg:min-w-64 flex-col border-r border-platinum-300 py-4 items-center">
+            <div>
+                <img src="../MMS_transparent.png" alt="Logo" class="hidden lg:block w-32" />
+            </div>
+            
+            <nav class="flex-1 w-full overflow-auto">
+                <ul class="p-4 space-y-4 text-2xl">
+                    <li class="rounded-md px-4 py-1 overflow-hidden hover:bg-platinum-100 hover:cursor-pointer">
+                        <a href="#home" class="space-x-4">
+                            <i class="fa-solid fa-house"></i>
+                            <span>Home</span>
+                        </a>
+                    </li>
+                    <li class="rounded-md px-4 py-1 overflow-hidden hover:bg-platinum-100 hover:cursor-pointer">
+                        <a href="#movie" class="space-x-4">
+                            <i class="fa-solid fa-film"></i>
+                            <span>Movie</span>
+                        </a>
+                    </li>
+                    <li class="rounded-md px-4 py-1 overflow-hidden hover:bg-platinum-100 hover:cursor-pointer">
+                        <a href="#schedule" class="space-x-4">
+                            <i class="fa-solid fa-calendar"></i>
+                            <span>Schedule</span>
+                        </a>
+                    </li>
+                    <li class="rounded-md px-4 py-1 overflow-hidden hover:bg-platinum-100 hover:cursor-pointer">
+                        <a href="#room" class="space-x-4">
+                            <i class="fa-solid fa-door-closed"></i>
+                            <span>Room</span>
+                        </a>
+                    </li>
+                    <li class="rounded-md px-4 py-1 overflow-hidden bg-platinum-200 hover:cursor-pointer">
+                        <a href="#ticket" class="space-x-4">
+                            <i class="fa-solid fa-ticket"></i>
+                            <span>Ticket</span>
+                        </a>
+                    </li>
+                    <li class="rounded-md px-4 py-1 overflow-hidden hover:bg-platinum-100 hover:cursor-pointer">
+                        <a href="#promotion" class="space-x-4">
+                            <i class="fa-solid fa-percent"></i>
+                            <span>Promotion</span>
+                        </a>
+                    </li>
+                    <li class="rounded-md px-4 py-1 overflow-hidden hover:bg-platinum-100 hover:cursor-pointer">
+                        <a href="#user" class="space-x-4">
+                            <i class="fa-solid fa-users"></i>
+                            <span>User</span>
+                        </a>
+                    </li>
+                </ul>
+            </nav>
+
+            <div class="flex flex-col w-full justify-evenly overflow-hidden px-2">
+                <hr class="border-platinum-300">
+                <div class="w-full flex items-center p-2">
+                    <img src="../user-solid-full.svg" alt="user_pfp" class="w-1/6 rounded-full" />
+                    <div class="px-2">
+                        <p class="font-bold">John Doe</p>
+                        <p class="text-sm">john.doe@example.com</p>
+                    </div>
+                </div>
+                <button class="px-2 text-white rounded-md bg-vermilion-500 hover:bg-vermilion-600">
+                    <i class="fa-solid fa-right-from-bracket"></i> Log Out
+                </button>
+            </div>
+        </aside>
+
+        <div class="w-full flex flex-col items-center justify-center m-2 overflow-hidden">
+            <!-- Search Bar -->
+            <form action="" method="get" id="search-container" class="flex flex-col w-full md:w-11/12 lg:max-h-[50%] max-h-full">
+                <div class="flex gap-4 flex-wrap">
+                    <div class="flex grow-[3]">
+                        <input type="text" name="keyword" placeholder="Search..." class="w-full px-4 py-2 border border-platinum-300 rounded-l-md focus:outline-none focus:ring-2 focus:ring-steel-blue">
+                        <button type="submit" class="w-12 text-white rounded-r-md bg-steel-blue hover:bg-steel-blue-600 focus:outline-none focus:ring-2 focus:ring-steel-blue">
+                            <i class="fa-solid fa-magnifying-glass"></i>
+                        </button>
+                    </div>
+
+                    <div class="flex gap-4 grow">
+                        <div class="flex grow">
+                            <button type="button" class="order-button w-1/4 max-w-12 border bg-white border-platinum-300 rounded-tl-md rounded-bl-md text-steel-blue focus:outline-none" onclick="toggleOrder()">
+                                <i id="icon-asc" class="fa-solid fa-arrow-up-short-wide"></i>
+                                <i id="icon-desc" class="fa-solid fa-arrow-down-short-wide hidden"></i>
+                            </button>
+
+                            <select name="order" id="order" class="w-full p-2 border border-l-0 rounded-tr-md rounded-br-md border-platinum-300 focus:outline-none focus:ring-2 focus:ring-steel-blue">
+                                <option value="" disabled selected hidden>Order by</option>
+                                <option value="">Default</option>
+                                <option value="username">Username</option>
+                                <option value="dateOfBirth">Date of birth</option>
+                            </select>
+                        </div>
+    
+                        <button type="button" class="filter-button w-1/4 max-w-12 border border-steel-blue rounded-md hover:bg-platinum-100 text-steel-blue focus:outline-none" onclick="toggleFilter()">
+                            <i class="fa-solid fa-filter"></i>
+                        </button>
+                    </div>
+                </div>
+
+                <hr class="my-4 border-platinum-300">
+                <div id="filter-container" class="space-y-4 overflow-y-auto transition-all duration-500 ease-in-out h-0 lg:max-h-fit opacity-0">
+                    <div class="flex gap-4 *:flex-1 *:min-w-40 flex-wrap items-end">
+                        <select name="filter-role" id="filter-role" class="h-fit px-4 py-2 border border-platinum-300 rounded-md focus:outline-none focus:ring-2 focus:ring-steel-blue">
+                            <option value="" selected>Any role</option>
+                            <option value="user">User</option>
+                            <option value="admin">Admin</option>
+                        </select>
+                    </div>
+                </div>
+                <hr id="filter-bottom" class="hidden my-4 border-platinum-300">
+            </form>
+            
+            <!-- Table -->
+            <div id="table-container" class="flex flex-col flex-1 min-h-0 w-full md:w-11/12">
+                <div>
+                    <button type="button" onclick="toggleCreate()" class="px-2 py-1 bg-bright-fern-500 hover:bg-bright-fern-600 text-white font-semibold">
+                        <i class="fa-solid fa-plus"></i>
+                        <span>Add</span>
+                    </button>
+                </div>
+                <div class="overflow-auto border border-platinum-300">
+                    <table class="w-full bg-platinum-50 border-separate border-spacing-0">
+                        <thead class="text-left sticky top-0 z-10">
+                            <tr class="bg-platinum-200 *:border-b *:border-platinum-300 last:*:border-l last:*:sticky last:*:right-0 last:*:bg-platinum-200">
+                                <th class="min-w-24 px-4 py-2">Price</th>
+                                <th class="min-w-36 px-4 py-2">Show Time</th>
+                                <th class="min-w-48 px-4 py-2">Movie</th>
+                                <th class="min-w-32 px-4 py-2">Room</th>
+                                <th class="min-w-24 px-4 py-2">Seat</th>
+                                <th class="min-w-48 px-4 py-2">Promotion</th>
+                                <th class="min-w-32 px-4 py-2">Username</th>
+                                <th class="min-w-32 px-4 py-2">Phone</th>
+                                <th class="min-w-24 w-24"></th>
+                            </tr>
+                        </thead>
+                        <tbody class="*:*:border-b *:*:border-platinum-300 last:*:*:border-l *:last:*:border-b-0">
+                            <tr class="hover:bg-platinum-100 last:*:sticky last:*:right-0 last:*:bg-platinum-50 last:*:hover:bg-platinum-100">
+                                <td class="px-4 py-2">88000</td>
+                                <td class="px-4 py-2">2024-10-19 10:57:02</td>
+                                <td class="px-4 py-2">Our Man in Havana</td>
+                                <td class="px-4 py-2">Sycamore</td>
+                                <td class="px-4 py-2">E5</td>
+                                <td class="px-4 py-2">Midweek Movie Madness</td>
+                                <td class="px-4 py-2">dummy</td>
+                                <td class="px-4 py-2">0123456789</td>
+                                <td>
+                                    <div class="flex justify-evenly">
+                                        <button type="button" onclick="toggleModal('detail-modal')"><i class="fa-solid fa-circle-info text-steel-blue"></i></button>
+                                        <button type="button" onclick="toggleEdit()"><i class="fa-solid fa-pen-to-square text-carrot-orange"></i></button>
+                                        <button type="button" onclick="toggleModal('delete-modal')"><i class="fa-solid fa-trash text-vermilion"></i></button>
+                                    </div>
+                                </td>
+                            </tr>
+                            <tr class="hover:bg-platinum-100 last:*:sticky last:*:right-0 last:*:bg-platinum-50 last:*:hover:bg-platinum-100">
+                                <td class="px-4 py-2">40000</td>
+                                <td class="px-4 py-2">2024-11-23 10:50:09</td>
+                                <td class="px-4 py-2">Cinderfella</td>
+                                <td class="px-4 py-2">Cedar</td>
+                                <td class="px-4 py-2">K11</td>
+                                <td class="px-4 py-2">Family Movie Night Special</td>
+                                <td class="px-4 py-2">dummy</td>
+                                <td class="px-4 py-2">0123456789</td>
+                                <td>
+                                    <div class="flex justify-evenly">
+                                        <button type="button" onclick="toggleModal('detail-modal')"><i class="fa-solid fa-circle-info text-steel-blue"></i></button>
+                                        <button type="button" onclick="toggleEdit()"><i class="fa-solid fa-pen-to-square text-carrot-orange"></i></button>
+                                        <button type="button" onclick="toggleModal('delete-modal')"><i class="fa-solid fa-trash text-vermilion"></i></button>
+                                    </div>
+                                </td>
+                            </tr>
+                            <tr class="hover:bg-platinum-100 last:*:sticky last:*:right-0 last:*:bg-platinum-50 last:*:hover:bg-platinum-100">
+                                <td class="px-4 py-2">51000</td>
+                                <td class="px-4 py-2">2025-08-12 01:53:00</td>
+                                <td class="px-4 py-2">Beast Within, The</td>
+                                <td class="px-4 py-2">Spruce</td>
+                                <td class="px-4 py-2">F6</td>
+                                <td class="px-4 py-2">Matinee Magic Deal</td>
+                                <td class="px-4 py-2">dummy</td>
+                                <td class="px-4 py-2">0123456789</td>
+                                <td>
+                                    <div class="flex justify-evenly">
+                                        <button type="button" onclick="toggleModal('detail-modal')"><i class="fa-solid fa-circle-info text-steel-blue"></i></button>
+                                        <button type="button" onclick="toggleEdit()"><i class="fa-solid fa-pen-to-square text-carrot-orange"></i></button>
+                                        <button type="button" onclick="toggleModal('delete-modal')"><i class="fa-solid fa-trash text-vermilion"></i></button>
+                                    </div>
+                                </td>
+                            </tr>
+                            <tr class="hover:bg-platinum-100 last:*:sticky last:*:right-0 last:*:bg-platinum-50 last:*:hover:bg-platinum-100">
+                                <td class="px-4 py-2">83000</td>
+                                <td class="px-4 py-2">2025-08-12 01:53:00</td>
+                                <td class="px-4 py-2">Beast Within, The</td>
+                                <td class="px-4 py-2">Spruce</td>
+                                <td class="px-4 py-2">D4</td>
+                                <td class="px-4 py-2">Family Movie Night Special</td>
+                                <td class="px-4 py-2">dummy</td>
+                                <td class="px-4 py-2">0123456789</td>
+                                <td>
+                                    <div class="flex justify-evenly">
+                                        <button type="button" onclick="toggleModal('detail-modal')"><i class="fa-solid fa-circle-info text-steel-blue"></i></button>
+                                        <button type="button" onclick="toggleEdit()"><i class="fa-solid fa-pen-to-square text-carrot-orange"></i></button>
+                                        <button type="button" onclick="toggleModal('delete-modal')"><i class="fa-solid fa-trash text-vermilion"></i></button>
+                                    </div>
+                                </td>
+                            </tr>
+                            
+                        </tbody>
+                    </table>
+                </div>
+    
+                <!-- Pagination -->
+                <div class="flex md:flex-row flex-col justify-between items-center pt-2 gap-2">
+                    <div class="w-full flex md:flex-col md:items-baseline items-center flex-row gap-2 md:gap-0 flex-wrap">
+                        <p class="flex-1 min-w-fit">1 - 10 of 50 entries</p>
+                        
+                        <div class="w-full sm:w-fit flex md:hidden gap-2 items-center justify-center sm:order-2 order-3">
+                            <button disabled class="rounded-md border border-platinum-300 p-2 text-center text-sm transition-all shadow-sm hover:shadow-lg hover:text-white hover:bg-space-black hover:border-space-black focus:text-white focus:bg-space-black focus:border-space-black active:border-space-black active:text-white active:bg-space-black disabled:pointer-events-none disabled:opacity-50 disabled:shadow-none" type="button">
+                                Prev
+                            </button>
+                            
+                            <p class="text-center">
+                                Page <strong>1</strong> of <strong>10</strong>
+                            </p>
+                            
+                            <button class="rounded-md border border-platinum-300 p-2 text-center text-sm transition-all shadow-sm hover:shadow-lg hover:text-white hover:bg-space-black hover:border-space-black focus:text-white focus:bg-space-black focus:border-space-black active:border-space-black active:text-white active:bg-space-black disabled:pointer-events-none disabled:opacity-50 disabled:shadow-none" type="button">
+                                Next
+                            </button>
+                        </div>
+                        
+                        <div class="flex-1 min-w-fit flex flex-wrap items-center justify-end md:justify-start sm:order-3 order-2">
+                            <label for="pages" class="mr-2">Page size:</label>
+                            <select id="pages" name="pages" class="border border-platinum-300 rounded-md w-16 px-2">
+                                <option value="10">10</option>
+                                <option value="25">25</option>
+                                <option value="50">50</option>
+                                <option value="100">100</option>
+                            </select>
+                        </div>
+                    </div>
+    
+                    <div class="hidden md:flex gap-2 justify-center">
+                        <button class="rounded-md border border-platinum-300 p-2 text-center text-sm transition-all shadow-sm hover:shadow-lg hover:text-white hover:bg-space-black hover:border-space-black focus:text-white focus:bg-space-black focus:border-space-black active:border-space-black active:text-white active:bg-space-black disabled:pointer-events-none disabled:opacity-50 disabled:shadow-none">
+                            Prev
+                        </button>
+                        <div class="flex items-center justify-center gap-2">
+                            <button class="w-10 rounded-md bg-space-black p-2 border border-transparent text-center text-sm text-white transition-all shadow-md hover:shadow-lg focus:bg-space-black focus:shadow-none active:bg-space-black hover:bg-space-black active:shadow-none disabled:pointer-events-none disabled:opacity-50 disabled:shadow-none">
+                                1
+                            </button>
+                            <button class="w-10 rounded-md border border-platinum-300 p-2 text-center text-sm transition-all shadow-sm hover:shadow-lg hover:text-white hover:bg-space-black hover:border-space-black focus:text-white focus:bg-space-black focus:border-space-black active:border-space-black active:text-white active:bg-space-black disabled:pointer-events-none disabled:opacity-50 disabled:shadow-none">
+                                2
+                            </button>
+                            <button class="w-10 rounded-md border border-platinum-300 p-2 text-center text-sm transition-all shadow-sm hover:shadow-lg hover:text-white hover:bg-space-black hover:border-space-black focus:text-white focus:bg-space-black focus:border-space-black active:border-space-black active:text-white active:bg-space-black disabled:pointer-events-none disabled:opacity-50 disabled:shadow-none">
+                                3
+                            </button>
+                            <button class="md:hi w-10 rounded-md border border-platinum-300 p-2 text-center text-sm transition-all shadow-sm hover:shadow-lg hover:text-white hover:bg-space-black hover:border-space-black focus:text-white focus:bg-space-black focus:border-space-black active:border-space-black active:text-white active:bg-space-black disabled:pointer-events-none disabled:opacity-50 disabled:shadow-none">
+                                4
+                            </button>
+                            <span class="w-10 rounded-md border border-platinum-300 p-2 text-center text-sm shadow-sm">
+                                ...
+                            </span>
+                            <button class="w-10 rounded-md border border-platinum-300 p-2 text-center text-sm transition-all shadow-sm hover:shadow-lg hover:text-white hover:bg-space-black hover:border-space-black focus:text-white focus:bg-space-black focus:border-space-black active:border-space-black active:text-white active:bg-space-black disabled:pointer-events-none disabled:opacity-50 disabled:shadow-none">
+                                10
+                            </button>
+                        </div>
+                        <button class="rounded-md border border-platinum-300 p-2 text-center text-sm transition-all shadow-sm hover:shadow-lg hover:text-white hover:bg-space-black hover:border-space-black focus:text-white focus:bg-space-black focus:border-space-black active:border-space-black active:text-white active:bg-space-black disabled:pointer-events-none disabled:opacity-50 disabled:shadow-none">
+                            Next
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <div class="detail-modal absolute w-full h-full hidden justify-center items-center bg-space-black/50 z-50">
+        <div class="w-full max-h-full overflow-auto max-w-4xl bg-ghost-white p-4 md:p-8 rounded-lg shadow-md flex flex-col items-center">
+            <div class="mb-8 w-full flex flex-wrap-reverse items-center relative">
+                <h2 class="sm:flex-1 text-2xl font-semibold sm:text-center overflow-hidden">Ticket Details</h2>
+                <div class="sm:absolute sm:right-0 flex flex-1 justify-end">
+                    <button class="w-10 h-10 hover:bg-platinum-100" onclick="toggleModal('detail-modal')">
+                        <i class="fa-solid fa-xmark"></i>
+                    </button>
+                </div>
+            </div>
+            
+            <div class="w-full flex flex-col md:flex-row items-center gap-8">
+                <div class="w-full flex-1 gap-8 grid grid-cols-1 sm:grid-cols-2">
+                    <div class="flex flex-col">
+                        <span class="font-medium">Price</span>
+                        <span>88000</span>
+                    </div>
+                    <div class="flex flex-col">
+                        <span class="font-medium">Show Time</span>
+                        <span>2024-10-19 10:57:02</span>
+                    </div>
+                    <div class="flex flex-col">
+                        <span class="font-medium">Movie</span>
+                        <span>Our Man in Havana</span>
+                    </div>
+                    <div class="flex flex-col">
+                        <span class="font-medium">Room</span>
+                        <span>Sycamore</span>
+                    </div>
+                    <div class="flex flex-col">
+                        <span class="font-medium">Seat</span>
+                        <span>E5</span>
+                    </div>
+                    <div class="flex flex-col">
+                        <span class="font-medium">Promotion</span>
+                        <span>Midweek Movie Madness</span>
+                    </div>
+                    <div class="flex flex-col">
+                        <span class="font-medium">Username</span>
+                        <span>dummy</span>
+                    </div>
+                    <div class="flex flex-col">
+                        <span class="font-medium">Phone</span>
+                        <span>0123456789</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="mt-8 flex justify-center gap-4 *:w-20">
+                <button type="button" onclick="toggleModal('detail-modal'); toggleEdit()" class="px-4 py-2 text-white rounded-md bg-steel-blue-500 hover:bg-steel-blue-600 focus:outline-none focus:ring-2 focus:ring-steel-blue">Edit</button>
+                <button type="button" onclick="toggleModal('delete-modal')" class="px-4 py-2 text-white rounded-md bg-vermilion-500 hover:bg-vermilion-600 focus:outline-none focus:ring-2 focus:ring-vermilion">Delete</button>
+            </div>
+        </div>
+    </div>
+
+    <div class="create-edit-modal absolute w-full h-full hidden justify-center items-center bg-space-black/50 z-50">
+        <form id="create-edit-form" class="w-full max-h-full overflow-auto max-w-6xl bg-ghost-white p-4 md:p-8 rounded-lg shadow-md flex flex-col items-center">
+            <div class="mb-8 w-full flex flex-wrap-reverse items-center relative">
+                <h2 id="create-edit-title" class="sm:flex-1 text-2xl font-semibold sm:text-center overflow-hidden">Create / Edit Ticket</h2>
+                <div class="sm:absolute sm:right-0 flex flex-1 justify-end">
+                    <button type="button" class="w-10 h-10 hover:bg-platinum-100" onclick="toggleForm()">
+                        <i class="fa-solid fa-xmark"></i>
+                    </button>
+                </div>
+            </div>
+
+            <div class="w-full flex flex-col md:flex-row items-center gap-8">
+                <div class="w-full flex-1 gap-4 grid grid-cols-1 sm:grid-cols-2">
+                    <div class="flex flex-col">
+                        <label for="movie" class="font-medium">Movie*</label>
+                        <select value="" onchange="enableSchedule()" name="movie" id="movie" class="appearance-none px-4 py-2 pr-8 border border-platinum-300 rounded-md focus:outline-none focus:ring-2 focus:ring-steel-blue">
+                            <option value="" disabled selected hidden></option>
+                            <option value="option1">Movie 1</option>
+                            <option value="option2">Movie 2</option>
+                            <option value="option3">Movie 3</option>
+                        </select>
+                        <span id="movie-error" class="error-text hidden italic text-sm text-vermilion">Movie is required</span>
+                    </div>
+                    
+                    <div class="flex flex-col">
+                        <label for="schedule" class="font-medium">Schedule*</label>
+                        <select value="" name="schedule" id="schedule" disabled class="disabled:bg-platinum-100 disabled:cursor-not-allowed appearance-none px-4 py-2 pr-8 border border-platinum-300 rounded-md focus:outline-none focus:ring-2 focus:ring-steel-blue">
+                            <option value="" disabled selected hidden></option>
+                            <option value="option1">Schedule 1 - Room 1</option>
+                            <option value="option2">Schedule 2 - Room 2</option>
+                            <option value="option3">Schedule 3 - Room 3</option>
+                        </select>
+                        <span id="schedule-error" class="error-text hidden italic text-sm text-vermilion">Schedule is required</span>
+                    </div>
+
+                    <div class="flex flex-col">
+                        <label for="seat" class="font-medium">Seat*</label>
+                        <select value="" name="seat" id="seat" class="appearance-none px-4 py-2 pr-8 border border-platinum-300 rounded-md focus:outline-none focus:ring-2 focus:ring-steel-blue">
+                            <option value="" disabled selected hidden></option>
+                            <option value="option1">A1 - Standard - 50000</option>
+                            <option value="option2">A2 - Standard - 50000</option>
+                            <option value="option3">A3 - Standard - 50000</option>
+                        </select>
+                        <span id="seat-error" class="error-text hidden italic text-sm text-vermilion">Seat is required</span>
+                    </div>
+
+                    <div class="flex flex-col">
+                        <label for="promotion" class="font-medium">Promotion</label>
+                        <select value="" name="promotion" id="promotion" class="appearance-none px-4 py-2 pr-8 border border-platinum-300 rounded-md focus:outline-none focus:ring-2 focus:ring-steel-blue">
+                            <option value="" disabled selected hidden></option>
+                            <option value="option1">Option 1</option>
+                            <option value="option2">Option 2</option>
+                            <option value="option3">Option 3</option>
+                        </select>
+                    </div>
+
+                    <div class="flex flex-col">
+                        <label for="user" class="font-medium">User*</label>
+                        <select value="" name="user" id="user" class="appearance-none px-4 py-2 pr-8 border border-platinum-300 rounded-md focus:outline-none focus:ring-2 focus:ring-steel-blue">
+                            <option value="" disabled selected hidden></option>
+                            <option value="option1">Option 1</option>
+                            <option value="option2">Option 2</option>
+                            <option value="option3">Option 3</option>
+                        </select>
+                        <span id="user-error" class="error-text hidden italic text-sm text-vermilion">User is required</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="mt-8 flex justify-center gap-4 *:w-20">
+                <button type="button" onclick="submitForm(event)" class="px-4 py-2 text-white rounded-md bg-steel-blue-500 hover:bg-steel-blue-600 focus:outline-none focus:ring-2 focus:ring-steel-blue">Save</button>
+                <button type="reset" onclick="resetForm()" class="px-4 py-2 border border-steel-blue rounded-md hover:bg-platinum-100 text-steel-blue focus:outline-none">Reset</button>
+            </div>
+        </form>
+    </div>
+
+    <div class="hidden delete-modal absolute w-full h-full justify-center items-center bg-space-black/50 z-50">
+        <div class="flex sm:flex-row flex-col items-center sm:items-start gap-2 sm:gap-4 mx-auto max-w-lg rounded-lg border border-stone bg-ghost-white p-4 shadow-lg">
+            <span class="size-8 min-w-8 flex items-center justify-center rounded-full bg-carrot-orange text-white">
+                <i class="fa-solid fa-exclamation"></i>
+            </span>
+            <div class="flex flex-col items-center sm:items-start">
+                <p class="font-bold text-lg text-carrot-orange">Warning</p>
+
+                <p class="pt-2 pb-4">
+                    Are you sure you want to delete this item?
+                </p>
+                
+                <div class="flex flex-col sm:flex-row-reverse gap-3 w-full">
+                    <button type="button" class="rounded-lg text-white bg-carrot-orange-500 hover:bg-carrot-orange-600 px-4 py-2 text-center text-sm font-semibold">
+                        Confirm
+                    </button>
+    
+                    <button type="button" onclick="toggleModal('delete-modal')" class="border border-platinum-300 rounded-lg hover:bg-platinum-100 px-4 py-2 text-center text-sm font-semibold">
+                        Cancel
+                    </button>
+                </div>
+            </div>
+
+        </div>
+    </div>
+    <script src="ticketScript.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/flowbite@3.1.2/dist/flowbite.min.js"></script>
+</body>
+
+</html>
