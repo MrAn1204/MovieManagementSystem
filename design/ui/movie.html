@@ -7,10 +7,12 @@
     <title>Movie</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.1/css/all.min.css">
     <link href="https://cdn.jsdelivr.net/npm/flowbite@3.1.2/dist/flowbite.min.css" rel="stylesheet" />
+    <link rel="stylesheet" href="style.css">
     <script src="https://cdn.tailwindcss.com"></script>
     <script src="tailwind.config.js"></script>
     <script src="script.js"></script>
     <script src="movieScript.js"></script>
+    <script src="ticketScript.js"></script>
 </head>
 
 <body class="bg-ghost-white flex flex-col h-screen m-0 text-space-black">
@@ -611,7 +613,7 @@
                             <tr class="bg-platinum-200 *:border-b *:border-platinum-300 last:*:border-l last:*:sticky last:*:right-0 last:*:bg-platinum-200">
                                 <th class="min-w-40 px-4 py-2">Show time</th>
                                 <th class="min-w-40 px-4 py-2">Room</th>
-                                <th class="min-w-16 w-16"></th>
+                                <th class="min-w-12 w-12"></th>
                             </tr>
                         </thead>
                         <tbody class="*:*:border-b *:*:border-platinum-300 last:*:*:border-l *:last:*:border-b-0">
@@ -620,8 +622,7 @@
                                 <td class="px-4 py-2">Oak</td>
                                 <td>
                                     <div class="flex justify-evenly">
-                                        <button><i class="fa-solid fa-circle-info text-steel-blue"></i></button>
-                                        <button><i class="fa-solid fa-pen-to-square text-carrot-orange"></i></button>
+                                        <button type="button" class="text-bright-fern" onclick="toggleModal('book-ticket-modal')"><i class="fa-solid fa-ticket"></i></button>
                                     </div>
                                 </td>
                             </tr>
@@ -630,8 +631,7 @@
                                 <td class="px-4 py-2">Oak</td>
                                 <td>
                                     <div class="flex justify-evenly">
-                                        <button><i class="fa-solid fa-circle-info text-steel-blue"></i></button>
-                                        <button><i class="fa-solid fa-pen-to-square text-carrot-orange"></i></button>
+                                        <button type="button" class="text-bright-fern" onclick="toggleModal('book-ticket-modal')"><i class="fa-solid fa-ticket"></i></button>
                                     </div>
                                 </td>
                             </tr>
@@ -640,8 +640,7 @@
                                 <td class="px-4 py-2">Oak</td>
                                 <td>
                                     <div class="flex justify-evenly">
-                                        <button><i class="fa-solid fa-circle-info text-steel-blue"></i></button>
-                                        <button><i class="fa-solid fa-pen-to-square text-carrot-orange"></i></button>
+                                        <button type="button" class="text-bright-fern" onclick="toggleModal('book-ticket-modal')"><i class="fa-solid fa-ticket"></i></button>
                                     </div>
                                 </td>
                             </tr>
@@ -650,8 +649,7 @@
                                 <td class="px-4 py-2">Oak</td>
                                 <td>
                                     <div class="flex justify-evenly">
-                                        <button><i class="fa-solid fa-circle-info text-steel-blue"></i></button>
-                                        <button><i class="fa-solid fa-pen-to-square text-carrot-orange"></i></button>
+                                        <button type="button" class="text-bright-fern" onclick="toggleModal('book-ticket-modal')"><i class="fa-solid fa-ticket"></i></button>
                                     </div>
                                 </td>
                             </tr>
@@ -660,8 +658,7 @@
                                 <td class="px-4 py-2">Oak</td>
                                 <td>
                                     <div class="flex justify-evenly">
-                                        <button><i class="fa-solid fa-circle-info text-steel-blue"></i></button>
-                                        <button><i class="fa-solid fa-pen-to-square text-carrot-orange"></i></button>
+                                        <button type="button" class="text-bright-fern" onclick="toggleModal('book-ticket-modal')"><i class="fa-solid fa-ticket"></i></button>
                                     </div>
                                 </td>
                             </tr>
@@ -670,8 +667,7 @@
                                 <td class="px-4 py-2">Oak</td>
                                 <td>
                                     <div class="flex justify-evenly">
-                                        <button><i class="fa-solid fa-circle-info text-steel-blue"></i></button>
-                                        <button><i class="fa-solid fa-pen-to-square text-carrot-orange"></i></button>
+                                        <button type="button" class="text-bright-fern" onclick="toggleModal('book-ticket-modal')"><i class="fa-solid fa-ticket"></i></button>
                                     </div>
                                 </td>
                             </tr>
@@ -974,6 +970,224 @@
                     </button>
     
                     <button type="button" onclick="toggleModal('delete-modal')" class="border border-platinum-300 rounded-lg hover:bg-platinum-100 px-4 py-2 text-center text-sm font-semibold">
+                        Cancel
+                    </button>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+    <div class="book-ticket-modal absolute w-full h-full hidden justify-center items-center bg-space-black/50 z-50">
+        <div class="w-full max-h-full overflow-auto max-w-4xl bg-ghost-white p-4 md:p-8 rounded-lg shadow-md flex flex-col items-center">
+            <div class="mb-8 w-full flex flex-wrap-reverse items-center relative">
+                <h2 class="sm:flex-1 text-2xl font-semibold sm:text-center overflow-hidden">Book ticket</h2>
+                <div class="sm:absolute right-0 flex flex-1 justify-end">
+                    <button class="w-10 h-10 hover:bg-platinum-100" onclick="toggleModal('book-ticket-modal'); updateTicketInfo('---', '---')">
+                        <i class="fa-solid fa-xmark"></i>
+                    </button>
+                </div>
+            </div>
+
+            <div class="w-full flex flex-col md:flex-row items-center gap-8">
+                <div class="w-full flex-1 gap-8 grid grid-cols-1 sm:grid-cols-2">
+                    <div class="flex flex-col">
+                        <span class="font-medium">Movie</span>
+                        <span>Our Man in Havana</span>
+                    </div>
+                    <div class="flex flex-col">
+                        <span class="font-medium">Show Time</span>
+                        <span>2024-10-19 10:57:02</span>
+                    </div>
+                    <div class="flex flex-col">
+                        <span class="font-medium">Room</span>
+                        <span>Sycamore</span>
+                    </div>
+                    <div class="flex flex-col">
+                        <span class="font-medium">Seat</span>
+                        <span id="ticket-seat">---</span>
+                    </div>
+                    <div class="flex flex-col sm:col-span-2">
+                        <label for="promotion" class="font-medium">Promotion</label>
+                        <select value="" name="promotion" id="promotion" class="appearance-none px-4 py-2 pr-8 border border-platinum-300 rounded-md focus:outline-none focus:ring-2 focus:ring-steel-blue">
+                            <option value="" disabled selected hidden>None</option>
+                            <option value="option1">Option 1</option>
+                            <option value="option2">Option 2</option>
+                            <option value="option3">Option 3</option>
+                        </select>
+                    </div>
+                    <div class="flex flex-col">
+                        <span class="font-medium">Price</span>
+                        <span id="ticket-price">---</span>
+                    </div>
+                </div>
+            </div>
+
+            <hr class="my-4 w-full border-platinum-300">
+
+            <div class="flex flex-col items-center gap-4">
+                <div class="border-8 border-platinum-300 bg-platinum-100 w-full flex justify-center">
+                    <p class="italic">Screen</p>
+                </div>
+
+                <div class="flex overflow-x-auto">
+                    <div class="shrink-0 grid grid-cols-10 gap-2 *:border *:border-platinum-300 *:size-12 *:rounded-md ">
+                        <button onclick="toggleModal('seat-detail-modal')" class="seat-accessible">A1</button>
+                        <button onclick="toggleModal('seat-detail-modal')" class="seat-couple">A2</button>
+                        <button onclick="toggleModal('seat-detail-modal')" class="seat-couple">A3</button>
+                        <button onclick="toggleModal('seat-detail-modal')" class="seat-premium">A4</button>
+                        <button onclick="toggleModal('seat-detail-modal')" class="seat-premium">A5</button>
+                        <button onclick="toggleModal('seat-detail-modal')" class="seat-premium">A6</button>
+                        <button onclick="toggleModal('seat-detail-modal')" class="seat-premium">A7</button>
+                        <button onclick="toggleModal('seat-detail-modal')" class="seat">A8</button>
+                        <button onclick="toggleModal('seat-detail-modal')" class="seat-occupied">A9</button>
+                        <button onclick="toggleModal('seat-detail-modal')" class="seat-accessible">A10</button>
+
+                        <button onclick="toggleModal('seat-detail-modal')" class="seat-accessible">B1</button>
+                        <button onclick="toggleModal('seat-detail-modal')" class="seat-occupied">B2</button>
+                        <button onclick="toggleModal('seat-detail-modal')" class="seat-occupied">B3</button>
+                        <button onclick="toggleModal('seat-detail-modal')" class="seat">B4</button>
+                        <button onclick="toggleModal('seat-detail-modal')" class="seat">B5</button>
+                        <button onclick="toggleModal('seat-detail-modal')" class="seat">B6</button>
+                        <button onclick="toggleModal('seat-detail-modal')" class="seat">B7</button>
+                        <button onclick="toggleModal('seat-detail-modal')" class="seat">B8</button>
+                        <button onclick="toggleModal('seat-detail-modal')" class="seat">B9</button>
+                        <button onclick="toggleModal('seat-detail-modal')" class="seat-accessible">B10</button>
+                        
+                        <button onclick="toggleModal('seat-detail-modal')" class="seat-accessible">C1</button>
+                        <button onclick="toggleModal('seat-detail-modal')" class="seat-couple">C2</button>
+                        <button onclick="toggleModal('seat-detail-modal')" class="seat-couple">C3</button>
+                        <button onclick="toggleModal('seat-detail-modal')" class="seat">C4</button>
+                        <button onclick="toggleModal('seat-detail-modal')" class="seat">C5</button>
+                        <button onclick="toggleModal('seat-detail-modal')" class="seat">C6</button>
+                        <button onclick="toggleModal('seat-detail-modal')" class="seat">C7</button>
+                        <button onclick="toggleModal('seat-detail-modal')" class="seat-occupied">C8</button>
+                        <button onclick="toggleModal('seat-detail-modal')" class="seat">C9</button>
+                        <button onclick="toggleModal('seat-detail-modal')" class="seat-occupied">C10</button>
+                    </div>
+                </div>
+
+                <hr class="w-full border-platinum-300">
+
+                <div class="flex flex-wrap justify-center gap-x-8 gap-y-2 *:flex *:items-center *:flex-1 *:max-w-[100px] *:gap-2">
+                    <div>
+                        <span class="size-4 border border-platinum-300 bg-platinum-100"></span>
+                        <span>Standard</span>
+                    </div>
+                    <div>
+                        <div class="size-4 border border-platinum-300 bg-bright-fern-600"></div>
+                        <span>Occupied</span>
+                    </div>
+                    <div>
+                        <div class="size-4 border border-platinum-300 bg-carrot-orange-600"></div>
+                        <span>Premium</span>
+                    </div>
+                    <div>
+                        <div class="size-4 border border-platinum-300 bg-vermilion-600"></div>
+                        <span>Couple</span>
+                    </div>
+                    <div>
+                        <span class="size-4 border border-platinum-300 bg-steel-blue-600"></span>
+                        <span>Accessible</span>
+                    </div>
+                </div>
+
+                <div class="flex-1 flex justify-center items-end gap-4 *:w-24">
+                    <button type="button" onclick="toggleModal('book-confirm')" class="px-4 py-2 text-white rounded-md bg-steel-blue-500 hover:bg-steel-blue-600 focus:outline-none focus:ring-2 focus:ring-steel-blue">Confirm</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="seat-detail-modal absolute w-full h-full hidden justify-center items-center bg-space-black/50 z-50">
+        <div class="w-full max-h-full overflow-auto max-w-2xl bg-ghost-white p-4 md:p-8 rounded-lg shadow-md flex flex-col items-center">
+            <div class="mb-8 w-full flex flex-wrap-reverse items-center relative">
+                <h2 class="sm:flex-1 text-2xl font-semibold sm:text-center overflow-hidden">Seat Details</h2>
+                <div class="sm:absolute right-0 flex flex-1 justify-end">
+                    <button class="w-10 h-10 hover:bg-platinum-100" onclick="toggleModal('seat-detail-modal')">
+                        <i class="fa-solid fa-xmark"></i>
+                    </button>
+                </div>
+            </div>
+
+            <div class="w-full sm:h-72 flex flex-col gap-8">
+                <div class="flex-1 gap-8 grid grid-cols-2">
+                    <div class="flex flex-col">
+                        <span class="font-medium">Name</span>
+                        <span>A1</span>
+                    </div>
+                    <div class="flex flex-col">
+                        <span class="font-medium">Type</span>
+                        <span>Accessible</span>
+                    </div>
+                    <div class="flex flex-col">
+                        <span class="font-medium">Row</span>
+                        <span>1</span>
+                    </div>
+                    <div class="flex flex-col">
+                        <span class="font-medium">Column</span>
+                        <span>1</span>
+                    </div>
+                    <div class="flex flex-col">
+                        <span class="font-medium">Status</span>
+                        <span>Available</span>
+                    </div><div class="flex flex-col">
+                        <span class="font-medium">Price</span>
+                        <span>88000</span>
+                    </div>
+                </div>
+
+                <div class="flex-1 flex justify-center items-end gap-4 *:w-28">
+                    <button type="button" onclick="updateTicketInfo('A1', '88000'); toggleModal('seat-detail-modal')" class="px-4 py-2 text-white rounded-md bg-steel-blue-500 hover:bg-steel-blue-600 focus:outline-none focus:ring-2 focus:ring-steel-blue">Select seat</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="hidden book-confirm absolute w-full h-full justify-center items-center bg-space-black/50 z-50">
+        <div class="flex sm:flex-row flex-col items-center sm:items-start gap-2 sm:gap-4 mx-auto max-w-lg rounded-lg border border-stone bg-ghost-white p-4 shadow-lg">
+            <span class="size-8 min-w-8 flex items-center justify-center rounded-full bg-steel-blue text-white">
+                <i class="fa-solid fa-info"></i>
+            </span>
+            <div class="flex flex-col items-center sm:items-start">
+                <p class="font-bold text-lg text-steel-blue">Note</p>
+
+                <p class="pt-2 pb-4">
+                    Are you sure you want to to book this seat?
+                </p>
+                
+                <div class="flex flex-col sm:flex-row-reverse gap-3 w-full">
+                    <button type="button" onclick="toggleModal('book-confirm'); toggleModal('book-ticket-modal')" class="rounded-lg text-white bg-steel-blue-500 hover:bg-steel-blue-600 px-4 py-2 text-center text-sm font-semibold">
+                        Confirm
+                    </button>
+    
+                    <button type="button" onclick="toggleModal('book-confirm')" class="border border-platinum-300 rounded-lg hover:bg-platinum-100 px-4 py-2 text-center text-sm font-semibold">
+                        Cancel
+                    </button>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+    <div class="hidden book-success absolute w-full h-full justify-center items-center bg-space-black/50 z-50">
+        <div class="flex sm:flex-row flex-col items-center sm:items-start gap-2 sm:gap-4 mx-auto max-w-lg rounded-lg border border-stone bg-ghost-white p-4 shadow-lg">
+            <span class="size-8 min-w-8 flex items-center justify-center rounded-full bg-bright-fern text-white">
+                <i class="fa-solid fa-check"></i>
+            </span>
+            <div class="flex flex-col items-center sm:items-start">
+                <p class="font-bold text-lg text-bright-fern">Success</p>
+
+                <p class="pt-2 pb-4">
+                    Booking completed successfully!
+                </p>
+                
+                <div class="flex flex-col sm:flex-row-reverse gap-3 w-full">
+                    <button type="button" class="rounded-lg text-white bg-bright-fern-500 hover:bg-bright-fern-600 px-4 py-2 text-center text-sm font-semibold">
+                        Confirm
+                    </button>
+    
+                    <button type="button" onclick="toggleModal('book-success')" class="border border-platinum-300 rounded-lg hover:bg-platinum-100 px-4 py-2 text-center text-sm font-semibold">
                         Cancel
                     </button>
                 </div>

@@ -47,3 +47,11 @@ function toggleEdit() {
 
     toggleForm();
 }
+
+function updateTicketInfo(seat, price) {
+    const ticketSeat = document.getElementById("ticket-seat");
+    const ticketPrice = document.getElementById("ticket-price");
+    
+    ticketSeat.textContent = seat;
+    ticketPrice.textContent = price;
+}
