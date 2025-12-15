@@ -7,8 +7,6 @@ import com.mms.mms_api.exception.ResourceNotFoundException;
 import com.mms.mms_api.model.Seat;
 import com.mms.mms_api.util.mapper.SeatMapper;
 
-import jakarta.transaction.Transactional;
-
 public class SeatDeleteHandler extends SeatBaseHandler<SeatDeleteCommand, Void> {
     private final ScheduleSeatRepository scheduleSeatRepository;
 
@@ -19,7 +17,6 @@ public class SeatDeleteHandler extends SeatBaseHandler<SeatDeleteCommand, Void> 
     }
 
     @Override
-    @Transactional
     public Void execute() {
         Seat seat = seatRepository.findById(request.getId())
                 .orElseThrow(() -> new ResourceNotFoundException("seat.notFound"));

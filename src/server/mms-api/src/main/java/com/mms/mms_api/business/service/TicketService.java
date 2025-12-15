@@ -3,6 +3,7 @@ package com.mms.mms_api.business.service;
 import java.util.List;
 
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.mms.mms_api.business.command.ticket.TicketCreateCommand;
 import com.mms.mms_api.business.command.ticket.TicketDeleteCommand;
@@ -59,6 +60,7 @@ public class TicketService {
         this.scheduleSeatRepository = scheduleSeatRepository;
     }
 
+    @Transactional
     public TicketDto handle(TicketCreateCommand request) {
         TicketCreateHandler handler = new TicketCreateHandler(request, ticketMapper, ticketRepository,
                 scheduleRepository, seatRepository, promotionRepository, userRepository, scheduleSeatRepository);
@@ -75,12 +77,14 @@ public class TicketService {
         return handler.execute();
     }
 
+    @Transactional
     public TicketDto handle(TicketUpdateCommand request) {
         TicketUpdateHandler handler = new TicketUpdateHandler(request, ticketMapper, ticketRepository,
                 scheduleRepository, seatRepository, invoiceRepository, promotionRepository, scheduleSeatRepository);
         return handler.execute();
     }
 
+    @Transactional
     public void handle(TicketDeleteCommand request) {
         TicketDeleteHandler handler = new TicketDeleteHandler(request, ticketRepository);
         handler.execute();

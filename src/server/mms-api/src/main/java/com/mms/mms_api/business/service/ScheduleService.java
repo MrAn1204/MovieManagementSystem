@@ -3,6 +3,7 @@ package com.mms.mms_api.business.service;
 import java.util.List;
 
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.mms.mms_api.business.command.schedule.ScheduleCreateCommand;
 import com.mms.mms_api.business.command.schedule.ScheduleDeleteCommand;
@@ -36,6 +37,7 @@ public class ScheduleService {
 
     private final RoomRepository roomRepository;
 
+    @Transactional
     public ScheduleDto handle(ScheduleCreateCommand request) {
         ScheduleCreateHandler handler = new ScheduleCreateHandler(request, scheduleMapper,
                 scheduleRepository, movieRepository, roomRepository);
@@ -52,12 +54,14 @@ public class ScheduleService {
         return handler.execute();
     }
 
+    @Transactional
     public ScheduleDto handle(ScheduleUpdateCommand request) {
         ScheduleUpdateHandler handler = new ScheduleUpdateHandler(request, scheduleMapper, scheduleRepository,
                 movieRepository, roomRepository);
         return handler.execute();
     }
 
+    @Transactional
     public void handle(ScheduleDeleteCommand request) {
         ScheduleDeleteHandler handler = new ScheduleDeleteHandler(request, scheduleRepository);
         handler.execute();

@@ -14,8 +14,6 @@ import com.mms.mms_api.util.mapper.InvoiceMapper;
 
 import java.util.List;
 
-import org.springframework.transaction.annotation.Transactional;
-
 public class InvoiceUpdateHandler extends InvoiceBaseHandler<InvoiceUpdateCommand, InvoiceDto> {
     private final TicketRepository ticketRepository;
 
@@ -29,7 +27,6 @@ public class InvoiceUpdateHandler extends InvoiceBaseHandler<InvoiceUpdateComman
     }
 
     @Override
-    @Transactional
     public InvoiceDto execute() {
         Invoice invoice = invoiceRepository.findById(request.getId())
                 .orElseThrow(() -> new ResourceNotFoundException("invoice.notFound"));

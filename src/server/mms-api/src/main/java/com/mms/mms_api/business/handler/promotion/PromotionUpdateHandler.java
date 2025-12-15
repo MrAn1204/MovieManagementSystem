@@ -2,8 +2,6 @@ package com.mms.mms_api.business.handler.promotion;
 
 import java.util.List;
 
-import org.springframework.transaction.annotation.Transactional;
-
 import com.mms.mms_api.business.command.promotion.PromotionUpdateCommand;
 import com.mms.mms_api.dto.PromotionDto;
 import com.mms.mms_api.exception.InvalidInputException;
@@ -24,7 +22,6 @@ public class PromotionUpdateHandler extends PromotionBaseHandler<PromotionUpdate
     }
 
     @Override
-    @Transactional
     public PromotionDto execute() {
         Promotion promotion = promotionRepository.findById(request.getId())
                 .orElseThrow(() -> new ResourceNotFoundException("promotion.notFound"));

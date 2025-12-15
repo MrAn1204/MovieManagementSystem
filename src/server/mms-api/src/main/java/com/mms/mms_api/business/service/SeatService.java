@@ -3,6 +3,7 @@ package com.mms.mms_api.business.service;
 import java.util.List;
 
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.mms.mms_api.business.command.seat.SeatCreateCommand;
 import com.mms.mms_api.business.command.seat.SeatDeleteCommand;
@@ -33,6 +34,7 @@ public class SeatService {
 
     private final SeatMapper seatMapper;
 
+    @Transactional
     public SeatDto handle(SeatCreateCommand request) {
         SeatCreateHandler handler = new SeatCreateHandler(request, seatMapper, seatRepository, roomRepository);
         return handler.execute();
@@ -48,11 +50,13 @@ public class SeatService {
         return handler.execute();
     }
 
+    @Transactional
     public SeatDto handle(SeatUpdateCommand request) {
         SeatUpdateHandler handler = new SeatUpdateHandler(request, seatMapper, seatRepository, roomRepository);
         return handler.execute();
     }
 
+    @Transactional
     public void handle(SeatDeleteCommand request) {
         SeatDeleteHandler handler = new SeatDeleteHandler(request, seatMapper, seatRepository, scheduleSeatRepository);
         handler.execute();

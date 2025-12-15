@@ -2,8 +2,6 @@ package com.mms.mms_api.business.handler.promotion;
 
 import java.util.List;
 
-import org.springframework.transaction.annotation.Transactional;
-
 import com.mms.mms_api.business.command.promotion.PromotionCreateCommand;
 import com.mms.mms_api.dto.PromotionDto;
 import com.mms.mms_api.exception.InvalidInputException;
@@ -23,7 +21,6 @@ public class PromotionCreateHandler extends PromotionBaseHandler<PromotionCreate
     }
 
     @Override
-    @Transactional
     public PromotionDto execute() {
         List<Ticket> tickets = ticketRepository.findByIdIn(request.getTicketIds());
 

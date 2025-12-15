@@ -3,6 +3,7 @@ package com.mms.mms_api.business.service;
 import java.util.List;
 
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.mms.mms_api.business.command.invoice.InvoiceCreateCommand;
 import com.mms.mms_api.business.command.invoice.InvoiceDeleteCommand;
@@ -33,6 +34,7 @@ public class InvoiceService {
 
     private final UserRepository userRepository;
 
+    @Transactional
     public InvoiceDto handle(InvoiceCreateCommand request) {
         InvoiceCreateHandler handler = new InvoiceCreateHandler(request, invoiceMapper, invoiceRepository,
                 ticketRepository, userRepository);
@@ -50,12 +52,14 @@ public class InvoiceService {
         return handler.execute();
     }
 
+    @Transactional
     public InvoiceDto handle(InvoiceUpdateCommand request) {
         InvoiceUpdateHandler handler = new InvoiceUpdateHandler(request, invoiceMapper, invoiceRepository,
                 ticketRepository, userRepository);
         return handler.execute();
     }
 
+    @Transactional
     public void handle(InvoiceDeleteCommand request) {
         InvoiceDeleteHandler handler = new InvoiceDeleteHandler(request, invoiceRepository);
         handler.execute();

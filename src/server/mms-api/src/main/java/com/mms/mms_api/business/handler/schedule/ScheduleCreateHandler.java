@@ -3,7 +3,7 @@ package com.mms.mms_api.business.handler.schedule;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.springframework.transaction.annotation.Transactional;
+
 
 import com.mms.mms_api.business.command.schedule.ScheduleCreateCommand;
 import com.mms.mms_api.data.MovieRepository;
@@ -32,7 +32,6 @@ public class ScheduleCreateHandler extends ScheduleBaseHandler<ScheduleCreateCom
     }
 
     @Override
-    @Transactional
     public ScheduleDto execute() {
         Schedule schedule = scheduleMapper.toEntity(request);
 

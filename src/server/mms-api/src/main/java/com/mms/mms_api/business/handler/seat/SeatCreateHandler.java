@@ -2,8 +2,6 @@ package com.mms.mms_api.business.handler.seat;
 
 import java.util.List;
 
-import org.springframework.transaction.annotation.Transactional;
-
 import com.mms.mms_api.business.command.seat.SeatCreateCommand;
 import com.mms.mms_api.data.RoomRepository;
 import com.mms.mms_api.data.SeatRepository;
@@ -26,7 +24,6 @@ public class SeatCreateHandler extends SeatBaseHandler<SeatCreateCommand, SeatDt
     }
 
     @Override
-    @Transactional
     public SeatDto execute() {
         SeatValidator.validateSeatType(request.getSeatType());
 

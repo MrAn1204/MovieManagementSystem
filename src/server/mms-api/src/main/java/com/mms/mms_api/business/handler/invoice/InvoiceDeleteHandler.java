@@ -1,6 +1,6 @@
 package com.mms.mms_api.business.handler.invoice;
 
-import org.springframework.transaction.annotation.Transactional;
+
 
 import com.mms.mms_api.business.command.invoice.InvoiceDeleteCommand;
 import com.mms.mms_api.data.InvoiceRepository;
@@ -14,7 +14,6 @@ public class InvoiceDeleteHandler extends InvoiceBaseHandler<InvoiceDeleteComman
     }
 
     @Override
-    @Transactional
     public Void execute() {
         Invoice invoice = invoiceRepository.findById(request.getId())
                 .orElseThrow(() -> new ResourceNotFoundException("invoice.notFound"));

@@ -1,6 +1,6 @@
 package com.mms.mms_api.business.handler.seat;
 
-import org.springframework.transaction.annotation.Transactional;
+
 
 import com.mms.mms_api.business.command.seat.SeatUpdateCommand;
 import com.mms.mms_api.data.RoomRepository;
@@ -23,7 +23,6 @@ public class SeatUpdateHandler extends SeatBaseHandler<SeatUpdateCommand, SeatDt
     }
 
     @Override
-    @Transactional
     public SeatDto execute() {
         Seat seat = seatRepository.findById(request.getId())
                 .orElseThrow(() -> new ResourceNotFoundException("seat.notFound"));

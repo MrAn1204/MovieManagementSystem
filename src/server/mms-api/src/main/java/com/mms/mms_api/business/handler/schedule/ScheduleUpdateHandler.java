@@ -4,8 +4,6 @@ import java.util.List;
 import java.util.Map;
 import java.util.UUID;
 
-import org.springframework.transaction.annotation.Transactional;
-
 import com.mms.mms_api.business.command.schedule.ScheduleUpdateCommand;
 import com.mms.mms_api.dto.ScheduleDto;
 import com.mms.mms_api.data.ScheduleRepository;
@@ -31,7 +29,6 @@ public class ScheduleUpdateHandler extends ScheduleBaseHandler<ScheduleUpdateCom
     }
 
     @Override
-    @Transactional
     public ScheduleDto execute() {
         Schedule schedule = scheduleRepository.findById(request.getId())
                 .orElseThrow(() -> new ResourceNotFoundException("schedule.notFound"));

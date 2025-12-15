@@ -1,6 +1,5 @@
 package com.mms.mms_api.business.handler.promotion;
 
-import org.springframework.transaction.annotation.Transactional;
 
 import com.mms.mms_api.business.command.promotion.PromotionDeleteCommand;
 import com.mms.mms_api.data.PromotionRepository;
@@ -15,7 +14,6 @@ public class PromotionDeleteHandler extends PromotionBaseHandler<PromotionDelete
     }
 
     @Override
-    @Transactional
     public Void execute() {
         Promotion promotion = promotionRepository.findById(request.getId())
                 .orElseThrow(() -> new ResourceNotFoundException("promotion.notFound"));
