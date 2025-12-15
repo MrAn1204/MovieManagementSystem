@@ -21,7 +21,5 @@ public class TicketUpdateCommand extends BaseUpdateCommand {
     @NotNull(message = "{ticket.seat.required}")
     private UUID seatId;
 
-    private UUID invoiceId;
-
     private UUID promotionId;
 }

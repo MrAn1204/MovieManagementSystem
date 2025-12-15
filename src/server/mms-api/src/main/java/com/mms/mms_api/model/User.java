@@ -61,6 +61,9 @@ public class User extends BaseEntity {
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
     private List<Invoice> invoices;
 
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
+    private List<Ticket> tickets;
+
     public void setScore(int useScore, int addScore) {
         this.score = this.score - useScore + addScore;
     }

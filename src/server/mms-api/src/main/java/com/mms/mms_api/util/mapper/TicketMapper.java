@@ -16,15 +16,17 @@ public interface TicketMapper {
     @Mapping(target = "seat", ignore = true)
     @Mapping(target = "invoice", ignore = true)
     @Mapping(target = "promotion", ignore = true)
+    @Mapping(target = "user", ignore = true)
     Ticket toEntity(TicketCreateCommand command);
 
-    @Mapping(target = "username", source = "ticket.invoice.user.username")
-    @Mapping(target = "phoneNumber", source = "ticket.invoice.user.phoneNumber")
+    @Mapping(target = "username", source = "ticket.user.username")
+    @Mapping(target = "phoneNumber", source = "ticket.user.phoneNumber")
     TicketDto toDto(Ticket ticket);
 
     @Mapping(target = "schedule", ignore = true)
     @Mapping(target = "seat", ignore = true)
     @Mapping(target = "invoice", ignore = true)
     @Mapping(target = "promotion", ignore = true)
+    @Mapping(target = "user", ignore = true)
     void updateEntity(TicketUpdateCommand command, @MappingTarget Ticket ticket);
 }

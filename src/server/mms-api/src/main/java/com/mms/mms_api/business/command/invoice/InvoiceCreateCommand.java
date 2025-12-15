@@ -31,6 +31,6 @@ public class InvoiceCreateCommand extends BaseCreateCommand {
     @NotEmpty(message = "{invoice.tickets.required}")
     private List<UUID> ticketIds;
 
-    @NotNull(message = "{invoice.user.required}")
+    @NotNull(message = "{user.required}")
     private UUID userId;
 }
