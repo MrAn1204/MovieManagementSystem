@@ -1,1 +1,72 @@
 @import "tailwindcss";
+
+
+@theme {
+    --color-ghost-white: #FAFAFF;
+    --color-space-black: #46494C;
+
+    --color-platinum: #97979A;
+    --color-platinum-50: #f7f7f7;
+    --color-platinum-100: #ececed;
+    --color-platinum-200: #dcdcdd;
+    --color-platinum-300: #c7c7c9;
+    --color-platinum-400: #acacae;
+    --color-platinum-500: #97979a;
+    --color-platinum-600: #888789;
+    --color-platinum-700: #79797c;
+    --color-platinum-800: #656568;
+    --color-platinum-900: #535355;
+    --color-platinum-950: #353536;
+
+    --color-vermilion: #ff3c38;
+    --color-vermilion-50: #fff1f1;
+    --color-vermilion-100: #ffe0df;
+    --color-vermilion-200: #ffc6c5;
+    --color-vermilion-300: #ff9f9d;
+    --color-vermilion-400: #ff6764;
+    --color-vermilion-500: #ff3c38;
+    --color-vermilion-600: #ed1915;
+    --color-vermilion-700: #c8110d;
+    --color-vermilion-800: #a5120f;
+    --color-vermilion-900: #881614;
+    --color-vermilion-950: #4b0504;
+
+    --color-steel-blue: #3f88c5;
+    --color-steel-blue-50: #f3f7fc;
+    --color-steel-blue-100: #e6eef8;
+    --color-steel-blue-200: #c7dcf0;
+    --color-steel-blue-300: #96bfe3;
+    --color-steel-blue-400: #5e9dd2;
+    --color-steel-blue-500: #3f88c5;
+    --color-steel-blue-600: #2967a0;
+    --color-steel-blue-700: #225282;
+    --color-steel-blue-800: #20466c;
+    --color-steel-blue-900: #1f3c5b;
+    --color-steel-blue-950: #15263c;
+
+    --color-carrot-orange: #ee8f2f;
+    --color-carrot-orange-50: #fef8ee;
+    --color-carrot-orange-100: #fdf1d7;
+    --color-carrot-orange-200: #fadeae;
+    --color-carrot-orange-300: #f6c57b;
+    --color-carrot-orange-400: #f1a346;
+    --color-carrot-orange-500: #ee8f2f;
+    --color-carrot-orange-600: #de6e18;
+    --color-carrot-orange-700: #b85416;
+    --color-carrot-orange-800: #934319;
+    --color-carrot-orange-900: #763918;
+    --color-carrot-orange-950: #401b0a;
+
+    --color-bright-fern: #4dbb2c;
+    --color-bright-fern-50: #f5fcf1;
+    --color-bright-fern-100: #e5fade;
+    --color-bright-fern-200: #ccf3bf;
+    --color-bright-fern-300: #a2e98c;
+    --color-bright-fern-400: #72d553;
+    --color-bright-fern-500: #4dbb2c;
+    --color-bright-fern-600: #3c9a1f;
+    --color-bright-fern-700: #31791c;
+    --color-bright-fern-800: #2a601b;
+    --color-bright-fern-900: #234f18;
+    --color-bright-fern-950: #0f2b08;
+}

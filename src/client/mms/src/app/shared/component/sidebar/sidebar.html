@@ -1,0 +1,62 @@
+<aside
+    [class.left-0]="visible()"
+    class="flex bg-platinum-50 transition-all duration-500 ease-in-out -left-64 lg:left-0 absolute z-40 lg:relative lg:h-screen h-[calc(100vh-48px)] w-64 lg:min-w-64 flex-col border-r border-platinum-300 py-4 items-center">
+    <div>
+        <img src="/images/MMS_transparent.png" alt="Logo" class="hidden lg:block w-32" />
+    </div>
+
+    <nav class="flex-1 w-full overflow-auto">
+        <ul class="p-4 space-y-4 text-2xl">
+            <li class="rounded-md px-4 py-1 overflow-hidden bg-platinum-200 hover:cursor-pointer">
+                <a href="#home" class="space-x-4">
+                    <i class="fa-solid fa-house"></i>
+                    <span>Home</span>
+                </a>
+            </li>
+            <li class="rounded-md px-4 py-1 overflow-hidden hover:bg-platinum-100 hover:cursor-pointer">
+                <a href="#movie" class="space-x-4">
+                    <i class="fa-solid fa-film"></i>
+                    <span>Movie</span>
+                </a>
+            </li>
+            <li class="rounded-md px-4 py-1 overflow-hidden hover:bg-platinum-100 hover:cursor-pointer">
+                <a href="#schedule" class="space-x-4">
+                    <i class="fa-solid fa-calendar"></i>
+                    <span>Schedule</span>
+                </a>
+            </li>
+            <li class="rounded-md px-4 py-1 overflow-hidden hover:bg-platinum-100 hover:cursor-pointer">
+                <a href="#room" class="space-x-4">
+                    <i class="fa-solid fa-door-closed"></i>
+                    <span>Room</span>
+                </a>
+            </li>
+            <li class="rounded-md px-4 py-1 overflow-hidden hover:bg-platinum-100 hover:cursor-pointer">
+                <a href="#promotion" class="space-x-4">
+                    <i class="fa-solid fa-percent"></i>
+                    <span>Promotion</span>
+                </a>
+            </li>
+            <li class="rounded-md px-4 py-1 overflow-hidden hover:bg-platinum-100 hover:cursor-pointer">
+                <a href="#user" class="space-x-4">
+                    <i class="fa-solid fa-users"></i>
+                    <span>User</span>
+                </a>
+            </li>
+        </ul>
+    </nav>
+
+    <div class="flex flex-col w-full justify-evenly overflow-hidden px-2">
+        <hr class="border-platinum-300">
+        <div class="w-full flex items-center p-2">
+            <img src="/images/user-solid-full.svg" alt="user_pfp" class="w-1/6 rounded-full" />
+            <div class="px-2">
+                <p class="font-bold">John Doe</p>
+                <p class="text-sm">john.doe@example.com</p>
+            </div>
+        </div>
+        <button class="px-2 text-white rounded-md bg-vermilion-500 hover:bg-vermilion-600">
+            <i class="fa-solid fa-right-from-bracket"></i> Log Out
+        </button>
+    </div>
+</aside>
