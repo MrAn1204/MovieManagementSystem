@@ -3,10 +3,11 @@ import { RouterOutlet } from '@angular/router';
 import { Sidebar } from './shared/component/sidebar/sidebar';
 import { Header } from './shared/component/header/header';
 import { FlowbiteService } from './service/flowbite.service';
+import { Table } from './shared/component/table/table';
 
 @Component({
   selector: 'app-root',
-  imports: [RouterOutlet, Header, Sidebar],
+  imports: [RouterOutlet, Header, Sidebar, Table],
   templateUrl: './app.html',
   styleUrl: './app.css'
 })
