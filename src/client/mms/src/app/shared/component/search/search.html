@@ -1,0 +1,92 @@
+<form action="" method="get" class="flex flex-col h-full">
+  <div class="flex gap-4 sm:flex-row flex-col">
+    <div class="flex grow-3">
+      <input type="text" name="keyword" placeholder="Search..."
+        class="w-full px-4 py-2 border border-platinum-300 rounded-l-md focus:outline-none focus:ring-2 focus:ring-steel-blue">
+      <button type="submit"
+        class="w-12 text-white rounded-r-md bg-steel-blue hover:bg-steel-blue-500 focus:outline-none focus:ring-2 focus:ring-steel-blue">
+        <i class="fa-solid fa-magnifying-glass"></i>
+      </button>
+    </div>
+
+    <div class="flex gap-4 grow">
+      <div class="flex grow">
+        <button type="button"
+          class="order-button w-1/4 max-w-12 border bg-white border-platinum-300 rounded-tl-md rounded-bl-md text-steel-blue focus:outline-none"
+          (click)="toggleOrder()">
+          @if (ascending) {
+          <i id="icon-asc" class="fa-solid fa-arrow-up-short-wide"></i>
+          } @else {
+          <i id="icon-desc" class="fa-solid fa-arrow-down-short-wide"></i>
+          }
+        </button>
+
+        <select name="order" id="order"
+          class="w-full p-2 border border-l-0 rounded-tr-md rounded-br-md border-platinum-300 focus:outline-none focus:ring-2 focus:ring-steel-blue">
+          <option value="" disabled selected hidden>Order by</option>
+          @for (option of sortOptions; track $index) {
+          <option [value]="option.value">{{ option.label }}</option>
+          }
+        </select>
+      </div>
+
+      <button type="button"
+        class="filter-button w-1/4 max-w-12 border border-steel-blue rounded-md hover:bg-platinum-100 text-steel-blue focus:outline-none"
+        (click)="toggleFilter.emit()">
+        <i class="fa-solid fa-filter"></i>
+      </button>
+    </div>
+  </div>
+
+  <hr class="my-4 border-platinum-300">
+  <div id="filter-container" [class.h-screen]="visible()" [class.opacity-100]="visible()"
+    class="space-y-4 overflow-y-auto transition-all duration-500 ease-in-out h-0 lg:max-h-fit opacity-0">
+    <div class="flex gap-4 *:flex-1 *:min-w-40 flex-wrap">
+      <app-select-field idName="field1"></app-select-field>
+
+      <app-select-field idName="field2"></app-select-field>
+
+      <app-select-field idName="field3"></app-select-field>
+      
+      <app-select-field idName="field4"></app-select-field>
+
+      <app-input-field inputType="number" idName="field5" placeholderText="Field 5"></app-input-field>
+
+      <app-input-field inputType="number" idName="field6" placeholderText="Field 6"></app-input-field>
+    </div>
+
+    <div class="flex md:flex-row flex-col gap-4 *:grow *:min-w-[calc((100%-32px)/3)] md:flex-wrap flex-nowrap">
+      <app-multiselect-field idName="field7" labelText="Field 7"></app-multiselect-field>
+
+      <app-multiselect-field idName="field8" labelText="Field 8"></app-multiselect-field>
+
+      <app-multiselect-field idName="field9" labelText="Field 9"></app-multiselect-field>
+    </div>
+
+    <!-- Date time selector -->
+    <div>
+      <app-input-field inputType="datetime-local" idName="dateTime" labelText="On:"></app-input-field>
+    </div>
+
+    <!-- Date range selector -->
+    <div class="flex *:flex-1 flex-wrap gap-4 items-center">
+      <app-input-field inputType="date" idName="startDate" labelText="From:"></app-input-field>
+      
+      <app-input-field inputType="date" idName="endDate" labelText="To:"></app-input-field>
+    </div>
+
+    <!-- Date & time range selector -->
+    <div class="flex flex-wrap gap-4 items-center">
+      <div class="grow">
+        <app-input-field inputType="date" idName="date" labelText="On:"></app-input-field>
+      </div>
+
+      <div class="grow-2 flex *:flex-1 gap-4 flex-wrap">
+        <app-input-field inputType="time" idName="time" labelText="From:"></app-input-field>
+
+        <app-input-field inputType="time" idName="time" labelText="To:"></app-input-field>
+      </div>
+    </div>
+  </div>
+  <hr id="filter-bottom" [hidden]="!visible()" class="my-4 border-platinum-300">
+</form>
