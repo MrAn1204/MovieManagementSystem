@@ -1,0 +1,54 @@
+<div class="flex flex-col">
+  <label [htmlFor]="idName()" class="font-medium">{{ labelText() }}</label>
+  <button [id]="`${idName()}-button`" [attr.data-dropdown-toggle]="`${idName()}-dropdown`"
+    data-dropdown-placement="bottom"
+    class="relative bg-white flex flex-col px-4 py-2 border border-platinum-300 rounded-md focus:outline-none focus:ring-2 focus:ring-steel-blue"
+    type="button">
+    <input hidden [value]="fieldValue" [name]="idName()" [id]="idName()">
+    <div [id]="`${idName()}-display`"
+      class="overflow-auto min-h-6 flex flex-wrap gap-2 *:bg-platinum-200 *:px-1 *:rounded-md">
+      @for (item of selected; track $index) {
+      <span>
+        {{ item }}
+      </span>
+      }
+    </div>
+    <span class="absolute right-2 pointer-events-none"><i class="fa-solid fa-angle-down"></i></span>
+  </button>
+
+  <div [id]="`${idName()}-dropdown`" class="z-20 hidden bg-white rounded-lg shadow-sm w-60 border border-platinum-300">
+    <div class="p-3">
+      <label [htmlFor]="`${idName()}-search`" class="sr-only">Search</label>
+      <div class="relative">
+        <div class="absolute inset-y-0 rtl:inset-r-0 start-0 flex items-center ps-3 pointer-events-none">
+          <i class="fa-solid fa-magnifying-glass w-4 h-4 text-platinum-500"></i>
+        </div>
+        <input type="text" [id]="`${idName()}-search`" [value]="keyword" (input)="updateKeyword($event.target.value)"
+          class="block w-full p-2 ps-10 text-sm border border-platinum-300 rounded-lg focus:ring-steel-blue-500 focus:border-steel-blue-500"
+          placeholder="Search...">
+      </div>
+    </div>
+    <ul class="h-48 px-3 pb-3 overflow-y-auto text-sm text-platinum-700" [attr.aria-labelledby]="`${idName()}-button`">
+      @for (option of data; track $index) {
+      @if (containKeyword(option.name)) {
+      <li>
+        <div class="flex items-center ps-2 rounded-sm hover:bg-platinum-100">
+          <input (change)="updateSelected(option, $event)" [id]="`${idName()}-${$index}`" type="checkbox"
+            [value]="option.id" [checked]="option.checked"
+            class="w-4 h-4 text-steel-blue-500 bg-platinum-50 border border-platinum-300 rounded-sm focus:ring-steel-blue-500 focus:ring-2">
+          <label [htmlFor]="`${idName()}-${$index}`" class="w-full py-2 ms-2 text-sm font-medium rounded-sm">
+            {{ option.name }}</label>
+        </div>
+      </li>
+      }
+      }
+    </ul>
+    <div class="flex items-center text-white p-3 border-t border-platinum-200 rounded-b-lg">
+      <button type="button" (click)="resetSelected()"
+        class="w-full py-1 text-sm font-medium bg-vermilion-500 rounded-lg hover:bg-vermilion-600">
+        <i class="fa-regular fa-square-minus"></i>
+        Clear all
+      </button>
+    </div>
+  </div>
+</div>
