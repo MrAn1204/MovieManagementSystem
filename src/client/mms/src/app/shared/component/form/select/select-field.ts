@@ -7,7 +7,7 @@ import { Component, input } from '@angular/core';
   styleUrl: './select-field.css',
 })
 export class SelectField {
-  labelName= input<string>('');
+  labelText= input<string>('');
   idName = input.required<string>();
 
   options: { label: string; value: string }[] = [
