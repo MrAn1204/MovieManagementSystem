@@ -1,5 +1,5 @@
 <div>
-  <button class="px-2 py-1 bg-bright-fern-500 hover:bg-bright-fern-600 text-white font-semibold">
+  <button type="button" (click)="addItem()" class="px-2 py-1 bg-bright-fern-500 hover:bg-bright-fern-600 text-white font-semibold">
     <i class="fa-solid fa-plus"></i>
     <span>Add</span>
   </button>
@@ -24,9 +24,9 @@
         <td class="px-4 py-2">{{item.field3}}</td>
         <td class="sticky right-0 bg-platinum-50 group-hover:bg-platinum-100 border-platinum-300 border-l">
           <div class="flex justify-evenly">
-            <button><i class="fa-solid fa-circle-info text-steel-blue"></i></button>
-            <button><i class="fa-solid fa-pen-to-square text-carrot-orange"></i></button>
-            <button><i class="fa-solid fa-trash text-vermilion"></i></button>
+            <button type="button" (click)="viewDetail()"><i class="fa-solid fa-circle-info text-steel-blue"></i></button>
+            <button type="button" (click)="updateItem()"><i class="fa-solid fa-pen-to-square text-carrot-orange"></i></button>
+            <button type="button" (click)="deleteItem()"><i class="fa-solid fa-trash text-vermilion"></i></button>
           </div>
         </td>
       </tr>
