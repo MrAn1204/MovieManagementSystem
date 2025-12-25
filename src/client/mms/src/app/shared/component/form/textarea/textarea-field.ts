@@ -1,4 +1,5 @@
 import { Component, input } from '@angular/core';
+import { BaseField } from '../base-field/base-field';
 
 @Component({
   selector: 'app-textarea-field',
@@ -6,8 +7,6 @@ import { Component, input } from '@angular/core';
   templateUrl: './textarea-field.html',
   styleUrl: './textarea-field.css',
 })
-export class Textarea {
-  labelText = input<string>('');
-  idName = input.required<string>();
+export class Textarea extends BaseField<string> {
   rowSize = input<number>(5);
 }

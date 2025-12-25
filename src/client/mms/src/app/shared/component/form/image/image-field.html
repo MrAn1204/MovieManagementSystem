@@ -2,7 +2,7 @@
   <label [htmlFor]="idName()" class="font-medium">{{ labelText() }}</label>
 
   <div class="flex justify-center relative">
-    <input type="file" (change)="onFileChange($event)" [id]="idName()" accept="image/*"
+    <input #fileInput type="file" (change)="onFileChange($event)" [id]="idName()" accept="image/*"
       class="w-full h-full opacity-0 absolute cursor-pointer">
     <img [id]="`${idName()}-preview`" [src]="imagePreviewSrc()" alt="thumbnail" class="max-h-48 md:max-h-72 rounded-md">
   </div>

@@ -1,4 +1,5 @@
 import { Component, input } from '@angular/core';
+import { BaseField } from '../base-field/base-field';
 
 @Component({
   selector: 'app-input-field',
@@ -6,9 +7,7 @@ import { Component, input } from '@angular/core';
   templateUrl: './input-field.html',
   styleUrl: './input-field.css',
 })
-export class InputField {
-  labelText = input<string>('');
-  idName = input.required<string>();
+export class InputField extends BaseField<string> {
   inputType = input.required<string>();
   placeholderText = input<string>('');
 }

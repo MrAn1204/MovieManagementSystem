@@ -1,9 +1,10 @@
 @if (labelText()) {
-  <label [htmlFor]="idName()" class="block font-medium">{{ labelText() }}</label>
+<label [htmlFor]="idName()" class="block font-medium">{{ labelText() }}</label>
 }
-<select [id]="idName()" class="w-full px-4 py-2 border border-platinum-300 rounded-md focus:outline-none focus:ring-2 focus:ring-steel-blue">
+<select [id]="idName()" [value]="value" [disabled]="disabled" (change)="updateValue($any($event.target).value)"
+  class="w-full px-4 py-2 border border-platinum-300 rounded-md focus:outline-none focus:ring-2 focus:ring-steel-blue">
   <option value="" selected>Any [Field]</option>
-  @for (option of options; track $index) {
-  <option value="{{option.value}}">{{option.label}}</option>
+  @for (option of options(); track $index) {
+  <option [value]="option.value">{{ option.label }}</option>
   }
 </select>

@@ -1,4 +1,5 @@
 import { Component, input } from '@angular/core';
+import { BaseField } from '../base-field/base-field';
 
 @Component({
   selector: 'app-multiselect-field',
@@ -6,39 +7,37 @@ import { Component, input } from '@angular/core';
   templateUrl: './multiselect-field.html',
   styleUrl: './multiselect-field.css',
 })
-export class MultiselectField {
-  labelText = input<string>('');
-  idName = input.required<string>();
-
-  data: { id: string, name: string, checked: boolean }[] = [];
+export class MultiselectField extends BaseField<string[]> {
+  options = input<{ id: string, name: string, checked: boolean }[]>([]);
   selected: string[] = [];
-  fieldValue: string[] = [];
   keyword = '';
 
   constructor() {
+    super();
     for (let i = 1; i <= 7; i++) {
-      this.data.push({ id: `option${i}`, name: `Option ${i}`, checked: false });
+      this.options().push({ id: `option${i}`, name: `Option ${i}`, checked: false });
     }
   }
 
-  updateSelected(value: { id: string, name: string, checked: boolean }, event: Event): void {
-    const checked = (event.target as HTMLInputElement).checked;
+  updateSelected(option: { id: string, name: string, checked: boolean }): void {
+    let newValue = this.value ? [...this.value] : [];
+    option.checked = !option.checked;
 
-    value.checked = checked;
-
-    if (checked) {
-      this.fieldValue.push(value.id);
-      this.selected.push(value.name);
+    if (option.checked) {
+      newValue.push(option.id);
+      this.selected.push(option.name);
     } else {
-      this.selected = this.selected.filter(item => item !== value.name);
-      this.fieldValue = this.fieldValue.filter(item => item !== value.id);
+      newValue = newValue.filter(item => item !== option.id);
+      this.selected = this.selected.filter(item => item !== option.name);
     }
+
+    this.updateValue(newValue);
   }
 
   resetSelected(): void {
     this.selected = [];
-    this.fieldValue = [];
-    this.data.forEach(item => item.checked = false);
+    super.updateValue([]);
+    this.options().forEach(item => item.checked = false);
   }
 
   updateKeyword(value: string): void {
