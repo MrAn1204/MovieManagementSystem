@@ -76,3 +76,7 @@
     --color-bright-fern-900: #234f18;
     --color-bright-fern-950: #0f2b08;
 }
+
+button, input, select {
+    cursor: pointer;
+}

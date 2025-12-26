@@ -29,8 +29,4 @@ export class App implements OnInit {
   toggleSidebar(): void {
     this.sidebarVisible = !this.sidebarVisible;
   }
-
-  toggleFilter(): void {
-    this.filterVisible = !this.filterVisible;
-  }
 }

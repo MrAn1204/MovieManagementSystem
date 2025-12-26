@@ -1,28 +1,21 @@
-import { Component, input, output } from '@angular/core';
-import { SelectField } from '../form/select/select-field';
-import { InputField } from '../form/input/input-field';
-import { MultiselectField } from '../form/multiselect/multiselect-field';
+import { Component } from '@angular/core';
 import { FormControl, FormGroup, ReactiveFormsModule } from '@angular/forms';
+import { FormOptionModel } from '../../model/form-option.model';
+import { Filter } from "../filter/filter";
 
 @Component({
   selector: 'app-search',
-  imports: [SelectField, InputField, MultiselectField, ReactiveFormsModule],
+  imports: [ReactiveFormsModule, Filter],
   templateUrl: './search.html',
   styleUrl: './search.css',
 })
-export class Search{
+export class Search {
   constructor() { }
+
+  filterVisible: boolean = false;
+  ascending: boolean = true;
   
-  visible = input<boolean>();
-  
-  toggleFilter = output<void>();
-  
-  ascending = true;
-  sortOptions = [
-    { label: 'Option 1', value: 'option1' },
-    { label: 'Option 2', value: 'option2' },
-    { label: 'Option 3', value: 'option3' },
-  ];
+  sortOptions: FormOptionModel[] = [];
   searchForm = new FormGroup({
     keyword: new FormControl(''),
     sortBy: new FormControl(''),
@@ -31,7 +24,16 @@ export class Search{
     pageSize: new FormControl(10),
   });
 
+  toggleFilter(): void {
+    this.filterVisible = !this.filterVisible;
+  }
+
   toggleOrder(): void {
     this.ascending = !this.ascending;
+  }
+
+  onSubmit(): void {
+    this.searchForm.controls.sortDirection.setValue(this.ascending ? 'ASC' : 'DESC');
+    console.log(this.searchForm.value);
   }
 }
