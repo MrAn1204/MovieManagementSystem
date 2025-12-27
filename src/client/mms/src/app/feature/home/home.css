@@ -1,0 +1,5 @@
+@import 'tailwindcss';
+
+:host {
+    @apply w-full min-w-0 flex flex-col px-4;
+}

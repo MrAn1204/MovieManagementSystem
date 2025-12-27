@@ -1,31 +1,39 @@
 <div>
-  <button type="button" (click)="addItem()" class="px-2 py-1 bg-bright-fern-500 hover:bg-bright-fern-600 text-white font-semibold">
+  <button type="button" (click)="addItem()"
+    class="space-x-1 px-2 py-1 bg-bright-fern-500 hover:bg-bright-fern-600 text-white font-semibold">
     <i class="fa-solid fa-plus"></i>
     <span>Add</span>
   </button>
 </div>
 
+@if (!data().length) {
+<div class="border border-platinum-300 h-full bg-platinum-50 flex flex-col items-center justify-center">
+  <p class="font-bold text-2xl">No data available</p>
+</div>
+} @else {
 <!-- Table -->
 <div class="overflow-auto border border-platinum-300">
   <table class="w-full bg-platinum-50 border-separate border-spacing-0">
     <thead class="text-left sticky top-0 z-10">
       <tr class="bg-platinum-200 *:border-b *:border-platinum-300">
-        @for (column of columns; track $index) {
+        @for (column of columnNames; track $index) {
         <th class="min-w-40 px-4 py-2">{{column}}</th>
         }
         <th class="min-w-24 w-24 border-l sticky right-0 bg-platinum-200"></th>
       </tr>
     </thead>
     <tbody class="*:border-b *:border-platinum-300">
-      @for (item of data; track $index) {
+      @for (row of dataGrid; track $index) {
       <tr class="group hover:bg-platinum-100 *:border-b *:border-platinum-300 last:*:border-b-0">
-        <td class="px-4 py-2">{{item.field1}}</td>
-        <td class="px-4 py-2">{{item.field2}}</td>
-        <td class="px-4 py-2">{{item.field3}}</td>
+        @for (item of row; track $index) {
+        <td class="px-4 py-2">{{ item }}</td>
+        }
         <td class="sticky right-0 bg-platinum-50 group-hover:bg-platinum-100 border-platinum-300 border-l">
           <div class="flex justify-evenly">
-            <button type="button" (click)="viewDetail()"><i class="fa-solid fa-circle-info text-steel-blue"></i></button>
-            <button type="button" (click)="updateItem()"><i class="fa-solid fa-pen-to-square text-carrot-orange"></i></button>
+            <button type="button" (click)="viewDetail()"><i
+                class="fa-solid fa-circle-info text-steel-blue"></i></button>
+            <button type="button" (click)="updateItem()"><i
+                class="fa-solid fa-pen-to-square text-carrot-orange"></i></button>
             <button type="button" (click)="deleteItem()"><i class="fa-solid fa-trash text-vermilion"></i></button>
           </div>
         </td>
@@ -105,3 +113,4 @@
     </button>
   </div>
 </div>
+}

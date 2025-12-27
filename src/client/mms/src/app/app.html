@@ -5,22 +5,9 @@
     <button class="w-full h-full cursor-default" (click)="toggleSidebar()"></button>
   </div>
 
-  
   <app-sidebar [visible]="sidebarVisible"></app-sidebar>
-  
-  <div class="w-full flex flex-col items-center justify-center m-2 overflow-hidden">
-    <!-- <div class="w-full min-w-0 flex flex-col px-4">
-      <h1 class="text-3xl text-center font-bold py-8">
-        Welcome to Movie Management System!
-      </h1>
-    
-      <p>Coming soon!</p>
-    </div> -->
 
-    <app-search id="search-container"></app-search>
-
-    <app-table id="table-container"></app-table>
+  <div class="w-full m-2 overflow-hidden">
+    <router-outlet />
   </div>
 </main>
-
-<router-outlet />
