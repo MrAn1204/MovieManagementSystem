@@ -1,15 +1,13 @@
 import { DIALOG_DATA, DialogRef } from '@angular/cdk/dialog';
-import { Component, inject, OnInit } from '@angular/core';
+import { Component, inject, input, OnInit } from '@angular/core';
 import { FlowbiteService } from '../../../../service/flowbite.service';
-import { SelectField } from "../../form/select/select-field";
-import { MultiselectField } from "../../form/multiselect/multiselect-field";
-import { InputField } from "../../form/input/input-field";
-import { Textarea } from "../../form/textarea/textarea-field";
-import { ImageField } from "../../form/image/image-field";
+import { ActivatedRoute } from '@angular/router';
+import { FormControl, FormGroup } from '@angular/forms';
+import { NgComponentOutlet } from '@angular/common';
 
 @Component({
   selector: 'app-create-edit',
-  imports: [SelectField, MultiselectField, InputField, Textarea, ImageField],
+  imports: [NgComponentOutlet],
   templateUrl: './create-edit.html',
   styleUrl: './create-edit.css',
 })
@@ -17,12 +15,22 @@ export class CreateEdit implements OnInit {
   data: {
     mode: 'create' | 'edit',
     title: string,
+    contentComponent: any,
   } = inject(DIALOG_DATA);
+  route = inject(ActivatedRoute);
+
+  fields = input<Record<string, FormControl>>();
+
+  form: FormGroup;
 
   constructor(
     private readonly dialogRef: DialogRef,
     private readonly flowbiteService: FlowbiteService,
-  ) { }
+  ) {
+    this.form = new FormGroup({
+      ...this.fields(),
+    });
+  }
 
   ngOnInit(): void {
     this.flowbiteService.loadFlowbite((flowbite) => {

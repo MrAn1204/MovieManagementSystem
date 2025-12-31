@@ -1,0 +1,39 @@
+<div class="create-edit-layout">
+  <app-image-field formControlName="thumbnail" idName="thumbnail" labelText="Image"></app-image-field>
+
+  <div class="w-full flex-1 gap-4 grid grid-cols-1 sm:grid-cols-2">
+    <div>
+      <app-input-field formControlName="name" inputType="text" idName="name" labelText="Title"></app-input-field>
+    </div>
+
+    <div>
+      <app-select-field formControlName="language" idName="language" labelText="Language"></app-select-field>
+    </div>
+
+    <div>
+      <app-multiselect-field formControlName="genre" idName="genre" labelText="Genre"></app-multiselect-field>
+    </div>
+
+    <div>
+      <app-multiselect-field formControlName="studio" idName="studio" labelText="Studio"></app-multiselect-field>
+    </div>
+
+    <div>
+      <app-multiselect-field formControlName="talent" idName="talent" labelText="Talent"></app-multiselect-field>
+    </div>
+
+    <div>
+      <app-input-field formControlName="duration" inputType="number" idName="duration"
+        labelText="Duration (minutes)"></app-input-field>
+    </div>
+
+    <div class="sm:col-span-2">
+      <app-input-field formControlName="releaseDate" inputType="date" idName="releaseDate"
+        labelText="Release Date"></app-input-field>
+    </div>
+
+    <div class="sm:col-span-2">
+      <app-textarea-field formControlName="content" idName="content" labelText="Content"></app-textarea-field>
+    </div>
+  </div>
+</div>

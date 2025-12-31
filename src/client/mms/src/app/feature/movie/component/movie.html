@@ -3,5 +3,5 @@
     <app-movie-filter></app-movie-filter>
   </app-search>
 
-  <app-table [columns]="columns" [data]="movies"></app-table>
+  <app-table entityName="Movie" [columns]="columns" [data]="movies" [layoutCreateEdit]="movieCreateEdit"></app-table>
 </div>

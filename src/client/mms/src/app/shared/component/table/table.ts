@@ -1,4 +1,4 @@
-import { Component, inject, input, OnInit } from '@angular/core';
+import { Component, inject, input, OnInit, Type } from '@angular/core';
 import { CreateEdit } from '../dialog/create-edit/create-edit';
 import { Dialog } from '@angular/cdk/dialog';
 
@@ -11,6 +11,8 @@ import { Dialog } from '@angular/cdk/dialog';
 export class Table implements OnInit {
   columns = input.required<Map<string, string>>();
   data = input.required<any[]>();
+  entityName = input.required<string>();
+  layoutCreateEdit = input.required<Type<Component>>();
   
   columnNames: string[] = [];
   dataGrid: string[][] = [];
@@ -33,12 +35,13 @@ export class Table implements OnInit {
     console.log('Open detail view');
   }
 
-  addItem() {
+  addItem(): void {
     this.dialog.open(CreateEdit, {
       backdropClass: 'bg-space-black/50',
       data: {
         mode: 'create',
-        title: 'Create Item',
+        title: `Create ${this.entityName()}`,
+        contentComponent: this.layoutCreateEdit(),
       }
     });
   }
@@ -48,7 +51,8 @@ export class Table implements OnInit {
       backdropClass: 'bg-space-black/50',
       data: {
         mode: 'edit',
-        title: 'Edit Item',
+        title: `Edit ${this.entityName()}`,
+        contentComponent: this.layoutCreateEdit(),
       }
     });
   }
