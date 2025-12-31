@@ -1,6 +1,7 @@
-import { Component, inject, input, OnInit, Type } from '@angular/core';
+import { Component, input, OnInit, Type } from '@angular/core';
 import { CreateEdit } from '../dialog/create-edit/create-edit';
-import { Dialog } from '@angular/cdk/dialog';
+import { Detail } from '../dialog/detail/detail';
+import { DialogService } from '../../../service/dialog/dialog.service';
 
 @Component({
   selector: 'app-table',
@@ -13,18 +14,17 @@ export class Table implements OnInit {
   data = input.required<any[]>();
   entityName = input.required<string>();
   layoutCreateEdit = input.required<Type<Component>>();
-  
+  layoutDetail = input.required<Type<Component>>();
+
   columnNames: string[] = [];
   dataGrid: string[][] = [];
 
-  dialog = inject(Dialog);
-
-  constructor() { }
+  constructor(private readonly dialogService: DialogService) { }
 
   ngOnInit(): void {
     this.columnNames = Array.from(this.columns().values());
     const columnKeys = Array.from(this.columns().keys());
-    
+
     for (const item of this.data()) {
       const row = columnKeys.map(key => item[key]);
       this.dataGrid.push(row);
@@ -32,28 +32,26 @@ export class Table implements OnInit {
   }
 
   viewDetail() {
-    console.log('Open detail view');
+    this.dialogService.openDialog(Detail, {
+      title: `${this.entityName()} Details`,
+      contentComponent: this.layoutDetail(),
+      updateItem: () => this.updateItem(),
+    })
   }
 
   addItem(): void {
-    this.dialog.open(CreateEdit, {
-      backdropClass: 'bg-space-black/50',
-      data: {
-        mode: 'create',
-        title: `Create ${this.entityName()}`,
-        contentComponent: this.layoutCreateEdit(),
-      }
+    this.dialogService.openDialog(CreateEdit, {
+      mode: 'create',
+      title: `Create ${this.entityName()}`,
+      contentComponent: this.layoutCreateEdit(),
     });
   }
 
   updateItem() {
-    this.dialog.open(CreateEdit, {
-      backdropClass: 'bg-space-black/50',
-      data: {
-        mode: 'edit',
-        title: `Edit ${this.entityName()}`,
-        contentComponent: this.layoutCreateEdit(),
-      }
+    this.dialogService.openDialog(CreateEdit, {
+      mode: 'edit',
+      title: `Edit ${this.entityName()}`,
+      contentComponent: this.layoutCreateEdit(),
     });
   }
 
