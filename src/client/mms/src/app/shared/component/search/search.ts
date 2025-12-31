@@ -1,11 +1,10 @@
 import { Component, input } from '@angular/core';
 import { FormControl, FormGroup, ReactiveFormsModule } from '@angular/forms';
 import { FormOptionModel } from '../../model/form-option.model';
-import { Filter } from "../filter/filter";
 
 @Component({
   selector: 'app-search',
-  imports: [ReactiveFormsModule, Filter],
+  imports: [ReactiveFormsModule],
   templateUrl: './search.html',
   styleUrl: './search.css',
 })

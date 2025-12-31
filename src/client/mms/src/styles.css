@@ -80,3 +80,29 @@
 button, input, select {
     cursor: pointer;
 }
+
+@layer utilities {
+    .filter-layout {
+        @apply space-y-4 px-2 py-4;
+    }
+    
+    .filter-common {
+        @apply flex gap-4 *:flex-1 *:min-w-40 flex-wrap;
+    }
+    
+    .filter-multiselect {
+        @apply flex md:flex-row flex-col gap-4 *:grow *:min-w-[calc((100%-32px)/3)] md:flex-wrap flex-nowrap;
+    }
+    
+    .filter-range {
+        @apply flex flex-wrap gap-4 items-center *:grow;
+    }
+    
+    .filter-range-advanced {
+        @apply flex flex-wrap gap-4 items-center *:first:grow *:last:grow-2;
+    }
+    
+    .create-edit-layout {
+        @apply w-full flex flex-col md:flex-row items-center gap-8;
+    }
+}

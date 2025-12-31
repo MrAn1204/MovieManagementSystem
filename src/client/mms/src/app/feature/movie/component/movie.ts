@@ -1,10 +1,11 @@
 import { Component } from '@angular/core';
 import { Search } from "../../../shared/component/search/search";
 import { Table } from "../../../shared/component/table/table";
+import { MovieFilter } from "../filter/movie-filter";
 
 @Component({
   selector: 'app-movie',
-  imports: [Search, Table],
+  imports: [Search, Table, MovieFilter],
   templateUrl: './movie.html',
   styleUrl: './movie.css',
 })
