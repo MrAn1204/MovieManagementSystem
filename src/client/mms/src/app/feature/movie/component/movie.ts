@@ -3,6 +3,7 @@ import { Search } from "../../../shared/component/search/search";
 import { Table } from "../../../shared/component/table/table";
 import { MovieFilter } from "../filter/movie-filter";
 import { MovieCreateEdit } from '../create-edit/movie-create-edit';
+import { MovieDetail } from '../detail/movie-detail';
 
 @Component({
   selector: 'app-movie',
@@ -12,6 +13,7 @@ import { MovieCreateEdit } from '../create-edit/movie-create-edit';
 })
 export class Movie {
   movieCreateEdit = MovieCreateEdit;
+  movieDetail = MovieDetail;
 
   columns: Map<string, string> = new Map([
     ['name', 'Name'],
