@@ -1,9 +1,11 @@
-import { Component } from '@angular/core';
+import { Component, OnInit, signal } from '@angular/core';
 import { Search } from "../../../shared/component/search/search";
 import { Table } from "../../../shared/component/table/table";
 import { MovieFilter } from "../filter/movie-filter";
 import { MovieCreateEdit } from '../create-edit/movie-create-edit';
 import { MovieDetail } from '../detail/movie-detail';
+import { MovieModel } from '../../../model/movie.model';
+import { MovieService } from '../../../service/movie/movie.service';
 
 @Component({
   selector: 'app-movie',
@@ -11,7 +13,7 @@ import { MovieDetail } from '../detail/movie-detail';
   templateUrl: './movie.html',
   styleUrl: './movie.css',
 })
-export class Movie {
+export class Movie implements OnInit {
   movieCreateEdit = MovieCreateEdit;
   movieDetail = MovieDetail;
 
@@ -19,11 +21,18 @@ export class Movie {
     ['name', 'Name'],
     ['releaseDate', 'Release Date'],
     ['duration', 'Duration'],
-    ['genre', 'Genre'],
-    ['studio', 'Studio'],
+    ['genres', 'Genre'],
+    ['studios', 'Studio'],
     ['language', 'Language']
   ]);
-  movies = [];
+  movies = signal<MovieModel[]>([]);
 
-  constructor() {}
+  constructor(private readonly movieService: MovieService) {}
+  
+  ngOnInit(): void {
+    this.movieService.getAll().subscribe(movies => {
+      this.movies.set(movies);
+    });
+  }
+  
 }

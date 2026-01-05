@@ -3,6 +3,6 @@
     <app-movie-filter></app-movie-filter>
   </app-search>
 
-  <app-table entityName="Movie" [columns]="columns" [data]="movies" [layoutCreateEdit]="movieCreateEdit"
+  <app-table entityName="Movie" [columns]="columns" [data]="movies()" [layoutCreateEdit]="movieCreateEdit"
     [layoutDetail]="movieDetail"></app-table>
 </div>
