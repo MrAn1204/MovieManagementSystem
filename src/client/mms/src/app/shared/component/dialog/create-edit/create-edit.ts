@@ -13,6 +13,7 @@ import { BaseDialog } from '../base/base-dialog';
 })
 export class CreateEdit extends BaseDialog implements OnInit {
   data: {
+    inputs: Record<string, any>,
     mode: 'create' | 'edit',
     title: string,
     contentComponent: any,

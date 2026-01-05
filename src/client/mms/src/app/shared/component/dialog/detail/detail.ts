@@ -11,6 +11,7 @@ import { NgComponentOutlet } from '@angular/common';
 })
 export class Detail extends BaseDialog {
   data: {
+    inputs: Record<string, any>,
     title: string,
     contentComponent: any,
     updateItem: () => void,

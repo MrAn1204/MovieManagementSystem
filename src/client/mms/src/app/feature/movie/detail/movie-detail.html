@@ -1,21 +1,21 @@
 <div class="w-full flex flex-col md:flex-row items-center gap-8">
-  <app-detail-image></app-detail-image>
+  <app-detail-image [src]="model().thumbnail"></app-detail-image>
 
   <div class="w-full flex-1 gap-8 grid grid-cols-1 sm:grid-cols-2">
-    <app-detail-text label="Name">text</app-detail-text>
-    
-    <app-detail-text label="Language">text</app-detail-text>
+    <app-detail-text label="Name">{{ model().name | formatCell }}</app-detail-text>
 
-    <app-detail-text label="Genre">text</app-detail-text>
+    <app-detail-text label="Language">{{ model().language | formatCell }}</app-detail-text>
 
-    <app-detail-text label="Studio">text</app-detail-text>
+    <app-detail-text label="Genre">{{ model().genres | formatCell }}</app-detail-text>
 
-    <app-detail-text label="Release Date">text</app-detail-text>
+    <app-detail-text label="Studio">{{ model().studios | formatCell }}</app-detail-text>
 
-    <app-detail-text label="Duration">text</app-detail-text>
-    
-    <app-detail-text class="sm:col-span-2" label="Talent">text</app-detail-text>
-    
-    <app-detail-text class="sm:col-span-2" label="Content">text</app-detail-text>
+    <app-detail-text label="Release Date">{{ model().releaseDate | formatCell }}</app-detail-text>
+
+    <app-detail-text label="Duration">{{ model().duration | formatCell }}</app-detail-text>
+
+    <app-detail-text class="sm:col-span-2" label="Talent">{{ model().talents | formatCell }}</app-detail-text>
+
+    <app-detail-text class="sm:col-span-2" label="Content">{{ model().content | formatCell }}</app-detail-text>
   </div>
 </div>

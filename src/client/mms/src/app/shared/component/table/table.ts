@@ -1,41 +1,30 @@
-import { Component, input, OnInit, Type } from '@angular/core';
+import { Component, input, Type } from '@angular/core';
 import { CreateEdit } from '../dialog/create-edit/create-edit';
 import { Detail } from '../dialog/detail/detail';
 import { DialogService } from '../../../service/dialog/dialog.service';
+import { FormatCellPipe } from '../../pipe/format-cell/format-cell-pipe';
 
 @Component({
   selector: 'app-table',
-  imports: [],
+  imports: [FormatCellPipe],
   templateUrl: './table.html',
   styleUrl: './table.css',
 })
-export class Table implements OnInit {
+export class Table {
   columns = input.required<Map<string, string>>();
   data = input.required<any[]>();
   entityName = input.required<string>();
-  layoutCreateEdit = input.required<Type<Component>>();
-  layoutDetail = input.required<Type<Component>>();
-
-  columnNames: string[] = [];
-  dataGrid: string[][] = [];
+  layoutCreateEdit = input.required<Type<unknown>>();
+  layoutDetail = input.required<Type<unknown>>();
 
   constructor(private readonly dialogService: DialogService) { }
 
-  ngOnInit(): void {
-    this.columnNames = Array.from(this.columns().values());
-    const columnKeys = Array.from(this.columns().keys());
-
-    for (const item of this.data()) {
-      const row = columnKeys.map(key => item[key]);
-      this.dataGrid.push(row);
-    }
-  }
-
-  viewDetail() {
+  viewDetail(item: any): void {
     this.dialogService.openDialog(Detail, {
+      inputs: { model: item },
       title: `${this.entityName()} Details`,
       contentComponent: this.layoutDetail(),
-      updateItem: () => this.updateItem(),
+      updateItem: () => this.updateItem(item),
     })
   }
 
@@ -47,8 +36,9 @@ export class Table implements OnInit {
     });
   }
 
-  updateItem() {
+  updateItem(item: any): void {
     this.dialogService.openDialog(CreateEdit, {
+      inputs: { model: item },
       mode: 'edit',
       title: `Edit ${this.entityName()}`,
       contentComponent: this.layoutCreateEdit(),

@@ -1,9 +1,10 @@
-import { Component } from '@angular/core';
+import { Component, input } from '@angular/core';
 import { InputField } from "../../../shared/component/form/input/input-field";
 import { ImageField } from "../../../shared/component/form/image/image-field";
 import { SelectField } from "../../../shared/component/form/select/select-field";
 import { MultiselectField } from "../../../shared/component/form/multiselect/multiselect-field";
 import { Textarea } from "../../../shared/component/form/textarea/textarea-field";
+import { MovieModel } from '../../../model/movie.model';
 
 @Component({
   selector: 'app-movie-create-edit',
@@ -12,5 +13,5 @@ import { Textarea } from "../../../shared/component/form/textarea/textarea-field
   styleUrl: './movie-create-edit.css',
 })
 export class MovieCreateEdit {
-
+  model = input<MovieModel>();
 }
