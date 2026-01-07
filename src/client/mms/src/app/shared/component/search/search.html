@@ -1,4 +1,4 @@
-<form [formGroup]="searchForm" (submit)="onSubmit()" class="flex flex-col max-h-screen overflow-auto">
+<form [formGroup]="form" (submit)="onSubmit()" class="flex flex-col max-h-screen overflow-auto">
   <div class="flex gap-4 sm:flex-row flex-col">
     <div class="flex grow-3">
       <input type="text" formControlName="keyword" placeholder="Search..."
@@ -42,7 +42,7 @@
 
   <div id="filter-container" [class.h-screen]="filterVisible" [class.opacity-100]="filterVisible"
     class="overflow-y-auto transition-all duration-500 ease-in-out h-0 lg:max-h-fit opacity-0">
-    <ng-content></ng-content>
+    <ng-container [ngComponentOutlet]="layoutFilter() ?? null"></ng-container>
   </div>
 
   <hr id="filter-bottom" [class.border-0]="!filterVisible" class="mb-4 border-platinum-300">

@@ -1,29 +1,31 @@
-import { Component, input } from '@angular/core';
+import { Component, input, OnInit, Type } from '@angular/core';
 import { FormControl, FormGroup, ReactiveFormsModule } from '@angular/forms';
 import { FormOptionModel } from '../../model/form-option.model';
+import { NgComponentOutlet } from '@angular/common';
 
 @Component({
   selector: 'app-search',
-  imports: [ReactiveFormsModule],
+  imports: [ReactiveFormsModule, NgComponentOutlet],
   templateUrl: './search.html',
   styleUrl: './search.css',
 })
-export class Search {
+export class Search implements OnInit {
   filterVisible: boolean = false;
   ascending: boolean = true;
-  filters = input<Record<string, FormControl>>();
+  layoutFilter = input<Type<unknown>>();
 
   sortOptions: FormOptionModel[] = [];
-  searchForm: FormGroup;
+  form!: FormGroup;
 
-  constructor() {
-    this.searchForm = new FormGroup({
+  constructor() { }
+
+  ngOnInit(): void {
+    this.form = new FormGroup({
       keyword: new FormControl(''),
       sortBy: new FormControl(''),
       sortDirection: new FormControl('ASC'),
       pageNumber: new FormControl(1),
       pageSize: new FormControl(10),
-      ...this.filters(),
     });
   }
 
@@ -36,7 +38,7 @@ export class Search {
   }
 
   onSubmit(): void {
-    this.searchForm.controls['sortDirection'].setValue(this.ascending ? 'ASC' : 'DESC');
-    console.log(this.searchForm.value);
+    this.form.controls['sortDirection'].setValue(this.ascending ? 'ASC' : 'DESC');
+    console.log(this.form.value);
   }
 }

@@ -1,4 +1,4 @@
-<form id="create-edit-form"
+<form [formGroup]="form" id="create-edit-form" (submit)="onSubmit()"
   class="w-screen max-h-screen overflow-auto max-w-6xl bg-ghost-white p-4 md:p-8 rounded-lg shadow-md flex flex-col items-center">
   <div class="mb-8 w-full flex flex-wrap-reverse items-center relative">
     <h2 class="sm:flex-1 text-2xl font-semibold sm:text-center overflow-hidden">{{ data.title }}</h2>
@@ -10,11 +10,11 @@
   </div>
 
   <div class="w-full">
-    <ng-container [ngComponentOutlet]="data.contentComponent" [ngComponentOutletInputs]="data.inputs"></ng-container>
+    <ng-container [ngComponentOutlet]="data.contentComponent" [ngComponentOutletInputs]="data.contentInputs"></ng-container>
   </div>
 
   <div class="mt-8 flex justify-center gap-4 *:w-20">
-    <button type="button"
+    <button type="submit"
       class="px-4 py-2 text-white rounded-md bg-steel-blue-500 hover:bg-steel-blue-600 focus:outline-none focus:ring-2 focus:ring-steel-blue">Save</button>
     <button type="reset"
       class="px-4 py-2 border border-steel-blue rounded-md hover:bg-platinum-100 text-steel-blue focus:outline-none">Reset</button>

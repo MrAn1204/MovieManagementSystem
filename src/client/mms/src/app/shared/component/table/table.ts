@@ -14,34 +14,38 @@ export class Table {
   columns = input.required<Map<string, string>>();
   data = input.required<any[]>();
   entityName = input.required<string>();
-  layoutCreateEdit = input.required<Type<unknown>>();
-  layoutDetail = input.required<Type<unknown>>();
+  contentCreateEdit = input.required<Type<unknown>>();
+  contentDetail = input.required<Type<unknown>>();
+
+  dialogCallbacks = input<Record<string, () => void>>({});
 
   constructor(private readonly dialogService: DialogService) { }
 
   viewDetail(item: any): void {
     this.dialogService.openDialog(Detail, {
-      inputs: { model: item },
       title: `${this.entityName()} Details`,
-      contentComponent: this.layoutDetail(),
-      updateItem: () => this.updateItem(item),
+      contentComponent: this.contentDetail(),
+      contentInputs: { model: item, },
+      callbacks: {
+        updateItem: () => this.updateItem(item),
+        ...this.dialogCallbacks,
+      },
     })
   }
 
   addItem(): void {
     this.dialogService.openDialog(CreateEdit, {
-      mode: 'create',
       title: `Create ${this.entityName()}`,
-      contentComponent: this.layoutCreateEdit(),
+      contentComponent: this.contentCreateEdit(),
+      contentInputs: { mode: 'create' },
     });
   }
 
   updateItem(item: any): void {
     this.dialogService.openDialog(CreateEdit, {
-      inputs: { model: item },
-      mode: 'edit',
       title: `Edit ${this.entityName()}`,
-      contentComponent: this.layoutCreateEdit(),
+      contentComponent: this.contentCreateEdit(),
+      contentInputs: { model: item, mode: 'edit', },
     });
   }
 

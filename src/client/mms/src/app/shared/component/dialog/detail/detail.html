@@ -10,13 +10,8 @@
   </div>
 
   <div class="w-full">
-    <ng-container [ngComponentOutlet]="data.contentComponent" [ngComponentOutletInputs]="data.inputs"></ng-container>
+    <ng-container [ngComponentOutlet]="data.contentComponent" [ngComponentOutletInputs]="data.contentInputs"></ng-container>
   </div>
 
-  <div class="mt-8 flex justify-center gap-4 *:w-20">
-    <button type="button" (click)="data.updateItem()"
-      class="px-4 py-2 text-white rounded-md bg-steel-blue-500 hover:bg-steel-blue-600 focus:outline-none focus:ring-2 focus:ring-steel-blue">Edit</button>
-    <button type="button"
-      class="px-4 py-2 text-white rounded-md bg-vermilion-500 hover:bg-vermilion-600 focus:outline-none focus:ring-2 focus:ring-vermilion">Delete</button>
-  </div>
+  <app-detail-buttons [updateItem]="updateItem"></app-detail-buttons>
 </div>
