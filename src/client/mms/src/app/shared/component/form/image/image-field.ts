@@ -1,9 +1,17 @@
-import { Component, signal } from '@angular/core';
+import { Component, forwardRef, signal } from '@angular/core';
 import { BaseField } from '../base-field/base-field';
+import { NG_VALUE_ACCESSOR } from '@angular/forms';
 
 @Component({
   selector: 'app-image-field',
   imports: [],
+  providers: [
+    {
+      provide: NG_VALUE_ACCESSOR,
+      multi: true,
+      useExisting: forwardRef(() => ImageField)
+    },
+  ],
   templateUrl: './image-field.html',
   styleUrl: './image-field.css',
 })

@@ -1,10 +1,18 @@
-import { Component, input } from '@angular/core';
+import { Component, forwardRef, input } from '@angular/core';
 import { BaseField } from '../base-field/base-field';
 import { CheckboxOptionModel } from '../../../model/checkbox-option.model';
+import { NG_VALUE_ACCESSOR } from '@angular/forms';
 
 @Component({
   selector: 'app-multiselect-field',
   imports: [],
+  providers: [
+    {
+      provide: NG_VALUE_ACCESSOR,
+      multi: true,
+      useExisting: forwardRef(() => MultiselectField)
+    },
+  ],
   templateUrl: './multiselect-field.html',
   styleUrl: './multiselect-field.css',
 })
