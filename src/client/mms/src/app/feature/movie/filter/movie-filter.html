@@ -1,17 +1,17 @@
 <div class="filter-layout">
   <div class="filter-common">
-    <app-select-field idName="filter-language" labelText="Language"></app-select-field>
+    <app-select-field formControlName="language" idName="filter-language" labelText="Language"></app-select-field>
   </div>
 
   <div class="filter-multiselect">
-    <app-multiselect-field idName="filter-genre" labelText="Genre"></app-multiselect-field>
-
-    <app-multiselect-field idName="filter-studio" labelText="Studio"></app-multiselect-field>
+    <app-multiselect-field formControlName="genre" idName="filter-genre" labelText="Genre"></app-multiselect-field>
+    
+    <app-multiselect-field formControlName="studio" idName="filter-studio" labelText="Studio"></app-multiselect-field>
   </div>
 
   <div class="filter-range">
-    <app-input-field inputType="date" idName="release-after" labelText="Release After"></app-input-field>
-
-    <app-input-field inputType="date" idName="release-before" labelText="Release Before"></app-input-field>
+    <app-input-field inputType="date" formControlName="releaseAfter" idName="release-after" labelText="Release After"></app-input-field>
+    
+    <app-input-field inputType="date" formControlName="releaseBefore" idName="release-before" labelText="Release Before"></app-input-field>
   </div>
 </div>

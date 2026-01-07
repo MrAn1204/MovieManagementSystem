@@ -6,16 +6,18 @@ import { MovieCreateEdit } from '../create-edit/movie-create-edit';
 import { MovieDetail } from '../detail/movie-detail';
 import { MovieModel } from '../../../model/movie.model';
 import { MovieService } from '../../../service/movie/movie.service';
+import { FormGroup, ReactiveFormsModule } from '@angular/forms';
 
 @Component({
   selector: 'app-movie',
-  imports: [Search, Table, MovieFilter],
+  imports: [Search, Table, ReactiveFormsModule],
   templateUrl: './movie.html',
   styleUrl: './movie.css',
 })
 export class Movie implements OnInit {
   movieCreateEdit = MovieCreateEdit;
   movieDetail = MovieDetail;
+  movieFilter = MovieFilter;
 
   columns: Map<string, string> = new Map([
     ['name', 'Name'],
@@ -26,6 +28,8 @@ export class Movie implements OnInit {
     ['language', 'Language']
   ]);
   movies = signal<MovieModel[]>([]);
+
+  form: FormGroup = new FormGroup({});
 
   constructor(private readonly movieService: MovieService) {}
   

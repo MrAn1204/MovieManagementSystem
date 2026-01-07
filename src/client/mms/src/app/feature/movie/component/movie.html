@@ -1,8 +1,6 @@
 <div class="w-full h-full flex flex-col items-center">
-  <app-search>
-    <app-movie-filter></app-movie-filter>
-  </app-search>
+  <app-search [layoutFilter]="movieFilter"></app-search>
 
-  <app-table entityName="Movie" [columns]="columns" [data]="movies()" [layoutCreateEdit]="movieCreateEdit"
-    [layoutDetail]="movieDetail"></app-table>
+  <app-table entityName="Movie" [columns]="columns" [data]="movies()" [contentCreateEdit]="movieCreateEdit"
+    [contentDetail]="movieDetail"></app-table>
 </div>
