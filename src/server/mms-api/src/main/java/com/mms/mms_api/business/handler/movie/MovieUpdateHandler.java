@@ -17,6 +17,7 @@ import com.mms.mms_api.util.mapper.MovieMapper;
 import com.mms.mms_api.util.validator.MovieValidator;
 
 import java.util.List;
+import java.util.UUID;
 
 public class MovieUpdateHandler extends MovieBaseHandler<MovieUpdateCommand, MovieDto> {
     private GenreRepository genreRepository;
@@ -44,24 +45,41 @@ public class MovieUpdateHandler extends MovieBaseHandler<MovieUpdateCommand, Mov
 
     @Override
     public MovieDto execute() {
-        Movie movie = movieRepository.findById(request.getId()).orElseThrow(
-                () -> new ResourceNotFoundException("movie.notFound"));
+        UUID movieId = request.getId();
 
-        List<String> genreNames = request.getGenres();
-        List<Genre> mappedGenres = genreRepository.findByNameIn(genreNames);
-        MovieValidator.validateGenres(genreNames, mappedGenres);
+        Movie movie;
+        if (movieId == null || (movie = movieRepository.findById(movieId).orElse(null)) == null) {
+            throw new ResourceNotFoundException("movie.notFound");
+        }
 
-        String languageName = request.getLanguage();
-        Language mappedLanguage = languageRepository.findByName(languageName);
-        MovieValidator.validateLanguage(languageName, mappedLanguage);
+        List<UUID> genreIds = request.getGenres();
+        List<UUID> studioIds = request.getStudios();
+        List<UUID> talentIds = request.getTalents();
+        UUID languageId = request.getLanguage();
 
-        List<String> studioNames = request.getStudios();
-        List<Studio> mappedStudios = studioRepository.findByNameIn(studioNames);
-        MovieValidator.validateStudios(studioNames, mappedStudios);
+        List<Genre> mappedGenres = null;
+        if (genreIds != null && !genreIds.contains(null)) {
+            mappedGenres = genreRepository.findAllById(genreIds);
+            MovieValidator.validateGenres(genreIds, mappedGenres);
+        }
 
-        List<String> talentNames = request.getTalents();
-        List<Talent> mappedTalents = talentRepository.findByNameIn(talentNames);
-        MovieValidator.validateTalents(talentNames, mappedTalents);
+        List<Studio> mappedStudios = null;
+        if (studioIds != null && !studioIds.contains(null)) {
+            mappedStudios = studioRepository.findAllById(studioIds);
+            MovieValidator.validateStudios(studioIds, mappedStudios);
+        }
+
+        List<Talent> mappedTalents = null;
+        if (talentIds != null && !talentIds.contains(null)) {
+            mappedTalents = talentRepository.findAllById(talentIds);
+            MovieValidator.validateTalents(talentIds, mappedTalents);
+        }
+
+        Language mappedLanguage = null;
+        if (languageId != null) {
+            mappedLanguage = languageRepository.findById(languageId).orElse(null);
+            MovieValidator.validateLanguage(mappedLanguage);
+        }
 
         movieMapper.updateEntity(request, movie);
 

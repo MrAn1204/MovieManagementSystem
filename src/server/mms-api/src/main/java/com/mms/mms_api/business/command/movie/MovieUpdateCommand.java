@@ -9,6 +9,7 @@ import lombok.EqualsAndHashCode;
 
 import java.time.LocalDate;
 import java.util.List;
+import java.util.UUID;
 
 @Data
 @EqualsAndHashCode(callSuper = true)
@@ -25,11 +26,11 @@ public class MovieUpdateCommand extends BaseUpdateCommand {
 
     private String thumbnail;
 
-    private List<String> genres;
+    private List<UUID> genres;
 
-    private List<String> studios;
+    private List<UUID> studios;
 
-    private List<String> talents;
+    private List<UUID> talents;
 
-    private String language;
+    private UUID language;
 }
