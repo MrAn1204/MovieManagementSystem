@@ -7,19 +7,19 @@
     </div>
 
     <div>
-      <app-select-field formControlName="language" idName="language" labelText="Language"></app-select-field>
+      <app-select-field formControlName="language" idName="language" labelText="Language" [options]="languages()"></app-select-field>
     </div>
 
     <div>
-      <app-multiselect-field formControlName="genre" idName="genre" labelText="Genre"></app-multiselect-field>
+      <app-multiselect-field formControlName="genre" idName="genre" labelText="Genre" [options]="genres()"></app-multiselect-field>
     </div>
 
     <div>
-      <app-multiselect-field formControlName="studio" idName="studio" labelText="Studio"></app-multiselect-field>
+      <app-multiselect-field formControlName="studio" idName="studio" labelText="Studio" [options]="studios()"></app-multiselect-field>
     </div>
 
     <div>
-      <app-multiselect-field formControlName="talent" idName="talent" labelText="Talent"></app-multiselect-field>
+      <app-multiselect-field formControlName="talent" idName="talent" labelText="Talent" [options]="talents()"></app-multiselect-field>
     </div>
 
     <div>
