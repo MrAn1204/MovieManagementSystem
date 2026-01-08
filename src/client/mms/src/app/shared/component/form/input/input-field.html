@@ -2,7 +2,7 @@
   @if (labelText()) {
   <label [htmlFor]="idName()" class="block font-medium">{{ labelText() }}</label>
   }
-  <input [type]="inputType()" [id]="idName()" [placeholder]="placeholderText()" (change)="updateValue($any($event.target).value)"
+  <input [type]="inputType()" [value]="value" [id]="idName()" [placeholder]="placeholderText()" (input)="updateValue(inputType() === 'number' ? $any($event.target).valueAsNumber : $any($event.target).value)"
     class="w-full px-4 py-2 border border-platinum-300 rounded-md focus:outline-none focus:ring-2 focus:ring-steel-blue">
 
   @if (inputType() === 'time') {

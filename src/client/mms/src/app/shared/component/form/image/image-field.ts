@@ -1,4 +1,4 @@
-import { Component, forwardRef, signal } from '@angular/core';
+import { Component, effect, forwardRef, signal } from '@angular/core';
 import { BaseField } from '../base-field/base-field';
 import { NG_VALUE_ACCESSOR } from '@angular/forms';
 
@@ -15,10 +15,18 @@ import { NG_VALUE_ACCESSOR } from '@angular/forms';
   templateUrl: './image-field.html',
   styleUrl: './image-field.css',
 })
-export class ImageField extends BaseField<File> {
+export class ImageField extends BaseField<string> {
   private readonly DEFAULT_SRC = 'https://dummyimage.com/300x400/dddddd/000000&text=No+Image';
 
   imagePreviewSrc = signal(this.DEFAULT_SRC);
+
+  constructor() {
+    super();
+
+    effect(() => {
+      this.imagePreviewSrc.set(this.value ?? this.DEFAULT_SRC);
+    });
+  }
 
   onFileChange(event: Event) {
     const input = event.target as HTMLInputElement;
@@ -31,8 +39,6 @@ export class ImageField extends BaseField<File> {
       reader.onload = () => {
         this.imagePreviewSrc.set(reader.result as string);
       };
-
-      this.updateValue(file);
     }
   }
 }

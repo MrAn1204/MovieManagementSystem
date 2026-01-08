@@ -15,7 +15,7 @@ import { NG_VALUE_ACCESSOR } from '@angular/forms';
   templateUrl: './input-field.html',
   styleUrl: './input-field.css',
 })
-export class InputField extends BaseField<string> {
+export class InputField extends BaseField<string | number> {
   inputType = input.required<string>();
   placeholderText = input<string>('');
 }

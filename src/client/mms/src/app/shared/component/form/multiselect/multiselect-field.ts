@@ -1,4 +1,4 @@
-import { Component, forwardRef, input } from '@angular/core';
+import { Component, effect, forwardRef, input } from '@angular/core';
 import { BaseField } from '../base-field/base-field';
 import { CheckboxOptionModel } from '../../../model/checkbox-option.model';
 import { NG_VALUE_ACCESSOR } from '@angular/forms';
@@ -21,6 +21,14 @@ export class MultiselectField extends BaseField<string[]> {
   selected: string[] = [];
   keyword = '';
 
+  constructor() {
+    super();
+
+    effect(() => {
+      this.selected = this.options().filter(option => option.checked).map(option => option.label);
+    });
+  }
+
   updateSelected(option: CheckboxOptionModel): void {
     let newValue = this.value ? [...this.value] : [];
     option.checked = !option.checked;
@@ -38,8 +46,8 @@ export class MultiselectField extends BaseField<string[]> {
 
   resetSelected(): void {
     this.selected = [];
-    super.updateValue([]);
-    this.options().forEach(item => item.checked = false);
+    this.updateValue([]);
+    this.options()?.forEach(item => item.checked = false);
   }
 
   updateKeyword(value: string): void {
