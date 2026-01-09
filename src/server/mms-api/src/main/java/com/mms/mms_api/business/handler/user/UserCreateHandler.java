@@ -1,6 +1,7 @@
 package com.mms.mms_api.business.handler.user;
 
 import java.util.List;
+import java.util.UUID;
 
 import org.springframework.security.crypto.password.PasswordEncoder;
 
@@ -27,9 +28,11 @@ public class UserCreateHandler extends UserBaseHandler<UserCreateCommand, UserDt
     }
 
     public UserDto execute() {
-        List<String> roleNames = request.getRoles();
-        List<Role> mappedRoles = roleRepository.findByNameIn(roleNames);
-        UserValidator.validateRoles(roleNames, mappedRoles);
+        List<UUID> roleIds = request.getRoles();
+        List<Role> mappedRoles = (roleIds != null)
+                ? roleRepository.findAllById(roleIds)
+                : null;
+        UserValidator.validateRoles(roleIds, mappedRoles);
 
         User user = userMapper.toEntity(request);
         user.setPassword(passwordEncoder.encode(user.getPassword()));

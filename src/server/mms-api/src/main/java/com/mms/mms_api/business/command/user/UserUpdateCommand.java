@@ -2,6 +2,7 @@ package com.mms.mms_api.business.command.user;
 
 import java.time.LocalDate;
 import java.util.List;
+import java.util.UUID;
 
 import com.mms.mms_api.annotation.Password;
 import com.mms.mms_api.business.command.BaseUpdateCommand;
@@ -56,5 +57,5 @@ public class UserUpdateCommand extends BaseUpdateCommand {
     private int score;
 
     @NotEmpty(message = "{user.roles.required}")
-    private List<String> roles;
+    private List<@NotNull(message = "{user.roles.invalid}") UUID> roles;
 }

@@ -2,6 +2,7 @@ package com.mms.mms_api.business.command.user;
 
 import java.time.LocalDate;
 import java.util.List;
+import java.util.UUID;
 
 import com.mms.mms_api.annotation.Password;
 import com.mms.mms_api.business.command.BaseCreateCommand;
@@ -54,5 +55,5 @@ public class UserCreateCommand extends BaseCreateCommand {
     private String address;
 
     @NotEmpty(message = "{user.roles.required}")
-    private List<String> roles;
+    private List<@NotNull(message = "{user.roles.invalid}") UUID> roles;
 }
