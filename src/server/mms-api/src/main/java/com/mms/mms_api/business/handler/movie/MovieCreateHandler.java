@@ -50,19 +50,19 @@ public class MovieCreateHandler extends MovieBaseHandler<MovieCreateCommand, Mov
         UUID languageId = request.getLanguage();
 
         List<Genre> mappedGenres = null;
-        if (genreIds != null && !genreIds.contains(null)) {
+        if (genreIds != null) {
             mappedGenres = genreRepository.findAllById(genreIds);
             MovieValidator.validateGenres(genreIds, mappedGenres);
         }
 
         List<Studio> mappedStudios = null;
-        if (studioIds != null && !studioIds.contains(null)) {
+        if (studioIds != null) {
             mappedStudios = studioRepository.findAllById(studioIds);
             MovieValidator.validateStudios(studioIds, mappedStudios);
         }
 
         List<Talent> mappedTalents = null;
-        if (talentIds != null && !talentIds.contains(null)) {
+        if (talentIds != null) {
             mappedTalents = talentRepository.findAllById(talentIds);
             MovieValidator.validateTalents(talentIds, mappedTalents);
         }
@@ -70,7 +70,7 @@ public class MovieCreateHandler extends MovieBaseHandler<MovieCreateCommand, Mov
         Language mappedLanguage = null;
         if (languageId != null) {
             mappedLanguage = languageRepository.findById(languageId).orElse(null);
-            MovieValidator.validateLanguage(mappedLanguage);
+            MovieValidator.validateLanguage(languageId, mappedLanguage);
         }
 
         Movie movie = movieMapper.toEntity(request);

@@ -26,11 +26,11 @@ public class MovieUpdateCommand extends BaseUpdateCommand {
 
     private String thumbnail;
 
-    private List<UUID> genres;
+    private List<@NotNull(message = "{movie.genres.invalid}") UUID> genres;
 
-    private List<UUID> studios;
+    private List<@NotNull(message = "{movie.studios.invalid}") UUID> studios;
 
-    private List<UUID> talents;
+    private List<@NotNull(message = "{movie.talents.invalid}") UUID> talents;
 
     private UUID language;
 }
