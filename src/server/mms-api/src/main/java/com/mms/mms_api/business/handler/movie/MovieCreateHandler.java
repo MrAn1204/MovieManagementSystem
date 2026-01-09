@@ -44,10 +44,10 @@ public class MovieCreateHandler extends MovieBaseHandler<MovieCreateCommand, Mov
     }
 
     public MovieDto execute() {
-        List<UUID> genreIds = request.getGenres();
-        List<UUID> studioIds = request.getStudios();
-        List<UUID> talentIds = request.getTalents();
-        UUID languageId = request.getLanguage();
+        List<UUID> genreIds = request.getGenreIds();
+        List<UUID> studioIds = request.getStudioIds();
+        List<UUID> talentIds = request.getTalentIds();
+        UUID languageId = request.getLanguageId();
 
         List<Genre> mappedGenres = null;
         if (genreIds != null) {

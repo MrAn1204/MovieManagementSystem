@@ -55,5 +55,5 @@ public class UserCreateCommand extends BaseCreateCommand {
     private String address;
 
     @NotEmpty(message = "{user.roles.required}")
-    private List<@NotNull(message = "{user.roles.invalid}") UUID> roles;
+    private List<@NotNull(message = "{user.roles.invalid}") UUID> roleIds;
 }

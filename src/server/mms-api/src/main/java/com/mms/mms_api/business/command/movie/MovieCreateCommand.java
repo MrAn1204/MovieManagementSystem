@@ -26,11 +26,11 @@ public class MovieCreateCommand extends BaseCreateCommand {
 
     private String thumbnail;
 
-    private List<@NotNull(message = "{movie.genres.invalid}") UUID> genres;
+    private List<@NotNull(message = "{movie.genres.invalid}") UUID> genreIds;
 
-    private List<@NotNull(message = "{movie.studios.required}") UUID> studios;
+    private List<@NotNull(message = "{movie.studios.required}") UUID> studioIds;
 
-    private List<@NotNull(message = "{movie.talents.required}") UUID> talents;
+    private List<@NotNull(message = "{movie.talents.required}") UUID> talentIds;
 
-    private UUID language;
+    private UUID languageId;
 }

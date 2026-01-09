@@ -37,7 +37,7 @@ public class UserUpdateHandler extends UserBaseHandler<UserUpdateCommand, UserDt
             throw new ResourceNotFoundException("user.notFound");
         }
 
-        List<UUID> roleIds = request.getRoles();
+        List<UUID> roleIds = request.getRoleIds();
         List<Role> mappedRoles = (roleIds != null)
                 ? roleRepository.findAllById(roleIds)
                 : null;

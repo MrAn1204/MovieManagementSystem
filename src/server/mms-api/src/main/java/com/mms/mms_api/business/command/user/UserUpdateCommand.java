@@ -57,5 +57,5 @@ public class UserUpdateCommand extends BaseUpdateCommand {
     private int score;
 
     @NotEmpty(message = "{user.roles.required}")
-    private List<@NotNull(message = "{user.roles.invalid}") UUID> roles;
+    private List<@NotNull(message = "{user.roles.invalid}") UUID> roleIds;
 }

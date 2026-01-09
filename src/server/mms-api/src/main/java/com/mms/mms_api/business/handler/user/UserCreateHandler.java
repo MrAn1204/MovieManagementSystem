@@ -28,7 +28,7 @@ public class UserCreateHandler extends UserBaseHandler<UserCreateCommand, UserDt
     }
 
     public UserDto execute() {
-        List<UUID> roleIds = request.getRoles();
+        List<UUID> roleIds = request.getRoleIds();
         List<Role> mappedRoles = (roleIds != null)
                 ? roleRepository.findAllById(roleIds)
                 : null;
