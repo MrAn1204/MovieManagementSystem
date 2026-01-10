@@ -45,12 +45,8 @@ public class MovieUpdateHandler extends MovieBaseHandler<MovieUpdateCommand, Mov
 
     @Override
     public MovieDto execute() {
-        UUID movieId = request.getId();
-
-        Movie movie;
-        if (movieId == null || (movie = movieRepository.findById(movieId).orElse(null)) == null) {
-            throw new ResourceNotFoundException("movie.notFound");
-        }
+        Movie movie = movieRepository.findById(request.getId()).orElseThrow(
+                () -> new ResourceNotFoundException("movie.notFound"));
 
         List<UUID> genreIds = request.getGenreIds();
         List<UUID> studioIds = request.getStudioIds();

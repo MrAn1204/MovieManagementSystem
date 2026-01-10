@@ -1,5 +1,7 @@
 package com.mms.mms_api.business.handler.room;
 
+import java.util.Objects;
+
 import com.mms.mms_api.business.command.room.RoomCreateCommand;
 import com.mms.mms_api.data.RoomRepository;
 import com.mms.mms_api.dto.RoomDto;
@@ -15,7 +17,7 @@ public class RoomCreateHandler extends RoomBaseHandler<RoomCreateCommand, RoomDt
     public RoomDto execute() {
         Room room = roomMapper.toEntity(request);
         
-        Room savedRoom = roomRepository.save(room);
+        Room savedRoom = roomRepository.save(Objects.requireNonNull(room));
 
         return roomMapper.toDto(savedRoom);
     }

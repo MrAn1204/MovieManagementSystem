@@ -4,6 +4,8 @@ import java.time.LocalDateTime;
 import java.util.Map;
 import java.util.UUID;
 
+import org.springframework.lang.NonNull;
+
 import com.mms.mms_api.business.command.BaseUpdateCommand;
 
 import jakarta.validation.constraints.NotNull;
@@ -18,9 +20,11 @@ public class ScheduleUpdateCommand extends BaseUpdateCommand {
     private LocalDateTime showTime;
 
     @NotNull(message = "{schedule.movie.required}")
+    @NonNull
     private UUID movieId;
     
     @NotNull(message = "{schedule.room.required}")
+    @NonNull
     private UUID roomId;
 
     private Map<UUID, Boolean> seatStatuses;

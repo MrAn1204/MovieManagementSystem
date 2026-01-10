@@ -12,6 +12,8 @@ import lombok.EqualsAndHashCode;
 import java.util.List;
 import java.util.UUID;
 
+import org.springframework.lang.NonNull;
+
 @Data
 @EqualsAndHashCode(callSuper = true)
 @AllArgsConstructor
@@ -32,5 +34,6 @@ public class InvoiceCreateCommand extends BaseCreateCommand {
     private List<UUID> ticketIds;
 
     @NotNull(message = "{user.required}")
+    @NonNull
     private UUID userId;
 }

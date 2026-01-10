@@ -55,7 +55,7 @@ public class InvoiceService {
     @Transactional
     public InvoiceDto handle(InvoiceUpdateCommand request) {
         InvoiceUpdateHandler handler = new InvoiceUpdateHandler(request, invoiceMapper, invoiceRepository,
-                ticketRepository, userRepository);
+                ticketRepository);
         return handler.execute();
     }
 

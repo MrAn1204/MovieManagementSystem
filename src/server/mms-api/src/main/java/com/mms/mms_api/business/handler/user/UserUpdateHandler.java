@@ -30,12 +30,8 @@ public class UserUpdateHandler extends UserBaseHandler<UserUpdateCommand, UserDt
 
     @Override
     public UserDto execute() {
-        UUID userId = request.getId();
-        User user;
-
-        if (userId == null || (user = userRepository.findById(userId).orElse(null)) == null) {
-            throw new ResourceNotFoundException("user.notFound");
-        }
+        User user = userRepository.findById(request.getId()).orElseThrow(
+                () -> new ResourceNotFoundException("user.notFound"));
 
         List<UUID> roleIds = request.getRoleIds();
         List<Role> mappedRoles = (roleIds != null)

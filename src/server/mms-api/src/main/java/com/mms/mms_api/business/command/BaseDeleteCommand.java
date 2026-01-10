@@ -1,12 +1,18 @@
 package com.mms.mms_api.business.command;
 
+import java.util.Objects;
 import java.util.UUID;
 
-import lombok.AllArgsConstructor;
+import org.springframework.lang.NonNull;
+
 import lombok.Data;
 
 @Data
-@AllArgsConstructor
 public abstract class BaseDeleteCommand {
+    @NonNull
     private UUID id;
+
+    protected BaseDeleteCommand(UUID id) {
+        this.id = Objects.requireNonNull(id);
+    }
 }

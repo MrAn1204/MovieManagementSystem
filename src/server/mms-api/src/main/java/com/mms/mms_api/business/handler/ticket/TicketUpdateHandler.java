@@ -1,5 +1,7 @@
 package com.mms.mms_api.business.handler.ticket;
 
+import java.util.UUID;
+
 import com.mms.mms_api.business.command.ticket.TicketUpdateCommand;
 import com.mms.mms_api.dto.TicketDto;
 import com.mms.mms_api.exception.InvalidInputException;
@@ -53,11 +55,11 @@ public class TicketUpdateHandler extends TicketBaseHandler<TicketUpdateCommand, 
         Seat seat = seatRepository.findById(request.getSeatId())
                 .orElseThrow(() -> new ResourceNotFoundException("seat.notFound"));
 
-        Promotion promotion = null;
-        if (request.getPromotionId() != null) {
-            promotion = promotionRepository.findById(request.getPromotionId())
-                    .orElseThrow(() -> new ResourceNotFoundException("promotion.notFound"));
-        }
+        UUID promotionId = request.getPromotionId();
+        Promotion promotion = (promotionId != null)
+                ? promotionRepository.findById(promotionId)
+                        .orElseThrow(() -> new ResourceNotFoundException("promotion.notFound"))
+                : null;
 
         if (seat.getRoom().getId() != schedule.getRoom().getId()) {
             throw new InvalidInputException("ticket.room.mismatch");
@@ -91,7 +93,7 @@ public class TicketUpdateHandler extends TicketBaseHandler<TicketUpdateCommand, 
         if (invoice != null) {
             int totalTicketPrice = invoice.getTickets().stream().mapToInt(Ticket::getPrice).sum();
             int totalMoney = (int) Math.round(totalTicketPrice * (1 - invoice.getDiscount()));
-            
+
             invoice.setTotalMoney(totalMoney);
             invoiceRepository.save(invoice);
         }

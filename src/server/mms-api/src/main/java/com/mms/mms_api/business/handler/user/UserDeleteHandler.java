@@ -1,5 +1,7 @@
 package com.mms.mms_api.business.handler.user;
 
+import java.util.Objects;
+
 import com.mms.mms_api.business.command.user.UserDeleteCommand;
 import com.mms.mms_api.data.UserRepository;
 import com.mms.mms_api.exception.ResourceNotFoundException;
@@ -16,7 +18,7 @@ public class UserDeleteHandler extends UserBaseHandler<UserDeleteCommand, Void> 
         User user = userRepository.findById(request.getId()).orElseThrow(
                 () -> new ResourceNotFoundException("user.notFound"));
 
-        userRepository.delete(user);
+        userRepository.delete(Objects.requireNonNull(user));
 
         return null;
     }

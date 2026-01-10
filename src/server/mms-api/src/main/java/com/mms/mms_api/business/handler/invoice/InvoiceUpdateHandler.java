@@ -3,7 +3,6 @@ package com.mms.mms_api.business.handler.invoice;
 import com.mms.mms_api.business.command.invoice.InvoiceUpdateCommand;
 import com.mms.mms_api.data.InvoiceRepository;
 import com.mms.mms_api.data.TicketRepository;
-import com.mms.mms_api.data.UserRepository;
 import com.mms.mms_api.dto.InvoiceDto;
 import com.mms.mms_api.exception.InvalidInputException;
 import com.mms.mms_api.exception.ResourceNotFoundException;
@@ -17,13 +16,10 @@ import java.util.List;
 public class InvoiceUpdateHandler extends InvoiceBaseHandler<InvoiceUpdateCommand, InvoiceDto> {
     private final TicketRepository ticketRepository;
 
-    private final UserRepository userRepository;
-
     public InvoiceUpdateHandler(InvoiceUpdateCommand request, InvoiceMapper invoiceMapper,
-            InvoiceRepository invoiceRepository, TicketRepository ticketRepository, UserRepository userRepository) {
+            InvoiceRepository invoiceRepository, TicketRepository ticketRepository) {
         super(request, invoiceMapper, invoiceRepository);
         this.ticketRepository = ticketRepository;
-        this.userRepository = userRepository;
     }
 
     @Override
@@ -37,8 +33,7 @@ public class InvoiceUpdateHandler extends InvoiceBaseHandler<InvoiceUpdateComman
             throw new InvalidInputException("invoice.tickets.invalid");
         }
 
-        User user = userRepository.findById(invoice.getUser().getId())
-                .orElseThrow(() -> new ResourceNotFoundException("user.notFound"));
+        User user = invoice.getUser();
 
         if (user.getScore() < request.getUseScore()) {
             throw new InvalidInputException("user.score.insufficient");
