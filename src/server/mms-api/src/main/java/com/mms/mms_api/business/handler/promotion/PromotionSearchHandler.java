@@ -6,11 +6,10 @@ import com.mms.mms_api.common.PaginatedResult;
 import com.mms.mms_api.data.PromotionRepository;
 import com.mms.mms_api.dto.PromotionDto;
 import com.mms.mms_api.model.Promotion;
+import com.mms.mms_api.util.SearchHelper;
 import com.mms.mms_api.util.mapper.PromotionMapper;
 import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
-import org.springframework.data.domain.Sort;
 import org.springframework.data.jpa.domain.Specification;
 
 import java.util.List;
@@ -24,13 +23,8 @@ public class PromotionSearchHandler extends PromotionBaseHandler<PromotionSearch
 
     @Override
     public PaginatedResult<PromotionDto> execute() {
-        Sort.Direction direction = Sort.Direction.valueOf(request.getSortDirection().name());
-
-        String sortBy = request.getSortBy();
-
-        Sort sort = Sort.by(direction, sortBy);
-
-        Pageable pageable = PageRequest.of(request.getPageNumber() - 1, request.getPageSize(), sort);
+        Pageable pageable = SearchHelper.generatePageable(request.getSortDirection(), request.getSortBy(),
+                request.getPageNumber(), request.getPageSize());
 
         Specification<Promotion> spec = new PromotionSpecification(request);
 

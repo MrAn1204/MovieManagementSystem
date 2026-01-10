@@ -3,9 +3,7 @@ package com.mms.mms_api.business.handler.schedule;
 import java.util.List;
 
 import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
-import org.springframework.data.domain.Sort;
 import org.springframework.data.jpa.domain.Specification;
 
 import com.mms.mms_api.business.query.schedule.ScheduleSearchQuery;
@@ -14,6 +12,7 @@ import com.mms.mms_api.common.PaginatedResult;
 import com.mms.mms_api.data.ScheduleRepository;
 import com.mms.mms_api.dto.ScheduleDto;
 import com.mms.mms_api.model.Schedule;
+import com.mms.mms_api.util.SearchHelper;
 import com.mms.mms_api.util.mapper.ScheduleMapper;
 
 public class ScheduleSearchHandler extends ScheduleBaseHandler<ScheduleSearchQuery, PaginatedResult<ScheduleDto>> {
@@ -24,12 +23,8 @@ public class ScheduleSearchHandler extends ScheduleBaseHandler<ScheduleSearchQue
 
     @Override
     public PaginatedResult<ScheduleDto> execute() {
-        Sort.Direction sortDirection = Sort.Direction.fromString(request.getSortDirection().name());
-
-        String sortBy = request.getSortBy();
-
-        Pageable pageable = PageRequest.of(request.getPageNumber() - 1, request.getPageSize(),
-                Sort.by(sortDirection, sortBy));
+        Pageable pageable = SearchHelper.generatePageable(request.getSortDirection(), request.getSortBy(),
+                request.getPageNumber(), request.getPageSize());
 
         Specification<Schedule> spec = new ScheduleSpecification(request);
 

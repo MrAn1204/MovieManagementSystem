@@ -1,11 +1,8 @@
 package com.mms.mms_api.business.handler.ticket;
 
 import java.util.List;
-
 import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
-import org.springframework.data.domain.Sort;
 import org.springframework.data.jpa.domain.Specification;
 
 import com.mms.mms_api.business.query.ticket.TicketSearchQuery;
@@ -14,6 +11,7 @@ import com.mms.mms_api.common.PaginatedResult;
 import com.mms.mms_api.data.TicketRepository;
 import com.mms.mms_api.dto.TicketDto;
 import com.mms.mms_api.model.Ticket;
+import com.mms.mms_api.util.SearchHelper;
 import com.mms.mms_api.util.mapper.TicketMapper;
 
 public class TicketSearchHandler extends TicketBaseHandler<TicketSearchQuery, PaginatedResult<TicketDto>> {
@@ -25,13 +23,8 @@ public class TicketSearchHandler extends TicketBaseHandler<TicketSearchQuery, Pa
 
     @Override
     public PaginatedResult<TicketDto> execute() {
-        Sort.Direction direction = Sort.Direction.fromString(request.getSortDirection().name());
-
-        String sortBy = request.getSortBy();
-
-        Sort sort = Sort.by(direction, sortBy);
-
-        Pageable pageable = PageRequest.of(request.getPageNumber() - 1, request.getPageSize(), sort);
+        Pageable pageable = SearchHelper.generatePageable(request.getSortDirection(), request.getSortBy(),
+                request.getPageNumber(), request.getPageSize());
 
         Specification<Ticket> specification = new TicketSpecification(request);
 
