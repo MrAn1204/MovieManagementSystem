@@ -11,9 +11,9 @@ import com.mms.mms_api.common.AppConstant;
 import com.mms.mms_api.util.validator.PasswordValidator;
 
 @Constraint(validatedBy = PasswordValidator.class)
-@Target(ElementType.FIELD)
+@Target(ElementType.TYPE)
 @Retention(RetentionPolicy.RUNTIME)
-public @interface Password {
+public @interface PasswordMatch {
     int min() default AppConstant.PASSWORD_MIN;
 
     String message() default "{user.password.required}";
