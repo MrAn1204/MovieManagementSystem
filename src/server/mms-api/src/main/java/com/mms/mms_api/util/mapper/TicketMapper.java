@@ -9,7 +9,7 @@ import com.mms.mms_api.business.command.ticket.TicketUpdateCommand;
 import com.mms.mms_api.dto.TicketDto;
 import com.mms.mms_api.model.Ticket;
 
-@Mapper(config = DefaultMapperConfig.class, uses = {ScheduleMapper.class, SeatMapper.class})
+@Mapper(config = DefaultMapperConfig.class, uses = { ScheduleMapper.class, SeatMapper.class })
 public interface TicketMapper {
     @Mapping(target = "schedule", ignore = true)
     @Mapping(target = "seat", ignore = true)
@@ -20,6 +20,7 @@ public interface TicketMapper {
 
     @Mapping(target = "username", source = "ticket.user.username")
     @Mapping(target = "phoneNumber", source = "ticket.user.phoneNumber")
+    @Mapping(target = "promotion.name", source = "ticket.promotion.title")
     TicketDto toDto(Ticket ticket);
 
     @Mapping(target = "schedule", ignore = true)

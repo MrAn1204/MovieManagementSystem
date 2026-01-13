@@ -9,7 +9,7 @@ import com.mms.mms_api.business.command.schedule.ScheduleUpdateCommand;
 import com.mms.mms_api.dto.ScheduleDto;
 import com.mms.mms_api.model.Schedule;
 
-@Mapper(config = DefaultMapperConfig.class)
+@Mapper(config = DefaultMapperConfig.class, uses = { MovieMapper.class, RoomMapper.class })
 public interface ScheduleMapper {
     @Mapping(target = "movie", ignore = true)
     @Mapping(target = "room", ignore = true)
@@ -17,8 +17,6 @@ public interface ScheduleMapper {
     @Mapping(target = "tickets", ignore = true)
     Schedule toEntity(ScheduleCreateCommand command);
 
-    @Mapping(target = "movieName", source = "movie.name")
-    @Mapping(target = "roomName", source = "room.name")
     ScheduleDto toDto(Schedule schedule);
 
     @Mapping(target = "movie", ignore = true)
