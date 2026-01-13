@@ -9,9 +9,8 @@ import com.mms.mms_api.business.command.seat.SeatUpdateCommand;
 import com.mms.mms_api.dto.SeatDto;
 import com.mms.mms_api.model.Seat;
 
-@Mapper(componentModel = "spring")
+@Mapper(config = DefaultMapperConfig.class)
 public interface SeatMapper {
-    @Mapping(target = "id", ignore = true)
     @Mapping(target = "room", ignore = true)
     @Mapping(target = "scheduleSeats", ignore = true)
     @Mapping(target = "linkedSeat", ignore = true)

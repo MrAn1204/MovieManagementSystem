@@ -9,9 +9,8 @@ import com.mms.mms_api.business.command.invoice.InvoiceUpdateCommand;
 import com.mms.mms_api.dto.InvoiceDto;
 import com.mms.mms_api.model.Invoice;
 
-@Mapper(componentModel = "spring", uses = { TicketMapper.class })
+@Mapper(config = DefaultMapperConfig.class, uses = { TicketMapper.class })
 public interface InvoiceMapper {
-    @Mapping(target = "id", ignore = true)
     @Mapping(target = "tickets", ignore = true)
     @Mapping(target = "user", ignore = true)
     Invoice toEntity(InvoiceCreateCommand command);

@@ -9,9 +9,8 @@ import com.mms.mms_api.business.command.ticket.TicketUpdateCommand;
 import com.mms.mms_api.dto.TicketDto;
 import com.mms.mms_api.model.Ticket;
 
-@Mapper(componentModel = "spring", uses = {ScheduleMapper.class, SeatMapper.class})
+@Mapper(config = DefaultMapperConfig.class, uses = {ScheduleMapper.class, SeatMapper.class})
 public interface TicketMapper {
-    @Mapping(target = "id", ignore = true)
     @Mapping(target = "schedule", ignore = true)
     @Mapping(target = "seat", ignore = true)
     @Mapping(target = "invoice", ignore = true)
