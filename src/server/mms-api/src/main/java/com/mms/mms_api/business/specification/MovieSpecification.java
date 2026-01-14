@@ -1,6 +1,7 @@
 package com.mms.mms_api.business.specification;
 
 import java.util.List;
+import java.util.UUID;
 
 import org.springframework.lang.NonNull;
 import org.springframework.lang.Nullable;
@@ -32,12 +33,20 @@ public class MovieSpecification extends BaseSpecification<Movie, MovieSearchQuer
             addKeywordPredicate(root, criteriaBuilder);
         }
 
-        if (!CollectionUtils.isEmpty(criteria.getGenres())) {
+        if (!CollectionUtils.isEmpty(criteria.getGenreIds())) {
             addGenrePredicate(root);
         }
 
-        if (StringUtils.hasText(criteria.getLanguage())) {
+        if (!CollectionUtils.isEmpty(criteria.getStudioIds())) {
+            addStudioPredicate(root);
+        }
+
+        if (criteria.getLanguageId() != null) {
             addLanguagePredicate(root, criteriaBuilder);
+        }
+
+        if (criteria.getReleaseAfter() != null || criteria.getReleaseBefore() != null) {
+            addReleaseDatePredicate(root, criteriaBuilder);
         }
 
         return criteriaBuilder.and(predicates.toArray(Predicate[]::new));
@@ -47,30 +56,45 @@ public class MovieSpecification extends BaseSpecification<Movie, MovieSearchQuer
     protected void addKeywordPredicate(Root<Movie> root, CriteriaBuilder criteriaBuilder) {
         String pattern = "%" + criteria.getKeyword().toLowerCase() + "%";
 
-        Join<Movie, Studio> studioJoin = root.join("studios");
         Join<Movie, Talent> talentJoin = root.join("talents");
 
         Predicate namePredicate = criteriaBuilder.like(root.get("name"), pattern);
-        Predicate studioPredicate = criteriaBuilder.like(studioJoin.get("name"), pattern);
         Predicate talentPredicate = criteriaBuilder.like(talentJoin.get("name"), pattern);
 
-        predicates.add(criteriaBuilder.or(namePredicate, studioPredicate, talentPredicate));
+        predicates.add(criteriaBuilder.or(namePredicate, talentPredicate));
     }
 
     private void addGenrePredicate(Root<Movie> root) {
-        List<String> searchGenres = criteria.getGenres().stream()
-                .map(genre -> StringUtils.capitalize(genre.toLowerCase())).toList();
+        List<UUID> searchGenres = criteria.getGenreIds();
 
         Join<Movie, Genre> genreJoin = root.join("genres");
 
-        predicates.add(genreJoin.get("name").in(searchGenres));
+        predicates.add(genreJoin.get("id").in(searchGenres));
+    }
+
+    private void addStudioPredicate(Root<Movie> root) {
+        List<UUID> searchStudios = criteria.getStudioIds();
+
+        Join<Movie, Studio> studioJoin = root.join("studios");
+
+        predicates.add(studioJoin.get("id").in(searchStudios));
     }
 
     private void addLanguagePredicate(Root<Movie> root, CriteriaBuilder criteriaBuilder) {
-        String pattern = criteria.getLanguage().toUpperCase();
+        UUID searchLanguage = criteria.getLanguageId();
 
         Join<Movie, Language> languageJoin = root.join("language");
 
-        predicates.add(criteriaBuilder.equal(languageJoin.get("name"), pattern));
+        predicates.add(criteriaBuilder.equal(languageJoin.get("id"), searchLanguage));
+    }
+
+    private void addReleaseDatePredicate(Root<Movie> root, CriteriaBuilder criteriaBuilder) {
+        if (criteria.getReleaseAfter() != null) {
+            predicates.add(criteriaBuilder.greaterThanOrEqualTo(root.get("releaseDate"), criteria.getReleaseAfter()));
+        }
+
+        if (criteria.getReleaseBefore() != null) {
+            predicates.add(criteriaBuilder.lessThanOrEqualTo(root.get("releaseDate"), criteria.getReleaseBefore()));
+        }
     }
 }
