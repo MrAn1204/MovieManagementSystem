@@ -3,6 +3,7 @@ package com.mms.mms_api.business.command.seat;
 import java.util.UUID;
 
 import org.hibernate.validator.constraints.Range;
+import org.springframework.lang.NonNull;
 
 import com.mms.mms_api.business.command.BaseCreateCommand;
 import com.mms.mms_api.common.AppConstant;
@@ -31,5 +32,6 @@ public class SeatCreateCommand extends BaseCreateCommand {
     private String name;
 
     @NotNull(message = "{seat.room.required}")
+    @NonNull
     private UUID roomId;
 }

@@ -2,6 +2,8 @@ package com.mms.mms_api.dto;
 
 import java.util.UUID;
 
+import com.mms.mms_api.common.IdNameDto;
+
 import lombok.Data;
 
 @Data
@@ -10,7 +12,7 @@ public class ScheduleDto {
 
     private String showTime;
 
-    private String movieName;
+    private IdNameDto movie;
 
-    private String roomName;
+    private IdNameDto room;
 }

@@ -17,5 +17,5 @@ public class InvoiceDto {
 
     private double discount;
 
-    private List<TicketDto> tickets;
+    private List<UUID> tickets;
 }

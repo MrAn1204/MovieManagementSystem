@@ -3,6 +3,8 @@ package com.mms.mms_api.business.command.schedule;
 import java.time.LocalDateTime;
 import java.util.UUID;
 
+import org.springframework.lang.NonNull;
+
 import com.mms.mms_api.business.command.BaseCreateCommand;
 
 import jakarta.validation.constraints.NotNull;
@@ -17,8 +19,10 @@ public class ScheduleCreateCommand extends BaseCreateCommand {
     private LocalDateTime showTime;
 
     @NotNull(message = "{schedule.movie.required}")
+    @NonNull
     private UUID movieId;
 
     @NotNull(message = "{schedule.room.required}")
+    @NonNull
     private UUID roomId;
 }

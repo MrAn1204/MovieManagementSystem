@@ -6,11 +6,10 @@ import com.mms.mms_api.data.UserRepository;
 import com.mms.mms_api.dto.user.UserDto;
 import com.mms.mms_api.model.User;
 import com.mms.mms_api.business.specification.UserSpecification;
+import com.mms.mms_api.util.SearchHelper;
 import com.mms.mms_api.util.mapper.UserMapper;
 import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
-import org.springframework.data.domain.Sort;
 import org.springframework.data.jpa.domain.Specification;
 
 import java.util.List;
@@ -22,13 +21,8 @@ public class UserSearchHandler extends UserBaseHandler<UserSearchQuery, Paginate
 
     @Override
     public PaginatedResult<UserDto> execute() {
-        Sort.Direction direction = Sort.Direction.valueOf(request.getSortDirection().name());
-        
-        String sortBy = request.getSortBy();
-
-        Sort sort = Sort.by(direction, sortBy);
-
-        Pageable pageable = PageRequest.of(request.getPageNumber() - 1, request.getPageSize(), sort);
+        Pageable pageable = SearchHelper.generatePageable(request.getSortDirection(),
+                request.getSortBy(), request.getPageNumber(), request.getPageSize());
 
         Specification<User> spec = new UserSpecification(request);
 
@@ -39,6 +33,6 @@ public class UserSearchHandler extends UserBaseHandler<UserSearchQuery, Paginate
                 .toList();
 
         return new PaginatedResult<>(userDtos, userPage.getTotalElements(), userPage.getTotalPages(),
-                pageable.getPageSize(), pageable.getPageNumber() + 1);
+                request.getPageSize(), request.getPageNumber());
     }
 }

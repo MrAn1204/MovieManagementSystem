@@ -1,5 +1,7 @@
 package com.mms.mms_api.business.handler.ticket;
 
+import java.util.UUID;
+
 import com.mms.mms_api.business.command.ticket.TicketCreateCommand;
 import com.mms.mms_api.dto.TicketDto;
 import com.mms.mms_api.exception.InvalidInputException;
@@ -32,7 +34,8 @@ public class TicketCreateHandler extends TicketBaseHandler<TicketCreateCommand, 
 
     public TicketCreateHandler(TicketCreateCommand request, TicketMapper ticketMapper,
             TicketRepository ticketRepository, ScheduleRepository scheduleRepository, SeatRepository seatRepository,
-            PromotionRepository promotionRepository, UserRepository userRepository, ScheduleSeatRepository scheduleSeatRepository) {
+            PromotionRepository promotionRepository, UserRepository userRepository,
+            ScheduleSeatRepository scheduleSeatRepository) {
         super(request, ticketMapper, ticketRepository);
         this.scheduleRepository = scheduleRepository;
         this.seatRepository = seatRepository;
@@ -51,12 +54,12 @@ public class TicketCreateHandler extends TicketBaseHandler<TicketCreateCommand, 
         Seat seat = seatRepository.findById(request.getSeatId())
                 .orElseThrow(() -> new ResourceNotFoundException("seat.notFound"));
 
-        Promotion promotion = null;
-        if (request.getPromotionId() != null) {
-            promotion = promotionRepository.findById(request.getPromotionId())
-                    .orElseThrow(() -> new ResourceNotFoundException("promotion.notFound"));
-        }
-        
+        UUID promotionId = request.getPromotionId();
+        Promotion promotion = (promotionId != null)
+                ? promotionRepository.findById(promotionId)
+                        .orElseThrow(() -> new ResourceNotFoundException("promotion.notFound"))
+                : null;
+
         User user = userRepository.findById(request.getUserId())
                 .orElseThrow(() -> new ResourceNotFoundException("user.notFound"));
 

@@ -8,6 +8,7 @@ import org.springframework.util.StringUtils;
 
 import com.mms.mms_api.business.query.schedule.ScheduleSearchQuery;
 import com.mms.mms_api.model.Movie;
+import com.mms.mms_api.model.Room;
 import com.mms.mms_api.model.Schedule;
 
 import jakarta.persistence.criteria.CriteriaBuilder;
@@ -31,6 +32,10 @@ public class ScheduleSpecification extends BaseSpecification<Schedule, ScheduleS
 
         if (criteria.getDate() != null) {
             addShowTimePredicate(root, criteriaBuilder);
+        }
+
+        if (criteria.getRoomId() != null) {
+            addRoomPredicate(root, criteriaBuilder);
         }
 
         return criteriaBuilder.and(predicates.toArray(Predicate[]::new));
@@ -65,5 +70,11 @@ public class ScheduleSpecification extends BaseSpecification<Schedule, ScheduleS
         }
 
         predicates.add(showTimePredicate);
+    }
+
+    private void addRoomPredicate(Root<Schedule> root, CriteriaBuilder criteriaBuilder) {
+        Join<Schedule, Room> roomJoin = root.join("room");
+        
+        predicates.add(criteriaBuilder.equal(roomJoin.get("id"), criteria.getRoomId()));
     }
 }

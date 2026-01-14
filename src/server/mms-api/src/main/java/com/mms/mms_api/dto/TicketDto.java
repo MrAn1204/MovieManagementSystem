@@ -2,21 +2,23 @@ package com.mms.mms_api.dto;
 
 import java.util.UUID;
 
+import com.mms.mms_api.common.IdNameDto;
+
 import lombok.Data;
 
 @Data
 public class TicketDto {
-    UUID id;
+    private UUID id;
 
-    ScheduleDto schedule;
+    private ScheduleDto schedule;
 
-    SeatDto seat;
+    private IdNameDto seat;
 
-    PromotionDto promotion;
+    private IdNameDto promotion;
 
-    int price;
+    private int price;
 
-    String username;
+    private String username;
 
-    String phoneNumber;
+    private String phoneNumber;
 }

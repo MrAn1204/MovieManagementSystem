@@ -5,34 +5,52 @@ import com.mms.mms_api.model.Genre;
 import com.mms.mms_api.model.Language;
 import com.mms.mms_api.model.Studio;
 import com.mms.mms_api.model.Talent;
-import org.springframework.util.CollectionUtils;
-import org.springframework.util.StringUtils;
 
 import java.util.List;
+import java.util.UUID;
+
+import org.springframework.util.CollectionUtils;
 
 public class MovieValidator {
-    private MovieValidator() {}
+    private MovieValidator() {
+    }
 
-    public static void validateGenres(List<String> genreNames, List<Genre> mappedNames) {
-        if (!CollectionUtils.isEmpty(genreNames) && genreNames.size() != mappedNames.size()) {
+    public static void validateGenres(List<UUID> genreIds, List<Genre> mappedGenres) {
+        if (CollectionUtils.isEmpty(genreIds)) {
+            return;
+        }
+
+        if (mappedGenres != null && genreIds.size() != mappedGenres.size()) {
             throw new InvalidInputException("movie.genres.invalid");
         }
     }
 
-    public static void validateLanguage(String languageName, Language mappedLanguage) {
-        if (StringUtils.hasText(languageName) && mappedLanguage != null) {
+    public static void validateLanguage(UUID languageId, Language mappedLanguage) {
+        if (languageId == null) {
+            return;
+        }
+        
+        if (mappedLanguage == null) {
             throw new InvalidInputException("movie.language.invalid");
         }
     }
 
-    public static void validateStudios(List<String> studioNames, List<Studio> mappedStudios) {
-        if (!CollectionUtils.isEmpty(studioNames) && studioNames.size() != mappedStudios.size()) {
+    public static void validateStudios(List<UUID> studioIds, List<Studio> mappedStudios) {
+        if (CollectionUtils.isEmpty(studioIds)) {
+            return;
+        }
+
+        if (mappedStudios != null && studioIds.size() != mappedStudios.size()) {
             throw new InvalidInputException("movie.studios.invalid");
         }
     }
 
-    public static void validateTalents(List<String> talentNames, List<Talent> mappedTalents) {
-        if (!CollectionUtils.isEmpty(talentNames) && talentNames.size() != mappedTalents.size()) {
+    public static void validateTalents(List<UUID> talentIds, List<Talent> mappedTalents) {
+        if (CollectionUtils.isEmpty(talentIds)) {
+            return;
+        }
+
+        if (mappedTalents != null && talentIds.size() != mappedTalents.size()) {
             throw new InvalidInputException("movie.talents.invalid");
         }
     }

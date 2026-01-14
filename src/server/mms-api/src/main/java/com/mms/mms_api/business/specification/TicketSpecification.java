@@ -35,15 +35,15 @@ public class TicketSpecification extends BaseSpecification<Ticket, TicketSearchQ
             addShowTimePredicate(root, criteriaBuilder);
         }
 
-        if (StringUtils.hasText(criteria.getMovie())) {
+        if (criteria.getMovieId() != null) {
             addMoviePredicate(root, criteriaBuilder);
         }
 
-        if (StringUtils.hasText(criteria.getRoom())) {
+        if (criteria.getRoomId() != null) {
             addRoomPredicate(root, criteriaBuilder);
         }
 
-        if (StringUtils.hasText(criteria.getPromotion())) {
+        if (criteria.getPromotionId() != null) {
             addPromotionPredicate(root, criteriaBuilder);
         }
 
@@ -66,8 +66,7 @@ public class TicketSpecification extends BaseSpecification<Ticket, TicketSearchQ
     private void addShowTimePredicate(Root<Ticket> root, CriteriaBuilder criteriaBuilder) {
         Join<Ticket, Schedule> scheduleJoin = root.join("schedule");
 
-        Predicate showTimePredicate = criteriaBuilder.equal(scheduleJoin.get("showTime"),
-                criteria.getShowTime());
+        Predicate showTimePredicate = criteriaBuilder.equal(scheduleJoin.get("showTime"), criteria.getShowTime());
 
         predicates.add(showTimePredicate);
     }
@@ -76,7 +75,7 @@ public class TicketSpecification extends BaseSpecification<Ticket, TicketSearchQ
         Join<Ticket, Schedule> scheduleJoin = root.join("schedule");
         Join<Schedule, Movie> movieJoin = scheduleJoin.join("movie");
 
-        Predicate moviePredicate = criteriaBuilder.equal(movieJoin.get("name"), criteria.getMovie());
+        Predicate moviePredicate = criteriaBuilder.equal(movieJoin.get("id"), criteria.getMovieId());
 
         predicates.add(moviePredicate);
     }
@@ -85,7 +84,7 @@ public class TicketSpecification extends BaseSpecification<Ticket, TicketSearchQ
         Join<Ticket, Schedule> scheduleJoin = root.join("schedule");
         Join<Schedule, Room> roomJoin = scheduleJoin.join("room");
 
-        Predicate roomPredicate = criteriaBuilder.equal(roomJoin.get("name"), criteria.getRoom());
+        Predicate roomPredicate = criteriaBuilder.equal(roomJoin.get("id"), criteria.getRoomId());
 
         predicates.add(roomPredicate);
     }
@@ -93,7 +92,7 @@ public class TicketSpecification extends BaseSpecification<Ticket, TicketSearchQ
     private void addPromotionPredicate(Root<Ticket> root, CriteriaBuilder criteriaBuilder) {
         Join<Ticket, Promotion> promotionJoin = root.join("promotion");
 
-        Predicate promotionPredicate = criteriaBuilder.equal(promotionJoin.get("name"), criteria.getPromotion());
+        Predicate promotionPredicate = criteriaBuilder.equal(promotionJoin.get("id"), criteria.getPromotionId());
 
         predicates.add(promotionPredicate);
     }

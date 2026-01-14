@@ -4,6 +4,8 @@ import java.time.LocalDate;
 import java.util.List;
 import java.util.UUID;
 
+import com.mms.mms_api.common.IdNameDto;
+
 import lombok.Data;
 
 @Data
@@ -22,11 +24,11 @@ public class MovieDto {
 
     private double rating;
 
-    List<String> genres;
+    private List<IdNameDto> genres;
 
-    List<String> studios;
+    private List<IdNameDto> studios;
 
-    List<String> talents;
+    private List<IdNameDto> talents;
 
-    String language;
+    private IdNameDto language;
 }

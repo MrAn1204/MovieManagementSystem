@@ -2,6 +2,7 @@ package com.mms.mms_api.business.query.schedule;
 
 import java.time.LocalDate;
 import java.time.LocalTime;
+import java.util.UUID;
 
 import com.mms.mms_api.business.query.BaseSearchQuery;
 
@@ -18,7 +19,7 @@ private LocalDate date;
 
     private LocalTime maxTime;
 
-    private String room;
+    private UUID roomId;
 
     @AssertTrue(message = "{search.timeRange.invalid}")
     public boolean isTimeRangeValid() {

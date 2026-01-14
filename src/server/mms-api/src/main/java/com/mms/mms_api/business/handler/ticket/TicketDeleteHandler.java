@@ -1,9 +1,10 @@
 package com.mms.mms_api.business.handler.ticket;
 
+import java.util.UUID;
+
 import com.mms.mms_api.business.command.ticket.TicketDeleteCommand;
 import com.mms.mms_api.data.TicketRepository;
 import com.mms.mms_api.exception.ResourceNotFoundException;
-import com.mms.mms_api.model.Ticket;
 
 public class TicketDeleteHandler extends TicketBaseHandler<TicketDeleteCommand, Void> {
 
@@ -13,10 +14,13 @@ public class TicketDeleteHandler extends TicketBaseHandler<TicketDeleteCommand, 
 
     @Override
     public Void execute() {
-        Ticket ticket = ticketRepository.findById(request.getId())
-                .orElseThrow(() -> new ResourceNotFoundException("ticket.notFound"));
+        UUID id = request.getId();
 
-        ticketRepository.delete(ticket);
+        if (!ticketRepository.existsById(id)) {
+            throw new ResourceNotFoundException("ticket.notFound");
+        }
+
+        ticketRepository.deleteById(id);
         return null;
     }
 }

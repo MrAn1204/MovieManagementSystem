@@ -1,9 +1,10 @@
 package com.mms.mms_api.business.handler.room;
 
+import java.util.UUID;
+
 import com.mms.mms_api.business.command.room.RoomDeleteCommand;
 import com.mms.mms_api.data.RoomRepository;
 import com.mms.mms_api.exception.ResourceNotFoundException;
-import com.mms.mms_api.model.Room;
 import com.mms.mms_api.util.mapper.RoomMapper;
 
 public class RoomDeleteHandler extends RoomBaseHandler<RoomDeleteCommand, Void> {
@@ -13,10 +14,13 @@ public class RoomDeleteHandler extends RoomBaseHandler<RoomDeleteCommand, Void> 
 
     @Override
     public Void execute() {
-        Room room = roomRepository.findById(request.getId()).orElseThrow(
-                () -> new ResourceNotFoundException("room.notFound"));
+        UUID id = request.getId();
 
-        roomRepository.delete(room);
+        if (!roomRepository.existsById(id)) {
+            throw new ResourceNotFoundException("room.notFound");
+        }
+
+        roomRepository.deleteById(id);
 
         return null;
     }

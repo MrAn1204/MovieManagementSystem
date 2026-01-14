@@ -9,9 +9,8 @@ import com.mms.mms_api.business.command.promotion.PromotionUpdateCommand;
 import com.mms.mms_api.dto.PromotionDto;
 import com.mms.mms_api.model.Promotion;
 
-@Mapper(componentModel = "spring")
+@Mapper(config = DefaultMapperConfig.class)
 public interface PromotionMapper {
-    @Mapping(target = "id", ignore = true)
     @Mapping(target = "tickets", ignore = true)
     Promotion toEntity(PromotionCreateCommand command);
 

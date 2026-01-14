@@ -9,17 +9,14 @@ import com.mms.mms_api.business.command.schedule.ScheduleUpdateCommand;
 import com.mms.mms_api.dto.ScheduleDto;
 import com.mms.mms_api.model.Schedule;
 
-@Mapper(componentModel = "spring")
+@Mapper(config = DefaultMapperConfig.class, uses = { MovieMapper.class, RoomMapper.class })
 public interface ScheduleMapper {
-    @Mapping(target = "id", ignore = true)
     @Mapping(target = "movie", ignore = true)
     @Mapping(target = "room", ignore = true)
     @Mapping(target = "scheduleSeats", ignore = true)
     @Mapping(target = "tickets", ignore = true)
     Schedule toEntity(ScheduleCreateCommand command);
 
-    @Mapping(target = "movieName", source = "movie.name")
-    @Mapping(target = "roomName", source = "room.name")
     ScheduleDto toDto(Schedule schedule);
 
     @Mapping(target = "movie", ignore = true)

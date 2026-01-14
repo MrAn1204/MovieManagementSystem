@@ -2,6 +2,7 @@ package com.mms.mms_api.business.command.movie;
 
 import java.time.LocalDate;
 import java.util.List;
+import java.util.UUID;
 
 import com.mms.mms_api.business.command.BaseCreateCommand;
 
@@ -25,11 +26,11 @@ public class MovieCreateCommand extends BaseCreateCommand {
 
     private String thumbnail;
 
-    List<String> genres;
+    private List<@NotNull(message = "{movie.genres.invalid}") UUID> genreIds;
 
-    List<String> studios;
+    private List<@NotNull(message = "{movie.studios.invalid}") UUID> studioIds;
 
-    List<String> talents;
+    private List<@NotNull(message = "{movie.talents.invalid}") UUID> talentIds;
 
-    String language;
+    private UUID languageId;
 }

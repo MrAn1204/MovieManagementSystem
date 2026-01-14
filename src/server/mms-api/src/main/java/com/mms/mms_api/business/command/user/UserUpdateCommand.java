@@ -2,8 +2,9 @@ package com.mms.mms_api.business.command.user;
 
 import java.time.LocalDate;
 import java.util.List;
+import java.util.UUID;
 
-import com.mms.mms_api.annotation.Password;
+import com.mms.mms_api.annotation.PasswordMatch;
 import com.mms.mms_api.business.command.BaseUpdateCommand;
 import com.mms.mms_api.common.AppConstant;
 import com.mms.mms_api.model.Gender;
@@ -21,6 +22,7 @@ import lombok.EqualsAndHashCode;
 @Data
 @EqualsAndHashCode(callSuper = true)
 @AllArgsConstructor
+@PasswordMatch
 public class UserUpdateCommand extends BaseUpdateCommand {
     @NotNull(message = "{user.username.required}")
     @Size(min = AppConstant.USERNAME_MIN, max = AppConstant.USERNAME_MAX, message = "{user.username.size}")
@@ -30,8 +32,9 @@ public class UserUpdateCommand extends BaseUpdateCommand {
     @Size(min = AppConstant.FULLNAME_MIN, max = AppConstant.FULLNAME_MAX, message = "{user.fullname.size}")
     private String fullname;
 
-    @Password
     private String password;
+
+    private String confirmPassword;
 
     @NotNull(message = "{user.gender.required}")
     private Gender gender;
@@ -56,5 +59,5 @@ public class UserUpdateCommand extends BaseUpdateCommand {
     private int score;
 
     @NotEmpty(message = "{user.roles.required}")
-    private List<String> roles;
+    private List<@NotNull(message = "{user.roles.invalid}") UUID> roleIds;
 }

@@ -2,6 +2,8 @@ package com.mms.mms_api.business.command.ticket;
 
 import java.util.UUID;
 
+import org.springframework.lang.NonNull;
+
 import com.mms.mms_api.business.command.BaseUpdateCommand;
 
 import jakarta.validation.constraints.NotNull;
@@ -16,9 +18,11 @@ public class TicketUpdateCommand extends BaseUpdateCommand {
     private int price;
 
     @NotNull(message = "{ticket.schedule.required}")
+    @NonNull
     private UUID scheduleId;
 
     @NotNull(message = "{ticket.seat.required}")
+    @NonNull
     private UUID seatId;
 
     private UUID promotionId;

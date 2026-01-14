@@ -10,18 +10,19 @@ import com.mms.mms_api.dto.user.UserDto;
 import com.mms.mms_api.model.Role;
 import com.mms.mms_api.model.User;
 
-@Mapper(componentModel = "spring", uses = {InvoiceMapper.class})
+@Mapper(config = DefaultMapperConfig.class, uses = { InvoiceMapper.class })
 public interface UserMapper {
-    @Mapping(target = "id", ignore = true)
     @Mapping(target = "roles", ignore = true)
     @Mapping(target = "invoices", ignore = true)
     @Mapping(target = "score", ignore = true)
+    @Mapping(target = "tickets", ignore = true)
     User toEntity(UserCreateCommand command);
     
     UserDto toDto(User user);
 
     @Mapping(target = "roles", ignore = true)
     @Mapping(target = "invoices", ignore = true)
+    @Mapping(target = "tickets", ignore = true)
     void updateEntity(UserUpdateCommand command, @MappingTarget User user);
 
     default String roleToString(Role role) {

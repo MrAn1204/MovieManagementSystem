@@ -9,6 +9,8 @@ import jakarta.persistence.criteria.Join;
 import jakarta.persistence.criteria.Predicate;
 import jakarta.persistence.criteria.Root;
 
+import java.util.UUID;
+
 import org.springframework.lang.NonNull;
 import org.springframework.lang.Nullable;
 import org.springframework.util.StringUtils;
@@ -25,7 +27,7 @@ public class UserSpecification extends BaseSpecification<User, UserSearchQuery> 
             addKeywordPredicate(root, criteriaBuilder);
         }
 
-        if (StringUtils.hasText(criteria.getRole())) {
+        if (criteria.getRoleId() != null) {
             addRolePredicate(root, criteriaBuilder);
         }
 
@@ -44,10 +46,10 @@ public class UserSpecification extends BaseSpecification<User, UserSearchQuery> 
     }
 
     private void addRolePredicate(Root<User> root, CriteriaBuilder criteriaBuilder) {
-        String searchRole = criteria.getRole().toUpperCase();
+        UUID searchRole = criteria.getRoleId();
 
         Join<User, Role> roleJoin = root.join("roles");
 
-        predicates.add(criteriaBuilder.equal(roleJoin.get("name"), searchRole));
+        predicates.add(criteriaBuilder.equal(roleJoin.get("id"), searchRole));
     }
 }
