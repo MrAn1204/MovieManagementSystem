@@ -1,6 +1,7 @@
 package com.mms.mms_api.business.query.ticket;
 
 import java.time.LocalDateTime;
+import java.util.UUID;
 
 import com.mms.mms_api.business.query.BaseSearchQuery;
 
@@ -12,9 +13,9 @@ import lombok.EqualsAndHashCode;
 public class TicketSearchQuery extends BaseSearchQuery {
     private LocalDateTime showTime;
 
-    private String movie;
+    private UUID movieId;
 
-    private String room;
+    private UUID roomId;
 
-    private String promotion;
+    private UUID promotionId;
 }
