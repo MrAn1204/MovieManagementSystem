@@ -7,6 +7,7 @@ import { MovieDetail } from '../detail/movie-detail';
 import { MovieModel } from '../../../model/movie.model';
 import { MovieService } from '../../../service/movie/movie.service';
 import { FormGroup, ReactiveFormsModule } from '@angular/forms';
+import { TableColumnModel } from '../../../shared/model/table-column.model';
 
 @Component({
   selector: 'app-movie',
@@ -19,14 +20,14 @@ export class Movie implements OnInit {
   movieDetail = MovieDetail;
   movieFilter = MovieFilter;
 
-  columns: Map<string, string> = new Map([
-    ['name', 'Name'],
-    ['releaseDate', 'Release Date'],
-    ['duration', 'Duration'],
-    ['genres', 'Genre'],
-    ['studios', 'Studio'],
-    ['language', 'Language']
-  ]);
+  columns: TableColumnModel[] = [
+    { key: 'name', label: 'Name', type: 'string' },
+    { key: 'releaseDate', label: 'Release Date', type: 'date' },
+    { key: 'duration', label: 'Duration', type: 'number' },
+    { key: 'genres', label: 'Genre', type: 'id-name-array' },
+    { key: 'studios', label: 'Studio', type: 'id-name-array' },
+    { key: 'language', label: 'Language', type: 'id-name' }
+  ];
   movies = signal<MovieModel[]>([]);
 
   form: FormGroup = new FormGroup({});

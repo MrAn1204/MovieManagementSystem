@@ -1,3 +1,5 @@
+import { IdNameModel } from '../shared/model/id-name.model';
+
 export interface MovieModel {
 	id: string;
 	name: string;
@@ -6,8 +8,8 @@ export interface MovieModel {
 	content: string;
 	thumbnail: string;
 	rating: number;
-	genres: string[];
-	studios: string[];
-	talents: string[];
-	language: string;
+	genres: IdNameModel[];
+	studios: IdNameModel[];
+	talents: IdNameModel[];
+	language: IdNameModel;
 }

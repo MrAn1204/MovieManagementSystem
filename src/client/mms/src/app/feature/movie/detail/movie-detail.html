@@ -2,20 +2,36 @@
   <app-detail-image [src]="model().thumbnail"></app-detail-image>
 
   <div class="w-full flex-1 gap-8 grid grid-cols-1 sm:grid-cols-2">
-    <app-detail-text label="Name">{{ model().name | formatCell }}</app-detail-text>
+    <app-detail-text label="Name">
+      {{ model().name | formatCell }}
+    </app-detail-text>
 
-    <app-detail-text label="Language">{{ model().language | formatCell }}</app-detail-text>
+    <app-detail-text label="Language">
+      {{ model().language | formatCell: 'id-name' }}
+    </app-detail-text>
 
-    <app-detail-text label="Genre">{{ model().genres | formatCell }}</app-detail-text>
+    <app-detail-text label="Genre">
+      {{ model().genres | formatCell: 'id-name-array' }}
+    </app-detail-text>
 
-    <app-detail-text label="Studio">{{ model().studios | formatCell }}</app-detail-text>
+    <app-detail-text label="Studio">
+      {{ model().studios | formatCell: 'id-name-array' }}
+    </app-detail-text>
 
-    <app-detail-text label="Release Date">{{ model().releaseDate | formatCell }}</app-detail-text>
+    <app-detail-text label="Release Date">
+      {{ model().releaseDate | formatCell }}
+    </app-detail-text>
 
-    <app-detail-text label="Duration">{{ model().duration | formatCell }}</app-detail-text>
+    <app-detail-text label="Duration">
+      {{ model().duration | formatCell }}
+    </app-detail-text>
 
-    <app-detail-text class="sm:col-span-2" label="Talent">{{ model().talents | formatCell }}</app-detail-text>
+    <app-detail-text class="sm:col-span-2" label="Talent">
+      {{ model().talents | formatCell: 'id-name-array' }}
+    </app-detail-text>
 
-    <app-detail-text class="sm:col-span-2" label="Content">{{ model().content | formatCell }}</app-detail-text>
+    <app-detail-text class="sm:col-span-2" label="Content">
+      {{ model().content | formatCell }}
+    </app-detail-text>
   </div>
 </div>

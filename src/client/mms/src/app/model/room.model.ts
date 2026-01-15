@@ -1,8 +1,8 @@
-import { SeatModel } from './seat.model';
+import { IdNameModel } from '../shared/model/id-name.model';
 
 export interface RoomModel {
   id: string;
   seatQuantity: number;
   name: string;
-  seats: SeatModel[];
+  seats: IdNameModel[];
 }

@@ -63,11 +63,17 @@ export class MovieCreateEdit implements OnInit {
   }
 
   private loadOptions(): void {
+    const model = this.model();
+    const modelGenres = model ? model.genres.map((genre) => genre.id) : [];
+    const modelStudios = model ? model.studios.map((studio) => studio.id) : [];
+    const modelTalents = model ? model.talents.map((talent) => talent.id) : [];
+    const modelLanguage = model ? model.language.id : null;
+
     this.genreService.getAll().subscribe((genres) => {
       this.genres.set(genres.map((genre) => ({
         label: genre.name,
         value: genre.id,
-        checked: this.model()?.genres.includes(genre.name) || false
+        checked: modelGenres.includes(genre.id) || false
       })));
     });
 
@@ -75,7 +81,7 @@ export class MovieCreateEdit implements OnInit {
       this.studios.set(studios.map((studio) => ({
         label: studio.name,
         value: studio.id,
-        checked: this.model()?.studios.includes(studio.name) || false
+        checked: modelStudios.includes(studio.id) || false
       })));
     });
 
@@ -83,7 +89,7 @@ export class MovieCreateEdit implements OnInit {
       this.talents.set(talents.map((talent) => ({
         label: talent.name,
         value: talent.id,
-        checked: this.model()?.talents.includes(talent.name) || false
+        checked: modelTalents.includes(talent.id) || false
       })));
     });
 
@@ -91,7 +97,7 @@ export class MovieCreateEdit implements OnInit {
       this.languages.set(languages.map((language) => ({
         label: language.name,
         value: language.id,
-        selected: this.model()?.language === language.name || false
+        selected: modelLanguage === language.id || false
       })));
     });
   }

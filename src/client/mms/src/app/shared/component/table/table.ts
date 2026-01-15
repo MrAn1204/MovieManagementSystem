@@ -3,6 +3,7 @@ import { CreateEdit } from '../dialog/create-edit/create-edit';
 import { Detail } from '../dialog/detail/detail';
 import { DialogService } from '../../../service/dialog/dialog.service';
 import { FormatCellPipe } from '../../pipe/format-cell/format-cell-pipe';
+import { TableColumnModel } from '../../model/table-column.model';
 
 @Component({
   selector: 'app-table',
@@ -11,7 +12,7 @@ import { FormatCellPipe } from '../../pipe/format-cell/format-cell-pipe';
   styleUrl: './table.css',
 })
 export class Table {
-  columns = input.required<Map<string, string>>();
+  columns = input.required<TableColumnModel[]>();
   data = input.required<any[]>();
   entityName = input.required<string>();
   contentCreateEdit = input.required<Type<unknown>>();

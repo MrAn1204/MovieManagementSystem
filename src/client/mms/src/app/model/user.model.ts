@@ -1,4 +1,5 @@
 import { InvoiceModel } from './invoice.model';
+import { RoleModel } from './role.model';
 
 export interface UserModel {
   id: string;
@@ -11,6 +12,6 @@ export interface UserModel {
   phoneNumber: string;
   address: string;
   score: number;
-  roles: string[];
+  roles: RoleModel[];
   invoices: InvoiceModel[];
 }
