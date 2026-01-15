@@ -1,7 +1,7 @@
 import { Component, effect, forwardRef, input } from '@angular/core';
 import { BaseField } from '../base-field/base-field';
-import { CheckboxOptionModel } from '../../../model/checkbox-option.model';
 import { NG_VALUE_ACCESSOR } from '@angular/forms';
+import { FormOptionModel } from '../../../model/form-option.model';
 
 @Component({
   selector: 'app-multiselect-field',
@@ -17,7 +17,7 @@ import { NG_VALUE_ACCESSOR } from '@angular/forms';
   styleUrl: './multiselect-field.css',
 })
 export class MultiselectField extends BaseField<string[]> {
-  options = input<CheckboxOptionModel[]>([]);
+  options = input<FormOptionModel[]>([]);
   selected: string[] = [];
   keyword = '';
 
@@ -25,15 +25,15 @@ export class MultiselectField extends BaseField<string[]> {
     super();
 
     effect(() => {
-      this.selected = this.options().filter(option => option.checked).map(option => option.label);
+      this.selected = this.options().filter(option => option.selected).map(option => option.label);
     });
   }
 
-  updateSelected(option: CheckboxOptionModel): void {
+  updateSelected(option: FormOptionModel): void {
     let newValue = this.value ? [...this.value] : [];
-    option.checked = !option.checked;
+    option.selected = !option.selected;
 
-    if (option.checked) {
+    if (option.selected) {
       newValue.push(option.value);
       this.selected.push(option.label);
     } else {
@@ -47,7 +47,7 @@ export class MultiselectField extends BaseField<string[]> {
   resetSelected(): void {
     this.selected = [];
     this.updateValue([]);
-    this.options()?.forEach(item => item.checked = false);
+    this.options()?.forEach(item => item.selected = false);
   }
 
   updateKeyword(value: string): void {

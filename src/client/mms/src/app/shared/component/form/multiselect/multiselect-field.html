@@ -34,7 +34,7 @@
       <li>
         <div class="flex items-center ps-2 rounded-sm hover:bg-platinum-100">
           <input (change)="updateSelected(option)" [id]="`${idName()}-${$index}`" type="checkbox"
-            [value]="option.value" [checked]="option.checked"
+            [value]="option.value" [checked]="option.selected"
             class="w-4 h-4 text-steel-blue-500 bg-platinum-50 border border-platinum-300 rounded-sm focus:ring-steel-blue-500 focus:ring-2">
           <label [htmlFor]="`${idName()}-${$index}`" class="w-full py-2 ms-2 text-sm font-medium rounded-sm">
             {{ option.label }}</label>

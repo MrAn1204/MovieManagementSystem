@@ -11,7 +11,6 @@ import { StudioService } from '../../../service/studio/studio.service';
 import { TalentService } from '../../../service/talent/talent.service';
 import { LanguageService } from '../../../service/language/language.service';
 import { FormOptionModel } from '../../../shared/model/form-option.model';
-import { CheckboxOptionModel } from '../../../shared/model/checkbox-option.model';
 
 @Component({
   selector: 'app-movie-create-edit',
@@ -26,9 +25,9 @@ export class MovieCreateEdit implements OnInit {
 
   form: FormGroup = inject(ControlContainer).control as FormGroup;
 
-  genres = signal<CheckboxOptionModel[]>([]);
-  studios = signal<CheckboxOptionModel[]>([]);
-  talents = signal<CheckboxOptionModel[]>([]);
+  genres = signal<FormOptionModel[]>([]);
+  studios = signal<FormOptionModel[]>([]);
+  talents = signal<FormOptionModel[]>([]);
   languages = signal<FormOptionModel[]>([]);
 
   constructor(
@@ -73,7 +72,7 @@ export class MovieCreateEdit implements OnInit {
       this.genres.set(genres.map((genre) => ({
         label: genre.name,
         value: genre.id,
-        checked: modelGenres.includes(genre.id) || false
+        selected: modelGenres.includes(genre.id) || false
       })));
     });
 
@@ -81,7 +80,7 @@ export class MovieCreateEdit implements OnInit {
       this.studios.set(studios.map((studio) => ({
         label: studio.name,
         value: studio.id,
-        checked: modelStudios.includes(studio.id) || false
+        selected: modelStudios.includes(studio.id) || false
       })));
     });
 
@@ -89,7 +88,7 @@ export class MovieCreateEdit implements OnInit {
       this.talents.set(talents.map((talent) => ({
         label: talent.name,
         value: talent.id,
-        checked: modelTalents.includes(talent.id) || false
+        selected: modelTalents.includes(talent.id) || false
       })));
     });
 
