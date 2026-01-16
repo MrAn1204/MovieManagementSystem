@@ -1,5 +1,8 @@
 package com.mms.mms_api.business.specification;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import org.springframework.lang.NonNull;
 import org.springframework.lang.Nullable;
 import org.springframework.util.StringUtils;
@@ -27,31 +30,33 @@ public class TicketSpecification extends BaseSpecification<Ticket, TicketSearchQ
     @Override
     public Predicate toPredicate(@NonNull Root<Ticket> root, @Nullable CriteriaQuery<?> query,
             @NonNull CriteriaBuilder criteriaBuilder) {
+        List<Predicate> predicates = new ArrayList<>();
+        
         if (StringUtils.hasText(criteria.getKeyword())) {
-            addKeywordPredicate(root, criteriaBuilder);
+            buildKeywordPredicate(root, criteriaBuilder);
         }
 
         if (criteria.getShowTime() != null) {
-            addShowTimePredicate(root, criteriaBuilder);
+            predicates.add(buildShowTimePredicate(root, criteriaBuilder));
         }
 
         if (criteria.getMovieId() != null) {
-            addMoviePredicate(root, criteriaBuilder);
+            predicates.add(buildMoviePredicate(root, criteriaBuilder));
         }
 
         if (criteria.getRoomId() != null) {
-            addRoomPredicate(root, criteriaBuilder);
+            predicates.add(buildRoomPredicate(root, criteriaBuilder));
         }
 
         if (criteria.getPromotionId() != null) {
-            addPromotionPredicate(root, criteriaBuilder);
+            predicates.add(buildPromotionPredicate(root, criteriaBuilder));
         }
 
         return criteriaBuilder.and(predicates.toArray(Predicate[]::new));
     }
 
     @Override
-    protected void addKeywordPredicate(Root<Ticket> root, CriteriaBuilder criteriaBuilder) {
+    protected Predicate buildKeywordPredicate(Root<Ticket> root, CriteriaBuilder criteriaBuilder) {
         String pattern = "%" + criteria.getKeyword().toLowerCase() + "%";
 
         Join<Ticket, Invoice> invoiceJoin = root.join("invoice");
@@ -60,40 +65,32 @@ public class TicketSpecification extends BaseSpecification<Ticket, TicketSearchQ
         Predicate usernamePredicate = criteriaBuilder.like(userJoin.get("username"), pattern);
         Predicate phonePredicate = criteriaBuilder.like(userJoin.get("phoneNumber"), pattern);
 
-        predicates.add(criteriaBuilder.or(usernamePredicate, phonePredicate));
+        return criteriaBuilder.or(usernamePredicate, phonePredicate);
     }
 
-    private void addShowTimePredicate(Root<Ticket> root, CriteriaBuilder criteriaBuilder) {
+    private Predicate buildShowTimePredicate(Root<Ticket> root, CriteriaBuilder criteriaBuilder) {
         Join<Ticket, Schedule> scheduleJoin = root.join("schedule");
 
-        Predicate showTimePredicate = criteriaBuilder.equal(scheduleJoin.get("showTime"), criteria.getShowTime());
-
-        predicates.add(showTimePredicate);
+        return criteriaBuilder.equal(scheduleJoin.get("showTime"), criteria.getShowTime());
     }
 
-    private void addMoviePredicate(Root<Ticket> root, CriteriaBuilder criteriaBuilder) {
+    private Predicate buildMoviePredicate(Root<Ticket> root, CriteriaBuilder criteriaBuilder) {
         Join<Ticket, Schedule> scheduleJoin = root.join("schedule");
         Join<Schedule, Movie> movieJoin = scheduleJoin.join("movie");
 
-        Predicate moviePredicate = criteriaBuilder.equal(movieJoin.get("id"), criteria.getMovieId());
-
-        predicates.add(moviePredicate);
+        return criteriaBuilder.equal(movieJoin.get("id"), criteria.getMovieId());
     }
 
-    private void addRoomPredicate(Root<Ticket> root, CriteriaBuilder criteriaBuilder) {
+    private Predicate buildRoomPredicate(Root<Ticket> root, CriteriaBuilder criteriaBuilder) {
         Join<Ticket, Schedule> scheduleJoin = root.join("schedule");
         Join<Schedule, Room> roomJoin = scheduleJoin.join("room");
 
-        Predicate roomPredicate = criteriaBuilder.equal(roomJoin.get("id"), criteria.getRoomId());
-
-        predicates.add(roomPredicate);
+        return criteriaBuilder.equal(roomJoin.get("id"), criteria.getRoomId());
     }
 
-    private void addPromotionPredicate(Root<Ticket> root, CriteriaBuilder criteriaBuilder) {
+    private Predicate buildPromotionPredicate(Root<Ticket> root, CriteriaBuilder criteriaBuilder) {
         Join<Ticket, Promotion> promotionJoin = root.join("promotion");
 
-        Predicate promotionPredicate = criteriaBuilder.equal(promotionJoin.get("id"), criteria.getPromotionId());
-
-        predicates.add(promotionPredicate);
+        return criteriaBuilder.equal(promotionJoin.get("id"), criteria.getPromotionId());
     }
 }

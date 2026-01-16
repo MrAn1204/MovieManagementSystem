@@ -70,7 +70,7 @@ public class PromotionController {
         return ResponseEntity.noContent().build();
     }
 
-    @GetMapping("/search")
+    @PostMapping("/search")
     public ResponseEntity<PaginatedResult<PromotionDto>> search(@Valid @RequestBody PromotionSearchQuery request) {
         PaginatedResult<PromotionDto> result = promotionService.handle(request);
 

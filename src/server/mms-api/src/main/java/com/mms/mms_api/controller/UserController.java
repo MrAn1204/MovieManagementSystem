@@ -83,7 +83,7 @@ public class UserController {
         return ResponseEntity.noContent().build();
     }
 
-    @GetMapping("/search")
+    @PostMapping("/search")
     public ResponseEntity<PaginatedResult<UserDto>> search(@Valid @RequestBody UserSearchQuery query) {
         PaginatedResult<UserDto> users = userService.handle(query);
 

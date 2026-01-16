@@ -1,6 +1,8 @@
 package com.mms.mms_api.business.specification;
 
 import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.List;
 
 import com.mms.mms_api.business.query.promotion.PromotionSearchQuery;
 import com.mms.mms_api.model.Promotion;
@@ -21,28 +23,30 @@ public class PromotionSpecification extends BaseSpecification<Promotion, Promoti
     @Override
     public Predicate toPredicate(@NonNull Root<Promotion> root, @Nullable CriteriaQuery<?> query,
             @NonNull CriteriaBuilder criteriaBuilder) {
+        List<Predicate> predicates = new ArrayList<>();
+
         if (StringUtils.hasText(criteria.getKeyword())) {
-            addKeywordPredicate(root, criteriaBuilder);
+            predicates.add(buildKeywordPredicate(root, criteriaBuilder));
         }
 
         if (criteria.getStartDate() != null || criteria.getEndDate() != null) {
-            addDatePredicate(root, criteriaBuilder);
+            predicates.add(buildDatePredicate(root, criteriaBuilder));
         }
 
         return criteriaBuilder.and(predicates.toArray(Predicate[]::new));
     }
 
     @Override
-    protected void addKeywordPredicate(Root<Promotion> root, CriteriaBuilder criteriaBuilder) {
+    protected Predicate buildKeywordPredicate(Root<Promotion> root, CriteriaBuilder criteriaBuilder) {
         String pattern = "%" + criteria.getKeyword().toLowerCase() + "%";
 
         Predicate titlePredicate = criteriaBuilder.like(root.get("title"), pattern);
         Predicate descriptionPredicate = criteriaBuilder.like(root.get("description"), pattern);
 
-        predicates.add(criteriaBuilder.or(titlePredicate, descriptionPredicate));
+        return criteriaBuilder.or(titlePredicate, descriptionPredicate);
     }
 
-    private void addDatePredicate(Root<Promotion> root, CriteriaBuilder criteriaBuilder) {
+    private Predicate buildDatePredicate(Root<Promotion> root, CriteriaBuilder criteriaBuilder) {
         LocalDate searchStart = criteria.getStartDate();
         LocalDate searchEnd = criteria.getEndDate();
 
@@ -50,11 +54,13 @@ public class PromotionSpecification extends BaseSpecification<Promotion, Promoti
             Predicate startPredicate = criteriaBuilder.greaterThanOrEqualTo(root.get("startDate"), searchStart);
             Predicate endPredicate = criteriaBuilder.lessThanOrEqualTo(root.get("endDate"), searchEnd);
 
-            predicates.add(criteriaBuilder.and(startPredicate, endPredicate));
+            return criteriaBuilder.and(startPredicate, endPredicate);
         } else if (searchStart != null) {
-            predicates.add(criteriaBuilder.greaterThanOrEqualTo(root.get("startDate"), searchStart));
+            return criteriaBuilder.greaterThanOrEqualTo(root.get("startDate"), searchStart);
         } else if (searchEnd != null) {
-            predicates.add(criteriaBuilder.lessThanOrEqualTo(root.get("endDate"), searchEnd));
+            return criteriaBuilder.lessThanOrEqualTo(root.get("endDate"), searchEnd);
+        } else {
+            return criteriaBuilder.conjunction();
         }
     }
 }

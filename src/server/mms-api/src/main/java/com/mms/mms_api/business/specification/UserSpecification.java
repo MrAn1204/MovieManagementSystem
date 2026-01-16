@@ -9,6 +9,8 @@ import jakarta.persistence.criteria.Join;
 import jakarta.persistence.criteria.Predicate;
 import jakarta.persistence.criteria.Root;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.UUID;
 
 import org.springframework.lang.NonNull;
@@ -23,33 +25,35 @@ public class UserSpecification extends BaseSpecification<User, UserSearchQuery> 
     @Override
     public Predicate toPredicate(@NonNull Root<User> root, @Nullable CriteriaQuery<?> query,
             @NonNull CriteriaBuilder criteriaBuilder) {
+        List<Predicate> predicates = new ArrayList<>();
+
         if (StringUtils.hasText(criteria.getKeyword())) {
-            addKeywordPredicate(root, criteriaBuilder);
+            predicates.add(buildKeywordPredicate(root, criteriaBuilder));
         }
 
         if (criteria.getRoleId() != null) {
-            addRolePredicate(root, criteriaBuilder);
+            predicates.add(buildRolePredicate(root, criteriaBuilder));
         }
 
         return criteriaBuilder.and(predicates.toArray(Predicate[]::new));
     }
 
     @Override
-    protected void addKeywordPredicate(Root<User> root, CriteriaBuilder criteriaBuilder) {
+    protected Predicate buildKeywordPredicate(Root<User> root, CriteriaBuilder criteriaBuilder) {
         String pattern = "%" + criteria.getKeyword().toLowerCase() + "%";
 
         Predicate usernamePredicate = criteriaBuilder.like(root.get("username"), pattern);
         Predicate fullnamePredicate = criteriaBuilder.like(root.get("fullname"), pattern);
         Predicate emailPredicate = criteriaBuilder.like(root.get("email"), pattern);
 
-        predicates.add(criteriaBuilder.or(usernamePredicate, fullnamePredicate, emailPredicate));
+        return criteriaBuilder.or(usernamePredicate, fullnamePredicate, emailPredicate);
     }
 
-    private void addRolePredicate(Root<User> root, CriteriaBuilder criteriaBuilder) {
+    private Predicate buildRolePredicate(Root<User> root, CriteriaBuilder criteriaBuilder) {
         UUID searchRole = criteria.getRoleId();
 
         Join<User, Role> roleJoin = root.join("roles");
 
-        predicates.add(criteriaBuilder.equal(roleJoin.get("id"), searchRole));
+        return criteriaBuilder.equal(roleJoin.get("id"), searchRole);
     }
 }

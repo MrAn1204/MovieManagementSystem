@@ -69,7 +69,7 @@ public class TicketController {
         return ResponseEntity.noContent().build();
     }
 
-    @GetMapping("/search")
+    @PostMapping("/search")
     public ResponseEntity<PaginatedResult<TicketDto>> search(@Valid @RequestBody TicketSearchQuery request) {
         PaginatedResult<TicketDto> result = ticketService.handle(request);
         return ResponseEntity.ok(result);

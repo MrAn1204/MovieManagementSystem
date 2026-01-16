@@ -1,5 +1,8 @@
 package com.mms.mms_api.business.specification;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import org.springframework.lang.NonNull;
 import org.springframework.lang.Nullable;
 import org.springframework.util.StringUtils;
@@ -21,38 +24,37 @@ public class RoomSpecification extends BaseSpecification<Room, RoomSearchQuery> 
     @Override
     public Predicate toPredicate(@NonNull Root<Room> root, @Nullable CriteriaQuery<?> query,
             @NonNull CriteriaBuilder criteriaBuilder) {
+        List<Predicate> predicates = new ArrayList<>();
+
         if (StringUtils.hasText(criteria.getKeyword())) {
-            addKeywordPredicate(root, criteriaBuilder);
+            predicates.add(buildKeywordPredicate(root, criteriaBuilder));
         }
 
         if (criteria.getSeatQuantityMin() > 0 || criteria.getSeatQuantityMax() > 0) {
-            addSeatQuantityPredicate(root, criteriaBuilder);
+            predicates.add(buildSeatQuantityPredicate(root, criteriaBuilder));
         }
 
         return criteriaBuilder.and(predicates.toArray(Predicate[]::new));
     }
 
-    private void addSeatQuantityPredicate(Root<Room> root, CriteriaBuilder criteriaBuilder) {
-        Predicate seatQuantityPredicate = criteriaBuilder.conjunction();
-        
+    @Override
+    protected Predicate buildKeywordPredicate(Root<Room> root, CriteriaBuilder criteriaBuilder) {
+        String pattern = "%" + criteria.getKeyword().toLowerCase() + "%";
+
+        return criteriaBuilder.like(root.get("name"), pattern);
+    }
+
+    private Predicate buildSeatQuantityPredicate(Root<Room> root, CriteriaBuilder criteriaBuilder) {
         Path<Integer> seatQuantityPath = root.get("seatQuantity");
 
         if (criteria.getSeatQuantityMin() > 0 && criteria.getSeatQuantityMax() > 0) {
-            seatQuantityPredicate = criteriaBuilder.between(seatQuantityPath, criteria.getSeatQuantityMin(), criteria.getSeatQuantityMax());
+            return criteriaBuilder.between(seatQuantityPath, criteria.getSeatQuantityMin(), criteria.getSeatQuantityMax());
         } else if (criteria.getSeatQuantityMin() > 0) {
-            seatQuantityPredicate = criteriaBuilder.greaterThanOrEqualTo(seatQuantityPath, criteria.getSeatQuantityMin());
+            return criteriaBuilder.greaterThanOrEqualTo(seatQuantityPath, criteria.getSeatQuantityMin());
         } else if (criteria.getSeatQuantityMax() > 0) {
-            seatQuantityPredicate = criteriaBuilder.lessThanOrEqualTo(seatQuantityPath, criteria.getSeatQuantityMax());
+            return criteriaBuilder.lessThanOrEqualTo(seatQuantityPath, criteria.getSeatQuantityMax());
+        } else {
+            return criteriaBuilder.conjunction();
         }
-
-        predicates.add(seatQuantityPredicate);
     }
-
-    @Override
-    protected void addKeywordPredicate(Root<Room> root, CriteriaBuilder criteriaBuilder) {
-        String pattern = "%" + criteria.getKeyword().toLowerCase() + "%";
-
-        predicates.add(criteriaBuilder.like(root.get("name"), pattern));
-    }
-
 }

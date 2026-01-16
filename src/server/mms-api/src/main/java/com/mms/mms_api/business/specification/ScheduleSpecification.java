@@ -1,6 +1,8 @@
 package com.mms.mms_api.business.specification;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
 
 import org.springframework.lang.NonNull;
 import org.springframework.lang.Nullable;
@@ -26,39 +28,39 @@ public class ScheduleSpecification extends BaseSpecification<Schedule, ScheduleS
     @Override
     public Predicate toPredicate(@NonNull Root<Schedule> root, @Nullable CriteriaQuery<?> query,
             @NonNull CriteriaBuilder criteriaBuilder) {
+        List<Predicate> predicates = new ArrayList<>();
+        
         if (StringUtils.hasText(criteria.getKeyword())) {
-            addKeywordPredicate(root, criteriaBuilder);
+            predicates.add(buildKeywordPredicate(root, criteriaBuilder));
         }
 
         if (criteria.getDate() != null) {
-            addShowTimePredicate(root, criteriaBuilder);
+            predicates.add(buildShowTimePredicate(root, criteriaBuilder));
         }
 
         if (criteria.getRoomId() != null) {
-            addRoomPredicate(root, criteriaBuilder);
+            predicates.add(buildRoomPredicate(root, criteriaBuilder));
         }
 
         return criteriaBuilder.and(predicates.toArray(Predicate[]::new));
     }
 
     @Override
-    protected void addKeywordPredicate(Root<Schedule> root, CriteriaBuilder criteriaBuilder) {
+    protected Predicate buildKeywordPredicate(Root<Schedule> root, CriteriaBuilder criteriaBuilder) {
         String pattern = "%" + criteria.getKeyword().toLowerCase() + "%";
 
         Join<Schedule, Movie> movieJoin = root.join("movie");
 
-        predicates.add(criteriaBuilder.like(movieJoin.get("name"), pattern));
+        return criteriaBuilder.like(movieJoin.get("name"), pattern);
     }
 
-    private void addShowTimePredicate(Root<Schedule> root, CriteriaBuilder criteriaBuilder) {
-        Predicate showTimePredicate;
-
+    private Predicate buildShowTimePredicate(Root<Schedule> root, CriteriaBuilder criteriaBuilder) {
         Path<LocalDateTime> showTimePath = root.get("showTime");
 
         if (criteria.getMinTime() != null && criteria.getMaxTime() != null) {
             LocalDateTime fromDateTime = criteria.getDate().atTime(criteria.getMinTime());
             LocalDateTime toDateTime = criteria.getDate().atTime(criteria.getMaxTime());
-            showTimePredicate = criteriaBuilder.between(showTimePath, fromDateTime, toDateTime);
+            return criteriaBuilder.between(showTimePath, fromDateTime, toDateTime);
         } else {
             LocalDateTime minShowTime = criteria.getMinTime() != null
                     ? criteria.getDate().atTime(criteria.getMinTime())
@@ -66,15 +68,13 @@ public class ScheduleSpecification extends BaseSpecification<Schedule, ScheduleS
             LocalDateTime endOfDay = criteria.getMaxTime() != null
                     ? criteria.getDate().atTime(criteria.getMaxTime())
                     : criteria.getDate().plusDays(1).atStartOfDay();
-            showTimePredicate = criteriaBuilder.between(showTimePath, minShowTime, endOfDay);
+            return criteriaBuilder.between(showTimePath, minShowTime, endOfDay);
         }
-
-        predicates.add(showTimePredicate);
     }
 
-    private void addRoomPredicate(Root<Schedule> root, CriteriaBuilder criteriaBuilder) {
+    private Predicate buildRoomPredicate(Root<Schedule> root, CriteriaBuilder criteriaBuilder) {
         Join<Schedule, Room> roomJoin = root.join("room");
         
-        predicates.add(criteriaBuilder.equal(roomJoin.get("id"), criteria.getRoomId()));
+        return criteriaBuilder.equal(roomJoin.get("id"), criteria.getRoomId());
     }
 }

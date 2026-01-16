@@ -74,7 +74,7 @@ public class MovieController {
         return ResponseEntity.noContent().build();
     }
 
-    @GetMapping("/search")
+    @PostMapping("/search")
     public ResponseEntity<PaginatedResult<MovieDto>> search(@Valid @RequestBody MovieSearchQuery query) {
         PaginatedResult<MovieDto> movies = movieService.handle(query);
 
