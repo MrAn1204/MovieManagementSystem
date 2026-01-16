@@ -63,7 +63,7 @@ public class ScheduleController {
         return ResponseEntity.noContent().build();
     }
 
-    @GetMapping("/search")
+    @PostMapping("/search")
     public ResponseEntity<PaginatedResult<ScheduleDto>> search(@Valid @RequestBody ScheduleSearchQuery request) {
         PaginatedResult<ScheduleDto> schedules = scheduleService.handle(request);
         return ResponseEntity.ok(schedules);

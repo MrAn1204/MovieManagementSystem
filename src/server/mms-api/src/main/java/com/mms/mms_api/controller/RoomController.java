@@ -63,7 +63,7 @@ public class RoomController {
         return ResponseEntity.noContent().build();
     }
 
-    @GetMapping("/search")
+    @PostMapping("/search")
     public ResponseEntity<PaginatedResult<RoomDto>> search(@Valid @RequestBody RoomSearchQuery request) {
         PaginatedResult<RoomDto> result = roomService.handle(request);
 
