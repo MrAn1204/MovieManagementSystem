@@ -23,7 +23,8 @@
 
         <select name="order" id="order" formControlName="sortBy"
           class="w-full p-2 border border-l-0 rounded-tr-md rounded-br-md border-platinum-300 focus:outline-none focus:ring-2 focus:ring-steel-blue">
-          <option value="" disabled selected hidden>Order by</option>
+          <option value="id" selected hidden>Order by</option>
+          <option value="id">Default</option>
           @for (option of sortOptions; track $index) {
           <option [value]="option.value">{{ option.label }}</option>
           }

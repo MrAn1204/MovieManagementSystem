@@ -1,4 +1,4 @@
-import { Component, input, OnInit, Type } from '@angular/core';
+import { Component, input, OnInit, output, Type } from '@angular/core';
 import { FormControl, FormGroup, ReactiveFormsModule } from '@angular/forms';
 import { FormOptionModel } from '../../model/form-option.model';
 import { NgComponentOutlet } from '@angular/common';
@@ -13,6 +13,7 @@ export class Search implements OnInit {
   filterVisible: boolean = false;
   ascending: boolean = true;
   layoutFilter = input<Type<unknown>>();
+  triggerSearch = output<any>();
 
   sortOptions: FormOptionModel[] = [];
   form!: FormGroup;
@@ -22,7 +23,7 @@ export class Search implements OnInit {
   ngOnInit(): void {
     this.form = new FormGroup({
       keyword: new FormControl(''),
-      sortBy: new FormControl(''),
+      sortBy: new FormControl('id'),
       sortDirection: new FormControl('ASC'),
       pageNumber: new FormControl(1),
       pageSize: new FormControl(10),
@@ -40,5 +41,6 @@ export class Search implements OnInit {
   onSubmit(): void {
     this.form.controls['sortDirection'].setValue(this.ascending ? 'ASC' : 'DESC');
     console.log(this.form.value);
+    this.triggerSearch.emit(this.form.value);
   }
 }

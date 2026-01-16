@@ -1,5 +1,5 @@
 <div class="w-full h-full flex flex-col items-center">
-  <app-search [layoutFilter]="movieFilter"></app-search>
+  <app-search [layoutFilter]="movieFilter" (triggerSearch)="onSearch($event)"></app-search>
 
   <app-table entityName="Movie" [columns]="columns" [data]="movies()" [contentCreateEdit]="movieCreateEdit"
     [contentDetail]="movieDetail"></app-table>

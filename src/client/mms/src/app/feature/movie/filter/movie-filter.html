@@ -1,12 +1,12 @@
 <div class="filter-layout">
   <div class="filter-common">
-    <app-select-field formControlName="language" idName="filter-language" labelText="Language"></app-select-field>
+    <app-select-field formControlName="languageId" idName="filter-language" labelText="Language" [options]="languages()"></app-select-field>
   </div>
 
   <div class="filter-multiselect">
-    <app-multiselect-field formControlName="genre" idName="filter-genre" labelText="Genre"></app-multiselect-field>
+    <app-multiselect-field formControlName="genreIds" idName="filter-genre" labelText="Genre" [options]="genres()"></app-multiselect-field>
     
-    <app-multiselect-field formControlName="studio" idName="filter-studio" labelText="Studio"></app-multiselect-field>
+    <app-multiselect-field formControlName="studioIds" idName="filter-studio" labelText="Studio" [options]="studios()"></app-multiselect-field>
   </div>
 
   <div class="filter-range">

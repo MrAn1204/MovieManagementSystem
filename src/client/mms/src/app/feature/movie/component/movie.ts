@@ -6,8 +6,9 @@ import { MovieCreateEdit } from '../create-edit/movie-create-edit';
 import { MovieDetail } from '../detail/movie-detail';
 import { MovieModel } from '../../../model/movie.model';
 import { MovieService } from '../../../service/movie/movie.service';
-import { FormGroup, ReactiveFormsModule } from '@angular/forms';
+import { ReactiveFormsModule } from '@angular/forms';
 import { TableColumnModel } from '../../../shared/model/table-column.model';
+import { MovieSearchModel } from '../../../model/search/movie-search.model';
 
 @Component({
   selector: 'app-movie',
@@ -30,14 +31,29 @@ export class Movie implements OnInit {
   ];
   movies = signal<MovieModel[]>([]);
 
-  form: FormGroup = new FormGroup({});
+  constructor(private readonly movieService: MovieService) { }
 
-  constructor(private readonly movieService: MovieService) {}
-  
   ngOnInit(): void {
     this.movieService.getAll().subscribe(movies => {
       this.movies.set(movies);
     });
   }
-  
+
+  onSearch(form: any): void {
+    console.log(form);
+
+    const data: MovieSearchModel = {
+      ...form,
+      releaseAfter: form.releaseAfter
+        ? new Date(form.releaseAfter).toISOString().substring(0, 10)
+        : "",
+      releaseBefore: form.releaseBefore
+        ? new Date(form.releaseBefore).toISOString().substring(0, 10)
+        : "",
+    }
+
+    this.movieService.search(data).subscribe(res => {
+      this.movies.set(res.items);
+    });
+  }
 }

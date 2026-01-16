@@ -2,6 +2,8 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { MovieModel } from '../../model/movie.model';
+import { MovieSearchModel } from '../../model/search/movie-search.model';
+import { PaginatedResult } from '../../shared/model/paginated-result.model';
 
 @Injectable({
   providedIn: 'root',
@@ -29,5 +31,11 @@ export class MovieService {
 
   delete(id: string): Observable<null> {
     return this.http.delete<null>(`${this.baseUrl}/${id}`);
+  }
+
+  search(filter: MovieSearchModel): Observable<PaginatedResult<MovieModel>> {
+    console.log(filter);
+    
+    return this.http.post<PaginatedResult<MovieModel>>(`${this.baseUrl}/search`, filter );
   }
 }
