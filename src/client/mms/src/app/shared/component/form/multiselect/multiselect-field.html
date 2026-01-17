@@ -2,15 +2,15 @@
   <label [htmlFor]="idName()" class="font-medium">{{ labelText() }}</label>
   <button [id]="`${idName()}-button`" [attr.data-dropdown-toggle]="`${idName()}-dropdown`"
     data-dropdown-placement="bottom"
-    class="relative bg-white flex flex-col px-4 py-2 border border-platinum-300 rounded-md focus:outline-none focus:ring-2 focus:ring-steel-blue"
+    class="relative bg-white flex flex-col form-field"
     type="button">
     <input hidden [value]="value" [name]="idName()" [id]="idName()">
     <div [id]="`${idName()}-display`"
       class="overflow-auto min-h-6 flex flex-wrap gap-2 *:bg-platinum-200 *:px-1 *:rounded-md">
       @for (item of selected; track $index) {
-      <span>
-        {{ item }}
-      </span>
+        <span>
+          {{ item }}
+        </span>
       }
     </div>
     <span class="absolute right-2 pointer-events-none"><i class="fa-solid fa-angle-down"></i></span>
@@ -30,17 +30,17 @@
     </div>
     <ul class="h-48 px-3 pb-3 overflow-y-auto text-sm text-platinum-700" [attr.aria-labelledby]="`${idName()}-button`">
       @for (option of options(); track $index) {
-      @if (containKeyword(option.label)) {
-      <li>
-        <div class="flex items-center ps-2 rounded-sm hover:bg-platinum-100">
-          <input (change)="updateSelected(option)" [id]="`${idName()}-${$index}`" type="checkbox"
-            [value]="option.value" [checked]="option.selected"
-            class="w-4 h-4 text-steel-blue-500 bg-platinum-50 border border-platinum-300 rounded-sm focus:ring-steel-blue-500 focus:ring-2">
-          <label [htmlFor]="`${idName()}-${$index}`" class="w-full py-2 ms-2 text-sm font-medium rounded-sm">
-            {{ option.label }}</label>
-        </div>
-      </li>
-      }
+        @if (containKeyword(option.label)) {
+          <li>
+            <div class="flex items-center ps-2 rounded-sm hover:bg-platinum-100">
+              <input (change)="updateSelected(option)" [id]="`${idName()}-${$index}`" type="checkbox"
+                [value]="option.value" [checked]="option.selected"
+                class="w-4 h-4 text-steel-blue-500 bg-platinum-50 border border-platinum-300 rounded-sm focus:ring-steel-blue-500 focus:ring-2">
+              <label [htmlFor]="`${idName()}-${$index}`" class="w-full py-2 ms-2 text-sm font-medium rounded-sm">
+                {{ option.label }}</label>
+            </div>
+          </li>
+        }
       }
     </ul>
     <div class="flex items-center text-white p-3 border-t border-platinum-200 rounded-b-lg">

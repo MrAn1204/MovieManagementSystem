@@ -1,4 +1,4 @@
-import { Component, OnInit, signal } from '@angular/core';
+import { Component, signal } from '@angular/core';
 import { Search } from "../../../shared/component/search/search";
 import { Table } from "../../../shared/component/table/table";
 import { MovieFilter } from "../filter/movie-filter";
@@ -6,9 +6,10 @@ import { MovieCreateEdit } from '../create-edit/movie-create-edit';
 import { MovieDetail } from '../detail/movie-detail';
 import { MovieModel } from '../../../model/movie.model';
 import { MovieService } from '../../../service/movie/movie.service';
-import { ReactiveFormsModule } from '@angular/forms';
+import { FormControl, FormGroup, ReactiveFormsModule } from '@angular/forms';
 import { TableColumnModel } from '../../../shared/model/table-column.model';
 import { MovieSearchModel } from '../../../model/search/movie-search.model';
+import { createEmptyPaginatedResult, PaginatedResult } from '../../../shared/model/paginated-result.model';
 
 @Component({
   selector: 'app-movie',
@@ -16,10 +17,22 @@ import { MovieSearchModel } from '../../../model/search/movie-search.model';
   templateUrl: './movie.html',
   styleUrl: './movie.css',
 })
-export class Movie implements OnInit {
+export class Movie {
   movieCreateEdit = MovieCreateEdit;
   movieDetail = MovieDetail;
   movieFilter = MovieFilter;
+
+  pageNumber = signal<number>(1);
+  pageSize = 10;
+  pageCount = 10;
+
+  searchForm = new FormGroup({
+    languageId: new FormControl(''),
+    genreIds: new FormControl([]),
+    studioIds: new FormControl([]),
+    releaseAfter: new FormControl(''),
+    releaseBefore: new FormControl(''),
+  });
 
   columns: TableColumnModel[] = [
     { key: 'name', label: 'Name', type: 'string' },
@@ -29,31 +42,17 @@ export class Movie implements OnInit {
     { key: 'studios', label: 'Studio', type: 'id-name-array' },
     { key: 'language', label: 'Language', type: 'id-name' }
   ];
-  movies = signal<MovieModel[]>([]);
+  movies = signal<PaginatedResult<MovieModel>>(createEmptyPaginatedResult<MovieModel>());
 
   constructor(private readonly movieService: MovieService) { }
 
-  ngOnInit(): void {
-    this.movieService.getAll().subscribe(movies => {
-      this.movies.set(movies);
+  onSearch(formData: MovieSearchModel): void {
+    this.movieService.search(formData).subscribe(res => {
+      this.movies.set(res);
     });
   }
 
-  onSearch(form: any): void {
-    console.log(form);
-
-    const data: MovieSearchModel = {
-      ...form,
-      releaseAfter: form.releaseAfter
-        ? new Date(form.releaseAfter).toISOString().substring(0, 10)
-        : "",
-      releaseBefore: form.releaseBefore
-        ? new Date(form.releaseBefore).toISOString().substring(0, 10)
-        : "",
-    }
-
-    this.movieService.search(data).subscribe(res => {
-      this.movies.set(res.items);
-    });
+  onChangePage(page: number): void {
+    this.pageNumber.set(page);
   }
 }

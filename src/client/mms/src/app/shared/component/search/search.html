@@ -1,8 +1,8 @@
-<form [formGroup]="form" (submit)="onSubmit()" class="flex flex-col max-h-screen overflow-auto">
+<form [formGroup]="form()" (submit)="onSubmit()" class="flex flex-col max-h-screen overflow-auto">
   <div class="flex gap-4 sm:flex-row flex-col">
     <div class="flex grow-3">
       <input type="text" formControlName="keyword" placeholder="Search..."
-        class="w-full px-4 py-2 border border-platinum-300 rounded-l-md focus:outline-none focus:ring-2 focus:ring-steel-blue">
+        class="form-field rounded-r-none">
       <button type="submit"
         class="w-12 text-white rounded-r-md bg-steel-blue hover:bg-steel-blue-500 focus:outline-none focus:ring-2 focus:ring-steel-blue">
         <i class="fa-solid fa-magnifying-glass"></i>
@@ -15,14 +15,14 @@
           class="order-button w-1/4 max-w-12 border bg-white border-platinum-300 rounded-tl-md rounded-bl-md text-steel-blue focus:outline-none"
           (click)="toggleOrder()">
           @if (ascending) {
-          <i id="icon-asc" class="fa-solid fa-arrow-up-short-wide"></i>
+            <i id="icon-asc" class="fa-solid fa-arrow-up-short-wide"></i>
           } @else {
-          <i id="icon-desc" class="fa-solid fa-arrow-down-short-wide"></i>
+            <i id="icon-desc" class="fa-solid fa-arrow-down-short-wide"></i>
           }
         </button>
 
         <select name="order" id="order" formControlName="sortBy"
-          class="w-full p-2 border border-l-0 rounded-tr-md rounded-br-md border-platinum-300 focus:outline-none focus:ring-2 focus:ring-steel-blue">
+          class="form-field border-l-0 rounded-l-none p-2">
           <option value="id" selected hidden>Order by</option>
           <option value="id">Default</option>
           @for (option of sortOptions; track $index) {
@@ -33,6 +33,10 @@
 
       <button type="button"
         class="filter-button w-1/4 max-w-12 border border-steel-blue rounded-md hover:bg-platinum-100 text-steel-blue focus:outline-none"
+        [class.bg-steel-blue-500]="filterVisible"
+        [class.text-white]="filterVisible"
+        [class.hover:text-white]="filterVisible"
+        [class.hover:bg-steel-blue-600]="filterVisible"
         (click)="toggleFilter()">
         <i class="fa-solid fa-filter"></i>
       </button>
@@ -43,7 +47,7 @@
 
   <div id="filter-container" [class.h-screen]="filterVisible" [class.opacity-100]="filterVisible"
     class="overflow-y-auto transition-all duration-500 ease-in-out h-0 lg:max-h-fit opacity-0">
-    <ng-container [ngComponentOutlet]="layoutFilter() ?? null"></ng-container>
+    <ng-container [ngComponentOutlet]="contentFilter() ?? null"></ng-container>
   </div>
 
   <hr id="filter-bottom" [class.border-0]="!filterVisible" class="mb-4 border-platinum-300">

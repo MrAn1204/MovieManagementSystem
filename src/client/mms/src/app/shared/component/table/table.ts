@@ -1,9 +1,10 @@
-import { Component, input, Type } from '@angular/core';
+import { Component, input, OnInit, output, Type } from '@angular/core';
 import { CreateEdit } from '../dialog/create-edit/create-edit';
 import { Detail } from '../dialog/detail/detail';
 import { DialogService } from '../../../service/dialog/dialog.service';
 import { FormatCellPipe } from '../../pipe/format-cell/format-cell-pipe';
 import { TableColumnModel } from '../../model/table-column.model';
+import { PaginatedResult } from '../../model/paginated-result.model';
 
 @Component({
   selector: 'app-table',
@@ -11,16 +12,40 @@ import { TableColumnModel } from '../../model/table-column.model';
   templateUrl: './table.html',
   styleUrl: './table.css',
 })
-export class Table {
+export class Table implements OnInit {
   columns = input.required<TableColumnModel[]>();
-  data = input.required<any[]>();
+  data = input.required<PaginatedResult<any>>();
   entityName = input.required<string>();
   contentCreateEdit = input.required<Type<unknown>>();
   contentDetail = input.required<Type<unknown>>();
 
   dialogCallbacks = input<Record<string, () => void>>({});
 
+  changePage = output<number>();
+
+  pages: (number | null)[] = [];
+
   constructor(private readonly dialogService: DialogService) { }
+
+  ngOnInit(): void {
+    this.setPagination(this.data().pageNumber, this.data().totalPages);
+  }
+
+  setPagination(pageNumber: number, pageCount: number): void {
+    if (pageCount <= 7) {
+      this.pages = new Array(pageCount).fill(0).map((_, index) => index + 1);
+      return;
+    }
+
+    if (pageNumber <= 4) {
+      this.pages = new Array(5).fill(0).map((_, index) => index + 1);
+      this.pages.push(null, pageCount);
+    } else if (pageNumber <= pageCount - 4) {
+      this.pages = [1, null, pageNumber - 1, pageNumber, pageNumber + 1, null, pageCount];
+    } else {
+      this.pages = [1, null, pageCount - 4, pageCount - 3, pageCount - 2, pageCount - 1, pageCount];
+    }
+  }
 
   viewDetail(item: any): void {
     this.dialogService.openDialog(Detail, {
@@ -52,5 +77,13 @@ export class Table {
 
   deleteItem() {
     console.log('Delete item');
+  }
+
+  updatePages(page: number): void {
+    if (page < 1 || page > this.data().totalPages) {
+      return;
+    }
+    this.setPagination(page, this.data().totalPages);
+    this.changePage.emit(page);
   }
 }

@@ -12,22 +12,28 @@ import { NgComponentOutlet } from '@angular/common';
 export class Search implements OnInit {
   filterVisible: boolean = false;
   ascending: boolean = true;
-  layoutFilter = input<Type<unknown>>();
+  contentFilter = input<Type<unknown>>();
+  form = input.required<FormGroup>();
   triggerSearch = output<any>();
 
   sortOptions: FormOptionModel[] = [];
-  form!: FormGroup;
+
+  initialFields: Record<string, FormControl> = {
+    keyword: new FormControl(''),
+    sortBy: new FormControl('id'),
+    sortDirection: new FormControl('ASC'),
+    pageNumber: new FormControl(1),
+    pageSize: new FormControl(10),
+  };
 
   constructor() { }
 
   ngOnInit(): void {
-    this.form = new FormGroup({
-      keyword: new FormControl(''),
-      sortBy: new FormControl('id'),
-      sortDirection: new FormControl('ASC'),
-      pageNumber: new FormControl(1),
-      pageSize: new FormControl(10),
+    Object.entries(this.initialFields).forEach(([key, control]) => {
+      this.form().addControl(key, control);
     });
+    
+    this.triggerSearch.emit(this.form().value);
   }
 
   toggleFilter(): void {
@@ -39,8 +45,7 @@ export class Search implements OnInit {
   }
 
   onSubmit(): void {
-    this.form.controls['sortDirection'].setValue(this.ascending ? 'ASC' : 'DESC');
-    console.log(this.form.value);
-    this.triggerSearch.emit(this.form.value);
+    this.form().controls['sortDirection'].setValue(this.ascending ? 'ASC' : 'DESC');
+    this.triggerSearch.emit(this.form().value);
   }
 }

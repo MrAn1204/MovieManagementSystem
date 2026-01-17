@@ -1,8 +1,8 @@
-import { Component, inject, OnInit, signal } from '@angular/core';
+import { Component, OnInit, signal } from '@angular/core';
 import { SelectField } from "../../../shared/component/form/select/select-field";
 import { MultiselectField } from "../../../shared/component/form/multiselect/multiselect-field";
 import { InputField } from "../../../shared/component/form/input/input-field";
-import { ControlContainer, FormControl, FormGroup, FormGroupDirective, ReactiveFormsModule } from '@angular/forms';
+import { ControlContainer, FormGroupDirective, ReactiveFormsModule } from '@angular/forms';
 import { GenreService } from '../../../service/genre/genre.service';
 import { StudioService } from '../../../service/studio/studio.service';
 import { LanguageService } from '../../../service/language/language.service';
@@ -17,19 +17,9 @@ import { FlowbiteService } from '../../../service/flowbite.service';
   styleUrl: './movie-filter.css',
 })
 export class MovieFilter implements OnInit {
-  form: FormGroup = inject(ControlContainer).control as FormGroup;
-
   genres = signal<FormOptionModel[]>([]);
   studios = signal<FormOptionModel[]>([]);
   languages = signal<FormOptionModel[]>([]);
-
-  fields: Record<string, FormControl> = {
-    languageId: new FormControl(''),
-    genreIds: new FormControl([]),
-    studioIds: new FormControl([]),
-    releaseAfter: new FormControl(''),
-    releaseBefore: new FormControl(''),
-  };
 
   constructor(
     private readonly genreService: GenreService,
@@ -41,10 +31,6 @@ export class MovieFilter implements OnInit {
   ngOnInit(): void {
     this.flowbiteService.loadFlowbite((flowbite) => {
       flowbite.initFlowbite();
-    });
-
-    Object.entries(this.fields).forEach(([key, control]) => {
-      this.form.addControl(key, control);
     });
 
     this.genreService.getAll().subscribe((genres) => {

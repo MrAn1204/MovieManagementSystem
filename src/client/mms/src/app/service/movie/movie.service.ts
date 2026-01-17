@@ -34,8 +34,6 @@ export class MovieService {
   }
 
   search(filter: MovieSearchModel): Observable<PaginatedResult<MovieModel>> {
-    console.log(filter);
-    
     return this.http.post<PaginatedResult<MovieModel>>(`${this.baseUrl}/search`, filter );
   }
 }
