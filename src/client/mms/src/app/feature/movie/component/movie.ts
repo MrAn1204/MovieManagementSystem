@@ -1,4 +1,4 @@
-import { Component, signal } from '@angular/core';
+import { Component } from '@angular/core';
 import { Search } from "../../../shared/component/search/search";
 import { Table } from "../../../shared/component/table/table";
 import { MovieFilter } from "../filter/movie-filter";
@@ -6,10 +6,9 @@ import { MovieCreateEdit } from '../create-edit/movie-create-edit';
 import { MovieDetail } from '../detail/movie-detail';
 import { MovieModel } from '../../../model/movie.model';
 import { MovieService } from '../../../service/movie/movie.service';
-import { FormControl, FormGroup, ReactiveFormsModule } from '@angular/forms';
+import { FormControl, ReactiveFormsModule } from '@angular/forms';
 import { TableColumnModel } from '../../../shared/model/table-column.model';
-import { MovieSearchModel } from '../../../model/search/movie-search.model';
-import { createEmptyPaginatedResult, PaginatedResult } from '../../../shared/model/paginated-result.model';
+import { AppFeature } from '../../../shared/component/feature/base-feature';
 
 @Component({
   selector: 'app-movie',
@@ -17,24 +16,12 @@ import { createEmptyPaginatedResult, PaginatedResult } from '../../../shared/mod
   templateUrl: './movie.html',
   styleUrl: './movie.css',
 })
-export class Movie {
-  movieCreateEdit = MovieCreateEdit;
-  movieDetail = MovieDetail;
-  movieFilter = MovieFilter;
+export class Movie extends AppFeature<MovieModel> {
+  override contentCreateEdit = MovieCreateEdit;
+  override contentDetail = MovieDetail;
+  override contentFilter = MovieFilter;
 
-  pageNumber = signal<number>(1);
-  pageSize = 10;
-  pageCount = 10;
-
-  searchForm = new FormGroup({
-    languageId: new FormControl(''),
-    genreIds: new FormControl([]),
-    studioIds: new FormControl([]),
-    releaseAfter: new FormControl(''),
-    releaseBefore: new FormControl(''),
-  });
-
-  columns: TableColumnModel[] = [
+  override columns: TableColumnModel[] = [
     { key: 'name', label: 'Name', type: 'string' },
     { key: 'releaseDate', label: 'Release Date', type: 'date' },
     { key: 'duration', label: 'Duration', type: 'number' },
@@ -42,17 +29,25 @@ export class Movie {
     { key: 'studios', label: 'Studio', type: 'id-name-array' },
     { key: 'language', label: 'Language', type: 'id-name' }
   ];
-  movies = signal<PaginatedResult<MovieModel>>(createEmptyPaginatedResult<MovieModel>());
 
-  constructor(private readonly movieService: MovieService) { }
+  override sortOptions = [
+    { label: 'Name', value: 'name' },
+    { label: 'Release Date', value: 'releaseDate' },
+    { label: 'Duration', value: 'duration' },
+  ];
 
-  onSearch(formData: MovieSearchModel): void {
-    this.movieService.search(formData).subscribe(res => {
-      this.movies.set(res);
-    });
+  constructor(private readonly movieService: MovieService) {
+    super();
+    this.searchForm.addControl('languageId', new FormControl(''));
+    this.searchForm.addControl('genreIds', new FormControl([]));
+    this.searchForm.addControl('studioIds', new FormControl([]));
+    this.searchForm.addControl('releaseAfter', new FormControl(''));
+    this.searchForm.addControl('releaseBefore', new FormControl(''));
   }
 
-  onChangePage(page: number): void {
-    this.pageNumber.set(page);
+  override onSearch(): void {
+    this.movieService.search(this.searchForm.value).subscribe(res => {
+      this.data.set(res);
+    });
   }
 }

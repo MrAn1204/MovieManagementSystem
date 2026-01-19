@@ -12,11 +12,12 @@ import { NgComponentOutlet } from '@angular/common';
 export class Search implements OnInit {
   filterVisible: boolean = false;
   ascending: boolean = true;
-  contentFilter = input<Type<unknown>>();
-  form = input.required<FormGroup>();
-  triggerSearch = output<any>();
 
-  sortOptions: FormOptionModel[] = [];
+  form = input.required<FormGroup>();
+  contentFilter = input<Type<unknown>>();
+  sortOptions = input<FormOptionModel[]>();
+
+  triggerSearch = output<void>();
 
   initialFields: Record<string, FormControl> = {
     keyword: new FormControl(''),
@@ -46,6 +47,6 @@ export class Search implements OnInit {
 
   onSubmit(): void {
     this.form().controls['sortDirection'].setValue(this.ascending ? 'ASC' : 'DESC');
-    this.triggerSearch.emit(this.form().value);
+    this.triggerSearch.emit();
   }
 }

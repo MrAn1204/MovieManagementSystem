@@ -1,4 +1,4 @@
-import { Component, input, OnInit, output, Type } from '@angular/core';
+import { Component, effect, input, output, Type } from '@angular/core';
 import { CreateEdit } from '../dialog/create-edit/create-edit';
 import { Detail } from '../dialog/detail/detail';
 import { DialogService } from '../../../service/dialog/dialog.service';
@@ -12,7 +12,7 @@ import { PaginatedResult } from '../../model/paginated-result.model';
   templateUrl: './table.html',
   styleUrl: './table.css',
 })
-export class Table implements OnInit {
+export class Table {
   columns = input.required<TableColumnModel[]>();
   data = input.required<PaginatedResult<any>>();
   entityName = input.required<string>();
@@ -21,17 +21,21 @@ export class Table implements OnInit {
 
   dialogCallbacks = input<Record<string, () => void>>({});
 
-  changePage = output<number>();
+  changePageNumber = output<number>();
+  changePageSize = output<number>();
 
   pages: (number | null)[] = [];
 
-  constructor(private readonly dialogService: DialogService) { }
-
-  ngOnInit(): void {
-    this.setPagination(this.data().pageNumber, this.data().totalPages);
+  constructor(private readonly dialogService: DialogService) {
+    effect(() => {
+      this.setPagination();
+    });
   }
 
-  setPagination(pageNumber: number, pageCount: number): void {
+  setPagination(): void {
+    const pageNumber = this.data().pageNumber;
+    const pageCount = this.data().pageCount;
+
     if (pageCount <= 7) {
       this.pages = new Array(pageCount).fill(0).map((_, index) => index + 1);
       return;
@@ -79,11 +83,17 @@ export class Table implements OnInit {
     console.log('Delete item');
   }
 
-  updatePages(page: number): void {
-    if (page < 1 || page > this.data().totalPages) {
+  updatePageSize(event: Event): void {
+    this.setPagination();
+    const size = Number.parseInt((event.target as HTMLSelectElement).value);
+    this.changePageSize.emit(size);
+  }
+
+  updatePageNumber(page: number): void {
+    if (page < 1 || page > this.data().pageCount) {
       return;
     }
-    this.setPagination(page, this.data().totalPages);
-    this.changePage.emit(page);
+    this.setPagination();
+    this.changePageNumber.emit(page);
   }
 }

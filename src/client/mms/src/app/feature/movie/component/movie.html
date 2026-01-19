@@ -1,8 +1,10 @@
 <div class="w-full h-full flex flex-col items-center">
-  <app-search [form]="searchForm" [contentFilter]="movieFilter" (triggerSearch)="onSearch($event)"></app-search>
+  <app-search [form]="searchForm" [contentFilter]="contentFilter" [sortOptions]="sortOptions" 
+    (triggerSearch)="onSearch()">
+  </app-search>
 
-  <app-table entityName="Movie" [columns]="columns" [data]="movies()" 
-    [contentCreateEdit]="movieCreateEdit" [contentDetail]="movieDetail" 
-    (changePage)="onChangePage($event)">
+  <app-table entityName="Movie" [columns]="columns" [data]="data()" 
+    [contentCreateEdit]="contentCreateEdit" [contentDetail]="contentDetail" 
+    (changePageNumber)="onChangePageNumber($event)" (changePageSize)="onChangePageSize($event)">
   </app-table>
 </div>

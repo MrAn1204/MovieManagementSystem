@@ -67,8 +67,8 @@
     </div>
 
     <div class="flex-1 min-w-fit flex flex-wrap items-center justify-end md:justify-start sm:order-3 order-2">
-      <label for="pages" class="mr-2">Page size:</label>
-      <select id="pages" name="pages" class="border border-platinum-300 rounded-md w-16 px-2 py-0">
+      <label for="pageSize" class="mr-2">Page size:</label>
+      <select id="pageSize" name="pageSize" class="border border-platinum-300 rounded-md w-16 px-2 py-0" (change)="updatePageSize($event)">
         <option value="10">10</option>
         <option value="25">25</option>
         <option value="50">50</option>
@@ -78,7 +78,7 @@
   </div>
 
   <div class="hidden md:flex gap-2 justify-center">
-    <button type="button" class="page-button" (click)="updatePages(data().pageNumber - 1)">
+    <button type="button" class="page-button" (click)="updatePageNumber(data().pageNumber - 1)">
       Prev
     </button>
     <div class="flex items-center justify-center gap-2">
@@ -89,7 +89,7 @@
             [class.text-white]="page === data().pageNumber"
             [class.shadow-none]="page === data().pageNumber"
             [class.border-transparent]="page === data().pageNumber"
-            class="page-button w-10" (click)="updatePages(page)">
+            class="page-button w-10" (click)="updatePageNumber(page)">
             {{ page }}
           </button>
         } @else {
@@ -99,7 +99,7 @@
         }
       }
     </div>
-    <button type="button" class="page-button" (click)="updatePages(data().pageNumber + 1)">
+    <button type="button" class="page-button" (click)="updatePageNumber(data().pageNumber + 1)">
       Next
     </button>
   </div>
