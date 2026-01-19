@@ -21,7 +21,7 @@ export class Movie extends AppFeature<MovieModel> {
   override contentDetail = MovieDetail;
   override contentFilter = MovieFilter;
 
-  override columns: TableColumnModel[] = [
+  override columns: TableColumnModel<MovieModel>[] = [
     { key: 'name', label: 'Name', type: 'string' },
     { key: 'releaseDate', label: 'Release Date', type: 'date' },
     { key: 'duration', label: 'Duration', type: 'number' },

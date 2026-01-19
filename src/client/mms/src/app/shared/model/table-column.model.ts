@@ -1,5 +1,7 @@
-export interface TableColumnModel {
-  key: string;
+import { BaseEntityModel } from './base-entity.model';
+
+export interface TableColumnModel<T extends BaseEntityModel> {
+  key: keyof T;
   label: string;
   type?: 'string' | 'number' | 'date' | 'array' | 'id-name' | 'id-name-array';
 }

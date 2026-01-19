@@ -1,4 +1,6 @@
-export interface PaginatedResult<T> {
+import { BaseEntityModel } from "./base-entity.model";
+
+export interface PaginatedResult<T extends BaseEntityModel> {
   items: T[];
   itemCount: number;
   pageNumber: number;
@@ -6,7 +8,7 @@ export interface PaginatedResult<T> {
   pageCount: number;
 }
 
-export function createEmptyPaginatedResult<T>(): PaginatedResult<T> {
+export function createEmptyPaginatedResult<T extends BaseEntityModel>(): PaginatedResult<T> {
   return {
     items: [],
     itemCount: 0,

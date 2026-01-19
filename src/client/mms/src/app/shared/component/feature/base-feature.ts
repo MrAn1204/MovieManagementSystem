@@ -3,13 +3,14 @@ import { TableColumnModel } from "../../model/table-column.model";
 import { signal } from "@angular/core";
 import { createEmptyPaginatedResult, PaginatedResult } from "../../model/paginated-result.model";
 import { FormOptionModel } from "../../model/form-option.model";
+import { BaseEntityModel } from "../../model/base-entity.model";
 
-export abstract class AppFeature<T> {
+export abstract class AppFeature<T extends BaseEntityModel> {
   abstract contentCreateEdit: unknown;
   abstract contentDetail: unknown;
   abstract contentFilter: unknown;
   
-  abstract columns: TableColumnModel[];
+  abstract columns: TableColumnModel<T>[];
   abstract sortOptions: FormOptionModel[];
 
   data = signal<PaginatedResult<T>>(createEmptyPaginatedResult<T>());

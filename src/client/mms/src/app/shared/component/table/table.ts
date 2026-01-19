@@ -5,6 +5,7 @@ import { DialogService } from '../../../service/dialog/dialog.service';
 import { FormatCellPipe } from '../../pipe/format-cell/format-cell-pipe';
 import { TableColumnModel } from '../../model/table-column.model';
 import { PaginatedResult } from '../../model/paginated-result.model';
+import { BaseEntityModel } from '../../model/base-entity.model';
 
 @Component({
   selector: 'app-table',
@@ -12,9 +13,9 @@ import { PaginatedResult } from '../../model/paginated-result.model';
   templateUrl: './table.html',
   styleUrl: './table.css',
 })
-export class Table {
-  columns = input.required<TableColumnModel[]>();
-  data = input.required<PaginatedResult<any>>();
+export class Table<T extends BaseEntityModel> {
+  columns = input.required<TableColumnModel<T>[]>();
+  data = input.required<PaginatedResult<T>>();
   entityName = input.required<string>();
   contentCreateEdit = input.required<Type<unknown>>();
   contentDetail = input.required<Type<unknown>>();
