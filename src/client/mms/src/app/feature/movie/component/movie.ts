@@ -6,9 +6,9 @@ import { MovieCreateEdit } from '../create-edit/movie-create-edit';
 import { MovieDetail } from '../detail/movie-detail';
 import { MovieModel } from '../../../model/movie.model';
 import { MovieService } from '../../../service/movie/movie.service';
-import { FormControl, ReactiveFormsModule } from '@angular/forms';
+import { FormGroup, ReactiveFormsModule } from '@angular/forms';
 import { TableColumnModel } from '../../../shared/model/table-column.model';
-import { AppFeature } from '../../../shared/component/feature/base-feature';
+import { BaseFeature } from '../../../shared/component/feature/base-feature';
 
 @Component({
   selector: 'app-movie',
@@ -16,7 +16,9 @@ import { AppFeature } from '../../../shared/component/feature/base-feature';
   templateUrl: './movie.html',
   styleUrl: './movie.css',
 })
-export class Movie extends AppFeature<MovieModel> {
+export class Movie extends BaseFeature<MovieModel> {
+  override entityName = "Movie";
+
   override contentCreateEdit = MovieCreateEdit;
   override contentDetail = MovieDetail;
   override contentFilter = MovieFilter;
@@ -38,16 +40,56 @@ export class Movie extends AppFeature<MovieModel> {
 
   constructor(private readonly movieService: MovieService) {
     super();
-    this.searchForm.addControl('languageId', new FormControl(''));
-    this.searchForm.addControl('genreIds', new FormControl([]));
-    this.searchForm.addControl('studioIds', new FormControl([]));
-    this.searchForm.addControl('releaseAfter', new FormControl(''));
-    this.searchForm.addControl('releaseBefore', new FormControl(''));
+  }
+
+  protected override getFilterGroup(): FormGroup {
+    return this.formBuilder.group({
+      languageId: [''],
+      genreIds: [[]],
+      studioIds: [[]],
+      releaseAfter: [''],
+      releaseBefore: [''],
+    });
+  }
+
+  protected override getUpsertGroup(): FormGroup {
+    return this.formBuilder.group({
+      name: [''],
+      releaseDate: [''],
+      duration: [''],
+      content: [''],
+      thumbnail: [''],
+      genres: [[]],
+      studios: [[]],
+      talents: [[]],
+      language: [''],
+    });
   }
 
   override onSearch(): void {
     this.movieService.search(this.searchForm.value).subscribe(res => {
       this.data.set(res);
+    });
+  }
+
+  override saveNew(): void {
+    console.log(this.entityForm.value);
+  }
+
+  override saveUpdate(): void {
+    console.log(this.entityForm.value);
+  }
+
+  override onEdit(id: string): void {
+    this.movieService.getById(id).subscribe(res => {
+      this.entityForm.patchValue(res);
+      this.displayEdit(res);
+    });
+  }
+
+  override onView(id: string): void {
+    this.movieService.getById(id).subscribe(res => {
+      this.displayInfo(res);
     });
   }
 }

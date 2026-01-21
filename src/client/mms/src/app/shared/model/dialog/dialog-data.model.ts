@@ -4,5 +4,4 @@ export interface DialogDataModel {
   title: string;
   contentComponent: Type<unknown>;
   contentInputs: Record<string, unknown>;
-  callbacks?: Record<string, () => void>;
 }

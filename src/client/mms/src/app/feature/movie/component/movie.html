@@ -3,8 +3,9 @@
     (triggerSearch)="onSearch()">
   </app-search>
 
-  <app-table entityName="Movie" [columns]="columns" [data]="data()" 
+  <app-table [form]="entityForm" entityName="Movie" [columns]="columns" [data]="data()" 
     [contentCreateEdit]="contentCreateEdit" [contentDetail]="contentDetail" 
-    (changePageNumber)="onChangePageNumber($event)" (changePageSize)="onChangePageSize($event)">
+    (changePageNumber)="onChangePageNumber($event)" (changePageSize)="onChangePageSize($event)"
+    (openCreateForm)="onAdd()" (openEditForm)="onEdit($event)" (openDetailForm)="onView($event)">
   </app-table>
 </div>

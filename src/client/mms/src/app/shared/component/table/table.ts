@@ -1,11 +1,9 @@
 import { Component, effect, input, output, Type } from '@angular/core';
-import { CreateEdit } from '../dialog/create-edit/create-edit';
-import { Detail } from '../dialog/detail/detail';
-import { DialogService } from '../../../service/dialog/dialog.service';
 import { FormatCellPipe } from '../../pipe/format-cell/format-cell-pipe';
 import { TableColumnModel } from '../../model/table-column.model';
 import { PaginatedResult } from '../../model/paginated-result.model';
 import { BaseEntityModel } from '../../model/base-entity.model';
+import { FormGroup } from '@angular/forms';
 
 @Component({
   selector: 'app-table',
@@ -20,14 +18,21 @@ export class Table<T extends BaseEntityModel> {
   contentCreateEdit = input.required<Type<unknown>>();
   contentDetail = input.required<Type<unknown>>();
 
-  dialogCallbacks = input<Record<string, () => void>>({});
+  form = input.required<FormGroup>();
 
   changePageNumber = output<number>();
   changePageSize = output<number>();
 
+  saveCreate = output<void>();
+  saveEdit = output<void>();
+
+  openCreateForm = output<void>();
+  openEditForm = output<string>();
+  openDetailForm = output<string>();
+
   pages: (number | null)[] = [];
 
-  constructor(private readonly dialogService: DialogService) {
+  constructor() {
     effect(() => {
       this.setPagination();
     });
@@ -52,32 +57,16 @@ export class Table<T extends BaseEntityModel> {
     }
   }
 
-  viewDetail(item: any): void {
-    this.dialogService.openDialog(Detail, {
-      title: `${this.entityName()} Details`,
-      contentComponent: this.contentDetail(),
-      contentInputs: { model: item, },
-      callbacks: {
-        updateItem: () => this.updateItem(item),
-        ...this.dialogCallbacks,
-      },
-    })
+  viewDetail(id: string): void {
+    this.openDetailForm.emit(id);
   }
 
   addItem(): void {
-    this.dialogService.openDialog(CreateEdit, {
-      title: `Create ${this.entityName()}`,
-      contentComponent: this.contentCreateEdit(),
-      contentInputs: { mode: 'create' },
-    });
+    this.openCreateForm.emit();
   }
 
-  updateItem(item: any): void {
-    this.dialogService.openDialog(CreateEdit, {
-      title: `Edit ${this.entityName()}`,
-      contentComponent: this.contentCreateEdit(),
-      contentInputs: { model: item, mode: 'edit', },
-    });
+  updateItem(id: string): void {
+    this.openEditForm.emit(id);
   }
 
   deleteItem() {
