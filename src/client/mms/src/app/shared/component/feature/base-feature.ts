@@ -31,7 +31,7 @@ export abstract class BaseFeature<T extends BaseEntityModel> implements OnInit {
   protected readonly formBuilder = inject(FormBuilder);
 
   ngOnInit(): void {
-    this.searchForm = this.formBuilder.group({
+    this.searchForm = this.formBuilder.nonNullable.group({
       keyword: [''],
       sortBy: ['id'],
       sortDirection: ['ASC'],
@@ -40,7 +40,7 @@ export abstract class BaseFeature<T extends BaseEntityModel> implements OnInit {
       ...this.getFilterGroup().controls
     });
 
-    this.entityForm = this.formBuilder.group({
+    this.entityForm = this.formBuilder.nonNullable.group({
       ...this.getUpsertGroup().controls
     });
   }

@@ -29,5 +29,6 @@ export class CreateEdit extends BaseDialog implements OnInit {
   
   onSubmit(): void {
     this.dialogService.triggerSave();
+    this.data.form.markAllAsTouched();
   }
 }

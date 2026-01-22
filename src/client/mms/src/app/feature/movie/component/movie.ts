@@ -6,7 +6,7 @@ import { MovieCreateEdit } from '../create-edit/movie-create-edit';
 import { MovieDetail } from '../detail/movie-detail';
 import { MovieModel } from '../../../model/movie.model';
 import { MovieService } from '../../../service/movie/movie.service';
-import { FormGroup, ReactiveFormsModule } from '@angular/forms';
+import { FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { TableColumnModel } from '../../../shared/model/table-column.model';
 import { BaseFeature } from '../../../shared/component/feature/base-feature';
 
@@ -43,7 +43,7 @@ export class Movie extends BaseFeature<MovieModel> {
   }
 
   protected override getFilterGroup(): FormGroup {
-    return this.formBuilder.group({
+    return this.formBuilder.nonNullable.group({
       languageId: [''],
       genreIds: [[]],
       studioIds: [[]],
@@ -53,12 +53,12 @@ export class Movie extends BaseFeature<MovieModel> {
   }
 
   protected override getUpsertGroup(): FormGroup {
-    return this.formBuilder.group({
-      name: [''],
+    return this.formBuilder.nonNullable.group({
+      name: ['', [Validators.required]],
       releaseDate: [''],
-      duration: [''],
+      duration: [0, [Validators.min(1)]],
       content: [''],
-      thumbnail: [''],
+      thumbnail: [null],
       genres: [[]],
       studios: [[]],
       talents: [[]],
@@ -73,7 +73,9 @@ export class Movie extends BaseFeature<MovieModel> {
   }
 
   override saveNew(): void {
-    console.log(this.entityForm.value);
+    this.movieService.create(this.entityForm.value).subscribe(() => {
+      this.onSearch();
+    });
   }
 
   override saveUpdate(): void {
