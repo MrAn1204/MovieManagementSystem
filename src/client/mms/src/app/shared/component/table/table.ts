@@ -29,6 +29,7 @@ export class Table<T extends BaseEntityModel> {
   openCreateForm = output<void>();
   openEditForm = output<string>();
   openDetailForm = output<string>();
+  openDeleteModal = output<string>();
 
   pages: (number | null)[] = [];
 
@@ -69,8 +70,8 @@ export class Table<T extends BaseEntityModel> {
     this.openEditForm.emit(id);
   }
 
-  deleteItem() {
-    console.log('Delete item');
+  deleteItem(id: string): void {
+    this.openDeleteModal.emit(id);
   }
 
   updatePageSize(event: Event): void {

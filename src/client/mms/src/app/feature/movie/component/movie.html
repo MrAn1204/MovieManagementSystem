@@ -6,6 +6,6 @@
   <app-table [form]="entityForm" entityName="Movie" [columns]="columns" [data]="data()" 
     [contentCreateEdit]="contentCreateEdit" [contentDetail]="contentDetail" 
     (changePageNumber)="onChangePageNumber($event)" (changePageSize)="onChangePageSize($event)"
-    (openCreateForm)="onAdd()" (openEditForm)="onEdit($event)" (openDetailForm)="onView($event)">
+    (openCreateForm)="onAdd()" (openEditForm)="onEdit($event)" (openDetailForm)="onView($event)" (openDeleteModal)="onDelete($event)">
   </app-table>
 </div>

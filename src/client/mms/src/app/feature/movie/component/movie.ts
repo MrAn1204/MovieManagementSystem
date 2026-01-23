@@ -85,6 +85,12 @@ export class Movie extends BaseFeature<MovieModel> {
     });
   }
 
+  override confirmDelete(id: string): void {
+    this.movieService.delete(id).subscribe(() => {
+      this.onSearch();
+    });
+  }
+
   override onEdit(id: string): void {
     this.movieService.getById(id).subscribe(res => {
       this.entityForm.patchValue(new MovieFormModel(res));
@@ -96,5 +102,9 @@ export class Movie extends BaseFeature<MovieModel> {
     this.movieService.getById(id).subscribe(res => {
       this.displayInfo(res);
     });
+  }
+
+  override onDelete(id: string): void {
+    this.displayDelete(id);
   }
 }

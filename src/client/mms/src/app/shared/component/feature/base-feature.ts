@@ -9,6 +9,8 @@ import { Detail } from "../dialog/detail/detail";
 import { takeUntil } from "rxjs";
 import { CreateEdit } from "../dialog/create-edit/create-edit";
 import { DialogFormDataModel } from "../../model/dialog/dialog-form-data.model";
+import { PopupModal } from "../dialog/popup-modal/popup-modal";
+import { DialogModalDataModel } from "../../model/dialog/dialog-modal-data.model";
 
 @Directive()
 export abstract class BaseFeature<T extends BaseEntityModel> implements OnInit {
@@ -65,6 +67,8 @@ export abstract class BaseFeature<T extends BaseEntityModel> implements OnInit {
 
   protected abstract saveUpdate(id: string): void;
 
+  protected abstract confirmDelete(id: string): void;
+
   onAdd(): void {
     this.entityForm.reset();
     this.displayAdd();
@@ -73,6 +77,8 @@ export abstract class BaseFeature<T extends BaseEntityModel> implements OnInit {
   abstract onEdit(id: string): void;
 
   abstract onView(id: string): void;
+
+  abstract onDelete(id: string): void;
 
   protected displayInfo(item: any): void {
     const ref = this.dialogService.openDialog(Detail, {
@@ -128,5 +134,19 @@ export abstract class BaseFeature<T extends BaseEntityModel> implements OnInit {
           dialogRef.close();
         }
       });
+  }
+
+  protected displayDelete(id: string): void {
+    const data: DialogModalDataModel = {
+      type: 'warning',
+      message: `Are you sure you want to delete this ${this.entityName.toLowerCase()}? This action cannot be undone.`,
+    }
+
+    const dialogRef = this.dialogService.openDialog(PopupModal, data);
+  
+    dialogRef.componentInstance?.dialogService.confirmTask$.subscribe(() => {
+      this.confirmDelete(id);
+      dialogRef.close();
+    })
   }
 }

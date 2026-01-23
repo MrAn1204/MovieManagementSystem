@@ -15,6 +15,9 @@ export class DialogService {
   private readonly saveFormSubject = new Subject<void>();
   readonly saveForm$ = this.saveFormSubject.asObservable();
 
+  private readonly confirmTaskSubject = new Subject<void>();
+  readonly confirmTask$ = this.confirmTaskSubject.asObservable();
+
   constructor(private readonly dialog: Dialog) { }
 
   openDialog<R, C>(dialogComponent: ComponentType<C>, dialogData?: DialogDataModel): DialogRef<R, C> {
@@ -34,5 +37,9 @@ export class DialogService {
 
   triggerSave(): void {
     this.saveFormSubject.next();
+  }
+
+  triggerConfirm(): void {
+    this.confirmTaskSubject.next();
   }
 }
