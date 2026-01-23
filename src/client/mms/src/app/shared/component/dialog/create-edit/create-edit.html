@@ -10,7 +10,7 @@
   </div>
 
   <div class="w-full">
-    <ng-container [ngComponentOutlet]="data.contentComponent" [ngComponentOutletInputs]="data.contentInputs"></ng-container>
+    <ng-container [ngComponentOutlet]="data.contentComponent ?? null" [ngComponentOutletInputs]="data.contentInputs"></ng-container>
   </div>
 
   <div class="mt-8 flex justify-center gap-4 *:w-20">

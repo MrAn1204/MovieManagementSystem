@@ -44,14 +44,10 @@ export class MovieCreateEdit implements OnInit {
   private loadOptions(): void {
     const model = this.model();
 
-    if (!model) {
-      return;
-    }
-
-    const modelGenres = model.genres?.map((genre) => genre.id) ?? [];
-    const modelStudios = model.studios?.map((studio) => studio.id) ?? [];
-    const modelTalents = model.talents?.map((talent) => talent.id) ?? [];
-    const modelLanguage = model.language?.id ?? null;
+    const modelGenres = model?.genres?.map((genre) => genre.id) ?? [];
+    const modelStudios = model?.studios?.map((studio) => studio.id) ?? [];
+    const modelTalents = model?.talents?.map((talent) => talent.id) ?? [];
+    const modelLanguage = model?.language?.id ?? null;
 
     this.genreService.getAll().subscribe((genres) => {
       this.genres.set(genres.map((genre) => ({

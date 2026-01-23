@@ -10,7 +10,7 @@
   </div>
 
   <div class="w-full">
-    <ng-container [ngComponentOutlet]="data.contentComponent" [ngComponentOutletInputs]="data.contentInputs"></ng-container>
+    <ng-container [ngComponentOutlet]="data.contentComponent ?? null" [ngComponentOutletInputs]="data.contentInputs"></ng-container>
   </div>
 
   <app-detail-buttons [updateItem]="openUpdate"></app-detail-buttons>
