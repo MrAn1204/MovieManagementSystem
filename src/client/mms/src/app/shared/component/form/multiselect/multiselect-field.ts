@@ -29,6 +29,15 @@ export class MultiselectField extends BaseField<string[]> {
     });
   }
 
+  override writeValue(value: string[]): void {
+    super.writeValue(value);
+
+    if (!value || value.length === 0) {
+      this.selected = [];
+      this.options()?.forEach(item => item.selected = false);
+    }
+  }
+
   updateSelected(option: FormOptionModel): void {
     let newValue = this.value ? [...this.value] : [];
     option.selected = !option.selected;
@@ -45,9 +54,7 @@ export class MultiselectField extends BaseField<string[]> {
   }
 
   resetSelected(): void {
-    this.selected = [];
-    this.updateValue([]);
-    this.options()?.forEach(item => item.selected = false);
+    this.writeValue([]);
   }
 
   updateKeyword(value: string): void {

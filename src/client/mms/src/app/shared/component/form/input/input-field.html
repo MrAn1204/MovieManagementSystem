@@ -2,8 +2,8 @@
   @if (labelText()) {
   <label [htmlFor]="idName()" class="block font-medium">{{ labelText() }}</label>
   }
-  <input [type]="inputType()" [value]="value" [id]="idName()" [placeholder]="placeholderText()" (input)="updateValue(inputType() === 'number' ? $any($event.target).valueAsNumber : $any($event.target).value)"
-    class="form-field" />
+  <input [type]="inputType()" [value]="value" [id]="idName()" [placeholder]="placeholderText()" 
+    (input)="updateValue($any($event.target).value)" class="form-field" />
 
   @if (inputType() === 'time') {
   <div class="absolute top-[calc(50%+4px)] end-0 flex items-center pe-[18.5px] pointer-events-none">

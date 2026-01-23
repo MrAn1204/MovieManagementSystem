@@ -18,4 +18,12 @@ import { NG_VALUE_ACCESSOR } from '@angular/forms';
 export class InputField extends BaseField<string | number> {
   inputType = input.required<string>();
   placeholderText = input<string>('');
+
+  override updateValue(value: string | number): void {
+    if (this.inputType() === 'number') {
+      super.updateValue(Number(value));
+    } else {
+      super.updateValue(value);
+    }
+  }
 }
