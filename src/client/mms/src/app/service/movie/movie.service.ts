@@ -4,6 +4,7 @@ import { Observable } from 'rxjs';
 import { MovieModel } from '../../model/movie.model';
 import { MovieSearchModel } from '../../model/search/movie-search.model';
 import { PaginatedResult } from '../../shared/model/paginated-result.model';
+import { MovieFormModel } from '../../model/form/movie-form.model';
 
 @Injectable({
   providedIn: 'root',
@@ -21,11 +22,11 @@ export class MovieService {
     return this.http.get<MovieModel>(`${this.baseUrl}/${id}`);
   }
 
-  create(movie: MovieModel): Observable<MovieModel> {
-    return this.http.post<MovieModel>(this.baseUrl, movie);
+  create(movie: MovieFormModel): Observable<MovieModel> {
+    return this.http.post<MovieModel>(`${this.baseUrl}/create`, movie);
   }
 
-  update(id: string, movie: MovieModel): Observable<MovieModel> {
+  update(id: string, movie: MovieFormModel): Observable<MovieModel> {
     return this.http.put<MovieModel>(`${this.baseUrl}/${id}`, movie);
   }
 

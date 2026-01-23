@@ -63,7 +63,7 @@ export abstract class BaseFeature<T extends BaseEntityModel> implements OnInit {
 
   protected abstract saveNew(): void;
 
-  protected abstract saveUpdate(): void;
+  protected abstract saveUpdate(id: string): void;
 
   onAdd(): void {
     this.entityForm.reset();
@@ -102,7 +102,12 @@ export abstract class BaseFeature<T extends BaseEntityModel> implements OnInit {
 
     dialogRef.componentInstance?.dialogService.saveForm$
       .pipe(takeUntil(dialogRef.closed))
-      .subscribe(() => this.saveNew());
+      .subscribe(() => {
+        if (this.entityForm.valid) {
+          this.saveNew();
+          dialogRef.close();
+        }
+      });
   }
 
   protected displayEdit(item: any): void {
@@ -117,6 +122,11 @@ export abstract class BaseFeature<T extends BaseEntityModel> implements OnInit {
 
     dialogRef.componentInstance?.dialogService.saveForm$
       .pipe(takeUntil(dialogRef.closed))
-      .subscribe(() => this.saveUpdate());
+      .subscribe(() => {
+        if (this.entityForm.valid) {
+          this.saveUpdate(item.id);
+          dialogRef.close();
+        }
+      });
   }
 }

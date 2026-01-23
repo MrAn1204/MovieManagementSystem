@@ -9,6 +9,7 @@ import { MovieService } from '../../../service/movie/movie.service';
 import { FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { TableColumnModel } from '../../../shared/model/table-column.model';
 import { BaseFeature } from '../../../shared/component/feature/base-feature';
+import { MovieFormModel } from '../../../model/form/movie-form.model';
 
 @Component({
   selector: 'app-movie',
@@ -59,10 +60,10 @@ export class Movie extends BaseFeature<MovieModel> {
       duration: [0, [Validators.min(1)]],
       content: [''],
       thumbnail: [null],
-      genres: [[]],
-      studios: [[]],
-      talents: [[]],
-      language: [''],
+      genreIds: [[]],
+      studioIds: [[]],
+      talentIds: [[]],
+      languageId: [''],
     });
   }
 
@@ -78,13 +79,15 @@ export class Movie extends BaseFeature<MovieModel> {
     });
   }
 
-  override saveUpdate(): void {
-    console.log(this.entityForm.value);
+  override saveUpdate(id: string): void {
+    this.movieService.update(id, this.entityForm.value).subscribe(() => {
+      this.onSearch();
+    });
   }
 
   override onEdit(id: string): void {
     this.movieService.getById(id).subscribe(res => {
-      this.entityForm.patchValue(res);
+      this.entityForm.patchValue(new MovieFormModel(res));
       this.displayEdit(res);
     });
   }

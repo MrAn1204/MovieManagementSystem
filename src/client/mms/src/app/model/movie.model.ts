@@ -8,8 +8,8 @@ export interface MovieModel extends BaseEntityModel {
   content: string;
   thumbnail: string;
   rating: number;
-  genres: IdNameModel[];
-  studios: IdNameModel[];
-  talents: IdNameModel[];
-  language: IdNameModel;
+  genres?: IdNameModel[];
+  studios?: IdNameModel[];
+  talents?: IdNameModel[];
+  language?: IdNameModel;
 }
