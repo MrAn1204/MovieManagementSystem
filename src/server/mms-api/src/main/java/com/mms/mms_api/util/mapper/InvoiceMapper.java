@@ -1,8 +1,10 @@
 package com.mms.mms_api.util.mapper;
 
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.UUID;
 
+import org.mapstruct.AfterMapping;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 import org.mapstruct.MappingTarget;
@@ -19,6 +21,7 @@ public interface InvoiceMapper {
     @Mapping(target = "user", ignore = true)
     Invoice toEntity(InvoiceCreateCommand command);
 
+    @Mapping(target = "name", ignore = true)
     InvoiceDto toDto(Invoice invoice);
 
     @Mapping(target = "tickets", ignore = true)
@@ -27,5 +30,24 @@ public interface InvoiceMapper {
 
     default List<UUID> mapTickets(List<Ticket> tickets) {
         return tickets.stream().map(Ticket::getId).toList();
+    }
+
+    @AfterMapping
+    default void mapName(Invoice invoice, @MappingTarget InvoiceDto dto) {
+        String code = invoice.getId().toString().toUpperCase().substring(0, 8);
+
+        LocalDateTime createdDate = invoice.getCreatedAt();
+
+        String name = "INV-" + code;
+        
+        if (createdDate != null) {
+            String date = createdDate.toLocalDate().toString().replace("-", "");
+
+            String time = createdDate.toLocalTime().toString().replace(":", "");
+
+            name += "-" + date + time;
+        }
+
+        dto.setName(name);
     }
 }

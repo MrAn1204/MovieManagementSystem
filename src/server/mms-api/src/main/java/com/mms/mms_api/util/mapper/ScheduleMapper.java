@@ -1,5 +1,8 @@
 package com.mms.mms_api.util.mapper;
 
+import java.time.format.DateTimeFormatter;
+
+import org.mapstruct.AfterMapping;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 import org.mapstruct.MappingTarget;
@@ -17,6 +20,7 @@ public interface ScheduleMapper {
     @Mapping(target = "tickets", ignore = true)
     Schedule toEntity(ScheduleCreateCommand command);
 
+    @Mapping(target = "name", ignore = true)
     ScheduleDto toDto(Schedule schedule);
 
     @Mapping(target = "movie", ignore = true)
@@ -24,4 +28,17 @@ public interface ScheduleMapper {
     @Mapping(target = "scheduleSeats", ignore = true)
     @Mapping(target = "tickets", ignore = true)
     void updateEntity(ScheduleUpdateCommand command, @MappingTarget Schedule schedule);
+
+    @AfterMapping
+    default void mapName(Schedule schedule, @MappingTarget ScheduleDto dto) {
+        String movie = schedule.getMovie().getName();
+
+        String room = schedule.getRoom().getName();
+
+        String showTime = DateTimeFormatter.ofPattern("dd-MM-yyyy HH:mm").format(schedule.getShowTime());
+
+        String name = movie + " - " + room + " - " + showTime;
+
+        dto.setName(name);
+    }
 }
