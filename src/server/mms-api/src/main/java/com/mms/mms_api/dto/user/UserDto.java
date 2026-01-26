@@ -2,39 +2,37 @@ package com.mms.mms_api.dto.user;
 
 import java.time.LocalDate;
 import java.util.List;
-import java.util.UUID;
 
+import com.mms.mms_api.dto.BaseDto;
 import com.mms.mms_api.dto.InvoiceDto;
 import com.mms.mms_api.dto.RoleDto;
 import com.mms.mms_api.model.Gender;
 
-import lombok.AllArgsConstructor;
-import lombok.Getter;
+import lombok.Data;
+import lombok.EqualsAndHashCode;
 
-@Getter
-@AllArgsConstructor
-public class UserDto {
-    private final UUID id;
+@Data
+@EqualsAndHashCode(callSuper = true)
+public class UserDto extends BaseDto {
+    private String username;
 
-    private final String username;
+    private String fullname;
 
-    private final String fullname;
+    private Gender gender;
 
-    private final Gender gender;
+    private LocalDate dateOfBirth;
 
-    private final LocalDate dateOfBirth;
+    private String email;
 
-    private final String email;
+    private String citizenIdNumber;
 
-    private final String citizenIdNumber;
+    private String phoneNumber;
 
-    private final String phoneNumber;
+    private String address;
 
-    private final String address;
+    private int score;
 
-    private final int score;
+    private List<RoleDto> roles;
 
-    private final List<RoleDto> roles;
-
-    private final List<InvoiceDto> invoices;
+    private List<InvoiceDto> invoices;
 }

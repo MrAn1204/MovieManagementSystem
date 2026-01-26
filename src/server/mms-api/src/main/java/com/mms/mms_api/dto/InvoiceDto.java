@@ -4,10 +4,12 @@ import java.util.List;
 import java.util.UUID;
 
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 
 @Data
-public class InvoiceDto {
-    private UUID id;
+@EqualsAndHashCode(callSuper = true)
+public class InvoiceDto extends BaseDto {
+    private String name;
 
     private int totalMoney;
 
