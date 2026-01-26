@@ -11,6 +11,7 @@ import { CreateEdit } from "../dialog/create-edit/create-edit";
 import { DialogFormDataModel } from "../../model/dialog/dialog-form-data.model";
 import { PopupModal } from "../dialog/popup-modal/popup-modal";
 import { DialogModalDataModel } from "../../model/dialog/dialog-modal-data.model";
+import { DialogRef } from "@angular/cdk/dialog";
 
 @Directive()
 export abstract class BaseFeature<T extends BaseEntityModel> implements OnInit {
@@ -80,7 +81,7 @@ export abstract class BaseFeature<T extends BaseEntityModel> implements OnInit {
 
   abstract onDelete(id: string): void;
 
-  protected displayInfo(item: any): void {
+  protected displayInfo(item: BaseEntityModel): void {
     const ref = this.dialogService.openDialog(Detail, {
       title: `${this.entityName} Details`,
       contentComponent: this.contentDetail,
@@ -91,7 +92,20 @@ export abstract class BaseFeature<T extends BaseEntityModel> implements OnInit {
       .pipe(takeUntil(ref.closed))
       .subscribe((dialog) => {
         if (dialog === CreateEdit) {
-          this.displayEdit(item);
+          const editRef = this.displayEdit(item);
+
+          editRef.closed
+            .pipe(takeUntil(ref.closed))
+            .subscribe(() => {
+              ref.close();
+              this.onView(item.id);
+            });
+        } else if (dialog === PopupModal) {
+          const deleteRef = this.displayDelete(item.id);
+
+          deleteRef.closed
+            .pipe(takeUntil(ref.closed))
+            .subscribe(() => ref.close());
         }
       });
   }
@@ -116,7 +130,7 @@ export abstract class BaseFeature<T extends BaseEntityModel> implements OnInit {
       });
   }
 
-  protected displayEdit(item: any): void {
+  protected displayEdit(item: BaseEntityModel): DialogRef<unknown, CreateEdit> {
     const data: DialogFormDataModel = {
       title: `Edit ${this.entityName}`,
       contentComponent: this.contentCreateEdit,
@@ -134,9 +148,11 @@ export abstract class BaseFeature<T extends BaseEntityModel> implements OnInit {
           dialogRef.close();
         }
       });
+
+    return dialogRef;
   }
 
-  protected displayDelete(id: string): void {
+  protected displayDelete(id: string): DialogRef<unknown, PopupModal> {
     const data: DialogModalDataModel = {
       type: 'warning',
       message: `Are you sure you want to delete this ${this.entityName.toLowerCase()}? This action cannot be undone.`,
@@ -147,6 +163,8 @@ export abstract class BaseFeature<T extends BaseEntityModel> implements OnInit {
     dialogRef.componentInstance?.dialogService.confirmTask$.subscribe(() => {
       this.confirmDelete(id);
       dialogRef.close();
-    })
+    });
+
+    return dialogRef;
   }
 }

@@ -59,7 +59,7 @@ export class Movie extends BaseFeature<MovieModel> {
       releaseDate: [''],
       duration: [0, [Validators.min(1)]],
       content: [''],
-      thumbnail: [null],
+      thumbnail: ['https://dummyimage.com/300x400/dddddd/000000&text=No+Image'],
       genreIds: [[]],
       studioIds: [[]],
       talentIds: [[]],

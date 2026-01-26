@@ -1,4 +1,4 @@
-import { Component, input } from '@angular/core';
+import { Component, output } from '@angular/core';
 
 @Component({
   selector: 'app-detail-buttons',
@@ -7,5 +7,6 @@ import { Component, input } from '@angular/core';
   styleUrl: './detail-buttons.css',
 })
 export class DetailButtons {
-  updateItem = input.required<() => void>();
+  updateItem = output<void>();
+  deleteItem = output<void>();
 }

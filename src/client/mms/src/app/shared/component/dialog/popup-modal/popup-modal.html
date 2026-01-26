@@ -1,10 +1,13 @@
 <div
   class="flex sm:flex-row flex-col items-center sm:items-start gap-2 sm:gap-4 mx-auto max-w-lg rounded-lg bg-ghost-white p-4 shadow-lg">
-  <span class="size-8 min-w-8 flex items-center justify-center rounded-full bg-carrot-orange text-white">
-    <i class="fa-solid fa-exclamation"></i>
+  <span class="size-8 min-w-8 flex items-center justify-center rounded-full text-white"
+    [class]="config[data.type].iconColor">
+    <i class="fa-solid" [class]="config[data.type].icon"></i>
   </span>
   <div class="flex flex-col items-center sm:items-start">
-    <p class="font-bold text-lg text-carrot-orange">Warning</p>
+    <p class="font-bold text-lg" [class]="config[data.type].headerColor">
+      {{ config[data.type].header }}
+    </p>
 
     <p class="pt-2 pb-4">
       {{ data.message }}
@@ -12,7 +15,8 @@
 
     <div class="flex flex-col sm:flex-row-reverse gap-3 w-full">
       <button type="button" (click)="confirm()"
-        class="rounded-lg text-white bg-carrot-orange-500 hover:bg-carrot-orange-600 px-4 py-2 text-center text-sm font-semibold">
+        class="rounded-lg text-white px-4 py-2 text-center text-sm font-semibold"
+        [class]="config[data.type].buttonStyle">
         Confirm
       </button>
 

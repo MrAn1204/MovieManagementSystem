@@ -5,6 +5,7 @@ import { NgComponentOutlet } from '@angular/common';
 import { DetailButtons } from "../../detail/detail-buttons/detail-buttons";
 import { DialogDataModel } from '../../../model/dialog/dialog-data.model';
 import { CreateEdit } from '../create-edit/create-edit';
+import { PopupModal } from '../popup-modal/popup-modal';
 
 @Component({
   selector: 'app-detail',
@@ -16,4 +17,6 @@ export class Detail extends BaseDialog {
   data: DialogDataModel = inject(DIALOG_DATA);
 
   openUpdate = () => this.dialogService.triggerOpen(CreateEdit);
+
+  openDelete = () => this.dialogService.triggerOpen(PopupModal);
 }

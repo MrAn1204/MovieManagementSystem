@@ -13,5 +13,5 @@
     <ng-container [ngComponentOutlet]="data.contentComponent ?? null" [ngComponentOutletInputs]="data.contentInputs"></ng-container>
   </div>
 
-  <app-detail-buttons [updateItem]="openUpdate"></app-detail-buttons>
+  <app-detail-buttons (updateItem)="openUpdate()" (deleteItem)="openDelete()"></app-detail-buttons>
 </div>
