@@ -2,15 +2,15 @@ package com.mms.mms_api.dto;
 
 import java.time.LocalDate;
 import java.util.List;
-import java.util.UUID;
 
 import com.mms.mms_api.common.IdNameDto;
 
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 
 @Data
-public class MovieDto {
-    private UUID id;
+@EqualsAndHashCode(callSuper = true)
+public class MovieDto extends BaseDto {
 
     private String name;
 

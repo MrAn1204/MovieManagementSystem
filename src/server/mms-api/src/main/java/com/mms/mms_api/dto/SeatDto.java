@@ -1,13 +1,11 @@
 package com.mms.mms_api.dto;
 
-import java.util.UUID;
-
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 
 @Data
-public class SeatDto {
-    private UUID id;
-
+@EqualsAndHashCode(callSuper = true)
+public class SeatDto extends BaseDto {
     private int seatColumn;
 
     private int seatRow;

@@ -1,14 +1,14 @@
 package com.mms.mms_api.dto;
 
-import java.util.UUID;
-
 import com.mms.mms_api.common.IdNameDto;
 
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 
 @Data
-public class TicketDto {
-    private UUID id;
+@EqualsAndHashCode(callSuper = true)
+public class TicketDto extends BaseDto {
+    private String name;
 
     private ScheduleDto schedule;
 

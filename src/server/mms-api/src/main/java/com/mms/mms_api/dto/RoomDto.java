@@ -1,16 +1,15 @@
 package com.mms.mms_api.dto;
 
 import java.util.List;
-import java.util.UUID;
 
 import com.mms.mms_api.common.IdNameDto;
 
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 
 @Data
-public class RoomDto {
-    private UUID id;
-
+@EqualsAndHashCode(callSuper = true)
+public class RoomDto extends BaseDto {
     private int seatQuantity;
 
     private String name;

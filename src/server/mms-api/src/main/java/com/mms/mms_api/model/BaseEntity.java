@@ -1,5 +1,6 @@
 package com.mms.mms_api.model;
 
+import java.time.LocalDateTime;
 import java.util.UUID;
 
 import jakarta.persistence.GeneratedValue;
@@ -14,4 +15,8 @@ public abstract class BaseEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)
     private UUID id;
+
+    private LocalDateTime createdAt;
+
+    private LocalDateTime updatedAt;
 }

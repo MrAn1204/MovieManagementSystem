@@ -1,13 +1,11 @@
 package com.mms.mms_api.dto;
 
-import java.util.UUID;
-
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 
 @Data
-public class TalentDto {
-    private UUID id;
-
+@EqualsAndHashCode(callSuper = true)
+public class TalentDto extends BaseDto {
     private String name;
 
     private String profile;
