@@ -1,27 +1,48 @@
 import { computed, Injectable, signal } from '@angular/core';
 import { jwtDecode } from "jwt-decode";
+import { LoginRequest } from '../../model/auth/login-request';
+import { HttpClient } from '@angular/common/http';
+import { LocalStorageService } from '../storage/local-storage.service';
+import { LoginResponse } from '../../model/auth/login-response';
+import { UserInfo } from '../../model/auth/user-info';
+import { Router } from '@angular/router';
 
 @Injectable({
   providedIn: 'root',
 })
 export class AuthService {
-  currentUser = signal<any>(null);
+  private readonly baseUrl = 'http://localhost:8080/auth';
+
+  currentUser = signal<UserInfo | null>(null);
   isAuthenticated = computed<boolean>(() => this.currentUser() !== null);
 
-  constructor() {
-    const token = localStorage.getItem("token");
+  constructor(private readonly http: HttpClient, private readonly lsService: LocalStorageService, private readonly router: Router) {
+    const token = this.lsService.getItem("token");
 
     if (token) {
       this.currentUser.set(this.parseJwt(token));
-      console.log(this.currentUser());
     }
   }
 
-  parseJwt(token: string) {
+  parseJwt(token: string): UserInfo | null {
     if (!token) {
-      return;
+      return null;
     }
 
     return jwtDecode(token);
+  }
+
+  login(request: LoginRequest): void {
+    this.http.post<LoginResponse>(`${this.baseUrl}/login`, request).subscribe((res) => {
+      this.lsService.setItem("token", res.token);
+      this.currentUser.set(this.parseJwt(res.token));
+      this.router.navigate(['/']);
+    });
+  }
+
+  logout(): void {
+    this.lsService.removeItem("token");
+    this.currentUser.set(null);
+    this.router.navigate(['/login']);
   }
 }

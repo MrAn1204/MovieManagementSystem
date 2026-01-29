@@ -5,6 +5,7 @@ import org.springframework.stereotype.Service;
 
 import com.mms.mms_api.business.command.auth.LoginCommand;
 import com.mms.mms_api.business.handler.auth.LoginCommandHandler;
+import com.mms.mms_api.dto.LoginResultDto;
 import com.mms.mms_api.util.JwtHelper;
 
 import lombok.AllArgsConstructor;
@@ -16,7 +17,7 @@ public class AuthenticationService {
 
     private JwtHelper jwtHelper;
 
-    public String handle(LoginCommand request) {
+    public LoginResultDto handle(LoginCommand request) {
         LoginCommandHandler handler = new LoginCommandHandler(request, authenticationManager, jwtHelper);
         return handler.execute();
     }

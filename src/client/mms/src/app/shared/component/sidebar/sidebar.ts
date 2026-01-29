@@ -1,5 +1,6 @@
 import { Component, input } from '@angular/core';
 import { RouterLink } from "@angular/router";
+import { AuthService } from '../../../service/auth/auth.service';
 
 @Component({
   selector: 'app-sidebar',
@@ -19,7 +20,9 @@ export class Sidebar {
   ]
   visible = input<boolean>();
 
-  constructor() {}
+  constructor(private readonly authService: AuthService) {}
 
-  
+  onLogout(): void {
+    this.authService.logout();
+  }
 }

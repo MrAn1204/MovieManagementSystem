@@ -5,6 +5,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.mms.mms_api.business.command.auth.LoginCommand;
 import com.mms.mms_api.business.service.AuthenticationService;
+import com.mms.mms_api.dto.LoginResultDto;
 
 import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
@@ -20,7 +21,7 @@ public class AuthenticationController {
     private AuthenticationService authenticationService;
     
     @PostMapping("/login")
-    public String login(@Valid @RequestBody LoginCommand request) {
+    public LoginResultDto login(@Valid @RequestBody LoginCommand request) {
         return authenticationService.handle(request);
     }
     
