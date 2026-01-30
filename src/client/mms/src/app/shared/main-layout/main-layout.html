@@ -1,13 +1,15 @@
-<app-header (toggleSidebar)="toggleSidebar()"></app-header>
-
-<main class="flex flex-1 overflow-auto lg:h-screen h-[calc(100vh-48px)]">
-  <div id="overlay" [hidden]="!sidebarVisible" class="fixed w-full h-full bg-space-black/50 z-30 lg:hidden">
-    <button class="w-full h-full cursor-default" (click)="toggleSidebar()"></button>
-  </div>
-
-  <app-sidebar [visible]="sidebarVisible"></app-sidebar>
-
-  <div class="w-full m-2 overflow-hidden">
-    <router-outlet></router-outlet>
-  </div>
-</main>
+@if (hasUser) {
+  <app-header (toggleSidebar)="toggleSidebar()"></app-header>
+  
+  <main class="flex flex-1 overflow-auto lg:h-screen h-[calc(100vh-48px)]">
+    <div id="overlay" [hidden]="!sidebarVisible" class="fixed w-full h-full bg-space-black/50 z-30 lg:hidden">
+      <button class="w-full h-full cursor-default" (click)="toggleSidebar()"></button>
+    </div>
+  
+    <app-sidebar [visible]="sidebarVisible"></app-sidebar>
+  
+    <div class="w-full m-2 overflow-hidden">
+      <router-outlet></router-outlet>
+    </div>
+  </main>
+}
