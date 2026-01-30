@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { FormBuilder, FormGroup, Validators, ReactiveFormsModule } from '@angular/forms';
 import { InputField } from "../../../shared/component/form/input/input-field";
 import { AuthService } from '../../../service/auth/auth.service';
+import { HttpErrorResponse } from '@angular/common/http';
 
 @Component({
   selector: 'app-login',
@@ -21,7 +22,11 @@ export class Login {
 
   onSubmit() {
     if (this.form.valid) {
-      this.authService.login(this.form.value);
+      this.authService.login(this.form.value).subscribe({
+        error: (res: HttpErrorResponse) => {
+          this.form.setErrors({ loginFailed: 'Invalid username or password '});
+        }
+      });
     }
   }
 }

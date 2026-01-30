@@ -6,6 +6,7 @@ import { LocalStorageService } from '../storage/local-storage.service';
 import { LoginResponse } from '../../model/auth/login-response';
 import { UserInfo } from '../../model/auth/user-info';
 import { Router } from '@angular/router';
+import { Observable, tap } from 'rxjs';
 
 @Injectable({
   providedIn: 'root',
@@ -32,12 +33,12 @@ export class AuthService {
     return jwtDecode(token);
   }
 
-  login(request: LoginRequest): void {
-    this.http.post<LoginResponse>(`${this.baseUrl}/login`, request).subscribe((res) => {
+  login(request: LoginRequest): Observable<LoginResponse> {
+    return this.http.post<LoginResponse>(`${this.baseUrl}/login`, request).pipe(tap((res) => {
       this.lsService.setItem("token", res.token);
       this.currentUser.set(this.parseJwt(res.token));
       this.router.navigate(['/']);
-    });
+    }));
   }
 
   logout(): void {
