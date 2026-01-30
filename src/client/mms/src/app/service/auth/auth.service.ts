@@ -14,14 +14,22 @@ import { Observable, tap } from 'rxjs';
 export class AuthService {
   private readonly baseUrl = 'http://localhost:8080/auth';
 
-  currentUser = signal<UserInfo | null>(null);
+  private readonly currentUser = signal<UserInfo | null>(null);
   isAuthenticated = computed<boolean>(() => this.currentUser() !== null);
 
   constructor(private readonly http: HttpClient, private readonly lsService: LocalStorageService, private readonly router: Router) {
     const token = this.lsService.getItem("token");
 
-    if (token) {
-      this.currentUser.set(this.parseJwt(token));
+    if (!token) {
+      return;
+    }
+
+    const userInfo = this.parseJwt(token);
+
+    if (userInfo?.exp && Date.now() > userInfo.exp * 1000) {
+      this.lsService.removeItem("token");
+    } else {
+      this.currentUser.set(userInfo);
     }
   }
 
@@ -31,6 +39,14 @@ export class AuthService {
     }
 
     return jwtDecode(token);
+  }
+
+  getFullname(): string {
+    return this.currentUser()?.fullname || '';
+  }
+
+  getEmail(): string {
+    return this.currentUser()?.email || '';
   }
 
   login(request: LoginRequest): Observable<LoginResponse> {

@@ -20,7 +20,13 @@ export class Sidebar {
   ]
   visible = input<boolean>();
 
-  constructor(private readonly authService: AuthService) {}
+  fullname: string = '';
+  email: string = '';
+
+  constructor(private readonly authService: AuthService) {
+    this.fullname = this.authService.getFullname();
+    this.email = this.authService.getEmail();
+  }
 
   onLogout(): void {
     this.authService.logout();

@@ -22,8 +22,8 @@
     <div class="w-full flex items-center p-2">
       <img src="/images/user-solid-full.svg" alt="user_pfp" class="w-1/6 rounded-full" />
       <div class="px-2">
-        <p class="font-bold">John Doe</p>
-        <p class="text-sm">john.doe@example.com</p>
+        <p class="font-bold">{{ fullname }}</p>
+        <p class="text-sm">{{ email }}</p>
       </div>
     </div>
     <button type="button" (click)="onLogout()" class="px-2 text-white rounded-md bg-vermilion-500 hover:bg-vermilion-600">
