@@ -1,0 +1,102 @@
+<div class="flex flex-col justify-center items-center h-screen bg-space-black/50">
+  <form [formGroup]="form" (submit)="onSubmit()"
+    class="w-screen max-h-screen overflow-auto max-w-2xl flex flex-col items-center bg-ghost-white p-8 rounded-lg shadow-md">
+    
+    <h1 class="font-bold text-2xl mb-8">Create Account</h1>
+
+    <div class="w-full gap-4 grid grid-cols-1 sm:grid-cols-2">
+      <div>
+        <app-input-field 
+          formControlName="username" inputType="text" idName="username" labelText="Username">
+        </app-input-field>
+        
+        @if (form.get('username')?.touched && form.get('username')?.hasError('required')) {
+          <p class="error-text">Username is required</p>
+        } @else if (form.get('username')?.touched && form.get('username')?.hasError('minlength')) {
+          <p class="error-text">Username must be at least 5 characters</p>
+        } @else if (form.get('username')?.touched && form.get('username')?.hasError('maxlength')) {
+          <p class="error-text">Username cannot exceed 20 characters</p>
+        }
+      </div>
+
+      <div>
+        <app-input-field 
+          formControlName="fullname" inputType="text" idName="fullname" labelText="Full Name">
+        </app-input-field>
+        
+        @if (form.get('fullname')?.touched && form.get('fullname')?.hasError('required')) {
+          <p class="error-text">Full Name is required</p>
+        } @else if (form.get('fullname')?.touched && form.get('fullname')?.hasError('minlength')) {
+          <p class="error-text">Full Name must be at least 3 characters</p>
+        } @else if (form.get('fullname')?.touched && form.get('fullname')?.hasError('maxlength')) {
+          <p class="error-text">Full Name cannot exceed 50 characters</p>
+        }
+      </div>
+
+      <div>
+        <app-input-field 
+          formControlName="password" inputType="password" idName="password" labelText="Password">
+        </app-input-field>
+        
+        @if (form.get('password')?.touched && form.get('password')?.hasError('required')) {
+          <p class="error-text">Password is required</p>
+        }
+      </div>
+
+      <div>
+        <app-input-field 
+          formControlName="confirmPassword" inputType="password" idName="confirmPassword" labelText="Confirm Password">
+        </app-input-field>
+
+        @if (form.get('confirmPassword')?.touched && form.get('confirmPassword')?.hasError('required')) {
+          <p class="error-text">Confirm Password is required</p>
+        }
+      </div>
+
+      <div>
+        <app-input-field 
+          formControlName="dateOfBirth" inputType="date" idName="dateOfBirth" labelText="Date of Birth">
+        </app-input-field>
+
+        @if (form.get('dateOfBirth')?.touched && form.get('dateOfBirth')?.hasError('required')) {
+          <p class="error-text">Date of Birth is required</p>
+        }
+      </div>
+
+      <div>
+        <app-input-field 
+          formControlName="phoneNumber" inputType="tel" idName="phoneNumber" labelText="Phone Number">
+        </app-input-field>
+
+        @if (form.get('phoneNumber')?.touched && form.get('phoneNumber')?.hasError('required')) {
+          <p class="error-text">Phone Number is required</p>
+        }
+      </div>
+
+      <div class="sm:col-span-2">
+        <app-input-field 
+          formControlName="email" inputType="email" idName="email" labelText="Email">
+        </app-input-field>
+
+        @if (form.get('email')?.touched && form.get('email')?.hasError('email')) {
+          <p class="error-text">Invalid email format</p>
+        }
+      </div>
+    </div>
+
+
+    <div class="mt-4 w-full flex flex-col gap-y-4">
+      <button type="submit"
+        class="px-4 py-2 text-white rounded-md bg-steel-blue-500 hover:bg-steel-blue-600 focus:outline-none focus:ring-2 focus:ring-steel-blue">
+        Register
+      </button>
+
+      <hr class="border-platinum-300">
+
+      <button type="button" (click)="navigateToLogin()"
+        class="px-4 py-2 border border-steel-blue rounded-md hover:bg-platinum-100 text-steel-blue focus:outline-none">
+        Go to Login
+      </button>
+    </div>
+  </form>
+</div>
