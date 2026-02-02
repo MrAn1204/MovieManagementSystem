@@ -7,6 +7,7 @@ import { LoginResponse } from '../../model/auth/login-response';
 import { UserInfo } from '../../model/auth/user-info';
 import { Router } from '@angular/router';
 import { Observable, tap } from 'rxjs';
+import { RegisterRequest } from '../../model/auth/register-request';
 
 @Injectable({
   providedIn: 'root',
@@ -61,5 +62,11 @@ export class AuthService {
     this.lsService.removeItem("token");
     this.currentUser.set(null);
     this.router.navigate(['/login']);
+  }
+
+  register(request: RegisterRequest): Observable<void> {
+    return this.http.post<void>(`${this.baseUrl}/register`, request).pipe(tap(() => {
+      this.router.navigate(['/login']);
+    }));
   }
 }
