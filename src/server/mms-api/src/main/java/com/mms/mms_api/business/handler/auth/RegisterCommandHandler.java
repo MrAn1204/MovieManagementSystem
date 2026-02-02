@@ -1,11 +1,10 @@
-package com.mms.mms_api.business.handler.user;
+package com.mms.mms_api.business.handler.auth;
 
 import java.util.List;
-import java.util.UUID;
 
 import org.springframework.security.crypto.password.PasswordEncoder;
 
-import com.mms.mms_api.business.command.user.UserCreateCommand;
+import com.mms.mms_api.business.command.auth.RegisterCommand;
 import com.mms.mms_api.data.RoleRepository;
 import com.mms.mms_api.data.UserRepository;
 import com.mms.mms_api.dto.user.UserDto;
@@ -13,28 +12,26 @@ import com.mms.mms_api.exception.InvalidInputException;
 import com.mms.mms_api.model.Role;
 import com.mms.mms_api.model.User;
 import com.mms.mms_api.util.mapper.UserMapper;
-import com.mms.mms_api.util.validator.UserValidator;
 
-public class UserCreateHandler extends UserBaseHandler<UserCreateCommand, UserDto> {
-    private RoleRepository roleRepository;
+public class RegisterCommandHandler extends AuthBaseHandler<RegisterCommand, UserDto> {
+    private final UserRepository userRepository;
+    
+    private final RoleRepository roleRepository;
 
-    private PasswordEncoder passwordEncoder;
+    private final UserMapper userMapper;
 
-    public UserCreateHandler(
-            UserCreateCommand request, UserMapper userMapper,
-            UserRepository userRepository, RoleRepository roleRepository, PasswordEncoder passwordEncoder) {
-        super(request, userMapper, userRepository);
+    private final PasswordEncoder passwordEncoder;
+
+    public RegisterCommandHandler(RegisterCommand request, UserRepository userRepository, RoleRepository roleRepository, UserMapper userMapper, PasswordEncoder passwordEncoder) {
+        super(request, null, null);
+        this.userRepository = userRepository;
         this.roleRepository = roleRepository;
+        this.userMapper = userMapper;
         this.passwordEncoder = passwordEncoder;
     }
 
+    @Override
     public UserDto execute() {
-        List<UUID> roleIds = request.getRoleIds();
-        List<Role> mappedRoles = (roleIds != null)
-                ? roleRepository.findAllById(roleIds)
-                : null;
-        UserValidator.validateRoles(roleIds, mappedRoles);
-
         if (userRepository.existsByUsername(request.getUsername())) {
             throw new InvalidInputException("user.username.unique");
         }
@@ -47,10 +44,12 @@ public class UserCreateHandler extends UserBaseHandler<UserCreateCommand, UserDt
             throw new InvalidInputException("user.phone.unique");
         }
 
+        Role userRole = roleRepository.findByName("USER");
+        
         User user = userMapper.toEntity(request);
 
-        user.setPassword(passwordEncoder.encode(user.getPassword()));
-        user.setRoles(mappedRoles);
+        user.setPassword(passwordEncoder.encode(request.getPassword()));
+        user.setRoles(List.of(userRole));
 
         User savedUser = userRepository.save(user);
 

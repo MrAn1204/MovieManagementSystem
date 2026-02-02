@@ -9,6 +9,7 @@ import com.mms.mms_api.business.command.user.UserUpdateCommand;
 import com.mms.mms_api.data.RoleRepository;
 import com.mms.mms_api.data.UserRepository;
 import com.mms.mms_api.dto.user.UserDto;
+import com.mms.mms_api.exception.InvalidInputException;
 import com.mms.mms_api.exception.ResourceNotFoundException;
 import com.mms.mms_api.model.Role;
 import com.mms.mms_api.model.User;
@@ -38,6 +39,18 @@ public class UserUpdateHandler extends UserBaseHandler<UserUpdateCommand, UserDt
                 ? roleRepository.findAllById(roleIds)
                 : null;
         UserValidator.validateRoles(roleIds, mappedRoles);
+
+        if (userRepository.existsByUsername(request.getUsername())) {
+            throw new InvalidInputException("user.username.unique");
+        }
+
+        if (userRepository.existsByEmail(request.getEmail())) {
+            throw new InvalidInputException("user.email.unique");
+        }
+
+        if (userRepository.existsByPhoneNumber(request.getPhoneNumber())) {
+            throw new InvalidInputException("user.phone.unique");
+        }
 
         userMapper.updateEntity(request, user);
 

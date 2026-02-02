@@ -1,9 +1,11 @@
 package com.mms.mms_api.util.mapper;
 
+import org.mapstruct.BeanMapping;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 import org.mapstruct.MappingTarget;
 
+import com.mms.mms_api.business.command.auth.RegisterCommand;
 import com.mms.mms_api.business.command.user.UserCreateCommand;
 import com.mms.mms_api.business.command.user.UserUpdateCommand;
 import com.mms.mms_api.dto.user.UserDto;
@@ -18,6 +20,15 @@ public interface UserMapper {
     @Mapping(target = "tickets", ignore = true)
     User toEntity(UserCreateCommand command);
     
+    @BeanMapping(ignoreByDefault = true)
+    @Mapping(target = "username", source = "command.username")
+    @Mapping(target = "fullname", source = "command.fullname")
+    @Mapping(target = "gender", source = "command.gender")
+    @Mapping(target = "dateOfBirth", source = "command.dateOfBirth")
+    @Mapping(target = "email", source = "command.email")
+    @Mapping(target = "phoneNumber", source = "command.phoneNumber")
+    User toEntity(RegisterCommand command);
+
     UserDto toDto(User user);
 
     @Mapping(target = "roles", ignore = true)
