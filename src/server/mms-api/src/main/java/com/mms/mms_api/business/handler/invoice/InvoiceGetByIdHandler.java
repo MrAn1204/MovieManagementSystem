@@ -2,6 +2,7 @@ package com.mms.mms_api.business.handler.invoice;
 
 import com.mms.mms_api.business.query.invoice.InvoiceGetByIdQuery;
 import com.mms.mms_api.dto.InvoiceDto;
+import com.mms.mms_api.exception.InvalidInputException;
 import com.mms.mms_api.model.Invoice;
 import com.mms.mms_api.util.mapper.InvoiceMapper;
 import com.mms.mms_api.data.InvoiceRepository;
@@ -17,7 +18,7 @@ public class InvoiceGetByIdHandler extends InvoiceBaseHandler<InvoiceGetByIdQuer
     public InvoiceDto execute() {
         UUID invoiceId = request.getId();
         Invoice invoice = invoiceRepository.findById(invoiceId)
-                .orElseThrow(() -> new IllegalArgumentException("invoice.notFound"));
+                .orElseThrow(() -> new InvalidInputException("invoice.notFound"));
         return invoiceMapper.toDto(invoice);
     }
 }
