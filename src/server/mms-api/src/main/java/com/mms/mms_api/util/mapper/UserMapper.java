@@ -31,6 +31,8 @@ public interface UserMapper {
 
     UserDto toDto(User user);
 
+    @Mapping(target = "username", ignore = true)
+    @Mapping(target = "password", ignore = true)
     @Mapping(target = "roles", ignore = true)
     @Mapping(target = "invoices", ignore = true)
     @Mapping(target = "tickets", ignore = true)

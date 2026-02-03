@@ -22,12 +22,8 @@ import lombok.EqualsAndHashCode;
 @Data
 @EqualsAndHashCode(callSuper = true)
 @AllArgsConstructor
-@PasswordMatch
+@PasswordMatch(ignoreEmpty = true)
 public class UserUpdateCommand extends BaseUpdateCommand {
-    @NotNull(message = "{user.username.required}")
-    @Size(min = AppConstant.USERNAME_MIN, max = AppConstant.USERNAME_MAX, message = "{user.username.size}")
-    private String username;
-
     @NotNull(message = "{user.fullname.required}")
     @Size(min = AppConstant.FULLNAME_MIN, max = AppConstant.FULLNAME_MAX, message = "{user.fullname.size}")
     private String fullname;

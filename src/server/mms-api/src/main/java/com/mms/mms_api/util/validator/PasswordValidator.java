@@ -13,6 +13,8 @@ import jakarta.validation.ConstraintValidatorContext;
 public class PasswordValidator implements ConstraintValidator<PasswordMatch, Object> {
     private int minLength;
 
+    private boolean ignoreEmpty;
+
     private static final String SPECIAL_CHARACTERS = "!@#$%^&*()-_=+[]{};:',.?/";
 
     private static final String PASSWORD_PROPERTY = "password";
@@ -22,6 +24,7 @@ public class PasswordValidator implements ConstraintValidator<PasswordMatch, Obj
     @Override
     public void initialize(PasswordMatch annotation) {
         this.minLength = annotation.min();
+        this.ignoreEmpty = annotation.ignoreEmpty();
     }
 
     @Override
@@ -32,7 +35,7 @@ public class PasswordValidator implements ConstraintValidator<PasswordMatch, Obj
         String confirmPassword = (String) wrapper.getPropertyValue(CONFIRM_PASSWORD_PROPERTY);
 
         if (password == null || password.isBlank()) {
-            return buildViolation(context, "{user.password.required}", PASSWORD_PROPERTY);
+            return ignoreEmpty || buildViolation(context, "{user.password.required}", PASSWORD_PROPERTY);
         }
 
         if (!containRequirements(password)) {

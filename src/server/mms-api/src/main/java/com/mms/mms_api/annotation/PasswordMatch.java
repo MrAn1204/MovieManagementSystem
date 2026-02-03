@@ -16,6 +16,8 @@ import com.mms.mms_api.util.validator.PasswordValidator;
 public @interface PasswordMatch {
     int min() default AppConstant.PASSWORD_MIN;
 
+    boolean ignoreEmpty() default false;
+
     String message() default "{user.password.required}";
 
     Class<?>[] groups() default {};

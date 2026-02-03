@@ -40,10 +40,6 @@ public class UserUpdateHandler extends UserBaseHandler<UserUpdateCommand, UserDt
                 : null;
         UserValidator.validateRoles(roleIds, mappedRoles);
 
-        if (userRepository.existsByUsername(request.getUsername())) {
-            throw new InvalidInputException("user.username.unique");
-        }
-
         if (userRepository.existsByEmail(request.getEmail())) {
             throw new InvalidInputException("user.email.unique");
         }
@@ -54,7 +50,10 @@ public class UserUpdateHandler extends UserBaseHandler<UserUpdateCommand, UserDt
 
         userMapper.updateEntity(request, user);
 
-        user.setPassword(passwordEncoder.encode(user.getPassword()));
+        String password = request.getPassword();
+        if (password != null && !password.isBlank()) {
+            user.setPassword(passwordEncoder.encode(password));
+        }
 
         user.setRoles(mappedRoles);
 
