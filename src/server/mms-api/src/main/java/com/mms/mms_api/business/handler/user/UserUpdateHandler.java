@@ -1,6 +1,7 @@
 package com.mms.mms_api.business.handler.user;
 
 import java.util.List;
+import java.util.Objects;
 import java.util.UUID;
 
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -40,11 +41,11 @@ public class UserUpdateHandler extends UserBaseHandler<UserUpdateCommand, UserDt
                 : null;
         UserValidator.validateRoles(roleIds, mappedRoles);
 
-        if (userRepository.existsByEmail(request.getEmail())) {
+        if (!Objects.equals(request.getEmail(), user.getEmail()) && userRepository.existsByEmail(request.getEmail())) {
             throw new InvalidInputException("user.email.unique");
         }
 
-        if (userRepository.existsByPhoneNumber(request.getPhoneNumber())) {
+        if (!Objects.equals(request.getPhoneNumber(), user.getPhoneNumber()) && userRepository.existsByPhoneNumber(request.getPhoneNumber())) {
             throw new InvalidInputException("user.phone.unique");
         }
 
