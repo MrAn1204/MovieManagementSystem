@@ -9,11 +9,10 @@ import { AbstractControl } from '@angular/forms';
 })
 export class ValidationError {
   control = input.required<AbstractControl>();
-  errorMessages = input.required<Record<string, string>>();
 
   get errorMessage(): string | null {
     const error = Object.keys({ ...this.control().errors })[0];
 
-    return this.errorMessages()[error] || this.control().getError(error);
+    return this.control().getError(error);
   }
 }

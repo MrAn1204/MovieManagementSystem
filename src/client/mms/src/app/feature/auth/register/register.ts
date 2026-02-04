@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
+import { FormBuilder, FormGroup, ReactiveFormsModule } from '@angular/forms';
 import { InputField } from "../../../shared/component/form/input/input-field";
 import { Router } from '@angular/router';
 import { CustomValidators } from '../../../shared/util/custom-validators';
@@ -27,8 +27,8 @@ export class Register {
   errorMessages = {
     username: {
       required: 'Username is required',
-      minlength: 'Username must be at least 5 characters',
-      maxlength: 'Username cannot exceed 20 characters',
+      minLength: 'Username must be at least 5 characters',
+      maxLength: 'Username cannot exceed 20 characters',
     },
     password: {
       required: 'Password is required',
@@ -40,8 +40,8 @@ export class Register {
     },
     fullname: {
       required: 'Full name is required',
-      minlength: 'Full name must be at least 3 characters',
-      maxlength: 'Full name cannot exceed 50 characters',
+      minLength: 'Full name must be at least 3 characters',
+      maxLength: 'Full name cannot exceed 50 characters',
     },
     gender: {
       required: 'Gender is required',
@@ -51,6 +51,8 @@ export class Register {
     },
     phoneNumber: {
       required: 'Phone number is required',
+      minLength: 'Phone number must be at least 10 characters',
+      maxLength: 'Phone number cannot exceed 15 characters',
     },
     email: {
       email: 'Invalid email format',
@@ -59,14 +61,37 @@ export class Register {
 
   constructor(private readonly formBuilder: FormBuilder, private readonly authService: AuthService, private readonly router: Router) {
     this.form = this.formBuilder.group({
-      username: ['', [Validators.required, Validators.minLength(5), Validators.maxLength(20)]],
-      password: ['', [Validators.required, CustomValidators.passwordValid]],
-      confirmPassword: ['', [Validators.required]],
-      fullname: ['', [Validators.required, Validators.minLength(3), Validators.maxLength(50)]],
-      gender: ['', [Validators.required]],
-      dateOfBirth: ['', [Validators.required]],
-      email: ['', [Validators.email]],
-      phoneNumber: ['', [Validators.required, Validators.minLength(10), Validators.maxLength(15)]],
+      username: ['', [
+        CustomValidators.required(this.errorMessages.username.required),
+        CustomValidators.minLength(5, this.errorMessages.username.minLength),
+        CustomValidators.maxLength(20, this.errorMessages.username.maxLength)
+      ]],
+      password: ['', [
+        CustomValidators.required(this.errorMessages.password.required),
+        CustomValidators.passwordValid
+      ]],
+      confirmPassword: ['', [
+        CustomValidators.required(this.errorMessages.confirmPassword.required)
+      ]],
+      fullname: ['', [
+        CustomValidators.required(this.errorMessages.fullname.required),
+        CustomValidators.minLength(3, this.errorMessages.fullname.minLength),
+        CustomValidators.maxLength(50, this.errorMessages.fullname.maxLength)
+      ]],
+      gender: ['', [
+        CustomValidators.required(this.errorMessages.gender.required)
+      ]],
+      dateOfBirth: ['', [
+        CustomValidators.required(this.errorMessages.dateOfBirth.required)
+      ]],
+      email: ['', [
+        CustomValidators.email(this.errorMessages.email.email)
+      ]],
+      phoneNumber: ['', [
+        CustomValidators.required(this.errorMessages.phoneNumber.required),
+        CustomValidators.minLength(10, this.errorMessages.phoneNumber.minLength),
+        CustomValidators.maxLength(15, this.errorMessages.phoneNumber.maxLength)
+      ]],
     }, { validators: CustomValidators.passwordMatch });
   }
 
