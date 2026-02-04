@@ -44,11 +44,14 @@ export class CustomValidators {
 
 
   static passwordMatch(control: AbstractControl): ValidationErrors | null {
-    const password = control.get('password')?.value;
-    const confirmPassword = control.get('confirmPassword')?.value;
+    const password = control.get('password');
+    const confirmPassword = control.get('confirmPassword');
 
-    if (password !== confirmPassword) {
-      return { passwordMismatch: true };
+    if (password?.value !== confirmPassword?.value) {
+      const error = { passwordMismatch: true };
+
+      confirmPassword?.setErrors(error);
+      return error;
     }
 
     return null;

@@ -10,13 +10,9 @@
           formControlName="username" inputType="text" idName="username" labelText="Username">
         </app-input-field>
         
-        @if (form.get('username')?.touched && form.get('username')?.hasError('required')) {
-          <p class="error-text">Username is required</p>
-        } @else if (form.get('username')?.touched && form.get('username')?.hasError('minlength')) {
-          <p class="error-text">Username must be at least 5 characters</p>
-        } @else if (form.get('username')?.touched && form.get('username')?.hasError('maxlength')) {
-          <p class="error-text">Username cannot exceed 20 characters</p>
-        }
+        <app-validation-error 
+          [control]="form.get('username')!" [errorMessages]="errorMessages.username">
+        </app-validation-error>
       </div>
       
       <div class="sm:col-span-2">
@@ -24,13 +20,9 @@
           formControlName="password" inputType="password" idName="password" labelText="Password">
         </app-input-field>
         
-        @if (form.get('password')?.touched && form.get('password')?.hasError('required')) {
-          <p class="error-text">Password is required</p>
-        } @else if (form.get('password')?.touched && form.get('password')?.hasError('passwordInvalid')) {
-          <p class="error-text">
-            Password must have at least 8 characters, one uppercase letter, one lowercase letter, one digit, one special character, and no whitespace.
-          </p>
-        }
+        <app-validation-error 
+          [control]="form.get('password')!" [errorMessages]="errorMessages.password">
+        </app-validation-error>
       </div>
 
       <div class="sm:col-span-2">
@@ -38,11 +30,9 @@
           formControlName="confirmPassword" inputType="password" idName="confirmPassword" labelText="Confirm Password">
         </app-input-field>
 
-        @if (form.get('confirmPassword')?.touched && form.get('confirmPassword')?.hasError('required')) {
-          <p class="error-text">Confirm Password is required</p>
-        } @else if (form.get('confirmPassword')?.touched && form.hasError('passwordMismatch')) {
-          <p class="error-text">Passwords do not match</p>
-        }
+        <app-validation-error 
+          [control]="form.get('confirmPassword')!" [errorMessages]="errorMessages.confirmPassword">
+        </app-validation-error>
       </div>
 
       <hr class="border-platinum-300 sm:col-span-2">
@@ -52,13 +42,9 @@
           formControlName="fullname" inputType="text" idName="fullname" labelText="Full Name">
         </app-input-field>
         
-        @if (form.get('fullname')?.touched && form.get('fullname')?.hasError('required')) {
-          <p class="error-text">Full Name is required</p>
-        } @else if (form.get('fullname')?.touched && form.get('fullname')?.hasError('minlength')) {
-          <p class="error-text">Full Name must be at least 3 characters</p>
-        } @else if (form.get('fullname')?.touched && form.get('fullname')?.hasError('maxlength')) {
-          <p class="error-text">Full Name cannot exceed 50 characters</p>
-        }
+        <app-validation-error 
+          [control]="form.get('fullname')!" [errorMessages]="errorMessages.fullname">
+        </app-validation-error>
       </div>
 
       <div>
@@ -72,9 +58,9 @@
           formControlName="dateOfBirth" inputType="date" idName="dateOfBirth" labelText="Date of Birth">
         </app-input-field>
 
-        @if (form.get('dateOfBirth')?.touched && form.get('dateOfBirth')?.hasError('required')) {
-          <p class="error-text">Date of Birth is required</p>
-        }
+        <app-validation-error 
+          [control]="form.get('dateOfBirth')!" [errorMessages]="errorMessages.dateOfBirth">
+        </app-validation-error>
       </div>
 
       <div>
@@ -82,9 +68,9 @@
           formControlName="phoneNumber" inputType="tel" idName="phoneNumber" labelText="Phone Number">
         </app-input-field>
 
-        @if (form.get('phoneNumber')?.touched && form.get('phoneNumber')?.hasError('required')) {
-          <p class="error-text">Phone Number is required</p>
-        }
+        <app-validation-error 
+          [control]="form.get('phoneNumber')!" [errorMessages]="errorMessages.phoneNumber">
+        </app-validation-error>
       </div>
 
       <div class="sm:col-span-2">
@@ -92,9 +78,9 @@
           formControlName="email" inputType="email" idName="email" labelText="Email">
         </app-input-field>
 
-        @if (form.get('email')?.touched && form.get('email')?.hasError('email')) {
-          <p class="error-text">Invalid email format</p>
-        }
+        <app-validation-error 
+          [control]="form.get('email')!" [errorMessages]="errorMessages.email">
+        </app-validation-error>
       </div>
     </div>
 
