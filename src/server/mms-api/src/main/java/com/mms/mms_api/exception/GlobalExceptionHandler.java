@@ -4,8 +4,6 @@ import java.time.LocalDateTime;
 import java.util.Map;
 import java.util.stream.Collectors;
 
-import org.springframework.context.MessageSource;
-import org.springframework.context.i18n.LocaleContextHolder;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.AuthenticationException;
@@ -14,12 +12,14 @@ import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 
+import com.mms.mms_api.business.service.AppMessageService;
+
 @RestControllerAdvice
 public class GlobalExceptionHandler {
-    private final MessageSource messageSource;
+    private final AppMessageService messageService;
 
-    public GlobalExceptionHandler(MessageSource messageSource) {
-        this.messageSource = messageSource;
+    public GlobalExceptionHandler(AppMessageService messageService) {
+        this.messageService = messageService;
     }
 
     @ExceptionHandler(MethodArgumentNotValidException.class)
@@ -43,7 +43,7 @@ public class GlobalExceptionHandler {
         HttpStatus statusCode = exception.getStatusCode();
         
         String field = messageKey.split("\\.")[1];
-        String message = messageSource.getMessage(messageKey, exception.getArgs(), LocaleContextHolder.getLocale());
+        String message = messageService.getByCode(messageKey);
 
         ErrorResponse errorResponse = new ErrorResponse(
                 LocalDateTime.now(),

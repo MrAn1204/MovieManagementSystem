@@ -12,7 +12,6 @@ public abstract class ApiException extends RuntimeException {
 
     protected final ErrorType errorType;
 
-    @NonNull
     protected final String messageKey;
 
     protected final transient Object[] args;
@@ -21,7 +20,7 @@ public abstract class ApiException extends RuntimeException {
         super();
         this.statusCode = statusCode != null ? statusCode : HttpStatus.BAD_REQUEST;
         this.errorType = errorType;
-        this.messageKey = messageKey != null ? messageKey : "error.general";
+        this.messageKey = messageKey;
         this.args = args;
     }
 }
