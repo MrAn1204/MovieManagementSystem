@@ -39,17 +39,23 @@ public class GlobalExceptionHandler {
 
     @ExceptionHandler(ApiException.class)
     public ResponseEntity<ErrorResponse> handleApiException(ApiException exception) {
-        String messageKey = exception.getMessageKey();
+        Map<String, String> messages;
+        if (exception.getMessages() != null) {
+            messages = exception.getMessages().stream()
+                    .collect(Collectors.toMap(
+                            ErrorDetail::getField,
+                            detail -> messageService.getByCode(detail.getMessageKey(), detail.getMessageParams())));
+        } else {
+            messages = Map.of("message", messageService.getByCode(exception.getMessage()));
+        }
+
         HttpStatus statusCode = exception.getStatusCode();
-        
-        String field = messageKey.split("\\.")[1];
-        String message = messageService.getByCode(messageKey);
 
         ErrorResponse errorResponse = new ErrorResponse(
                 LocalDateTime.now(),
                 statusCode.value(),
                 exception.getErrorType().getValue(),
-                Map.of(field, message));
+                messages);
 
         return ResponseEntity.status(statusCode).body(errorResponse);
     }

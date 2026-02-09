@@ -11,6 +11,7 @@ import com.mms.mms_api.business.query.user.UserSearchQuery;
 import com.mms.mms_api.business.service.UserService;
 import com.mms.mms_api.common.PaginatedResult;
 import com.mms.mms_api.dto.user.UserDto;
+import com.mms.mms_api.util.validator.UserValidator;
 
 import java.util.List;
 import java.util.UUID;
@@ -26,15 +27,15 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 
 import jakarta.validation.Valid;
+import lombok.AllArgsConstructor;
 
 @RestController
 @RequestMapping("/api/users")
+@AllArgsConstructor
 public class UserController {
     private UserService userService;
 
-    public UserController(UserService userService) {
-        this.userService = userService;
-    }
+    private UserValidator userValidator;
 
     @GetMapping
     public ResponseEntity<List<UserDto>> getAll() {
@@ -47,6 +48,8 @@ public class UserController {
 
     @PostMapping("/create")
     public ResponseEntity<UserDto> create(@Valid @RequestBody UserCreateCommand command) {
+        userValidator.validate(command);
+
         UserDto result = userService.handle(command);
 
         return result != null

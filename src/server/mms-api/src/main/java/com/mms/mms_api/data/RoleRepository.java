@@ -1,5 +1,6 @@
 package com.mms.mms_api.data;
 
+import java.util.List;
 import java.util.UUID;
 
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -10,4 +11,10 @@ import com.mms.mms_api.model.Role;
 @Repository
 public interface RoleRepository extends JpaRepository<Role, UUID> {
     Role findByName(String name);
+
+    int countByIdIn(Iterable<UUID> ids);
+
+    default boolean existsAllByIdIn(List<UUID> ids) {
+        return countByIdIn(ids) == ids.size();
+    }
 }
