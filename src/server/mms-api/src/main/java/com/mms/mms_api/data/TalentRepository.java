@@ -10,4 +10,10 @@ import java.util.UUID;
 @Repository
 public interface TalentRepository extends JpaRepository<Talent, UUID> {
     List<Talent> findByNameIn(List<String> names);
+
+    int countByIdIn(Iterable<UUID> ids);
+
+    default boolean existsAllByIdIn(List<UUID> ids) {
+        return countByIdIn(ids) == ids.size();
+    }
 }
