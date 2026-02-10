@@ -10,6 +10,7 @@ import org.springframework.util.CollectionUtils;
 
 import com.mms.mms_api.business.command.user.UserCreateCommand;
 import com.mms.mms_api.business.command.user.UserUpdateCommand;
+import com.mms.mms_api.business.service.validation.RoleValidationService;
 import com.mms.mms_api.business.service.validation.UserValidationService;
 import com.mms.mms_api.exception.ErrorDetail;
 import com.mms.mms_api.exception.InvalidInputException;
@@ -21,6 +22,8 @@ import lombok.AllArgsConstructor;
 @AllArgsConstructor
 public class UserValidator implements BaseValidator {
     private final UserValidationService userValidationService;
+
+    private final RoleValidationService roleValidationService;
 
     public void validate(UserCreateCommand command) {
         List<ErrorDetail> errors = new ArrayList<>();
@@ -64,7 +67,7 @@ public class UserValidator implements BaseValidator {
             errors.add(new ErrorDetail("rolesIds", "user.roles.required"));
         }
 
-        if (!userValidationService.existsAllByIdIn(rolesIds)) {
+        if (!roleValidationService.existsAllByIdIn(rolesIds)) {
             errors.add(new ErrorDetail("rolesIds", "user.roles.invalid"));
         }
     }
