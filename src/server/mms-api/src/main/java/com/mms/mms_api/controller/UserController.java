@@ -69,6 +69,7 @@ public class UserController {
     @PutMapping("/{id}")
     public ResponseEntity<UserDto> update(@PathVariable UUID id, @Valid @RequestBody UserUpdateCommand command) {
         command.setId(id);
+        userValidator.validate(command);
 
         UserDto updatedUser = userService.handle(command);
 
