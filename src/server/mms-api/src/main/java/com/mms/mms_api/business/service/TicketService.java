@@ -19,51 +19,29 @@ import com.mms.mms_api.business.query.ticket.TicketGetByIdQuery;
 import com.mms.mms_api.business.query.ticket.TicketSearchQuery;
 import com.mms.mms_api.common.PaginatedResult;
 import com.mms.mms_api.data.InvoiceRepository;
-import com.mms.mms_api.data.PromotionRepository;
-import com.mms.mms_api.data.ScheduleRepository;
 import com.mms.mms_api.data.ScheduleSeatRepository;
-import com.mms.mms_api.data.SeatRepository;
 import com.mms.mms_api.data.TicketRepository;
-import com.mms.mms_api.data.UserRepository;
 import com.mms.mms_api.dto.TicketDto;
 import com.mms.mms_api.util.mapper.TicketMapper;
 
+import lombok.AllArgsConstructor;
+
 @Service
+@AllArgsConstructor
 public class TicketService {
     private final TicketRepository ticketRepository;
 
-    private final ScheduleRepository scheduleRepository;
-
-    private final SeatRepository seatRepository;
-
-    private final InvoiceRepository invoiceRepository;
-
-    private final PromotionRepository promotionRepository;
-
-    private final UserRepository userRepository;
+    private final TicketDependencies ticketDependencies;
 
     private final ScheduleSeatRepository scheduleSeatRepository;
 
-    private final TicketMapper ticketMapper;
+    private final InvoiceRepository invoiceRepository;
 
-    public TicketService(TicketRepository ticketRepository, ScheduleRepository scheduleRepository,
-            SeatRepository seatRepository, InvoiceRepository invoiceRepository,
-            PromotionRepository promotionRepository, UserRepository userRepository,
-            ScheduleSeatRepository scheduleSeatRepository, TicketMapper ticketMapper) {
-        this.ticketRepository = ticketRepository;
-        this.scheduleRepository = scheduleRepository;
-        this.seatRepository = seatRepository;
-        this.invoiceRepository = invoiceRepository;
-        this.promotionRepository = promotionRepository;
-        this.userRepository = userRepository;
-        this.ticketMapper = ticketMapper;
-        this.scheduleSeatRepository = scheduleSeatRepository;
-    }
+    private final TicketMapper ticketMapper;
 
     @Transactional
     public TicketDto handle(TicketCreateCommand request) {
-        TicketCreateHandler handler = new TicketCreateHandler(request, ticketMapper, ticketRepository,
-                scheduleRepository, seatRepository, promotionRepository, userRepository, scheduleSeatRepository);
+        TicketCreateHandler handler = new TicketCreateHandler(request, ticketMapper, ticketRepository, ticketDependencies, scheduleSeatRepository);
         return handler.execute();
     }
 
@@ -79,8 +57,7 @@ public class TicketService {
 
     @Transactional
     public TicketDto handle(TicketUpdateCommand request) {
-        TicketUpdateHandler handler = new TicketUpdateHandler(request, ticketMapper, ticketRepository,
-                scheduleRepository, seatRepository, invoiceRepository, promotionRepository, scheduleSeatRepository);
+        TicketUpdateHandler handler = new TicketUpdateHandler(request, ticketMapper, ticketRepository, ticketDependencies, invoiceRepository, scheduleSeatRepository);
         return handler.execute();
     }
 
