@@ -1,5 +1,7 @@
 package com.mms.mms_api.dto;
 
+import com.mms.mms_api.common.IdNameDto;
+
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 
@@ -14,5 +16,5 @@ public class SeatDto extends BaseDto {
 
     private String name;
 
-    private String roomName;
+    private IdNameDto room;
 }
