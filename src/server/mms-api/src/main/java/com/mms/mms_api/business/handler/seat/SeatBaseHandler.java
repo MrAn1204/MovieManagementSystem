@@ -7,7 +7,6 @@ import com.mms.mms_api.model.Room;
 import com.mms.mms_api.model.Seat;
 import com.mms.mms_api.model.SeatType;
 import com.mms.mms_api.util.mapper.SeatMapper;
-import com.mms.mms_api.util.validator.SeatValidator;
 
 public abstract class SeatBaseHandler<I, O> extends BaseHandler<I, O> {
     protected final SeatRepository seatRepository;
@@ -22,7 +21,6 @@ public abstract class SeatBaseHandler<I, O> extends BaseHandler<I, O> {
 
     protected Seat linkCoupleSeat(Seat seat, Room room) {
         Seat secondSeat;
-        SeatValidator.validateCoupleSeatPosition(seat.getSeatColumn(), room.getSeatQuantity());
 
         secondSeat = room.getSeats().stream()
                 .filter(s -> s.getSeatColumn() == seat.getSeatColumn() + 1

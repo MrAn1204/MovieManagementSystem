@@ -1,7 +1,5 @@
 package com.mms.mms_api.business.handler.seat;
 
-
-
 import com.mms.mms_api.business.command.seat.SeatUpdateCommand;
 import com.mms.mms_api.data.RoomRepository;
 import com.mms.mms_api.data.SeatRepository;
@@ -11,7 +9,6 @@ import com.mms.mms_api.model.Room;
 import com.mms.mms_api.model.Seat;
 import com.mms.mms_api.model.SeatType;
 import com.mms.mms_api.util.mapper.SeatMapper;
-import com.mms.mms_api.util.validator.SeatValidator;
 
 public class SeatUpdateHandler extends SeatBaseHandler<SeatUpdateCommand, SeatDto> {
     private final RoomRepository roomRepository;
@@ -26,8 +23,6 @@ public class SeatUpdateHandler extends SeatBaseHandler<SeatUpdateCommand, SeatDt
     public SeatDto execute() {
         Seat seat = seatRepository.findById(request.getId())
                 .orElseThrow(() -> new ResourceNotFoundException("seat.notFound"));
-
-        SeatValidator.validateSeatType(request.getSeatType());
 
         Room room = roomRepository.findById(request.getRoomId())
                 .orElseThrow(() -> new ResourceNotFoundException("room.notFound"));
