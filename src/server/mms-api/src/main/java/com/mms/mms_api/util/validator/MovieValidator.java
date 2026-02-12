@@ -7,13 +7,11 @@ import com.mms.mms_api.business.service.validation.GenreValidationService;
 import com.mms.mms_api.business.service.validation.LanguageValidationService;
 import com.mms.mms_api.business.service.validation.MovieValidationService;
 import com.mms.mms_api.business.service.validation.StudioValidationService;
-import com.mms.mms_api.exception.ErrorDetail;
-import com.mms.mms_api.exception.InvalidInputException;
-import com.mms.mms_api.exception.ResourceNotFoundException;
+import com.mms.mms_api.exception.ErrorLinkedList;
+import com.mms.mms_api.exception.ErrorType;
 
 import lombok.AllArgsConstructor;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
@@ -35,80 +33,74 @@ public class MovieValidator implements BaseValidator {
     private final TalentValidationService talentValidationService;
 
     public void validate(MovieCreateCommand command) {
-        List<ErrorDetail> errors = new ArrayList<>();
+        ErrorLinkedList errors = new ErrorLinkedList();
 
         validateGenres(errors, command.getGenreIds());
         validateLanguage(errors, command.getLanguageId());
         validateStudios(errors, command.getStudioIds());
         validateTalents(errors, command.getTalentIds());
 
-        if (!errors.isEmpty()) {
-            throw new InvalidInputException(errors);
-        }
+        errors.throwIfNotEmpty(ErrorType.INVALID_INPUT);
     }
 
     public void validate(MovieUpdateCommand command) {
-        List<ErrorDetail> errors = new ArrayList<>();
+        ErrorLinkedList errors = new ErrorLinkedList();
 
         validateId(errors, command.getId());
 
-        if (!errors.isEmpty()) {
-            throw new ResourceNotFoundException(errors);
-        }
+        errors.throwIfNotEmpty(ErrorType.RESOURCE_NOT_FOUND);
 
         validateGenres(errors, command.getGenreIds());
         validateLanguage(errors, command.getLanguageId());
         validateStudios(errors, command.getStudioIds());
         validateTalents(errors, command.getTalentIds());
 
-        if (!errors.isEmpty()) {
-            throw new InvalidInputException(errors);
-        }
+        errors.throwIfNotEmpty(ErrorType.INVALID_INPUT);
     }
 
-    private void validateId(List<ErrorDetail> errors, @NonNull UUID id) {
+    private void validateId(ErrorLinkedList errors, @NonNull UUID id) {
         if (!movieValidationService.existsById(id)) {
-            errors.add(new ErrorDetail("id", "movie.notFound"));
+            errors.add("id", "movie.notFound");
         }
     }
 
-    private void validateGenres(List<ErrorDetail> errors, List<UUID> genreIds) {
+    private void validateGenres(ErrorLinkedList errors, List<UUID> genreIds) {
         if (CollectionUtils.isEmpty(genreIds)) {
             return;
         }
 
         if (!genreValidationService.existsAllById(genreIds)) {
-            errors.add(new ErrorDetail("genres", "movie.genres.invalid"));
+            errors.add("genres", "movie.genres.invalid");
         }
     }
 
-    private void validateLanguage(List<ErrorDetail> errors, UUID languageId) {
+    private void validateLanguage(ErrorLinkedList errors, UUID languageId) {
         if (languageId == null) {
             return;
         }
 
         if (!languageValidationService.existsById(languageId)) {
-            errors.add(new ErrorDetail("language", "movie.language.invalid"));
+            errors.add("language", "movie.language.invalid");
         }
     }
 
-    private void validateStudios(List<ErrorDetail> errors, List<UUID> studioIds) {
+    private void validateStudios(ErrorLinkedList errors, List<UUID> studioIds) {
         if (CollectionUtils.isEmpty(studioIds)) {
             return;
         }
 
         if (!studioValidationService.existsAllById(studioIds)) {
-            errors.add(new ErrorDetail("studios", "movie.studios.invalid"));
+            errors.add("studios", "movie.studios.invalid");
         }
     }
 
-    private void validateTalents(List<ErrorDetail> errors, List<UUID> talentIds) {
+    private void validateTalents(ErrorLinkedList errors, List<UUID> talentIds) {
         if (CollectionUtils.isEmpty(talentIds)) {
             return;
         }
 
         if (!talentValidationService.existsAllById(talentIds)) {
-            errors.add(new ErrorDetail("talents", "movie.talents.invalid"));
+            errors.add("talents", "movie.talents.invalid");
         }
     }
 }

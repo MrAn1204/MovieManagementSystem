@@ -1,7 +1,5 @@
 package com.mms.mms_api.util.validator;
 
-import java.util.ArrayList;
-import java.util.List;
 import java.util.UUID;
 
 import org.springframework.lang.NonNull;
@@ -12,9 +10,8 @@ import com.mms.mms_api.business.command.schedule.ScheduleUpdateCommand;
 import com.mms.mms_api.business.service.validation.MovieValidationService;
 import com.mms.mms_api.business.service.validation.RoomValidationService;
 import com.mms.mms_api.business.service.validation.ScheduleValidationService;
-import com.mms.mms_api.exception.ErrorDetail;
-import com.mms.mms_api.exception.InvalidInputException;
-import com.mms.mms_api.exception.ResourceNotFoundException;
+import com.mms.mms_api.exception.ErrorLinkedList;
+import com.mms.mms_api.exception.ErrorType;
 
 import lombok.AllArgsConstructor;
 
@@ -28,48 +25,42 @@ public class ScheduleValidator implements BaseValidator {
     private final RoomValidationService roomValidationService;
 
     public void validate(ScheduleCreateCommand command) {
-        List<ErrorDetail> errors = new ArrayList<>();
+        ErrorLinkedList errors = new ErrorLinkedList();
 
         validateMovie(errors, command.getMovieId());
         validateRoom(errors, command.getRoomId());
 
-        if (!errors.isEmpty()) {
-            throw new InvalidInputException(errors);
-        }
+        errors.throwIfNotEmpty(ErrorType.INVALID_INPUT);
     }
 
     public void validate(ScheduleUpdateCommand command) {
-        List<ErrorDetail> errors = new ArrayList<>();
+        ErrorLinkedList errors = new ErrorLinkedList();
 
         validateId(errors, command.getId());
 
-        if (!errors.isEmpty()) {
-            throw new ResourceNotFoundException(errors);
-        }
+        errors.throwIfNotEmpty(ErrorType.RESOURCE_NOT_FOUND);
 
         validateMovie(errors, command.getMovieId());
         validateRoom(errors, command.getRoomId());
 
-        if (!errors.isEmpty()) {
-            throw new InvalidInputException(errors);
-        }
+        errors.throwIfNotEmpty(ErrorType.INVALID_INPUT);
     }
 
-    private void validateId(List<ErrorDetail> errors, @NonNull UUID id) {
+    private void validateId(ErrorLinkedList errors, @NonNull UUID id) {
         if (!scheduleValidationService.existsById(id)) {
-            errors.add(new ErrorDetail("id", "schedule.notFound"));
+            errors.add("id", "schedule.notFound");
         }
     }
 
-    private void validateMovie(List<ErrorDetail> errors, @NonNull UUID id) {
+    private void validateMovie(ErrorLinkedList errors, @NonNull UUID id) {
         if (!movieValidationService.existsById(id)) {
-            errors.add(new ErrorDetail("movie", "movie.notFound"));
+            errors.add("movie", "movie.notFound");
         }
     }
 
-    private void validateRoom(List<ErrorDetail> errors, @NonNull UUID id) {
+    private void validateRoom(ErrorLinkedList errors, @NonNull UUID id) {
         if (!roomValidationService.existsById(id)) {
-            errors.add(new ErrorDetail("room", "room.notFound"));
+            errors.add("room", "room.notFound");
         }
     }
 }
