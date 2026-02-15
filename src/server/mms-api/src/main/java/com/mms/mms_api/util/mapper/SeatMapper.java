@@ -17,7 +17,6 @@ public interface SeatMapper {
     @Mapping(target = "tickets", ignore = true)
     Seat toEntity(SeatCreateCommand command);
 
-    @Mapping(target = "roomName", source = "room.name")
     SeatDto toDto(Seat seat);
 
     @Mapping(target = "room", ignore = true)

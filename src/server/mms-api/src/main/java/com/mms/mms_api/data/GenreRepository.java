@@ -10,4 +10,10 @@ import java.util.UUID;
 @Repository
 public interface GenreRepository extends JpaRepository<Genre, UUID> {
     List<Genre> findByNameIn(List<String> names);
+
+    int countByIdIn(Iterable<UUID> ids);
+
+    default boolean existsAllByIdIn(List<UUID> ids) {
+        return countByIdIn(ids) == ids.size();
+    }
 }

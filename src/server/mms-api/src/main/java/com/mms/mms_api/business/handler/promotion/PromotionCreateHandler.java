@@ -4,7 +4,6 @@ import java.util.List;
 
 import com.mms.mms_api.business.command.promotion.PromotionCreateCommand;
 import com.mms.mms_api.dto.PromotionDto;
-import com.mms.mms_api.exception.InvalidInputException;
 import com.mms.mms_api.model.Promotion;
 import com.mms.mms_api.model.Ticket;
 import com.mms.mms_api.data.PromotionRepository;
@@ -23,10 +22,6 @@ public class PromotionCreateHandler extends PromotionBaseHandler<PromotionCreate
     @Override
     public PromotionDto execute() {
         List<Ticket> tickets = ticketRepository.findByIdIn(request.getTicketIds());
-
-        if (tickets.size() < request.getTicketIds().size()) {
-            throw new InvalidInputException("promotion.tickets.invalid");
-        }
 
         Promotion promotion = promotionMapper.toEntity(request);
 

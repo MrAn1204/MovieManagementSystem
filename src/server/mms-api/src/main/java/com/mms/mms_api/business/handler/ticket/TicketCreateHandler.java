@@ -3,15 +3,11 @@ package com.mms.mms_api.business.handler.ticket;
 import java.util.UUID;
 
 import com.mms.mms_api.business.command.ticket.TicketCreateCommand;
+import com.mms.mms_api.business.service.TicketDependencies;
 import com.mms.mms_api.dto.TicketDto;
-import com.mms.mms_api.exception.InvalidInputException;
 import com.mms.mms_api.exception.ResourceNotFoundException;
-import com.mms.mms_api.data.PromotionRepository;
-import com.mms.mms_api.data.ScheduleRepository;
 import com.mms.mms_api.data.ScheduleSeatRepository;
-import com.mms.mms_api.data.SeatRepository;
 import com.mms.mms_api.data.TicketRepository;
-import com.mms.mms_api.data.UserRepository;
 import com.mms.mms_api.util.mapper.TicketMapper;
 import com.mms.mms_api.model.Promotion;
 import com.mms.mms_api.model.Schedule;
@@ -22,25 +18,15 @@ import com.mms.mms_api.model.Ticket;
 import com.mms.mms_api.model.User;
 
 public class TicketCreateHandler extends TicketBaseHandler<TicketCreateCommand, TicketDto> {
-    private final ScheduleRepository scheduleRepository;
-
-    private final SeatRepository seatRepository;
-
-    private final PromotionRepository promotionRepository;
-
-    private final UserRepository userRepository;
+    private final TicketDependencies ticketDependencies;
 
     private final ScheduleSeatRepository scheduleSeatRepository;
 
     public TicketCreateHandler(TicketCreateCommand request, TicketMapper ticketMapper,
-            TicketRepository ticketRepository, ScheduleRepository scheduleRepository, SeatRepository seatRepository,
-            PromotionRepository promotionRepository, UserRepository userRepository,
+            TicketRepository ticketRepository, TicketDependencies ticketDependencies,
             ScheduleSeatRepository scheduleSeatRepository) {
         super(request, ticketMapper, ticketRepository);
-        this.scheduleRepository = scheduleRepository;
-        this.seatRepository = seatRepository;
-        this.promotionRepository = promotionRepository;
-        this.userRepository = userRepository;
+        this.ticketDependencies = ticketDependencies;
         this.scheduleSeatRepository = scheduleSeatRepository;
     }
 
@@ -48,24 +34,14 @@ public class TicketCreateHandler extends TicketBaseHandler<TicketCreateCommand, 
     public TicketDto execute() {
         Ticket ticket = ticketMapper.toEntity(request);
 
-        Schedule schedule = scheduleRepository.findById(request.getScheduleId())
-                .orElseThrow(() -> new ResourceNotFoundException("schedule.notFound"));
+        Schedule schedule = ticketDependencies.getScheduleById(request.getScheduleId());
 
-        Seat seat = seatRepository.findById(request.getSeatId())
-                .orElseThrow(() -> new ResourceNotFoundException("seat.notFound"));
+        Seat seat = ticketDependencies.getSeatById(request.getSeatId());
 
         UUID promotionId = request.getPromotionId();
-        Promotion promotion = (promotionId != null)
-                ? promotionRepository.findById(promotionId)
-                        .orElseThrow(() -> new ResourceNotFoundException("promotion.notFound"))
-                : null;
+        Promotion promotion = ticketDependencies.getPromotionById(promotionId);
 
-        User user = userRepository.findById(request.getUserId())
-                .orElseThrow(() -> new ResourceNotFoundException("user.notFound"));
-
-        if (seat.getRoom().getId() != schedule.getRoom().getId()) {
-            throw new InvalidInputException("ticket.room.mismatch");
-        }
+        User user = ticketDependencies.getUserById(request.getUserId());
 
         ticket.setSchedule(schedule);
         ticket.setSeat(seat);
@@ -75,12 +51,8 @@ public class TicketCreateHandler extends TicketBaseHandler<TicketCreateCommand, 
         ScheduleSeat scheduleSeat = scheduleSeatRepository.findById(new ScheduleSeatId(schedule.getId(), seat.getId()))
                 .orElseThrow(() -> new ResourceNotFoundException("schedule.seat.notFound"));
 
-        if (scheduleSeat.isReserved()) {
-            throw new InvalidInputException("ticket.seat.reserved");
-        } else {
-            scheduleSeat.setReserved(true);
-            scheduleSeatRepository.save(scheduleSeat);
-        }
+        scheduleSeat.setReserved(true);
+        scheduleSeatRepository.save(scheduleSeat);
 
         Ticket savedTicket = ticketRepository.save(ticket);
 

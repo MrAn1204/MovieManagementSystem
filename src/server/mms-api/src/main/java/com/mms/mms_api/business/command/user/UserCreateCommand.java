@@ -4,6 +4,8 @@ import java.time.LocalDate;
 import java.util.List;
 import java.util.UUID;
 
+import org.springframework.lang.NonNull;
+
 import com.mms.mms_api.annotation.PasswordMatch;
 import com.mms.mms_api.business.command.BaseCreateCommand;
 import com.mms.mms_api.common.AppConstant;
@@ -58,6 +60,7 @@ public class UserCreateCommand extends BaseCreateCommand {
     @Size(min = AppConstant.ADDRESS_MIN, max = AppConstant.ADDRESS_MAX, message = "{user.address.size}")
     private String address;
 
+    @NonNull
     @NotEmpty(message = "{user.roles.required}")
     private List<@NotNull(message = "{user.roles.invalid}") UUID> roleIds;
 }

@@ -5,10 +5,13 @@ import java.util.UUID;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 
+import com.mms.mms_api.model.Room;
 import com.mms.mms_api.model.Seat;
 
 public interface SeatRepository extends JpaRepository<Seat, UUID> {
     List<Seat> findByLinkedSeatIsNull();
 
     Seat findFirstByLinkedSeat(Seat linkedSeat);
+
+    boolean existsByRoom(Room room);
 }

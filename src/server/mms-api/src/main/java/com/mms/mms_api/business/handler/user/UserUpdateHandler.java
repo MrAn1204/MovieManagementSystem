@@ -1,7 +1,6 @@
 package com.mms.mms_api.business.handler.user;
 
 import java.util.List;
-import java.util.Objects;
 import java.util.UUID;
 
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -10,12 +9,10 @@ import com.mms.mms_api.business.command.user.UserUpdateCommand;
 import com.mms.mms_api.data.RoleRepository;
 import com.mms.mms_api.data.UserRepository;
 import com.mms.mms_api.dto.user.UserDto;
-import com.mms.mms_api.exception.InvalidInputException;
 import com.mms.mms_api.exception.ResourceNotFoundException;
 import com.mms.mms_api.model.Role;
 import com.mms.mms_api.model.User;
 import com.mms.mms_api.util.mapper.UserMapper;
-import com.mms.mms_api.util.validator.UserValidator;
 
 public class UserUpdateHandler extends UserBaseHandler<UserUpdateCommand, UserDto> {
     private RoleRepository roleRepository;
@@ -36,18 +33,7 @@ public class UserUpdateHandler extends UserBaseHandler<UserUpdateCommand, UserDt
                 () -> new ResourceNotFoundException("user.notFound"));
 
         List<UUID> roleIds = request.getRoleIds();
-        List<Role> mappedRoles = (roleIds != null)
-                ? roleRepository.findAllById(roleIds)
-                : null;
-        UserValidator.validateRoles(roleIds, mappedRoles);
-
-        if (!Objects.equals(request.getEmail(), user.getEmail()) && userRepository.existsByEmail(request.getEmail())) {
-            throw new InvalidInputException("user.email.unique");
-        }
-
-        if (!Objects.equals(request.getPhoneNumber(), user.getPhoneNumber()) && userRepository.existsByPhoneNumber(request.getPhoneNumber())) {
-            throw new InvalidInputException("user.phone.unique");
-        }
+        List<Role> mappedRoles = roleRepository.findAllById(roleIds);
 
         userMapper.updateEntity(request, user);
 

@@ -16,7 +16,6 @@ import com.mms.mms_api.model.Movie;
 import com.mms.mms_api.model.Studio;
 import com.mms.mms_api.model.Talent;
 import com.mms.mms_api.util.mapper.MovieMapper;
-import com.mms.mms_api.util.validator.MovieValidator;
 
 public class MovieCreateHandler extends MovieBaseHandler<MovieCreateCommand, MovieDto> {
     private GenreRepository genreRepository;
@@ -52,25 +51,21 @@ public class MovieCreateHandler extends MovieBaseHandler<MovieCreateCommand, Mov
         List<Genre> mappedGenres = null;
         if (genreIds != null) {
             mappedGenres = genreRepository.findAllById(genreIds);
-            MovieValidator.validateGenres(genreIds, mappedGenres);
         }
 
         List<Studio> mappedStudios = null;
         if (studioIds != null) {
             mappedStudios = studioRepository.findAllById(studioIds);
-            MovieValidator.validateStudios(studioIds, mappedStudios);
         }
 
         List<Talent> mappedTalents = null;
         if (talentIds != null) {
             mappedTalents = talentRepository.findAllById(talentIds);
-            MovieValidator.validateTalents(talentIds, mappedTalents);
         }
 
         Language mappedLanguage = null;
         if (languageId != null) {
             mappedLanguage = languageRepository.findById(languageId).orElse(null);
-            MovieValidator.validateLanguage(languageId, mappedLanguage);
         }
 
         Movie movie = movieMapper.toEntity(request);

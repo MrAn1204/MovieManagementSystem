@@ -4,6 +4,8 @@ import java.time.LocalDate;
 import java.util.List;
 import java.util.UUID;
 
+import org.springframework.lang.NonNull;
+
 import com.mms.mms_api.annotation.PasswordMatch;
 import com.mms.mms_api.business.command.BaseUpdateCommand;
 import com.mms.mms_api.common.AppConstant;
@@ -54,6 +56,7 @@ public class UserUpdateCommand extends BaseUpdateCommand {
 
     private int score;
 
+    @NonNull
     @NotEmpty(message = "{user.roles.required}")
     private List<@NotNull(message = "{user.roles.invalid}") UUID> roleIds;
 }
