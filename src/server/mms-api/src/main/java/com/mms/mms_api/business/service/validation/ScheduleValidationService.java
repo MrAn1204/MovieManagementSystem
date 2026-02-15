@@ -6,6 +6,7 @@ import org.springframework.lang.NonNull;
 import org.springframework.stereotype.Service;
 
 import com.mms.mms_api.data.ScheduleRepository;
+import com.mms.mms_api.model.Schedule;
 
 import lombok.AllArgsConstructor;
 
@@ -16,5 +17,9 @@ public class ScheduleValidationService {
 
     public boolean existsById(@NonNull UUID id) {
         return scheduleRepository.existsById(id);
+    }
+
+    public Schedule getById(@NonNull UUID id) {
+        return scheduleRepository.findById(id).orElse(null);
     }
 }

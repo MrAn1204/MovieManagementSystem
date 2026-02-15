@@ -5,7 +5,6 @@ import java.util.UUID;
 import com.mms.mms_api.business.command.ticket.TicketUpdateCommand;
 import com.mms.mms_api.business.service.TicketDependencies;
 import com.mms.mms_api.dto.TicketDto;
-import com.mms.mms_api.exception.InvalidInputException;
 import com.mms.mms_api.exception.ResourceNotFoundException;
 import com.mms.mms_api.data.InvoiceRepository;
 import com.mms.mms_api.data.ScheduleSeatRepository;
@@ -47,27 +46,19 @@ public class TicketUpdateHandler extends TicketBaseHandler<TicketUpdateCommand, 
         UUID promotionId = request.getPromotionId();
         Promotion promotion = ticketDependencies.getPromotionById(promotionId);
 
-        if (seat.getRoom().getId() != schedule.getRoom().getId()) {
-            throw new InvalidInputException("ticket.room.mismatch");
-        }
-
         ScheduleSeat scheduleSeat = scheduleSeatRepository.findById(new ScheduleSeatId(schedule.getId(), seat.getId()))
                 .orElseThrow(() -> new ResourceNotFoundException("schedule.seat.notFound"));
 
         ticketMapper.updateEntity(request, ticket);
 
-        if (scheduleSeat.isReserved()) {
-            throw new InvalidInputException("ticket.seat.reserved");
-        } else {
-            scheduleSeatRepository.findById(new ScheduleSeatId(ticket.getSchedule().getId(), ticket.getSeat().getId()))
-                    .ifPresent(ss -> {
-                        ss.setReserved(false);
-                        scheduleSeatRepository.save(ss);
-                    });
+        scheduleSeatRepository.findById(new ScheduleSeatId(ticket.getSchedule().getId(), ticket.getSeat().getId()))
+                .ifPresent(ss -> {
+                    ss.setReserved(false);
+                    scheduleSeatRepository.save(ss);
+                });
 
-            scheduleSeat.setReserved(true);
-            scheduleSeatRepository.save(scheduleSeat);
-        }
+        scheduleSeat.setReserved(true);
+        scheduleSeatRepository.save(scheduleSeat);
 
         ticket.setSchedule(schedule);
         ticket.setSeat(seat);
