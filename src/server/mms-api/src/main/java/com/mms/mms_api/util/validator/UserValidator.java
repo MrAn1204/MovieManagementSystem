@@ -7,6 +7,7 @@ import org.springframework.lang.NonNull;
 import org.springframework.stereotype.Component;
 import org.springframework.util.CollectionUtils;
 
+import com.mms.mms_api.business.command.auth.RegisterCommand;
 import com.mms.mms_api.business.command.user.UserCreateCommand;
 import com.mms.mms_api.business.command.user.UserUpdateCommand;
 import com.mms.mms_api.business.service.validation.RoleValidationService;
@@ -47,6 +48,16 @@ public class UserValidator implements BaseValidator {
 
         errors.throwIfNotEmpty(ErrorType.INVALID_INPUT);
 
+    }
+
+    public void validate(RegisterCommand command) {
+        ErrorLinkedList errors = new ErrorLinkedList();
+
+        validateUsername(errors, command.getUsername());
+        validateEmail(errors, command.getEmail());
+        validatePhoneNumber(errors, command.getPhoneNumber());
+
+        errors.throwIfNotEmpty(ErrorType.INVALID_INPUT);
     }
 
     private void validateId(ErrorLinkedList errors, @NonNull UUID id) {
