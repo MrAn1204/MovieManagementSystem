@@ -12,6 +12,7 @@ import com.mms.mms_api.business.query.promotion.PromotionSearchQuery;
 import com.mms.mms_api.business.service.PromotionService;
 import com.mms.mms_api.common.PaginatedResult;
 import com.mms.mms_api.dto.PromotionDto;
+import com.mms.mms_api.util.validator.PromotionValidator;
 
 import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
@@ -34,8 +35,12 @@ import org.springframework.web.bind.annotation.PutMapping;
 public class PromotionController {
     private final PromotionService promotionService;
 
+    private final PromotionValidator promotionValidator;
+
     @PostMapping("/create")
     public ResponseEntity<PromotionDto> create(@Valid @RequestBody PromotionCreateCommand request) {
+        promotionValidator.validate(request);
+        
         PromotionDto promotion = promotionService.handle(request);
 
         return ResponseEntity.status(HttpStatus.CREATED).body(promotion);
@@ -58,6 +63,8 @@ public class PromotionController {
     @PutMapping("/{id}")
     public ResponseEntity<PromotionDto> update(@PathVariable UUID id, @Valid @RequestBody PromotionUpdateCommand request) {
         request.setId(id);
+
+        promotionValidator.validate(request);
 
         PromotionDto promotion = promotionService.handle(request);
 

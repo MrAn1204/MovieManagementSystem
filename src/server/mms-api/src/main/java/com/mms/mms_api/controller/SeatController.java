@@ -16,6 +16,7 @@ import com.mms.mms_api.business.query.seat.SeatGetAllQuery;
 import com.mms.mms_api.business.query.seat.SeatGetByIdQuery;
 import com.mms.mms_api.business.service.SeatService;
 import com.mms.mms_api.dto.SeatDto;
+import com.mms.mms_api.util.validator.SeatValidator;
 
 import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
@@ -31,8 +32,12 @@ import org.springframework.web.bind.annotation.PutMapping;
 public class SeatController {
     private final SeatService seatService;
 
+    private final SeatValidator seatValidator;
+
     @PostMapping("/create")
     public ResponseEntity<SeatDto> create(@Valid @RequestBody SeatCreateCommand request) {
+        seatValidator.validate(request);
+
         return ResponseEntity.ok(seatService.handle(request));
     }
 
@@ -51,6 +56,8 @@ public class SeatController {
     @PutMapping("/{id}")
     public ResponseEntity<SeatDto> update(@PathVariable UUID id, @Valid @RequestBody SeatUpdateCommand request) {
         request.setId(id);
+        seatValidator.validate(request);
+
         SeatDto updatedSeat = seatService.handle(request);
         if (updatedSeat == null) {
             return ResponseEntity.notFound().build();

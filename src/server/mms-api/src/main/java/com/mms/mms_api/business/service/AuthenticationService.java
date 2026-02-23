@@ -14,23 +14,26 @@ import com.mms.mms_api.dto.LoginResultDto;
 import com.mms.mms_api.dto.user.UserDto;
 import com.mms.mms_api.util.JwtHelper;
 import com.mms.mms_api.util.mapper.UserMapper;
+import com.mms.mms_api.util.validator.UserValidator;
 
 import lombok.AllArgsConstructor;
 
 @Service
 @AllArgsConstructor
 public class AuthenticationService {
-    private AuthenticationManager authenticationManager;
+    private final AuthenticationManager authenticationManager;
 
-    private JwtHelper jwtHelper;
+    private final JwtHelper jwtHelper;
 
-    private UserRepository userRepository;
+    private final UserRepository userRepository;
 
-    private RoleRepository roleRepository;
+    private final RoleRepository roleRepository;
 
-    private UserMapper userMapper;
+    private final UserMapper userMapper;
 
-    private PasswordEncoder passwordEncoder;
+    private final PasswordEncoder passwordEncoder;
+    
+    private final UserValidator userValidator;
 
     public LoginResultDto handle(LoginCommand request) {
         LoginCommandHandler handler = new LoginCommandHandler(request, authenticationManager, jwtHelper);
@@ -38,6 +41,7 @@ public class AuthenticationService {
     }
 
     public UserDto handle(RegisterCommand request) {
+        userValidator.validate(request);
         RegisterCommandHandler handler = new RegisterCommandHandler(request, userRepository, roleRepository, userMapper, passwordEncoder);
         return handler.execute();
     }

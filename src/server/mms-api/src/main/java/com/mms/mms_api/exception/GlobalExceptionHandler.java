@@ -1,31 +1,32 @@
 package com.mms.mms_api.exception;
 
 import java.time.LocalDateTime;
+import java.util.Map;
+import java.util.stream.Collectors;
 
-import org.springframework.context.MessageSource;
-import org.springframework.context.i18n.LocaleContextHolder;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.AuthenticationException;
+import org.springframework.validation.FieldError;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 
+import com.mms.mms_api.business.service.AppMessageService;
+
 @RestControllerAdvice
 public class GlobalExceptionHandler {
-    private final MessageSource messageSource;
+    private final AppMessageService messageService;
 
-    public GlobalExceptionHandler(MessageSource messageSource) {
-        this.messageSource = messageSource;
+    public GlobalExceptionHandler(AppMessageService messageService) {
+        this.messageService = messageService;
     }
 
     @ExceptionHandler(MethodArgumentNotValidException.class)
     public ResponseEntity<ErrorResponse> handleMethodArgumentNotValidException(
             MethodArgumentNotValidException exception) {
-        String errorMessages = exception.getBindingResult().getFieldErrors().stream()
-                .map(error -> error.getDefaultMessage())
-                .reduce((msg1, msg2) -> msg1 + " " + msg2)
-                .orElse("Validation failed");
+        Map<String, String> errorMessages = exception.getBindingResult().getFieldErrors().stream()
+                .collect(Collectors.toMap(FieldError::getField, FieldError::getDefaultMessage));
 
         ErrorResponse errorResponse = new ErrorResponse(
                 LocalDateTime.now(),
@@ -38,27 +39,25 @@ public class GlobalExceptionHandler {
 
     @ExceptionHandler(ApiException.class)
     public ResponseEntity<ErrorResponse> handleApiException(ApiException exception) {
-        String message = messageSource.getMessage(exception.getMessage(), exception.getArgs(),
-                LocaleContextHolder.getLocale());
+        Map<String, String> messages;
+        if (exception.getMessages() != null) {
+            messages = exception.getMessages().stream()
+                    .collect(Collectors.toMap(
+                            ErrorDetail::getField,
+                            detail -> messageService.getByCode(detail.getMessageKey(), detail.getMessageParams())));
+        } else {
+            messages = Map.of("message", messageService.getByCode(exception.getMessage()));
+        }
+
+        HttpStatus statusCode = exception.getStatusCode();
 
         ErrorResponse errorResponse = new ErrorResponse(
                 LocalDateTime.now(),
-                exception.getStatusCode(),
-                exception.getErrorType(),
-                message);
+                statusCode.value(),
+                exception.getErrorType().getValue(),
+                messages);
 
-        return ResponseEntity.status(HttpStatus.valueOf(exception.getStatusCode())).body(errorResponse);
-    }
-
-    @ExceptionHandler(IllegalArgumentException.class)
-    public ResponseEntity<ErrorResponse> handleIllegalArgumentException(IllegalArgumentException exception) {
-        ErrorResponse errorResponse = new ErrorResponse(
-                LocalDateTime.now(),
-                HttpStatus.BAD_REQUEST.value(),
-                ErrorType.CONSTRAINT_VIOLATION.getValue(),
-                exception.getMessage());
-
-        return ResponseEntity.badRequest().body(errorResponse);
+        return ResponseEntity.status(statusCode).body(errorResponse);
     }
 
     @ExceptionHandler(AuthenticationException.class)

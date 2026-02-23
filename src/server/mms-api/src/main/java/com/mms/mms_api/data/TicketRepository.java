@@ -10,4 +10,10 @@ import com.mms.mms_api.model.Ticket;
 
 public interface TicketRepository extends JpaRepository<Ticket, UUID>, JpaSpecificationExecutor<Ticket> {
     List<Ticket> findByIdIn(List<UUID> ids);
+
+    int countByIdIn(Iterable<UUID> ids);
+
+    default boolean existsAllByIdIn(List<UUID> ids) {
+        return countByIdIn(ids) == ids.size();
+    }
 }

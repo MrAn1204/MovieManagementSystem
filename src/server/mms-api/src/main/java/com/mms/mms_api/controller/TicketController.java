@@ -19,6 +19,7 @@ import com.mms.mms_api.business.query.ticket.TicketSearchQuery;
 import com.mms.mms_api.business.service.TicketService;
 import com.mms.mms_api.common.PaginatedResult;
 import com.mms.mms_api.dto.TicketDto;
+import com.mms.mms_api.util.validator.TicketValidator;
 
 import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
@@ -34,9 +35,13 @@ import org.springframework.web.bind.annotation.PutMapping;
 public class TicketController {
     private final TicketService ticketService;
 
+    private final TicketValidator ticketValidator;
+
     @PostMapping("/create")
-    public ResponseEntity<TicketDto> create(@Valid @RequestBody TicketCreateCommand command) {
-        TicketDto ticket = ticketService.handle(command);
+    public ResponseEntity<TicketDto> create(@Valid @RequestBody TicketCreateCommand request) {
+        ticketValidator.validate(request);
+
+        TicketDto ticket = ticketService.handle(request);
 
         return ResponseEntity.status(HttpStatus.CREATED).body(ticket);
     }
@@ -58,6 +63,8 @@ public class TicketController {
     @PutMapping("/{id}")
     public ResponseEntity<TicketDto> update(@PathVariable UUID id, @Valid @RequestBody TicketUpdateCommand request) {
         request.setId(id);
+        ticketValidator.validate(request);
+
         TicketDto ticket = ticketService.handle(request);
 
         return ResponseEntity.ok(ticket);
