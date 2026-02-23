@@ -21,6 +21,7 @@ import com.mms.mms_api.common.PaginatedResult;
 import com.mms.mms_api.data.InvoiceRepository;
 import com.mms.mms_api.data.ScheduleSeatRepository;
 import com.mms.mms_api.data.TicketRepository;
+import com.mms.mms_api.dto.TicketDetailDto;
 import com.mms.mms_api.dto.TicketDto;
 import com.mms.mms_api.util.mapper.TicketMapper;
 
@@ -45,12 +46,12 @@ public class TicketService {
         return handler.execute();
     }
 
-    public List<TicketDto> handle(TicketGetAllQuery request) {
+    public List<TicketDetailDto> handle(TicketGetAllQuery request) {
         TicketGetAllHandler handler = new TicketGetAllHandler(request, ticketMapper, ticketRepository);
         return handler.execute();
     }
 
-    public TicketDto handle(TicketGetByIdQuery request) {
+    public TicketDetailDto handle(TicketGetByIdQuery request) {
         TicketGetByIdHandler handler = new TicketGetByIdHandler(request, ticketMapper, ticketRepository);
         return handler.execute();
     }
@@ -67,7 +68,7 @@ public class TicketService {
         handler.execute();
     }
 
-    public PaginatedResult<TicketDto> handle(TicketSearchQuery request) {
+    public PaginatedResult<TicketDetailDto> handle(TicketSearchQuery request) {
         TicketSearchHandler handler = new TicketSearchHandler(request, ticketMapper, ticketRepository);
         return handler.execute();
     }
