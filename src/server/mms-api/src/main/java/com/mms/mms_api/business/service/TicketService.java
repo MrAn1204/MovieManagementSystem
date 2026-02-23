@@ -2,6 +2,7 @@ package com.mms.mms_api.business.service;
 
 import java.util.List;
 
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -46,28 +47,33 @@ public class TicketService {
         return handler.execute();
     }
 
+    @PreAuthorize("hasAuthority('ADMIN')")
     public List<TicketDetailDto> handle(TicketGetAllQuery request) {
         TicketGetAllHandler handler = new TicketGetAllHandler(request, ticketMapper, ticketRepository);
         return handler.execute();
     }
 
+    @PreAuthorize("hasAuthority('ADMIN') || @ticketValidationService.isOwnedByUserId(#request.id, authentication.principal.id)")
     public TicketDetailDto handle(TicketGetByIdQuery request) {
         TicketGetByIdHandler handler = new TicketGetByIdHandler(request, ticketMapper, ticketRepository);
         return handler.execute();
     }
 
+    @PreAuthorize("hasAuthority('ADMIN')")
     @Transactional
     public TicketDto handle(TicketUpdateCommand request) {
         TicketUpdateHandler handler = new TicketUpdateHandler(request, ticketMapper, ticketRepository, ticketDependencies, invoiceRepository, scheduleSeatRepository);
         return handler.execute();
     }
 
+    @PreAuthorize("hasAuthority('ADMIN')")
     @Transactional
     public void handle(TicketDeleteCommand request) {
         TicketDeleteHandler handler = new TicketDeleteHandler(request, ticketRepository);
         handler.execute();
     }
 
+    @PreAuthorize("hasAuthority('ADMIN')")
     public PaginatedResult<TicketDetailDto> handle(TicketSearchQuery request) {
         TicketSearchHandler handler = new TicketSearchHandler(request, ticketMapper, ticketRepository);
         return handler.execute();

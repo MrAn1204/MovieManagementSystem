@@ -25,6 +25,7 @@ import com.mms.mms_api.util.mapper.MovieMapper;
 
 import lombok.AllArgsConstructor;
 
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -42,6 +43,7 @@ public class MovieService {
 
     private final MovieMapper movieMapper;
 
+    @PreAuthorize("hasAuthority('ADMIN')")
     public MovieDto handle(MovieCreateCommand request) {
         MovieCreateHandler handler = new MovieCreateHandler(request, movieMapper, movieRepository,
                 genreRepository, languageRepository, studioRepository, talentRepository);
@@ -58,12 +60,14 @@ public class MovieService {
         return handler.execute();
     }
 
+    @PreAuthorize("hasAuthority('ADMIN')")
     public MovieDto handle(MovieUpdateCommand request) {
         MovieUpdateHandler handler = new MovieUpdateHandler(request, movieMapper, movieRepository,
                 genreRepository, languageRepository, studioRepository, talentRepository);
         return handler.execute();
     }
 
+    @PreAuthorize("hasAuthority('ADMIN')")
     public void handle(MovieDeleteCommand request) {
         MovieDeleteHandler handler = new MovieDeleteHandler(request, movieRepository);
         handler.execute();
