@@ -2,6 +2,7 @@ package com.mms.mms_api.business.service;
 
 import java.util.List;
 
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -37,6 +38,7 @@ public class ScheduleService {
 
     private final RoomRepository roomRepository;
 
+    @PreAuthorize("hasAuthority('ADMIN')")
     @Transactional
     public ScheduleDto handle(ScheduleCreateCommand request) {
         ScheduleCreateHandler handler = new ScheduleCreateHandler(request, scheduleMapper,
@@ -54,6 +56,7 @@ public class ScheduleService {
         return handler.execute();
     }
 
+    @PreAuthorize("hasAuthority('ADMIN')")
     @Transactional
     public ScheduleDto handle(ScheduleUpdateCommand request) {
         ScheduleUpdateHandler handler = new ScheduleUpdateHandler(request, scheduleMapper, scheduleRepository,
@@ -61,6 +64,7 @@ public class ScheduleService {
         return handler.execute();
     }
 
+    @PreAuthorize("hasAuthority('ADMIN')")
     @Transactional
     public void handle(ScheduleDeleteCommand request) {
         ScheduleDeleteHandler handler = new ScheduleDeleteHandler(request, scheduleRepository);

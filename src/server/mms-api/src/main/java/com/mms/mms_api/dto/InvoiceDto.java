@@ -1,7 +1,6 @@
 package com.mms.mms_api.dto;
 
 import java.util.List;
-import java.util.UUID;
 
 import lombok.Data;
 import lombok.EqualsAndHashCode;
@@ -19,5 +18,5 @@ public class InvoiceDto extends BaseDto {
 
     private double discount;
 
-    private List<UUID> tickets;
+    private List<TicketDto> tickets;
 }

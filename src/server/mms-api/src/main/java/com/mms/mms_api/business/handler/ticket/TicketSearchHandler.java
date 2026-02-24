@@ -9,12 +9,12 @@ import com.mms.mms_api.business.query.ticket.TicketSearchQuery;
 import com.mms.mms_api.business.specification.TicketSpecification;
 import com.mms.mms_api.common.PaginatedResult;
 import com.mms.mms_api.data.TicketRepository;
-import com.mms.mms_api.dto.TicketDto;
+import com.mms.mms_api.dto.TicketDetailDto;
 import com.mms.mms_api.model.Ticket;
 import com.mms.mms_api.util.SearchHelper;
 import com.mms.mms_api.util.mapper.TicketMapper;
 
-public class TicketSearchHandler extends TicketBaseHandler<TicketSearchQuery, PaginatedResult<TicketDto>> {
+public class TicketSearchHandler extends TicketBaseHandler<TicketSearchQuery, PaginatedResult<TicketDetailDto>> {
 
     public TicketSearchHandler(TicketSearchQuery request, TicketMapper ticketMapper,
             TicketRepository ticketRepository) {
@@ -22,7 +22,7 @@ public class TicketSearchHandler extends TicketBaseHandler<TicketSearchQuery, Pa
     }
 
     @Override
-    public PaginatedResult<TicketDto> execute() {
+    public PaginatedResult<TicketDetailDto> execute() {
         Pageable pageable = SearchHelper.generatePageable(request.getSortDirection(), request.getSortBy(),
                 request.getPageNumber(), request.getPageSize());
 
@@ -30,7 +30,7 @@ public class TicketSearchHandler extends TicketBaseHandler<TicketSearchQuery, Pa
 
         Page<Ticket> tickets = ticketRepository.findAll(specification, pageable);
 
-        List<TicketDto> ticketDtos = tickets.stream().map(ticketMapper::toDto).toList();
+        List<TicketDetailDto> ticketDtos = tickets.stream().map(ticketMapper::toDetailDto).toList();
 
         return new PaginatedResult<>(ticketDtos, tickets.getTotalElements(), tickets.getTotalPages(),
                 request.getPageSize(), request.getPageNumber());

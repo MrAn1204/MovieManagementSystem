@@ -2,6 +2,7 @@ package com.mms.mms_api.business.service;
 
 import java.util.List;
 
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -34,6 +35,7 @@ public class SeatService {
 
     private final SeatMapper seatMapper;
 
+    @PreAuthorize("hasAuthority('ADMIN')")
     @Transactional
     public SeatDto handle(SeatCreateCommand request) {
         SeatCreateHandler handler = new SeatCreateHandler(request, seatMapper, seatRepository, roomRepository);
@@ -50,12 +52,14 @@ public class SeatService {
         return handler.execute();
     }
 
+    @PreAuthorize("hasAuthority('ADMIN')")
     @Transactional
     public SeatDto handle(SeatUpdateCommand request) {
         SeatUpdateHandler handler = new SeatUpdateHandler(request, seatMapper, seatRepository, roomRepository);
         return handler.execute();
     }
 
+    @PreAuthorize("hasAuthority('ADMIN')")
     @Transactional
     public void handle(SeatDeleteCommand request) {
         SeatDeleteHandler handler = new SeatDeleteHandler(request, seatMapper, seatRepository, scheduleSeatRepository);

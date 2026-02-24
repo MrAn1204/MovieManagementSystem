@@ -4,7 +4,6 @@ import com.mms.mms_api.business.command.invoice.InvoiceUpdateCommand;
 import com.mms.mms_api.data.InvoiceRepository;
 import com.mms.mms_api.data.TicketRepository;
 import com.mms.mms_api.dto.InvoiceDto;
-import com.mms.mms_api.exception.InvalidInputException;
 import com.mms.mms_api.exception.ResourceNotFoundException;
 import com.mms.mms_api.model.Invoice;
 import com.mms.mms_api.model.Ticket;
@@ -29,15 +28,7 @@ public class InvoiceUpdateHandler extends InvoiceBaseHandler<InvoiceUpdateComman
 
         List<Ticket> tickets = ticketRepository.findByIdIn(request.getTicketIds());
 
-        if (tickets.size() < request.getTicketIds().size()) {
-            throw new InvalidInputException("invoice.tickets.invalid");
-        }
-
         User user = invoice.getUser();
-
-        if (user.getScore() < request.getUseScore()) {
-            throw new InvalidInputException("user.score.insufficient");
-        }
 
         invoiceMapper.updateEntity(request, invoice);
 

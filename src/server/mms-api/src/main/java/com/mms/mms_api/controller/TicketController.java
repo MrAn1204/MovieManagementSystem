@@ -18,6 +18,7 @@ import com.mms.mms_api.business.query.ticket.TicketGetByIdQuery;
 import com.mms.mms_api.business.query.ticket.TicketSearchQuery;
 import com.mms.mms_api.business.service.TicketService;
 import com.mms.mms_api.common.PaginatedResult;
+import com.mms.mms_api.dto.TicketDetailDto;
 import com.mms.mms_api.dto.TicketDto;
 import com.mms.mms_api.util.validator.TicketValidator;
 
@@ -47,15 +48,15 @@ public class TicketController {
     }
 
     @GetMapping
-    public ResponseEntity<List<TicketDto>> getAll() {
-        List<TicketDto> tickets = ticketService.handle(new TicketGetAllQuery());
+    public ResponseEntity<List<TicketDetailDto>> getAll() {
+        List<TicketDetailDto> tickets = ticketService.handle(new TicketGetAllQuery());
 
         return ResponseEntity.ok(tickets);
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<TicketDto> getById(@PathVariable UUID id) {
-        TicketDto ticket = ticketService.handle(new TicketGetByIdQuery(id));
+    public ResponseEntity<TicketDetailDto> getById(@PathVariable UUID id) {
+        TicketDetailDto ticket = ticketService.handle(new TicketGetByIdQuery(id));
 
         return ResponseEntity.ok(ticket);
     }
@@ -77,8 +78,8 @@ public class TicketController {
     }
 
     @PostMapping("/search")
-    public ResponseEntity<PaginatedResult<TicketDto>> search(@Valid @RequestBody TicketSearchQuery request) {
-        PaginatedResult<TicketDto> result = ticketService.handle(request);
+    public ResponseEntity<PaginatedResult<TicketDetailDto>> search(@Valid @RequestBody TicketSearchQuery request) {
+        PaginatedResult<TicketDetailDto> result = ticketService.handle(request);
         return ResponseEntity.ok(result);
     }
 }

@@ -2,6 +2,7 @@ package com.mms.mms_api.business.service;
 
 import java.util.List;
 
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -36,36 +37,42 @@ public class UserService {
 
     private PasswordEncoder passwordEncoder;
 
+    @PreAuthorize("hasAuthority('ADMIN')")
     public UserDto handle(UserCreateCommand request) {
         UserCreateHandler handler = new UserCreateHandler(request, userMapper, userRepository, roleRepository, passwordEncoder);
 
         return handler.execute();
     }
 
+    @PreAuthorize("hasAuthority('ADMIN')")
     public List<UserDto> handle(UserGetAllQuery request) {
         UserGetAllHandler handler = new UserGetAllHandler(request, userMapper, userRepository);
 
         return handler.execute();
     }
 
+    @PreAuthorize("hasAuthority('ADMIN') || #request.id == authentication.principal.id")
     public UserDto handle(UserGetByIdQuery request) {
         UserGetByIdHandler handler = new UserGetByIdHandler(request, userMapper, userRepository);
 
         return handler.execute();
     }
 
+    @PreAuthorize("hasAuthority('ADMIN') || #request.id == authentication.principal.id")
     public UserDto handle(UserUpdateCommand request) {
         UserUpdateHandler handler = new UserUpdateHandler(request, userMapper, userRepository, roleRepository, passwordEncoder);
 
         return handler.execute();
     }
 
+    @PreAuthorize("hasAuthority('ADMIN')")
     public void handle(UserDeleteCommand request) {
         UserDeleteHandler handler = new UserDeleteHandler(request, userRepository);
 
         handler.execute();
     }
 
+    @PreAuthorize("hasAuthority('ADMIN')")
     public PaginatedResult<UserDto> handle(UserSearchQuery request) {
         UserSearchHandler handler = new UserSearchHandler(request, userMapper, userRepository);
         
