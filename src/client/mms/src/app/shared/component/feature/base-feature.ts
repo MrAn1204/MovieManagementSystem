@@ -10,8 +10,9 @@ import { takeUntil } from "rxjs";
 import { CreateEdit } from "../dialog/create-edit/create-edit";
 import { DialogFormDataModel } from "../../model/dialog/dialog-form-data.model";
 import { PopupModal } from "../dialog/popup-modal/popup-modal";
-import { DialogModalDataModel } from "../../model/dialog/dialog-modal-data.model";
+import { DialogPopupDataModel } from "../../model/dialog/dialog-popup-data.model";
 import { DialogRef } from "@angular/cdk/dialog";
+import { RoleConfigModel } from "../../model/role-config.model";
 
 @Directive()
 export abstract class BaseFeature<T extends BaseEntityModel> implements OnInit {
@@ -23,6 +24,8 @@ export abstract class BaseFeature<T extends BaseEntityModel> implements OnInit {
 
   abstract columns: TableColumnModel<T>[];
   abstract sortOptions: FormOptionModel[];
+
+  abstract roleConfig: RoleConfigModel;
 
   data = signal<PaginatedResult<T>>(createEmptyPaginatedResult<T>());
 
@@ -81,11 +84,12 @@ export abstract class BaseFeature<T extends BaseEntityModel> implements OnInit {
 
   abstract onDelete(id: string): void;
 
-  protected displayInfo(item: BaseEntityModel): void {
+  protected displayInfo(item: T): void {
     const ref = this.dialogService.openDialog(Detail, {
       title: `${this.entityName} Details`,
       contentComponent: this.contentDetail,
       contentInputs: { model: item, },
+      roleConfig: this.roleConfig,
     });
 
     ref.componentInstance?.dialogService.openDialog$
@@ -130,7 +134,9 @@ export abstract class BaseFeature<T extends BaseEntityModel> implements OnInit {
       });
   }
 
-  protected displayEdit(item: BaseEntityModel): DialogRef<unknown, CreateEdit> {
+  protected displayEdit(item: T): DialogRef<unknown, CreateEdit> {
+    this.patchEntityForm(item);
+
     const data: DialogFormDataModel = {
       title: `Edit ${this.entityName}`,
       contentComponent: this.contentCreateEdit,
@@ -153,13 +159,13 @@ export abstract class BaseFeature<T extends BaseEntityModel> implements OnInit {
   }
 
   protected displayDelete(id: string): DialogRef<unknown, PopupModal> {
-    const data: DialogModalDataModel = {
+    const data: DialogPopupDataModel = {
       type: 'warning',
       message: `Are you sure you want to delete this ${this.entityName.toLowerCase()}? This action cannot be undone.`,
     }
 
     const dialogRef = this.dialogService.openDialog(PopupModal, data);
-  
+
     dialogRef.componentInstance?.dialogService.confirmTask$.subscribe(() => {
       this.confirmDelete(id);
       dialogRef.close();
@@ -167,4 +173,6 @@ export abstract class BaseFeature<T extends BaseEntityModel> implements OnInit {
 
     return dialogRef;
   }
+
+  abstract patchEntityForm(model: T): void;
 }

@@ -10,6 +10,7 @@ import { FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { TableColumnModel } from '../../../shared/model/table-column.model';
 import { BaseFeature } from '../../../shared/component/feature/base-feature';
 import { MovieFormModel } from '../../../model/form/movie-form.model';
+import { getRoleConfig } from '../../../shared/config/role-config';
 
 @Component({
   selector: 'app-movie',
@@ -38,6 +39,8 @@ export class Movie extends BaseFeature<MovieModel> {
     { label: 'Release Date', value: 'releaseDate' },
     { label: 'Duration', value: 'duration' },
   ];
+
+  override roleConfig = getRoleConfig(this.entityName);
 
   constructor(private readonly movieService: MovieService) {
     super();
@@ -93,7 +96,6 @@ export class Movie extends BaseFeature<MovieModel> {
 
   override onEdit(id: string): void {
     this.movieService.getById(id).subscribe(res => {
-      this.entityForm.patchValue(new MovieFormModel(res));
       this.displayEdit(res);
     });
   }
@@ -106,5 +108,9 @@ export class Movie extends BaseFeature<MovieModel> {
 
   override onDelete(id: string): void {
     this.displayDelete(id);
+  }
+
+  override patchEntityForm(model: MovieModel): void {
+    this.entityForm.patchValue(new MovieFormModel(model));
   }
 }

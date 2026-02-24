@@ -50,6 +50,15 @@ export class AuthService {
     return this.currentUser()?.email || '';
   }
 
+  includeRoles(roles: string[]): boolean {
+    if (roles.length == 0) {
+      return false;
+    }
+
+    const userRoles = this.currentUser()?.roles || [];
+    return roles.some(role => userRoles.includes(role));
+  }
+
   login(request: LoginRequest): Observable<LoginResponse> {
     return this.http.post<LoginResponse>(`${this.baseUrl}/login`, request).pipe(tap((res) => {
       this.lsService.setItem("token", res.token);

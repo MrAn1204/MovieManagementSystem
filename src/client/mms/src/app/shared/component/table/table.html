@@ -1,10 +1,12 @@
-<div>
-  <button type="button" (click)="addItem()"
-    class="space-x-1 px-2 py-1 bg-bright-fern-500 hover:bg-bright-fern-600 text-white font-semibold">
-    <i class="fa-solid fa-plus"></i>
-    <span>Add</span>
-  </button>
-</div>
+@if (canCreate()) {
+  <div>
+    <button type="button" (click)="addItem()"
+      class="space-x-1 px-2 py-1 bg-bright-fern-500 hover:bg-bright-fern-600 text-white font-semibold">
+      <i class="fa-solid fa-plus"></i>
+      <span>Add</span>
+    </button>
+  </div>
+}
 
 @if (!data().items.length) {
 <div class="border border-platinum-300 h-full bg-platinum-50 flex flex-col items-center justify-center">
@@ -30,11 +32,23 @@
         }
         <td class="sticky right-0 bg-platinum-50 group-hover:bg-platinum-100 border-platinum-300 border-l">
           <div class="flex justify-evenly">
-            <button type="button" (click)="viewDetail(item.id)"><i
-                class="fa-solid fa-circle-info text-steel-blue"></i></button>
-            <button type="button" (click)="updateItem(item.id)"><i
-                class="fa-solid fa-pen-to-square text-carrot-orange"></i></button>
-            <button type="button" (click)="deleteItem(item.id)"><i class="fa-solid fa-trash text-vermilion"></i></button>
+            @if (canView()) {
+              <button type="button" (click)="viewDetail(item.id)">
+                <i class="fa-solid fa-circle-info text-steel-blue"></i>
+              </button>
+            }
+
+            @if (canEdit()) {
+              <button type="button" (click)="updateItem(item.id)">
+                <i class="fa-solid fa-pen-to-square text-carrot-orange"></i>
+              </button>
+            }
+
+            @if (canDelete()) {
+              <button type="button" (click)="deleteItem(item.id)">
+                <i class="fa-solid fa-trash text-vermilion"></i>
+              </button>
+            }
           </div>
         </td>
       </tr>
@@ -85,7 +99,7 @@
       @for (page of pages; track $index) {
         @if (page) {
           <button type="button"
-            [class.bg-space-black]="page === data().pageNumber" 
+            [class.bg-space-black]="page === data().pageNumber"
             [class.text-white]="page === data().pageNumber"
             [class.shadow-none]="page === data().pageNumber"
             [class.border-transparent]="page === data().pageNumber"

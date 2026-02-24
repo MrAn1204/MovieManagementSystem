@@ -4,6 +4,8 @@ import { TableColumnModel } from '../../model/table-column.model';
 import { PaginatedResult } from '../../model/paginated-result.model';
 import { BaseEntityModel } from '../../model/base-entity.model';
 import { FormGroup } from '@angular/forms';
+import { RoleConfigModel } from '../../model/role-config.model';
+import { AuthService } from '../../../service/auth/auth.service';
 
 @Component({
   selector: 'app-table',
@@ -20,6 +22,8 @@ export class Table<T extends BaseEntityModel> {
 
   form = input.required<FormGroup>();
 
+  roleConfig = input.required<RoleConfigModel>();
+
   changePageNumber = output<number>();
   changePageSize = output<number>();
 
@@ -33,7 +37,7 @@ export class Table<T extends BaseEntityModel> {
 
   pages: (number | null)[] = [];
 
-  constructor() {
+  constructor(private readonly authService: AuthService) {
     effect(() => {
       this.setPagination();
     });
@@ -86,5 +90,21 @@ export class Table<T extends BaseEntityModel> {
     }
     this.setPagination();
     this.changePageNumber.emit(page);
+  }
+
+  canCreate(): boolean {
+    return this.authService.includeRoles(this.roleConfig().create);
+  }
+
+  canEdit(): boolean {
+    return this.authService.includeRoles(this.roleConfig().edit);
+  }
+
+  canDelete(): boolean {
+    return this.authService.includeRoles(this.roleConfig().delete);
+  }
+
+  canView(): boolean {
+    return this.authService.includeRoles(this.roleConfig().getById ?? []);
   }
 }

@@ -1,7 +1,7 @@
 import { Component, inject } from '@angular/core';
 import { BaseDialog } from '../base/base-dialog';
 import { DIALOG_DATA } from '@angular/cdk/dialog';
-import { DialogModalDataModel } from '../../../model/dialog/dialog-modal-data.model';
+import { DialogPopupDataModel } from '../../../model/dialog/dialog-popup-data.model';
 
 @Component({
   selector: 'app-popup-modal',
@@ -10,8 +10,8 @@ import { DialogModalDataModel } from '../../../model/dialog/dialog-modal-data.mo
   styleUrl: './popup-modal.css',
 })
 export class PopupModal extends BaseDialog {
-  data: DialogModalDataModel = inject(DIALOG_DATA);
-  
+  data: DialogPopupDataModel = inject(DIALOG_DATA);
+
   config = {
     warning: {
       icon: "fa-exclamation",
@@ -45,6 +45,6 @@ export class PopupModal extends BaseDialog {
       buttonStyle: "bg-steel-blue-500 hover:bg-steel-blue-600",
     },
   }
-  
+
   confirm = () => this.dialogService.triggerConfirm();
 }
