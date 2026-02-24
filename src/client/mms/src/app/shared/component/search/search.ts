@@ -33,7 +33,7 @@ export class Search implements OnInit {
     Object.entries(this.initialFields).forEach(([key, control]) => {
       this.form().addControl(key, control);
     });
-    
+
     this.triggerSearch.emit(this.form().value);
   }
 
@@ -43,10 +43,15 @@ export class Search implements OnInit {
 
   toggleOrder(): void {
     this.ascending = !this.ascending;
+    this.form().controls['sortDirection'].setValue(this.ascending ? 'DESC' : 'ASC');
+  }
+
+  reset(): void {
+    this.form().reset();
+    this.ascending = true;
   }
 
   onSubmit(): void {
-    this.form().controls['sortDirection'].setValue(this.ascending ? 'ASC' : 'DESC');
     this.triggerSearch.emit();
   }
 }

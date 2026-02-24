@@ -9,8 +9,8 @@
       </button>
     </div>
 
-    <div class="flex gap-4 grow">
-      <div class="flex grow">
+    <div class="flex flex-wrap gap-4 grow">
+      <div class="flex grow-3">
         <button type="button"
           class="order-button w-1/4 max-w-12 border bg-white border-platinum-300 rounded-tl-md rounded-bl-md text-steel-blue focus:outline-none"
           (click)="toggleOrder()">
@@ -31,15 +31,23 @@
         </select>
       </div>
 
-      <button type="button"
-        class="filter-button w-1/4 max-w-12 border border-steel-blue rounded-md hover:bg-platinum-100 text-steel-blue focus:outline-none"
-        [class.bg-steel-blue-500]="filterVisible"
-        [class.text-white]="filterVisible"
-        [class.hover:text-white]="filterVisible"
-        [class.hover:bg-steel-blue-600]="filterVisible"
-        (click)="toggleFilter()">
-        <i class="fa-solid fa-filter"></i>
-      </button>
+      <div class="flex flex-1 h-10.5">
+        <button type="button"
+          class="filter-button min-w-12 w-1/2 border border-steel-blue rounded-tl-md rounded-bl-md hover:bg-platinum-100 text-steel-blue focus:outline-none"
+          [class.bg-steel-blue-500]="filterVisible"
+          [class.text-white]="filterVisible"
+          [class.hover:text-white]="filterVisible"
+          [class.hover:bg-steel-blue-600]="filterVisible"
+          (click)="toggleFilter()">
+          <i class="fa-solid fa-filter"></i>
+        </button>
+
+        <button type="button"
+          class="filter-button min-w-12 w-1/2 border border-l-0 border-steel-blue rounded-tr-md rounded-br-md hover:bg-platinum-100 text-steel-blue focus:outline-none"
+          (click)="reset()">
+          <i class="fa-solid fa-rotate-left"></i>
+        </button>
+      </div>
     </div>
   </div>
 
