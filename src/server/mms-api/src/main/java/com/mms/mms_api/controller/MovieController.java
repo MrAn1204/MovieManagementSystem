@@ -15,6 +15,7 @@ import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
 
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import java.util.List;
@@ -45,8 +46,8 @@ public class MovieController {
                 : ResponseEntity.notFound().build();
     }
 
-    @PostMapping("/create")
-    public ResponseEntity<MovieDto> create(@Valid @RequestBody MovieCreateCommand command) {
+    @PostMapping(value = "/create", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
+    public ResponseEntity<MovieDto> create(@Valid @ModelAttribute MovieCreateCommand command) {
         movieValidator.validate(command);
         
         MovieDto result = movieService.handle(command);

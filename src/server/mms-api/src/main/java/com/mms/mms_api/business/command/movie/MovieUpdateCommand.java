@@ -11,6 +11,8 @@ import java.time.LocalDate;
 import java.util.List;
 import java.util.UUID;
 
+import org.springframework.web.multipart.MultipartFile;
+
 @Data
 @EqualsAndHashCode(callSuper = true)
 @AllArgsConstructor
@@ -24,7 +26,7 @@ public class MovieUpdateCommand extends BaseUpdateCommand {
 
     private String content;
 
-    private String thumbnail;
+    private MultipartFile thumbnail;
 
     private List<@NotNull(message = "{movie.genres.invalid}") UUID> genreIds;
 

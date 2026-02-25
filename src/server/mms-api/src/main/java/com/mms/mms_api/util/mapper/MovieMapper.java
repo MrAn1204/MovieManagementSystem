@@ -18,6 +18,7 @@ public interface MovieMapper {
     @Mapping(target = "talents", ignore = true)
     @Mapping(target = "language", ignore = true)
     @Mapping(target = "schedules", ignore = true)
+    @Mapping(target = "thumbnail", ignore = true)
     Movie toEntity(MovieCreateCommand command);
 
     MovieDto toDto(Movie movie);
@@ -28,5 +29,6 @@ public interface MovieMapper {
     @Mapping(target = "talents", ignore = true)
     @Mapping(target = "language", ignore = true)
     @Mapping(target = "schedules", ignore = true)
+    @Mapping(target = "thumbnail", ignore = true)
     void updateEntity(MovieUpdateCommand command, @MappingTarget Movie movie);
 }
