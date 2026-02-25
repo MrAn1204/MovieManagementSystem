@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.UUID;
 
 import com.mms.mms_api.business.command.movie.MovieCreateCommand;
+import com.mms.mms_api.business.service.GscService;
 import com.mms.mms_api.data.GenreRepository;
 import com.mms.mms_api.data.LanguageRepository;
 import com.mms.mms_api.data.MovieRepository;
@@ -26,6 +27,8 @@ public class MovieCreateHandler extends MovieBaseHandler<MovieCreateCommand, Mov
 
     private TalentRepository talentRepository;
 
+    private GscService gscService;
+
     public MovieCreateHandler(
             MovieCreateCommand request,
             MovieMapper movieMapper,
@@ -33,13 +36,15 @@ public class MovieCreateHandler extends MovieBaseHandler<MovieCreateCommand, Mov
             GenreRepository genreRepository,
             LanguageRepository languageRepository,
             StudioRepository studioRepository,
-            TalentRepository talentRepository) {
+            TalentRepository talentRepository,
+            GscService gscService) {
         super(request, movieMapper, movieRepository);
         this.movieRepository = movieRepository;
         this.genreRepository = genreRepository;
         this.languageRepository = languageRepository;
         this.studioRepository = studioRepository;
         this.talentRepository = talentRepository;
+        this.gscService = gscService;
     }
 
     public MovieDto execute() {
@@ -67,6 +72,11 @@ public class MovieCreateHandler extends MovieBaseHandler<MovieCreateCommand, Mov
         if (languageId != null) {
             mappedLanguage = languageRepository.findById(languageId).orElse(null);
         }
+        
+        String thumbnailUrl = null;
+        if (request.getThumbnail() != null) {
+            thumbnailUrl = gscService.upload(request.getThumbnail());
+        }
 
         Movie movie = movieMapper.toEntity(request);
 
@@ -74,6 +84,7 @@ public class MovieCreateHandler extends MovieBaseHandler<MovieCreateCommand, Mov
         movie.setLanguage(mappedLanguage);
         movie.setStudios(mappedStudios);
         movie.setTalents(mappedTalents);
+        movie.setThumbnail(thumbnailUrl);
 
         Movie savedMovie = movieRepository.save(movie);
 

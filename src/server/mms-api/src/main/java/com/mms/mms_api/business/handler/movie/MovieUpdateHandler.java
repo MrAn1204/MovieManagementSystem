@@ -1,6 +1,7 @@
 package com.mms.mms_api.business.handler.movie;
 
 import com.mms.mms_api.business.command.movie.MovieUpdateCommand;
+import com.mms.mms_api.business.service.GscService;
 import com.mms.mms_api.data.GenreRepository;
 import com.mms.mms_api.data.LanguageRepository;
 import com.mms.mms_api.data.MovieRepository;
@@ -27,6 +28,8 @@ public class MovieUpdateHandler extends MovieBaseHandler<MovieUpdateCommand, Mov
 
     private TalentRepository talentRepository;
 
+    private GscService gscService;
+
     public MovieUpdateHandler(
             MovieUpdateCommand request,
             MovieMapper movieMapper,
@@ -34,12 +37,14 @@ public class MovieUpdateHandler extends MovieBaseHandler<MovieUpdateCommand, Mov
             GenreRepository genreRepository,
             LanguageRepository languageRepository,
             StudioRepository studioRepository,
-            TalentRepository talentRepository) {
+            TalentRepository talentRepository,
+            GscService gscService) {
         super(request, movieMapper, movieRepository);
         this.genreRepository = genreRepository;
         this.languageRepository = languageRepository;
         this.studioRepository = studioRepository;
         this.talentRepository = talentRepository;
+        this.gscService = gscService;
     }
 
     @Override
@@ -72,12 +77,18 @@ public class MovieUpdateHandler extends MovieBaseHandler<MovieUpdateCommand, Mov
             mappedLanguage = languageRepository.findById(languageId).orElse(null);
         }
 
+        String thumbnailUrl = null;
+        if (request.getThumbnail() != null) {
+            thumbnailUrl = gscService.upload(request.getThumbnail());
+        }
+
         movieMapper.updateEntity(request, movie);
 
         movie.setGenres(mappedGenres);
         movie.setLanguage(mappedLanguage);
         movie.setStudios(mappedStudios);
         movie.setTalents(mappedTalents);
+        movie.setThumbnail(thumbnailUrl);
 
         Movie updatedMovie = movieRepository.save(movie);
 

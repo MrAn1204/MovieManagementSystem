@@ -43,10 +43,12 @@ public class MovieService {
 
     private final MovieMapper movieMapper;
 
+    private final GscService gscService;
+
     @PreAuthorize("hasAuthority('ADMIN')")
     public MovieDto handle(MovieCreateCommand request) {
         MovieCreateHandler handler = new MovieCreateHandler(request, movieMapper, movieRepository,
-                genreRepository, languageRepository, studioRepository, talentRepository);
+                genreRepository, languageRepository, studioRepository, talentRepository, gscService);
         return handler.execute();
     }
 
@@ -63,7 +65,7 @@ public class MovieService {
     @PreAuthorize("hasAuthority('ADMIN')")
     public MovieDto handle(MovieUpdateCommand request) {
         MovieUpdateHandler handler = new MovieUpdateHandler(request, movieMapper, movieRepository,
-                genreRepository, languageRepository, studioRepository, talentRepository);
+                genreRepository, languageRepository, studioRepository, talentRepository, gscService);
         return handler.execute();
     }
 

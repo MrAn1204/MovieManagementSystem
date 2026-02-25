@@ -4,6 +4,8 @@ import java.time.LocalDate;
 import java.util.List;
 import java.util.UUID;
 
+import org.springframework.web.multipart.MultipartFile;
+
 import com.mms.mms_api.business.command.BaseCreateCommand;
 
 import jakarta.validation.constraints.NotNull;
@@ -24,7 +26,7 @@ public class MovieCreateCommand extends BaseCreateCommand {
 
     private String content;
 
-    private String thumbnail;
+    private MultipartFile thumbnail;
 
     private List<@NotNull(message = "{movie.genres.invalid}") UUID> genreIds;
 
