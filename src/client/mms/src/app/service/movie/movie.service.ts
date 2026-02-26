@@ -5,6 +5,7 @@ import { MovieModel } from '../../model/movie.model';
 import { MovieSearchModel } from '../../model/search/movie-search.model';
 import { PaginatedResult } from '../../shared/model/paginated-result.model';
 import { MovieFormModel } from '../../model/form/movie-form.model';
+import { FormMapper } from '../../shared/util/form-mapper';
 
 @Injectable({
   providedIn: 'root',
@@ -23,11 +24,11 @@ export class MovieService {
   }
 
   create(movie: MovieFormModel): Observable<MovieModel> {
-    return this.http.post<MovieModel>(`${this.baseUrl}/create`, movie);
+    return this.http.post<MovieModel>(`${this.baseUrl}/create`, FormMapper.toFormData(movie));
   }
 
   update(id: string, movie: MovieFormModel): Observable<MovieModel> {
-    return this.http.put<MovieModel>(`${this.baseUrl}/${id}`, movie);
+    return this.http.put<MovieModel>(`${this.baseUrl}/${id}`, FormMapper.toFormData(movie));
   }
 
   delete(id: string): Observable<null> {

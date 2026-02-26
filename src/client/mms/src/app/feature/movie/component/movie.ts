@@ -9,7 +9,6 @@ import { MovieService } from '../../../service/movie/movie.service';
 import { FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { TableColumnModel } from '../../../shared/model/table-column.model';
 import { BaseFeature } from '../../../shared/component/feature/base-feature';
-import { MovieFormModel } from '../../../model/form/movie-form.model';
 import { getRoleConfig } from '../../../shared/config/role-config';
 
 @Component({
@@ -62,7 +61,7 @@ export class Movie extends BaseFeature<MovieModel> {
       releaseDate: [''],
       duration: [0, [Validators.min(1)]],
       content: [''],
-      thumbnail: ['https://dummyimage.com/300x400/dddddd/000000&text=No+Image'],
+      thumbnail: [null],
       genreIds: [[]],
       studioIds: [[]],
       talentIds: [[]],
@@ -111,6 +110,12 @@ export class Movie extends BaseFeature<MovieModel> {
   }
 
   override patchEntityForm(model: MovieModel): void {
-    this.entityForm.patchValue(new MovieFormModel(model));
+    this.entityForm.patchValue({
+      ...model,
+      genreIds: model.genres?.map(genre => genre.id) ?? [],
+      studioIds: model.studios?.map(studio => studio.id) ?? [],
+      talentIds: model.talents?.map(talent => talent.id) ?? [],
+      languageId: model.language?.id ?? null,
+    });
   }
 }

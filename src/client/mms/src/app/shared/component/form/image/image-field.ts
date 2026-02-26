@@ -15,26 +15,33 @@ import { NG_VALUE_ACCESSOR } from '@angular/forms';
   templateUrl: './image-field.html',
   styleUrl: './image-field.css',
 })
-export class ImageField extends BaseField<string> {
+export class ImageField extends BaseField<File | string> {
   private readonly DEFAULT_SRC = 'https://dummyimage.com/300x400/dddddd/000000&text=No+Image';
 
-  imagePreviewSrc = signal(this.DEFAULT_SRC);
+  imagePreviewSrc = signal<string>(this.DEFAULT_SRC);
 
   constructor() {
     super();
 
     effect(() => {
-      this.imagePreviewSrc.set(this.value ?? this.DEFAULT_SRC);
+      if (typeof this.value === 'string') {
+        this.imagePreviewSrc.set(this.value);
+      } else {
+        this.imagePreviewSrc.set(this.DEFAULT_SRC);
+      }
     });
   }
 
   onFileChange(event: Event) {
     const input = event.target as HTMLInputElement;
-    
+
     if (input.files?.[0]) {
       const file = input.files[0];
+
+      this.updateValue(file);
+
       const reader = new FileReader();
-      
+
       reader.readAsDataURL(file);
       reader.onload = () => {
         this.imagePreviewSrc.set(reader.result as string);

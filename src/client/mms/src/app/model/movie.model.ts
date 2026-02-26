@@ -6,7 +6,7 @@ export interface MovieModel extends BaseEntityModel {
   releaseDate: string;
   duration: number;
   content: string;
-  thumbnail: string;
+  thumbnail?: string;
   rating: number;
   genres?: IdNameModel[];
   studios?: IdNameModel[];
