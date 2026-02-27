@@ -9,8 +9,8 @@ import com.mms.mms_api.business.command.movie.MovieUpdateCommand;
 import com.mms.mms_api.dto.MovieDto;
 import com.mms.mms_api.model.Movie;
 
-@Mapper(config = DefaultMapperConfig.class,
-        uses = { GenreMapper.class, LanguageMapper.class, StudioMapper.class, TalentMapper.class })
+@Mapper(config = DefaultMapperConfig.class, uses = { GenreMapper.class, LanguageMapper.class, StudioMapper.class,
+        TalentMapper.class })
 public interface MovieMapper {
     @Mapping(target = "rating", ignore = true)
     @Mapping(target = "genres", ignore = true)
@@ -21,6 +21,7 @@ public interface MovieMapper {
     @Mapping(target = "thumbnail", ignore = true)
     Movie toEntity(MovieCreateCommand command);
 
+    @Mapping(target = "thumbnail", expression = "java(\"https://storage.googleapis.com/\" + movie.getThumbnail())")
     MovieDto toDto(Movie movie);
 
     @Mapping(target = "rating", ignore = true)

@@ -5,6 +5,7 @@ import java.util.UUID;
 
 import com.mms.mms_api.business.command.movie.MovieCreateCommand;
 import com.mms.mms_api.business.service.GscService;
+import com.mms.mms_api.common.StoragePath;
 import com.mms.mms_api.data.GenreRepository;
 import com.mms.mms_api.data.LanguageRepository;
 import com.mms.mms_api.data.MovieRepository;
@@ -75,7 +76,7 @@ public class MovieCreateHandler extends MovieBaseHandler<MovieCreateCommand, Mov
         
         String thumbnailUrl = null;
         if (request.getThumbnail() != null) {
-            thumbnailUrl = gscService.upload(request.getThumbnail());
+            thumbnailUrl = gscService.upload(request.getThumbnail(), StoragePath.MOVIE_THUMBNAIL);
         }
 
         Movie movie = movieMapper.toEntity(request);

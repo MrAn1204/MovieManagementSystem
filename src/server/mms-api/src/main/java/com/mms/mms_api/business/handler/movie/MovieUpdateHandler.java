@@ -2,6 +2,7 @@ package com.mms.mms_api.business.handler.movie;
 
 import com.mms.mms_api.business.command.movie.MovieUpdateCommand;
 import com.mms.mms_api.business.service.GscService;
+import com.mms.mms_api.common.StoragePath;
 import com.mms.mms_api.data.GenreRepository;
 import com.mms.mms_api.data.LanguageRepository;
 import com.mms.mms_api.data.MovieRepository;
@@ -77,10 +78,8 @@ public class MovieUpdateHandler extends MovieBaseHandler<MovieUpdateCommand, Mov
             mappedLanguage = languageRepository.findById(languageId).orElse(null);
         }
 
-        String thumbnailUrl = null;
-        if (request.getThumbnail() != null) {
-            thumbnailUrl = gscService.upload(request.getThumbnail());
-        }
+        String oldThumbnailUrl = movie.getThumbnail();
+        String newThumbnailUrl = gscService.upload(request.getThumbnail(), StoragePath.MOVIE_THUMBNAIL);
 
         movieMapper.updateEntity(request, movie);
 
@@ -88,9 +87,16 @@ public class MovieUpdateHandler extends MovieBaseHandler<MovieUpdateCommand, Mov
         movie.setLanguage(mappedLanguage);
         movie.setStudios(mappedStudios);
         movie.setTalents(mappedTalents);
-        movie.setThumbnail(thumbnailUrl);
+
+        if (newThumbnailUrl != null) {
+            movie.setThumbnail(newThumbnailUrl);
+        }
 
         Movie updatedMovie = movieRepository.save(movie);
+
+        if (newThumbnailUrl != null && oldThumbnailUrl != null) {
+            gscService.delete(oldThumbnailUrl);
+        }
 
         return movieMapper.toDto(updatedMovie);
     }

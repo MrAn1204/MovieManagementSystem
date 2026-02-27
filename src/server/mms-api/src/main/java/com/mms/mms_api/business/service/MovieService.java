@@ -71,7 +71,7 @@ public class MovieService {
 
     @PreAuthorize("hasAuthority('ADMIN')")
     public void handle(MovieDeleteCommand request) {
-        MovieDeleteHandler handler = new MovieDeleteHandler(request, movieRepository);
+        MovieDeleteHandler handler = new MovieDeleteHandler(request, movieRepository, gscService);
         handler.execute();
     }
 
