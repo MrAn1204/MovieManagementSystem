@@ -1,0 +1,5 @@
+@import 'tailwindcss';
+
+:host {
+  @apply flex justify-center max-w-1/3;
+}

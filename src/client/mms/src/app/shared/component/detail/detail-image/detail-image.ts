@@ -7,5 +7,7 @@ import { Component, input } from '@angular/core';
   styleUrl: './detail-image.css',
 })
 export class DetailImage {
-  src = input<string>('https://dummyimage.com/300x400/dddddd/000000&text=No+Image');
+  src = input('', {
+    transform: (value) => value || 'https://dummyimage.com/300x400/dddddd/000000&text=No+Image'
+  });
 }
