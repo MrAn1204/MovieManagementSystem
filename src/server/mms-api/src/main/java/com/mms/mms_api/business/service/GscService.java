@@ -1,6 +1,8 @@
 package com.mms.mms_api.business.service;
 
 import java.io.IOException;
+import java.net.URL;
+import java.util.concurrent.TimeUnit;
 
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
@@ -54,5 +56,31 @@ public class GscService {
         BlobId blobId = BlobId.of(bucketName, objectName);
 
         return storage.delete(blobId);
+    }
+
+    public String getPublicUrl(String filePath) {
+        if (filePath == null || filePath.isEmpty()) {
+            return null;
+        }
+
+        return String.format("https://storage.googleapis.com/%s", filePath);
+    }
+
+    public String getUrl(String filePath) {
+        if (filePath == null || filePath.isEmpty()) {
+            return null;
+        }
+
+        Storage storage = StorageOptions.getDefaultInstance().getService();
+
+        String[] pathParts = filePath.split("/", 2);
+        String bucketName = pathParts[0];
+        String objectName = pathParts[1];
+
+        BlobInfo blobInfo = BlobInfo.newBuilder(BlobId.of(bucketName, objectName)).build();
+
+        URL url = storage.signUrl(blobInfo, 5, TimeUnit.MINUTES);
+
+        return url.toString();
     }
 }
