@@ -96,10 +96,9 @@ export class Register {
   }
 
   onSubmit() {
-    console.log(this.form.value);
     if (this.form.valid) {
       this.authService.register(this.form.value).subscribe({
-        next: (res) => console.log(res),
+        next: () => this.navigateToLogin(),
         error: (res: HttpErrorResponse) => {
           this.setServerErrors(res.error.messages);
           this.form.markAllAsTouched();
