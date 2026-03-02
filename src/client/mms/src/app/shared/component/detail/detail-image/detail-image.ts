@@ -9,7 +9,7 @@ import { Component, input, OnInit, signal } from '@angular/core';
 export class DetailImage implements OnInit {
   private readonly DEFAULT_SRC = 'https://dummyimage.com/300x400/dddddd/000000&text=No+Image';
 
-  src = input<string>();
+  src = input<string | null>();
 
   displaySrc = signal(this.src());
 
