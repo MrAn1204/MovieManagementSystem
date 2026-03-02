@@ -43,7 +43,7 @@ export class Search implements OnInit {
 
   toggleOrder(): void {
     this.ascending = !this.ascending;
-    this.form().controls['sortDirection'].setValue(this.ascending ? 'DESC' : 'ASC');
+    this.form().controls['sortDirection'].setValue(this.ascending ? 'ASC' : 'DESC');
   }
 
   reset(): void {
