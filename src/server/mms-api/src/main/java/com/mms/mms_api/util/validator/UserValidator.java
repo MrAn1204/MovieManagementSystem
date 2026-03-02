@@ -84,12 +84,20 @@ public class UserValidator implements BaseValidator {
     }
 
     private void validateEmail(ErrorLinkedList errors, String email) {
+        if (email == null || email.isBlank()) {
+            return;
+        }
+
         if (userValidationService.existsByEmail(email)) {
             errors.add("email", "user.email.unique");
         }
     }
 
     private void validateEmail(ErrorLinkedList errors, String email, UUID id) {
+        if (email == null || email.isBlank()) {
+            return;
+        }
+
         if (userValidationService.existsByEmailAndIdNot(email, id)) {
             errors.add("email", "user.email.unique");
         }

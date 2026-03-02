@@ -39,7 +39,7 @@ public class User extends BaseEntity {
     @Column(nullable = false)
     private LocalDate dateOfBirth;
 
-    @Column(unique = true, nullable = false)
+    @Column(unique = true)
     private String email;
 
     private String citizenIdNumber;
