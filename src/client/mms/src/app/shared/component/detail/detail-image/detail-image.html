@@ -1,1 +1,1 @@
-<img [src]="src()" alt="thumbnail" class="max-h-48 md:max-h-72 rounded-md">
+<img [src]="displaySrc()" (error)="onImageError()" alt="thumbnail" class="max-h-48 md:max-h-72 rounded-md">

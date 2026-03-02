@@ -1,4 +1,4 @@
-import { Component, input } from '@angular/core';
+import { Component, input, OnInit, signal } from '@angular/core';
 
 @Component({
   selector: 'app-detail-image',
@@ -6,8 +6,18 @@ import { Component, input } from '@angular/core';
   templateUrl: './detail-image.html',
   styleUrl: './detail-image.css',
 })
-export class DetailImage {
-  src = input('', {
-    transform: (value) => value || 'https://dummyimage.com/300x400/dddddd/000000&text=No+Image'
-  });
+export class DetailImage implements OnInit {
+  private readonly DEFAULT_SRC = 'https://dummyimage.com/300x400/dddddd/000000&text=No+Image';
+
+  src = input<string>();
+
+  displaySrc = signal(this.src());
+
+  ngOnInit(): void {
+    this.displaySrc.set(this.src());
+  }
+
+  onImageError() {
+    this.displaySrc.set(this.DEFAULT_SRC);
+  }
 }

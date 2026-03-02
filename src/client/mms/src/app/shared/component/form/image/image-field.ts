@@ -26,6 +26,8 @@ export class ImageField extends BaseField<File | string> {
     effect(() => {
       if (typeof this.value === 'string') {
         this.imagePreviewSrc.set(this.value);
+      } else if (this.value instanceof File) {
+        this.readFile(this.value);
       } else {
         this.imagePreviewSrc.set(this.DEFAULT_SRC);
       }
@@ -38,14 +40,22 @@ export class ImageField extends BaseField<File | string> {
     if (input.files?.[0]) {
       const file = input.files[0];
 
-      this.updateValue(file);
-
-      const reader = new FileReader();
-
-      reader.readAsDataURL(file);
-      reader.onload = () => {
-        this.imagePreviewSrc.set(reader.result as string);
-      };
+      this.readFile(file);
     }
+  }
+
+  readFile(file: File) {
+    this.updateValue(file);
+
+    const reader = new FileReader();
+
+    reader.readAsDataURL(file);
+    reader.onload = () => {
+      this.imagePreviewSrc.set(reader.result as string);
+    };
+  }
+
+  onImageError() {
+    this.imagePreviewSrc.set(this.DEFAULT_SRC);
   }
 }
