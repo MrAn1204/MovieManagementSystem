@@ -1,5 +1,5 @@
 import { Component, input } from '@angular/core';
-import { RouterLink } from "@angular/router";
+import { Router, RouterLink } from "@angular/router";
 import { AuthService } from '../../../service/auth/auth.service';
 
 @Component({
@@ -10,12 +10,12 @@ import { AuthService } from '../../../service/auth/auth.service';
 })
 export class Sidebar {
   readonly routes = [
-    { path: '/', label: 'Home', icon: 'fa-house' }, 
-    { path: '/movie', label: 'Movie', icon: 'fa-film' }, 
-    { path: '/schedule', label: 'Schedule', icon: 'fa-calendar' }, 
-    { path: '/room', label: 'Room', icon: 'fa-door-closed' }, 
+    { path: '/', label: 'Home', icon: 'fa-house' },
+    { path: '/movie', label: 'Movie', icon: 'fa-film' },
+    { path: '/schedule', label: 'Schedule', icon: 'fa-calendar' },
+    { path: '/room', label: 'Room', icon: 'fa-door-closed' },
     { path: '/ticket', label: 'Ticket', icon: 'fa-ticket' },
-    { path: '/promotion', label: 'Promotion', icon: 'fa-percent' }, 
+    { path: '/promotion', label: 'Promotion', icon: 'fa-percent' },
     { path: '/user', label: 'User', icon: 'fa-users' }
   ]
   visible = input<boolean>();
@@ -23,12 +23,16 @@ export class Sidebar {
   fullname: string = '';
   email: string = '';
 
-  constructor(private readonly authService: AuthService) {
+  constructor(private readonly authService: AuthService, private readonly router: Router) {
     this.fullname = this.authService.getFullname();
     this.email = this.authService.getEmail();
   }
 
   onLogout(): void {
     this.authService.logout();
+  }
+
+  isActive(path: string): boolean {
+    return this.router.url === path;
   }
 }

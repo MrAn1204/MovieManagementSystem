@@ -7,7 +7,8 @@
   <nav class="flex-1 w-full overflow-auto">
     <ul class="p-4 space-y-4 text-2xl">
       @for (route of routes; track $index) {
-      <li class="flex rounded-md overflow-hidden hover:bg-platinum-100 hover:cursor-pointer">
+      <li [class]="isActive(route.path) ? 'bg-platinum-200' : 'hover:bg-platinum-100'"
+        class="flex rounded-md overflow-hidden hover:cursor-pointer">
         <a class="px-4 py-1 w-full space-x-4" [routerLink]="[route.path]">
           <i class="fa-solid" [class]="route.icon"></i>
           <span>{{ route.label }}</span>
