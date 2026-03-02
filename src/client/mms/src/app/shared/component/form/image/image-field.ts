@@ -26,6 +26,7 @@ export class ImageField extends BaseField<File | string> {
     effect(() => {
       if (typeof this.value === 'string') {
         this.imagePreviewSrc.set(this.value);
+        this.updateValue(new File([], ''));
       } else if (this.value instanceof File) {
         this.readFile(this.value);
       } else {
