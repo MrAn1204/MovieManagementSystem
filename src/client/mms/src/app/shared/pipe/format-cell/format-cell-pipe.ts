@@ -12,6 +12,8 @@ export class FormatCellPipe implements PipeTransform {
     switch (type) {
       case 'date':
         return new Date(value).toLocaleDateString();
+      case 'datetime':
+        return new Date(value).toLocaleString();
       case 'id-name':
         return value.name;
       case 'id-name-array':
