@@ -1,0 +1,15 @@
+<div class="filter-layout">
+  <div class="filter-common">
+    <app-select-field formControlName="roomId" idName="filter-room" labelText="Room" [options]="rooms()"></app-select-field>
+  </div>
+
+  <div class="filter-range-advanced">
+    <app-input-field inputType="date" formControlName="date" idName="filter-date" labelText="Date"></app-input-field>
+
+    <div class="filter-range">
+      <app-input-field inputType="time" formControlName="minTime" idName="min-time" labelText="Min Time"></app-input-field>
+
+      <app-input-field inputType="time" formControlName="maxTime" idName="max-time" labelText="Max Time"></app-input-field>
+    </div>
+  </div>
+</div>
