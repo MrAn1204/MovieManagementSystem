@@ -14,6 +14,7 @@ public interface RoomMapper {
     @Mapping(target = "seats", ignore = true)
     Room toEntity(RoomCreateCommand command);
 
+    @Mapping(target = "maxCapacity", expression = "java(room.getRowLength() * room.getColumnLength())")
     RoomDto toDto(Room room);
 
     @Mapping(target = "seats", ignore = true)
