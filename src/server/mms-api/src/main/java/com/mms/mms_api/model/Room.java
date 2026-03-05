@@ -14,7 +14,10 @@ import lombok.EqualsAndHashCode;
 @EqualsAndHashCode(callSuper = true)
 public class Room extends BaseEntity {
     @Column(nullable = false)
-    private int seatQuantity;
+    private int rowLength;
+
+    @Column(nullable = false)
+    private int columnLength;
 
     @Column(unique = true, nullable = false)
     private String name;

@@ -10,7 +10,9 @@ import lombok.EqualsAndHashCode;
 @Data
 @EqualsAndHashCode(callSuper = true)
 public class RoomDto extends BaseDto {
-    private int seatQuantity;
+    private int rowLength;
+
+    private int columnLength;
 
     private String name;
 
