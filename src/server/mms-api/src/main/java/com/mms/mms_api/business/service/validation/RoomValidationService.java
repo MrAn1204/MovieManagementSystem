@@ -23,7 +23,7 @@ public class RoomValidationService {
         return roomRepository.findById(id).orElse(null);
     }
 
-    public boolean isRoomFull(@NonNull UUID id) {
-        return roomRepository.isRoomFull(id);
+    public boolean existsByName(String name) {
+        return roomRepository.existsByName(name);
     }
 }
