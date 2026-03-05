@@ -9,7 +9,6 @@ import com.mms.mms_api.business.command.seat.SeatCreateCommand;
 import com.mms.mms_api.business.command.seat.SeatUpdateCommand;
 import com.mms.mms_api.business.service.validation.RoomValidationService;
 import com.mms.mms_api.business.service.validation.SeatValidationService;
-import com.mms.mms_api.common.AppConstant;
 import com.mms.mms_api.exception.ErrorLinkedList;
 import com.mms.mms_api.exception.ErrorType;
 import com.mms.mms_api.model.Room;
@@ -81,13 +80,11 @@ public class SeatValidator implements BaseValidator {
     }
 
     private void validatePosition(ErrorLinkedList errors, Room room, int seatColumn, int seatRow) {
-        int numberOfColumns = room.getSeatQuantity() / AppConstant.COLUMN_MAX;
-
-        if (seatColumn <= 0 || seatColumn > numberOfColumns) {
+        if (seatColumn <= 0 || seatColumn > room.getColumnLength()) {
             errors.add("seatColumn", "seat.column.invalid");
         }
 
-        if (seatRow <= 0 || seatRow > 10) {
+        if (seatRow <= 0 || seatRow > room.getRowLength()) {
             errors.add("seatRow", "seat.row.invalid");
         }
 
@@ -108,9 +105,7 @@ public class SeatValidator implements BaseValidator {
     private void validateCoupleSeatPosition(ErrorLinkedList errors, int seatColumn, int seatRow, Room room) {
         int secondColumn = seatColumn + 1;
 
-        int numberOfColumns = room.getSeatQuantity() / AppConstant.COLUMN_MAX;
-
-        if (secondColumn > numberOfColumns) {
+        if (secondColumn > room.getColumnLength()) {
             errors.add("seatColumn", "seat.column.invalid");
         }
 
@@ -130,7 +125,9 @@ public class SeatValidator implements BaseValidator {
     }
 
     private void validateRoomCapacity(ErrorLinkedList errors, Room room) {
-        if (room.getSeats().size() >= room.getSeatQuantity()) {
+        int capacity = room.getRowLength() * room.getColumnLength();
+
+        if (room.getSeats().size() >= capacity) {
             errors.add("room", "room.full");
         }
     }
