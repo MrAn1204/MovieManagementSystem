@@ -12,7 +12,7 @@ import com.mms.mms_api.model.Room;
 
 import jakarta.persistence.criteria.CriteriaBuilder;
 import jakarta.persistence.criteria.CriteriaQuery;
-import jakarta.persistence.criteria.Path;
+import jakarta.persistence.criteria.Expression;
 import jakarta.persistence.criteria.Predicate;
 import jakarta.persistence.criteria.Root;
 
@@ -30,8 +30,8 @@ public class RoomSpecification extends BaseSpecification<Room, RoomSearchQuery> 
             predicates.add(buildKeywordPredicate(root, criteriaBuilder));
         }
 
-        if (criteria.getSeatQuantityMin() > 0 || criteria.getSeatQuantityMax() > 0) {
-            predicates.add(buildSeatQuantityPredicate(root, criteriaBuilder));
+        if (criteria.getMinCapacity() > 0 || criteria.getMaxCapacity() > 0) {
+            predicates.add(buildCapacityPredicate(root, criteriaBuilder));
         }
 
         return criteriaBuilder.and(predicates.toArray(Predicate[]::new));
@@ -44,15 +44,15 @@ public class RoomSpecification extends BaseSpecification<Room, RoomSearchQuery> 
         return criteriaBuilder.like(root.get("name"), pattern);
     }
 
-    private Predicate buildSeatQuantityPredicate(Root<Room> root, CriteriaBuilder criteriaBuilder) {
-        Path<Integer> seatQuantityPath = root.get("seatQuantity");
+    private Predicate buildCapacityPredicate(Root<Room> root, CriteriaBuilder criteriaBuilder) {
+        Expression<Integer> seatQuantityPath = criteriaBuilder.prod(root.get("rowLength"), root.get("columnLength"));
 
-        if (criteria.getSeatQuantityMin() > 0 && criteria.getSeatQuantityMax() > 0) {
-            return criteriaBuilder.between(seatQuantityPath, criteria.getSeatQuantityMin(), criteria.getSeatQuantityMax());
-        } else if (criteria.getSeatQuantityMin() > 0) {
-            return criteriaBuilder.greaterThanOrEqualTo(seatQuantityPath, criteria.getSeatQuantityMin());
-        } else if (criteria.getSeatQuantityMax() > 0) {
-            return criteriaBuilder.lessThanOrEqualTo(seatQuantityPath, criteria.getSeatQuantityMax());
+        if (criteria.getMinCapacity() > 0 && criteria.getMaxCapacity() > 0) {
+            return criteriaBuilder.between(seatQuantityPath, criteria.getMinCapacity(), criteria.getMaxCapacity());
+        } else if (criteria.getMinCapacity() > 0) {
+            return criteriaBuilder.greaterThanOrEqualTo(seatQuantityPath, criteria.getMinCapacity());
+        } else if (criteria.getMaxCapacity() > 0) {
+            return criteriaBuilder.lessThanOrEqualTo(seatQuantityPath, criteria.getMaxCapacity());
         } else {
             return criteriaBuilder.conjunction();
         }

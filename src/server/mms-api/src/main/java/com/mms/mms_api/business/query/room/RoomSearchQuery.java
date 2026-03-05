@@ -10,14 +10,14 @@ import lombok.EqualsAndHashCode;
 @Data
 @EqualsAndHashCode(callSuper = true)
 public class RoomSearchQuery extends BaseSearchQuery {
-    @PositiveOrZero(message = "{search.seatQuantityRange.invalid}")
-    private int seatQuantityMin;
+    @PositiveOrZero(message = "{search.roomCapacityRange.invalid}")
+    private int minCapacity;
 
-    @PositiveOrZero(message = "{search.seatQuantityRange.invalid}")
-    private int seatQuantityMax;
+    @PositiveOrZero(message = "{search.roomCapacityRange.invalid}")
+    private int maxCapacity;
 
-    @AssertTrue(message = "{search.seatQuantityRange.invalid}")
-    public boolean isSeatQuantityValid() {
-        return seatQuantityMax >= seatQuantityMin || seatQuantityMax == 0;
+    @AssertTrue(message = "{search.roomCapacityRange.invalid}")
+    public boolean isCapacityValid() {
+        return maxCapacity >= minCapacity || maxCapacity == 0;
     }
 }
