@@ -23,7 +23,7 @@ public class AppConstant {
 
     public static final int ADDRESS_MAX = 100;
 
-    public static final int ROW_MAX = 10;
+    public static final int ROW_MAX = 20;
 
-    public static final int COLUMN_MAX = 10;
+    public static final int COLUMN_MAX = 20;
 }
