@@ -1,0 +1,11 @@
+<div class="w-full h-full flex flex-col items-center">
+  <app-search [form]="searchForm" [contentFilter]="contentFilter" [sortOptions]="sortOptions"
+    (triggerSearch)="onSearch()">
+  </app-search>
+
+  <app-table [form]="entityForm" entityName="Room" [columns]="columns" [data]="data()"
+    [contentCreateEdit]="contentCreateEdit" [contentDetail]="contentDetail" [roleConfig]="roleConfig"
+    (changePageNumber)="onChangePageNumber($event)" (changePageSize)="onChangePageSize($event)"
+    (openCreateForm)="onAdd()" (openEditForm)="onEdit($event)" (openDetailForm)="onView($event)" (openDeleteModal)="onDelete($event)">
+  </app-table>
+</div>

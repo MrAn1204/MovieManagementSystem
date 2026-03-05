@@ -5,6 +5,7 @@ import { Login } from './feature/auth/login/login';
 import { authGuard } from './guard/auth/auth-guard';
 import { MainLayout } from './shared/main-layout/main-layout';
 import { Register } from './feature/auth/register/register';
+import { Room } from './feature/room/component/room';
 
 export const routes: Routes = [
   {
@@ -31,6 +32,11 @@ export const routes: Routes = [
         path: 'movie',
         component: Movie,
         title: 'Movie',
+      },
+      {
+        path: 'room',
+        component: Room,
+        title: 'Room',
       },
     ]
   },
