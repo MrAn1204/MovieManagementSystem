@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.mms.mms_api.business.command.seat.SeatCreateCommand;
 import com.mms.mms_api.business.command.seat.SeatDeleteCommand;
 import com.mms.mms_api.business.command.seat.SeatUpdateCommand;
+import com.mms.mms_api.business.query.seat.SeatGetAllInRoomQuery;
 import com.mms.mms_api.business.query.seat.SeatGetAllQuery;
 import com.mms.mms_api.business.query.seat.SeatGetByIdQuery;
 import com.mms.mms_api.business.service.SeatService;
@@ -69,5 +70,11 @@ public class SeatController {
     public ResponseEntity<Void> delete(@PathVariable UUID id) {
         seatService.handle(new SeatDeleteCommand(id));
         return ResponseEntity.noContent().build();
+    }
+
+    @PostMapping("/seat-map")
+    public ResponseEntity<List<SeatDto>> getAllInRoom(@RequestBody SeatGetAllInRoomQuery request) {
+        List<SeatDto> seats = seatService.handle(request);
+        return ResponseEntity.ok(seats);
     }
 }
