@@ -1,0 +1,41 @@
+@import "../../../../styles.css";
+
+.seat {
+  @apply bg-platinum-100;
+}
+
+.seat:hover {
+  @apply bg-platinum-200;
+}
+
+.occupied {
+  @apply bg-bright-fern-600 text-white;
+}
+
+.occupied:hover {
+  @apply bg-bright-fern-700;
+}
+
+.couple {
+  @apply bg-vermilion-600 text-white;
+}
+
+.couple:hover {
+  @apply bg-vermilion-700;
+}
+
+.premium {
+  @apply bg-carrot-orange-600 text-white;
+}
+
+.premium:hover {
+  @apply bg-carrot-orange-700;
+}
+
+.accessible {
+  @apply bg-steel-blue-600 text-white;
+}
+
+.accessible:hover {
+  @apply bg-steel-blue-700;
+}

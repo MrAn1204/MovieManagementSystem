@@ -1,0 +1,24 @@
+<div class="flex flex-col items-center gap-4 max-h-80">
+  <div class="border-8 border-platinum-300 bg-platinum-100 w-full flex justify-center">
+    <p class="italic">Screen</p>
+  </div>
+
+  <div class="flex overflow-x-auto">
+    <div [style.grid-template-columns]="'repeat(' + columns.length + ', minmax(0, 1fr))'" class="shrink-0 grid gap-2 *:border *:border-platinum-300 *:size-10 *:rounded-md ">
+      @for (r of rows; track $index) {
+        @for (c of columns; track $index) {
+          @let seat = getSeat(r, c);
+          @if (seat) {
+            <button [ngClass]="getType(seat)" (click)="selectSeat(seat)">
+              {{ seat.name}}
+            </button>
+          } @else {
+            <div class="aisle"></div>
+          }
+        }
+      }
+    </div>
+  </div>
+</div>
+
+

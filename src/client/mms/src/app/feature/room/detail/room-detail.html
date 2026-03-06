@@ -18,4 +18,9 @@
   <app-detail-text label="Current Capacity">
     {{ model().seats.length | formatCell }}
   </app-detail-text>
+
 </div>
+
+<hr class="my-8 border-platinum-300">
+
+<app-seat-map [rowLength]="model().rowLength" [columnLength]="model().columnLength" [roomId]="model().id"></app-seat-map>
