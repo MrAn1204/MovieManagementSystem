@@ -1,59 +1,61 @@
-<div class="create-edit-layout">
-  <app-image-field formControlName="thumbnail" idName="thumbnail" labelText="Image"></app-image-field>
+<app-create-edit [formGroup]="form" [title]="data.title" (submitForm)="onSubmit()" (closeDialog)="close()">
+  <div class="create-edit-layout">
+    <app-image-field formControlName="thumbnail" idName="thumbnail" labelText="Image"></app-image-field>
 
-  <div class="w-full flex-1 gap-4 grid grid-cols-1 sm:grid-cols-2">
-    <div>
-      <app-input-field formControlName="name" 
-        inputType="text" idName="name" labelText="Title">
-      </app-input-field>
-      @if (form.get('name')?.touched && form.get('name')?.hasError('required')) {
-        <p class="error-text">Name is required</p>
-      }
-    </div>
+    <div class="w-full flex-1 gap-4 grid grid-cols-1 sm:grid-cols-2">
+      <div>
+        <app-input-field formControlName="name"
+          inputType="text" idName="name" labelText="Title">
+        </app-input-field>
+        @if (form.get('name')?.touched && form.get('name')?.hasError('required')) {
+          <p class="error-text">Name is required</p>
+        }
+      </div>
 
-    <div>
-      <app-select-field formControlName="languageId" 
-        idName="language" labelText="Language" [options]="languages()">
-      </app-select-field>
-    </div>
+      <div>
+        <app-select-field formControlName="languageId"
+          idName="language" labelText="Language" [options]="languages()">
+        </app-select-field>
+      </div>
 
-    <div>
-      <app-multiselect-field formControlName="genreIds" 
-        idName="genres" labelText="Genre" [options]="genres()">
-      </app-multiselect-field>
-    </div>
+      <div>
+        <app-multiselect-field formControlName="genreIds"
+          idName="genres" labelText="Genre" [options]="genres()">
+        </app-multiselect-field>
+      </div>
 
-    <div>
-      <app-multiselect-field formControlName="studioIds" 
-        idName="studios" labelText="Studio" [options]="studios()">
-      </app-multiselect-field>
-    </div>
+      <div>
+        <app-multiselect-field formControlName="studioIds"
+          idName="studios" labelText="Studio" [options]="studios()">
+        </app-multiselect-field>
+      </div>
 
-    <div>
-      <app-multiselect-field formControlName="talentIds" 
-        idName="talents" labelText="Talent" [options]="talents()">
-      </app-multiselect-field>
-    </div>
+      <div>
+        <app-multiselect-field formControlName="talentIds"
+          idName="talents" labelText="Talent" [options]="talents()">
+        </app-multiselect-field>
+      </div>
 
-    <div>
-      <app-input-field formControlName="duration" 
-        inputType="number" idName="duration" labelText="Duration (minutes)">
-      </app-input-field>
-      @if (form.get("duration")?.touched && form.get("duration")?.hasError("min")) {
-        <p class="error-text">Duration must be greater than 0</p>
-      }
-    </div>
+      <div>
+        <app-input-field formControlName="duration"
+          inputType="number" idName="duration" labelText="Duration (minutes)">
+        </app-input-field>
+        @if (form.get("duration")?.touched && form.get("duration")?.hasError("min")) {
+          <p class="error-text">Duration must be greater than 0</p>
+        }
+      </div>
 
-    <div class="sm:col-span-2">
-      <app-input-field formControlName="releaseDate" 
-        inputType="date" idName="releaseDate" labelText="Release Date">
-      </app-input-field>
-    </div>
+      <div class="sm:col-span-2">
+        <app-input-field formControlName="releaseDate"
+          inputType="date" idName="releaseDate" labelText="Release Date">
+        </app-input-field>
+      </div>
 
-    <div class="sm:col-span-2">
-      <app-textarea-field formControlName="content" 
-        idName="content" labelText="Content">
-      </app-textarea-field>
+      <div class="sm:col-span-2">
+        <app-textarea-field formControlName="content"
+          idName="content" labelText="Content">
+        </app-textarea-field>
+      </div>
     </div>
   </div>
-</div>
+</app-create-edit>
