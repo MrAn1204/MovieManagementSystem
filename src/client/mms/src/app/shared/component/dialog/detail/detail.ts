@@ -1,35 +1,33 @@
-import { DIALOG_DATA } from '@angular/cdk/dialog';
-import { Component, inject } from '@angular/core';
-import { BaseDialog } from '../base/base-dialog';
-import { NgComponentOutlet } from '@angular/common';
+import { Component, input, output } from '@angular/core';
 import { DetailButtons } from "../../detail/detail-buttons/detail-buttons";
-import { DialogDataModel } from '../../../model/dialog/dialog-data.model';
-import { CreateEdit } from '../create-edit/create-edit';
-import { PopupModal } from '../popup-modal/popup-modal';
 import { AuthService } from '../../../../service/auth/auth.service';
+import { RoleConfigModel } from '../../../model/role-config.model';
 
 @Component({
   selector: 'app-detail',
-  imports: [NgComponentOutlet, DetailButtons],
+  imports: [DetailButtons],
   templateUrl: './detail.html',
   styleUrl: './detail.css',
 })
-export class Detail extends BaseDialog {
-  data: DialogDataModel = inject(DIALOG_DATA);
+export class Detail {
+  title = input<string>();
+
+  roleConfig = input<RoleConfigModel | undefined>(undefined);
 
   constructor(private readonly authService: AuthService) {
-    super();
   }
 
-  openUpdate = () => this.dialogService.triggerOpen(CreateEdit);
+  openUpdate = output<void>();
 
-  openDelete = () => this.dialogService.triggerOpen(PopupModal);
+  openDelete = output<void>();
+
+  closeDialog = output<void>();
 
   canEdit(): boolean {
-    return this.authService.includeRoles(this.data.roleConfig?.edit ?? []);
+    return this.authService.includeRoles(this.roleConfig()?.edit ?? []);
   }
 
   canDelete(): boolean {
-    return this.authService.includeRoles(this.data.roleConfig?.delete ?? []);
+    return this.authService.includeRoles(this.roleConfig()?.delete ?? []);
   }
 }

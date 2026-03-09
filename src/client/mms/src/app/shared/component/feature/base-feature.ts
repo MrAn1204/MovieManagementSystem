@@ -5,21 +5,20 @@ import { createEmptyPaginatedResult, PaginatedResult } from "../../model/paginat
 import { FormOptionModel } from "../../model/form-option.model";
 import { BaseEntityModel } from "../../model/base-entity.model";
 import { DialogService } from "../../../service/dialog/dialog.service";
-import { Detail } from "../dialog/detail/detail";
 import { takeUntil } from "rxjs";
-import { CreateEdit } from "../dialog/create-edit/create-edit";
-import { DialogFormDataModel } from "../../model/dialog/dialog-form-data.model";
 import { PopupModal } from "../dialog/popup-modal/popup-modal";
 import { DialogPopupDataModel } from "../../model/dialog/dialog-popup-data.model";
 import { DialogRef } from "@angular/cdk/dialog";
 import { RoleConfigModel } from "../../model/role-config.model";
+import { DialogFormDataModel } from "../../model/dialog/dialog-form-data.model";
+import { BaseDialog } from "../dialog/base/base-dialog";
 
 @Directive()
 export abstract class BaseFeature<T extends BaseEntityModel> implements OnInit {
   abstract entityName: string;
 
-  abstract contentCreateEdit: Type<unknown>;
-  abstract contentDetail: Type<unknown>;
+  abstract contentCreateEdit: Type<BaseDialog>;
+  abstract contentDetail: Type<BaseDialog>;
   abstract contentFilter: Type<unknown>;
 
   abstract columns: TableColumnModel<T>[];
@@ -85,17 +84,16 @@ export abstract class BaseFeature<T extends BaseEntityModel> implements OnInit {
   abstract onDelete(id: string): void;
 
   protected displayInfo(item: T): void {
-    const ref = this.dialogService.openDialog(Detail, {
+    const ref = this.dialogService.openDialog(this.contentDetail, {
       title: `${this.entityName} Details`,
-      contentComponent: this.contentDetail,
-      contentInputs: { model: item, },
+      model: item,
       roleConfig: this.roleConfig,
     });
 
     ref.componentInstance?.dialogService.openDialog$
       .pipe(takeUntil(ref.closed))
       .subscribe((dialog) => {
-        if (dialog === CreateEdit) {
+        if (dialog === this.contentCreateEdit) {
           const editRef = this.displayEdit(item);
 
           editRef.closed
@@ -115,14 +113,12 @@ export abstract class BaseFeature<T extends BaseEntityModel> implements OnInit {
   }
 
   protected displayAdd(): void {
-    const data: DialogFormDataModel = {
+    const data: DialogFormDataModel<T> = {
       title: `Create ${this.entityName}`,
-      contentComponent: this.contentCreateEdit,
-      contentInputs: { mode: 'create' },
       form: this.entityForm,
     };
 
-    const dialogRef = this.dialogService.openDialog(CreateEdit, data);
+    const dialogRef = this.dialogService.openDialog(this.contentCreateEdit, data);
 
     dialogRef.componentInstance?.dialogService.saveForm$
       .pipe(takeUntil(dialogRef.closed))
@@ -134,17 +130,16 @@ export abstract class BaseFeature<T extends BaseEntityModel> implements OnInit {
       });
   }
 
-  protected displayEdit(item: T): DialogRef<unknown, CreateEdit> {
+  protected displayEdit(item: T): DialogRef<unknown, BaseDialog> {
     this.patchEntityForm(item);
 
-    const data: DialogFormDataModel = {
+    const data: DialogFormDataModel<T> = {
       title: `Edit ${this.entityName}`,
-      contentComponent: this.contentCreateEdit,
-      contentInputs: { model: item, mode: 'edit', },
+      model: item,
       form: this.entityForm,
     };
 
-    const dialogRef = this.dialogService.openDialog(CreateEdit, data);
+    const dialogRef = this.dialogService.openDialog(this.contentCreateEdit, data);
 
     dialogRef.componentInstance?.dialogService.saveForm$
       .pipe(takeUntil(dialogRef.closed))

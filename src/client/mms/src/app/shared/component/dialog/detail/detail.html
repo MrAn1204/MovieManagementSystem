@@ -1,22 +1,23 @@
 <div
   class="w-screen max-h-screen overflow-auto max-w-4xl bg-ghost-white p-4 md:p-8 rounded-lg shadow-md flex flex-col items-center">
   <div class="mb-8 w-full flex flex-wrap-reverse items-center relative">
-    <h2 class="sm:flex-1 text-2xl font-semibold sm:text-center overflow-hidden">{{ data.title }}</h2>
+    <h2 class="sm:flex-1 text-2xl font-semibold sm:text-center overflow-hidden">{{ title() }}</h2>
     <div class="sm:absolute sm:right-0 flex flex-1 justify-end">
-      <button class="w-10 h-10 hover:bg-platinum-100" (click)="close()">
+      <button class="w-10 h-10 hover:bg-platinum-100" (click)="closeDialog.emit()">
         <i class="fa-solid fa-xmark"></i>
       </button>
     </div>
   </div>
 
   <div class="w-full">
-    <ng-container [ngComponentOutlet]="data.contentComponent ?? null" [ngComponentOutletInputs]="data.contentInputs"></ng-container>
+    <ng-content></ng-content>
   </div>
 
   <app-detail-buttons
     [canEdit]="canEdit()"
     [canDelete]="canDelete()"
-    (updateItem)="openUpdate()"
-    (deleteItem)="openDelete()">
+    (updateItem)="openUpdate.emit()"
+    (deleteItem)="openDelete.emit()">
+    <ng-content select="[custom-buttons]"></ng-content>
   </app-detail-buttons>
 </div>
