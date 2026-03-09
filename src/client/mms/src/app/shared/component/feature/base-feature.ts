@@ -19,7 +19,7 @@ export abstract class BaseFeature<T extends BaseEntityModel> implements OnInit {
 
   abstract contentCreateEdit: Type<BaseDialog>;
   abstract contentDetail: Type<BaseDialog>;
-  abstract contentFilter: Type<unknown>;
+  contentFilter?: Type<unknown>;
 
   abstract columns: TableColumnModel<T>[];
   abstract sortOptions: FormOptionModel[];
@@ -42,7 +42,7 @@ export abstract class BaseFeature<T extends BaseEntityModel> implements OnInit {
       sortDirection: ['ASC'],
       pageNumber: [1],
       pageSize: [10],
-      ...this.getFilterGroup().controls
+      ...this.getFilterGroup?.().controls
     });
 
     this.entityForm = this.formBuilder.nonNullable.group({
@@ -50,7 +50,7 @@ export abstract class BaseFeature<T extends BaseEntityModel> implements OnInit {
     });
   }
 
-  protected abstract getFilterGroup(): FormGroup;
+  protected getFilterGroup?(): FormGroup;
 
   protected abstract getUpsertGroup(): FormGroup;
 
