@@ -1,9 +1,8 @@
-import { Type } from "@angular/core";
+import { BaseEntityModel } from "../base-entity.model";
 import { RoleConfigModel } from "../role-config.model";
 
-export interface DialogDataModel {
+export interface DialogDataModel<T extends BaseEntityModel | null> {
   title?: string;
-  contentComponent?: Type<unknown>;
-  contentInputs?: Record<string, unknown>;
+  model?: T;
   roleConfig?: RoleConfigModel;
 }
