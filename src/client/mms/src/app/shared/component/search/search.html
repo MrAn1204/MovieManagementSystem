@@ -31,7 +31,7 @@
         </select>
       </div>
 
-      <div class="flex flex-1 h-10.5">
+      <div [hidden]="!contentFilter()" class="flex flex-1 h-10.5">
         <button type="button"
           class="filter-button min-w-12 w-1/2 border border-steel-blue rounded-tl-md rounded-bl-md hover:bg-platinum-100 text-steel-blue focus:outline-none"
           [class.bg-steel-blue-500]="filterVisible"

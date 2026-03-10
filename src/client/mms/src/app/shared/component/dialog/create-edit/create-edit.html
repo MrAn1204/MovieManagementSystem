@@ -1,16 +1,16 @@
-<form [formGroup]="data.form!" id="create-edit-form" (submit)="onSubmit()"
+<form id="create-edit-form" (submit)="submitForm.emit()"
   class="w-screen max-h-screen overflow-auto max-w-6xl bg-ghost-white p-4 md:p-8 rounded-lg shadow-md flex flex-col items-center">
   <div class="mb-8 w-full flex flex-wrap-reverse items-center relative">
-    <h2 class="sm:flex-1 text-2xl font-semibold sm:text-center overflow-hidden">{{ data.title }}</h2>
+    <h2 class="sm:flex-1 text-2xl font-semibold sm:text-center overflow-hidden">{{ title() }}</h2>
     <div class="sm:absolute sm:right-0 flex flex-1 justify-end">
-      <button type="button" class="w-10 h-10 hover:bg-platinum-100" (click)="close()">
+      <button type="button" class="w-10 h-10 hover:bg-platinum-100" (click)="closeDialog.emit()">
         <i class="fa-solid fa-xmark"></i>
       </button>
     </div>
   </div>
 
   <div class="w-full">
-    <ng-container [ngComponentOutlet]="data.contentComponent ?? null" [ngComponentOutletInputs]="data.contentInputs"></ng-container>
+    <ng-content></ng-content>
   </div>
 
   <div class="mt-8 flex justify-center gap-4 *:w-20">
