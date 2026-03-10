@@ -1,8 +1,5 @@
 import { FormBuilder, FormGroup } from "@angular/forms";
-import { TableColumnModel } from "../../model/table-column.model";
-import { Directive, inject, OnInit, signal, Type } from "@angular/core";
-import { createEmptyPaginatedResult, PaginatedResult } from "../../model/paginated-result.model";
-import { FormOptionModel } from "../../model/form-option.model";
+import { Directive, inject, OnInit, Type } from "@angular/core";
 import { BaseEntityModel } from "../../model/base-entity.model";
 import { DialogService } from "../../../service/dialog/dialog.service";
 import { takeUntil } from "rxjs";
@@ -20,16 +17,8 @@ export abstract class BaseFeature<T extends BaseEntityModel> implements OnInit {
 
   abstract contentCreateEdit: Type<BaseDialog>;
   abstract contentDetail: Type<BaseDialog>;
-  contentFilter?: Type<unknown>;
-
-  abstract columns: TableColumnModel<T>[];
-  abstract sortOptions: FormOptionModel[];
 
   abstract roleConfig: RoleConfigModel;
-
-  data = signal<PaginatedResult<T>>(createEmptyPaginatedResult<T>());
-
-  searchForm!: FormGroup;
 
   entityForm!: FormGroup;
 
@@ -37,35 +26,12 @@ export abstract class BaseFeature<T extends BaseEntityModel> implements OnInit {
   protected readonly formBuilder = inject(FormBuilder);
 
   ngOnInit(): void {
-    this.searchForm = this.formBuilder.nonNullable.group({
-      keyword: [''],
-      sortBy: ['id'],
-      sortDirection: ['ASC'],
-      pageNumber: [1],
-      pageSize: [10],
-      ...this.getFilterGroup?.().controls
-    });
-
     this.entityForm = this.formBuilder.nonNullable.group({
       ...this.getUpsertGroup().controls
     });
   }
 
-  protected getFilterGroup?(): FormGroup;
-
   protected abstract getUpsertGroup(): FormGroup;
-
-  abstract onSearch(): void;
-
-  onChangePageNumber(page: number): void {
-    this.searchForm.controls['pageNumber'].setValue(page);
-    this.onSearch();
-  }
-
-  onChangePageSize(size: number): void {
-    this.searchForm.controls['pageSize'].setValue(size);
-    this.onSearch();
-  }
 
   protected abstract saveNew(): void;
 

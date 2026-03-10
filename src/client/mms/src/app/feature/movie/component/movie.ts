@@ -8,8 +8,8 @@ import { MovieModel } from '../../../model/movie.model';
 import { MovieService } from '../../../service/movie/movie.service';
 import { FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { TableColumnModel } from '../../../shared/model/table-column.model';
-import { BaseFeature } from '../../../shared/component/feature/base-feature';
 import { getRoleConfig } from '../../../shared/config/role-config';
+import { SearchableFeature } from '../../../shared/component/feature/searchable-feature';
 
 @Component({
   selector: 'app-movie',
@@ -17,7 +17,7 @@ import { getRoleConfig } from '../../../shared/config/role-config';
   templateUrl: './movie.html',
   styleUrl: './movie.css',
 })
-export class Movie extends BaseFeature<MovieModel> {
+export class Movie extends SearchableFeature<MovieModel> {
   override entityName = "Movie";
 
   override contentCreateEdit = MovieCreateEdit;
