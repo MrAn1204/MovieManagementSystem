@@ -8,16 +8,16 @@ import { RoomModel } from '../../../model/room.model';
 import { RoomService } from '../../../service/room/room.service';
 import { FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { TableColumnModel } from '../../../shared/model/table-column.model';
-import { BaseFeature } from '../../../shared/component/feature/base-feature';
 import { getRoleConfig } from '../../../shared/config/role-config';
 import { RoomSearchModel } from '../../../model/search/room-search.model';
+import { SearchableFeature } from '../../../shared/component/feature/searchable-feature';
 
 @Component({
   selector: 'app-room',
   imports: [Search, Table, ReactiveFormsModule],
   templateUrl: './room.html',
 })
-export class Room extends BaseFeature<RoomModel> {
+export class Room extends SearchableFeature<RoomModel> {
   override entityName = 'Room';
 
   override contentCreateEdit = RoomCreateEdit;

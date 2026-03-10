@@ -1,17 +1,30 @@
-import { Component, inject, input } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { InputField } from "../../../shared/component/form/input/input-field";
 import { RoomModel } from '../../../model/room.model';
-import { ControlContainer, FormGroup, FormGroupDirective, ReactiveFormsModule } from '@angular/forms';
+import { FormGroup, ReactiveFormsModule } from '@angular/forms';
+import { BaseDialog } from '../../../shared/component/dialog/base/base-dialog';
+import { DialogFormDataModel } from '../../../shared/model/dialog/dialog-form-data.model';
+import { DIALOG_DATA } from '@angular/cdk/dialog';
+import { CreateEdit } from "../../../shared/component/dialog/create-edit/create-edit";
 
 @Component({
   selector: 'app-room-create-edit',
-  imports: [InputField, ReactiveFormsModule],
-  viewProviders: [{ provide: ControlContainer, useExisting: FormGroupDirective }],
+  imports: [InputField, ReactiveFormsModule, CreateEdit],
   templateUrl: './room-create-edit.html',
+  styleUrl: './room-create-edit.css'
 })
-export class RoomCreateEdit {
-  model = input<RoomModel>();
-  mode = input<'create' | 'edit'>();
+export class RoomCreateEdit extends BaseDialog {
+  data: DialogFormDataModel<RoomModel> = inject(DIALOG_DATA);
 
-  form: FormGroup = inject(ControlContainer).control as FormGroup;
+  get form(): FormGroup {
+    return this.data.form;
+  }
+
+  onSubmit(): void {
+    this.data.form.markAllAsTouched();
+    if (this.data.form.invalid) {
+      return;
+    }
+    this.dialogService.triggerSave();
+  }
 }

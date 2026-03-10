@@ -3,9 +3,9 @@
     (triggerSearch)="onSearch()">
   </app-search>
 
-  <app-table [form]="entityForm" entityName="Room" [columns]="columns" [data]="data()"
-    [contentCreateEdit]="contentCreateEdit" [contentDetail]="contentDetail" [roleConfig]="roleConfig"
+  <app-table entityName="Room" [columns]="columns" [data]="data()" [roleConfig]="roleConfig"
     (changePageNumber)="onChangePageNumber($event)" (changePageSize)="onChangePageSize($event)"
-    (openCreateForm)="onAdd()" (openEditForm)="onEdit($event)" (openDetailForm)="onView($event)" (openDeleteModal)="onDelete($event)">
+    (openCreateForm)="onAdd()" (openEditForm)="onEdit($event)" (openDetailForm)="onView($event)"
+    (openDeleteModal)="onDelete($event)">
   </app-table>
 </div>
