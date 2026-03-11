@@ -9,7 +9,7 @@
         @for (c of columns; track $index) {
           @let seat = getSeat(r, c);
           @if (seat) {
-            <button [ngClass]="getType(seat)" (click)="selectSeat(seat)">
+            <button [ngClass]="getType(seat)" (click)="onView(seat.id)">
               {{ seat.name}}
             </button>
           } @else {
