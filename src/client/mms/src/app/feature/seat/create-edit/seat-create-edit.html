@@ -5,9 +5,7 @@
         <app-input-field formControlName="name"
           inputType="text" idName="name" labelText="Name">
         </app-input-field>
-        @if (form.get('name')?.touched && form.get('name')?.hasError('required')) {
-          <p class="error-text">Name is required</p>
-        }
+        <app-validation-error [control]="form.get('name')!"></app-validation-error>
       </div>
 
       <div>
@@ -20,18 +18,14 @@
         <app-input-field formControlName="seatRow"
           inputType="number" idName="seatRow" labelText="Row">
         </app-input-field>
-        @if (form.get('seatRow')?.touched && form.get('seatRow')?.hasError('required')) {
-          <p class="error-text">Row is required</p>
-        }
+        <app-validation-error [control]="form.get('seatRow')!"></app-validation-error>
       </div>
 
       <div>
         <app-input-field formControlName="seatColumn"
           inputType="number" idName="seatColumn" labelText="Column">
         </app-input-field>
-        @if (form.get('seatColumn')?.touched && form.get('seatColumn')?.hasError('required')) {
-          <p class="error-text">Column is required</p>
-        }
+        <app-validation-error [control]="form.get('seatColumn')!"></app-validation-error>
       </div>
     </div>
   </div>

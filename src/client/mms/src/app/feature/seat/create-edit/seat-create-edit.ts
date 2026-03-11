@@ -8,10 +8,11 @@ import { SeatModel } from '../../../model/seat.model';
 import { SelectField } from "../../../shared/component/form/select/select-field";
 import { FormOptionModel } from '../../../shared/model/form-option.model';
 import { ReactiveFormsModule } from "@angular/forms";
+import { ValidationError } from "../../../shared/component/form/error/validation-error";
 
 @Component({
   selector: 'app-seat-create-edit',
-  imports: [CreateEdit, InputField, SelectField, ReactiveFormsModule],
+  imports: [CreateEdit, InputField, SelectField, ReactiveFormsModule, ValidationError],
   templateUrl: './seat-create-edit.html',
   styleUrl: './seat-create-edit.css',
 })

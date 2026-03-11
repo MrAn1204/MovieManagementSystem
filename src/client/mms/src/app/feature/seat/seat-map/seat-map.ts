@@ -3,10 +3,11 @@ import { SeatService } from '../../../service/seat/seat.service';
 import { SeatModel } from '../../../model/seat.model';
 import { NgClass } from '@angular/common';
 import { BaseFeature } from '../../../shared/component/feature/base-feature';
-import { FormGroup, Validators } from '@angular/forms';
+import { FormGroup } from '@angular/forms';
 import { getRoleConfig } from '../../../shared/config/role-config';
 import { SeatCreateEdit } from '../create-edit/seat-create-edit';
 import { SeatDetail } from '../detail/seat-detail';
+import { CustomValidators } from '../../../shared/util/custom-validators';
 
 @Component({
   selector: 'app-seat-map',
@@ -58,10 +59,16 @@ export class SeatMap extends BaseFeature<SeatModel> {
 
   protected override getUpsertGroup(): FormGroup {
     return this.formBuilder.nonNullable.group({
-      name: ['', [Validators.required]],
+      name: ['', [CustomValidators.required('Name is required')]],
       seatType: ['STANDARD'],
-      seatRow: [1, [Validators.min(1), Validators.max(this.rowLength())]],
-      seatColumn: [1, [Validators.min(1), Validators.max(this.columnLength())]],
+      seatRow: [1, [
+        CustomValidators.min(1, 'Row must be at least 1'),
+        CustomValidators.max(this.rowLength(), `Row must be at most ${this.rowLength()}`)
+      ]],
+      seatColumn: [1, [
+        CustomValidators.min(1, 'Column must be at least 1'),
+        CustomValidators.max(this.columnLength(), `Column must be at most ${this.columnLength()}`)
+      ]],
       roomId: [this.roomId()],
     });
   }
