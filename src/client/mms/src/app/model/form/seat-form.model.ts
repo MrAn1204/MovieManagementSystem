@@ -3,5 +3,5 @@ export interface SeatFormModel {
   seatRow: number;
   seatType: string;
   name: string;
-  roomName: string;
+  roomId: string;
 }

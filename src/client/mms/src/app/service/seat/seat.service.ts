@@ -3,7 +3,6 @@ import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { SeatModel } from '../../model/seat.model';
 import { SeatFormModel } from '../../model/form/seat-form.model';
-import { FormMapper } from '../../shared/util/form-mapper';
 
 @Injectable({
   providedIn: 'root',
@@ -22,11 +21,11 @@ export class SeatService {
   }
 
   create(seat: SeatFormModel): Observable<SeatModel> {
-    return this.http.post<SeatModel>(`${this.baseUrl}/create`, FormMapper.toFormData(seat));
+    return this.http.post<SeatModel>(`${this.baseUrl}/create`, seat);
   }
 
   update(id: string, seat: SeatFormModel): Observable<SeatModel> {
-    return this.http.put<SeatModel>(`${this.baseUrl}/${id}`, FormMapper.toFormData(seat));
+    return this.http.put<SeatModel>(`${this.baseUrl}/${id}`, seat);
   }
 
   delete(id: string): Observable<null> {
