@@ -24,5 +24,12 @@
 
   <hr class="my-8 border-platinum-300">
 
-  <app-seat-map [rowLength]="model.rowLength" [columnLength]="model.columnLength" [roomId]="model.id"></app-seat-map>
+  <app-seat-map #seatMap [rowLength]="model.rowLength" [columnLength]="model.columnLength" [roomId]="model.id"></app-seat-map>
+
+  <div custom-buttons>
+    <button type="button" (click)="openAddSeat()"
+      class="px-4 py-2 text-white rounded-md bg-steel-blue-500 hover:bg-steel-blue-600 focus:outline-none focus:ring-2 focus:ring-steel-blue">
+      Add Seat
+    </button>
+  </div>
 </app-detail>

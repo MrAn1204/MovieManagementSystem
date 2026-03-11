@@ -1,4 +1,4 @@
-import { Component, inject } from '@angular/core';
+import { Component, inject, viewChild } from '@angular/core';
 import { DetailText } from "../../../shared/component/detail/detail-text/detail-text";
 import { RoomModel } from '../../../model/room.model';
 import { FormatCellPipe } from '../../../shared/pipe/format-cell/format-cell-pipe';
@@ -19,6 +19,8 @@ import { Detail } from "../../../shared/component/dialog/detail/detail";
 export class RoomDetail extends BaseDialog {
   data: DialogDataModel<RoomModel> = inject(DIALOG_DATA);
 
+  seatMap = viewChild<SeatMap>('seatMap');
+
   get model(): RoomModel {
     return this.data.model as RoomModel;
   }
@@ -29,5 +31,9 @@ export class RoomDetail extends BaseDialog {
 
   openDelete(): void {
     this.dialogService.triggerOpen(PopupModal);
+  }
+
+  openAddSeat(): void {
+    this.seatMap()?.onAdd();
   }
 }
