@@ -34,7 +34,7 @@ public class RoomValidator implements BaseValidator {
 
         errors.throwIfNotEmpty(ErrorType.RESOURCE_NOT_FOUND);
 
-        validateName(errors, command.getName());
+        validateName(errors, command.getName(), command.getId());
         validateCapacity(errors, command.getId(), command.getRowLength(), command.getColumnLength());
 
         errors.throwIfNotEmpty(ErrorType.INVALID_INPUT);
@@ -48,6 +48,12 @@ public class RoomValidator implements BaseValidator {
 
     private void validateName(ErrorLinkedList errors, String name) {
         if (roomValidationService.existsByName(name)) {
+            errors.add("name", "room.name.unique");
+        }
+    }
+
+    private void validateName(ErrorLinkedList errors, String name, UUID id) {
+        if (roomValidationService.existsByNameAndIdNot(name, id)) {
             errors.add("name", "room.name.unique");
         }
     }
