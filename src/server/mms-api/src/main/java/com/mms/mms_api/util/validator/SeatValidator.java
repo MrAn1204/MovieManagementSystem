@@ -7,6 +7,7 @@ import org.springframework.stereotype.Component;
 
 import com.mms.mms_api.business.command.seat.SeatCreateCommand;
 import com.mms.mms_api.business.command.seat.SeatUpdateCommand;
+import com.mms.mms_api.business.query.seat.SeatGetAllInRoomQuery;
 import com.mms.mms_api.business.service.validation.RoomValidationService;
 import com.mms.mms_api.business.service.validation.SeatValidationService;
 import com.mms.mms_api.exception.ErrorLinkedList;
@@ -63,6 +64,14 @@ public class SeatValidator implements BaseValidator {
         }
 
         errors.throwIfNotEmpty(ErrorType.INVALID_INPUT);
+    }
+
+    public void validate(SeatGetAllInRoomQuery query) {
+        ErrorLinkedList errors = new ErrorLinkedList();
+
+        validateRoomId(errors, query.getRoomId());
+
+        errors.throwIfNotEmpty(ErrorType.RESOURCE_NOT_FOUND);
     }
 
     private boolean isCoupleSeat(String seatType) {

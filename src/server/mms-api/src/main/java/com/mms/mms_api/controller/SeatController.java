@@ -74,6 +74,7 @@ public class SeatController {
 
     @PostMapping("/seat-map")
     public ResponseEntity<List<SeatDto>> getAllInRoom(@RequestBody SeatGetAllInRoomQuery request) {
+        seatValidator.validate(request);
         List<SeatDto> seats = seatService.handle(request);
         return ResponseEntity.ok(seats);
     }
