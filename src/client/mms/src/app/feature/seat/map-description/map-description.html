@@ -1,0 +1,31 @@
+<div class="w-full flex flex-wrap justify-center gap-x-8 gap-y-2 *:flex *:items-center *:grow *:max-w-28 *:gap-2">
+  @if (!showType()) {
+    <div>
+      <div class="size-4 border border-platinum-300 bg-bright-fern-600"></div>
+      <span>Occupied</span>
+    </div>
+    <div>
+      <span class="size-4 border border-platinum-300 bg-platinum-100"></span>
+      <span>Available</span>
+    </div>
+  }
+
+  @if (showType()) {
+    <div>
+      <span class="size-4 border border-platinum-300 bg-platinum-100"></span>
+      <span>Standard</span>
+    </div>
+    <div>
+      <div class="size-4 border border-platinum-300 bg-carrot-orange-600"></div>
+      <span>Premium</span>
+    </div>
+    <div>
+      <div class="size-4 border border-platinum-300 bg-vermilion-600"></div>
+      <span>Couple</span>
+    </div>
+    <div>
+      <span class="size-4 border border-platinum-300 bg-steel-blue-600"></span>
+      <span>Accessible</span>
+    </div>
+  }
+</div>

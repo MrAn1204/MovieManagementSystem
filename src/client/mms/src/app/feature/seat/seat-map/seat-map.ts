@@ -8,10 +8,11 @@ import { getRoleConfig } from '../../../shared/config/role-config';
 import { SeatCreateEdit } from '../create-edit/seat-create-edit';
 import { SeatDetail } from '../detail/seat-detail';
 import { CustomValidators } from '../../../shared/util/custom-validators';
+import { MapDescription } from "../map-description/map-description";
 
 @Component({
   selector: 'app-seat-map',
-  imports: [NgClass],
+  imports: [NgClass, MapDescription],
   templateUrl: './seat-map.html',
   styleUrl: './seat-map.css',
 })
