@@ -6,6 +6,12 @@
           inputType="text" idName="name" labelText="Name">
         </app-input-field>
         <app-validation-error [control]="form.get('name')!"></app-validation-error>
+
+        <label for="autofillName" class="mt-2 flex items-center gap-2 text-sm">
+          <input id="autofillName" type="checkbox" [checked]="enableNameAutofill" (change)="onAutoFillNameChange($event)"
+            class="w-4 h-4 text-steel-blue-500 bg-platinum-50 border border-platinum-300 rounded-sm focus:ring-steel-blue-500 focus:ring-2" />
+          Auto fill from row and column
+        </label>
       </div>
 
       <div>

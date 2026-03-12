@@ -9,6 +9,8 @@ import { SelectField } from "../../../shared/component/form/select/select-field"
 import { FormOptionModel } from '../../../shared/model/form-option.model';
 import { ReactiveFormsModule } from "@angular/forms";
 import { ValidationError } from "../../../shared/component/form/error/validation-error";
+import { merge } from 'rxjs';
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop'
 
 @Component({
   selector: 'app-seat-create-edit',
@@ -18,6 +20,7 @@ import { ValidationError } from "../../../shared/component/form/error/validation
 })
 export class SeatCreateEdit extends BaseDialog {
   data: DialogFormDataModel<SeatModel> = inject(DIALOG_DATA);
+  enableNameAutofill = false;
 
   seatTypes: FormOptionModel[] = [
     { label: 'Standard', value: 'STANDARD', selected: true },
@@ -28,6 +31,60 @@ export class SeatCreateEdit extends BaseDialog {
 
   get form() {
     return this.data.form;
+  }
+
+  private get rowControl() {
+    return this.form.get('seatRow');
+  }
+
+  private get columnControl() {
+    return this.form.get('seatColumn');
+  }
+
+  constructor() {
+    super();
+
+    if (!this.rowControl || !this.columnControl) {
+      return;
+    }
+
+    merge(this.rowControl.valueChanges, this.columnControl.valueChanges)
+    .pipe(takeUntilDestroyed())
+    .subscribe(() => {
+
+      if (this.enableNameAutofill) {
+        this.updateSeatName();
+      }
+    });
+  }
+
+  onAutoFillNameChange(event: Event): void {
+    this.enableNameAutofill = (event.target as HTMLInputElement).checked;
+
+    if (this.enableNameAutofill) {
+      this.updateSeatName();
+    }
+  }
+
+  private updateSeatName(): void {
+    const row = Number(this.rowControl?.value);
+    const column = Number(this.columnControl?.value);
+    const name = this.buildSeatName(row, column);
+
+    this.form.get('name')?.setValue(name);
+  }
+
+  private buildSeatName(row: number, column: number): string {
+    if (!Number.isInteger(row) || this.rowControl?.errors) {
+      return '';
+    }
+
+    if (!Number.isInteger(column) || this.columnControl?.errors) {
+      return '';
+    }
+
+    const rowLetter = String.fromCodePoint(64 + row);
+    return `${rowLetter}${column}`;
   }
 
   onSubmit(): void {
