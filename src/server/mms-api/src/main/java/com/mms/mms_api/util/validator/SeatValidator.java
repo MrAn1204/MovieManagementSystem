@@ -8,7 +8,9 @@ import org.springframework.stereotype.Component;
 import com.mms.mms_api.business.command.seat.SeatCreateCommand;
 import com.mms.mms_api.business.command.seat.SeatUpdateCommand;
 import com.mms.mms_api.business.query.seat.SeatGetAllInRoomQuery;
+import com.mms.mms_api.business.query.seat.SeatGetAllWithStatusQuery;
 import com.mms.mms_api.business.service.validation.RoomValidationService;
+import com.mms.mms_api.business.service.validation.ScheduleValidationService;
 import com.mms.mms_api.business.service.validation.SeatValidationService;
 import com.mms.mms_api.exception.ErrorLinkedList;
 import com.mms.mms_api.exception.ErrorType;
@@ -24,6 +26,8 @@ public class SeatValidator implements BaseValidator {
     private final SeatValidationService seatValidationService;
 
     private final RoomValidationService roomValidationService;
+
+    private final ScheduleValidationService scheduleValidationService;
 
     public void validate(SeatCreateCommand command) {
         ErrorLinkedList errors = new ErrorLinkedList();
@@ -70,6 +74,14 @@ public class SeatValidator implements BaseValidator {
         ErrorLinkedList errors = new ErrorLinkedList();
 
         validateRoomId(errors, query.getRoomId());
+
+        errors.throwIfNotEmpty(ErrorType.RESOURCE_NOT_FOUND);
+    }
+
+    public void validate(SeatGetAllWithStatusQuery query) {
+        ErrorLinkedList errors = new ErrorLinkedList();
+
+        validateSchedule(errors, query.getScheduleId());
 
         errors.throwIfNotEmpty(ErrorType.RESOURCE_NOT_FOUND);
     }
@@ -130,6 +142,12 @@ public class SeatValidator implements BaseValidator {
     private void validateRoomId(ErrorLinkedList errors, @NonNull UUID roomId) {
         if (!roomValidationService.existsById(roomId)) {
             errors.add("room", "room.notFound");
+        }
+    }
+
+    private void validateSchedule(ErrorLinkedList errors, @NonNull UUID scheduleId) {
+        if (!scheduleValidationService.existsById(scheduleId)) {
+            errors.add("schedule", "schedule.notFound");
         }
     }
 
