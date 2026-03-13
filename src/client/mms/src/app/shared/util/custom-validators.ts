@@ -40,6 +40,24 @@ export class CustomValidators {
     };
   }
 
+  static min(min: number, message: string): ValidatorFn {
+    return (control: AbstractControl): ValidationErrors | null => {
+      if (control.value < min) {
+        return { min: message };
+      }
+      return null;
+    }
+  }
+
+  static max(max: number, message: string): ValidatorFn {
+    return (control: AbstractControl): ValidationErrors | null => {
+      if (control.value > max) {
+        return { max: message };
+      }
+      return null;
+    }
+  }
+
   static size(min: number, max: number, message: string): ValidatorFn {
     return (control: AbstractControl): ValidationErrors | null => {
       const value = String(control.value);

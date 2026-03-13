@@ -1,0 +1,22 @@
+<app-detail [title]="'Seat ' + model.name" [roleConfig]="data.roleConfig" (openUpdate)="openUpdate()"
+  (openDelete)="openDelete()" (closeDialog)="close()">
+  <div class="w-full flex flex-col md:flex-row items-center gap-8">
+    <div class="w-full flex-1 gap-8 grid grid-cols-1 sm:grid-cols-2">
+      <app-detail-text label="Name">
+        {{ model.name | formatCell }}
+      </app-detail-text>
+
+      <app-detail-text label="Seat Type">
+        {{ model.seatType | formatCell }}
+      </app-detail-text>
+
+      <app-detail-text label="Row">
+        {{ model.seatRow | formatCell }}
+      </app-detail-text>
+
+      <app-detail-text label="Column">
+        {{ model.seatColumn | formatCell }}
+      </app-detail-text>
+    </div>
+  </div>
+</app-detail>

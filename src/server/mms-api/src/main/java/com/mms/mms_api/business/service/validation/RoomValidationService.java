@@ -26,4 +26,8 @@ public class RoomValidationService {
     public boolean existsByName(String name) {
         return roomRepository.existsByName(name);
     }
+
+    public boolean existsByNameAndIdNot(String name, UUID id) {
+        return roomRepository.existsByNameAndIdNot(name, id);
+    }
 }
