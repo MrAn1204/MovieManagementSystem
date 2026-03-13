@@ -1,14 +1,11 @@
-import { Component, inject, viewChild } from '@angular/core';
+import { Component, viewChild } from '@angular/core';
 import { DetailText } from "../../../shared/component/detail/detail-text/detail-text";
 import { RoomModel } from '../../../model/room.model';
 import { FormatCellPipe } from '../../../shared/pipe/format-cell/format-cell-pipe';
 import { SeatMap } from "../../seat/seat-map/seat-map";
-import { BaseDialog } from '../../../shared/component/dialog/base/base-dialog';
-import { DialogDataModel } from '../../../shared/model/dialog/dialog-data.model';
-import { DIALOG_DATA } from '@angular/cdk/dialog';
-import { PopupModal } from '../../../shared/component/dialog/popup-modal/popup-modal';
 import { RoomCreateEdit } from '../create-edit/room-create-edit';
 import { Detail } from "../../../shared/component/detail/detail-component/detail";
+import { DetailDialog } from '../../../shared/component/dialog/detail/detail-dialog';
 
 @Component({
   selector: 'app-room-detail',
@@ -16,21 +13,15 @@ import { Detail } from "../../../shared/component/detail/detail-component/detail
   templateUrl: './room-detail.html',
   styleUrl: './room-detail.css'
 })
-export class RoomDetail extends BaseDialog {
-  data: DialogDataModel<RoomModel> = inject(DIALOG_DATA);
+export class RoomDetail extends DetailDialog<RoomModel> {
+  protected override updateDialog = RoomCreateEdit;
 
   seatMap = viewChild<SeatMap>('seatMap');
 
-  get model(): RoomModel {
-    return this.data.model as RoomModel;
-  }
-
-  openUpdate(): void {
-    this.dialogService.triggerOpen(RoomCreateEdit)
-  }
-
-  openDelete(): void {
-    this.dialogService.triggerOpen(PopupModal);
+  calculateMaxCapacity() {
+    const maxRow = this.model?.rowLength || 0;
+    const maxColumn = this.model?.columnLength || 0;
+    return maxRow * maxColumn;
   }
 
   openAddSeat(): void {

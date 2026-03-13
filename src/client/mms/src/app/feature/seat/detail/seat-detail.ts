@@ -1,13 +1,10 @@
-import { Component, inject } from '@angular/core';
-import { BaseDialog } from '../../../shared/component/dialog/base/base-dialog';
+import { Component } from '@angular/core';
 import { Detail } from "../../../shared/component/detail/detail-component/detail";
-import { DialogDataModel } from '../../../shared/model/dialog/dialog-data.model';
-import { DIALOG_DATA } from '@angular/cdk/dialog';
 import { SeatModel } from '../../../model/seat.model';
 import { FormatCellPipe } from '../../../shared/pipe/format-cell/format-cell-pipe';
 import { DetailText } from "../../../shared/component/detail/detail-text/detail-text";
 import { SeatCreateEdit } from '../create-edit/seat-create-edit';
-import { PopupModal } from '../../../shared/component/dialog/popup-modal/popup-modal';
+import { DetailDialog } from '../../../shared/component/dialog/detail/detail-dialog';
 
 @Component({
   selector: 'app-seat-detail',
@@ -15,18 +12,6 @@ import { PopupModal } from '../../../shared/component/dialog/popup-modal/popup-m
   templateUrl: './seat-detail.html',
   styleUrl: './seat-detail.css',
 })
-export class SeatDetail extends BaseDialog {
-  data: DialogDataModel<SeatModel> = inject(DIALOG_DATA);
-
-  get model(): SeatModel {
-    return this.data.model as SeatModel;
-  }
-
-  openUpdate(): void {
-    this.dialogService.triggerOpen(SeatCreateEdit)
-  }
-
-  openDelete(): void {
-    this.dialogService.triggerOpen(PopupModal);
-  }
+export class SeatDetail extends DetailDialog<SeatModel> {
+  protected override updateDialog = SeatCreateEdit;
 }

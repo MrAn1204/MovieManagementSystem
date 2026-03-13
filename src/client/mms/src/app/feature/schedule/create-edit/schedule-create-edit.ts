@@ -1,15 +1,13 @@
-import { Component, inject, OnInit, signal } from '@angular/core';
+import { Component, OnInit, signal } from '@angular/core';
 import { InputField } from "../../../shared/component/form/input/input-field";
 import { SelectField } from "../../../shared/component/form/select/select-field";
 import { ScheduleModel } from '../../../model/schedule.model';
-import { ControlContainer, FormGroup, FormGroupDirective, ReactiveFormsModule } from '@angular/forms';
+import { ControlContainer, FormGroupDirective, ReactiveFormsModule } from '@angular/forms';
 import { MovieService } from '../../../service/movie/movie.service';
 import { RoomService } from '../../../service/room/room.service';
 import { FormOptionModel } from '../../../shared/model/form-option.model';
-import { BaseDialog } from '../../../shared/component/dialog/base/base-dialog';
-import { DIALOG_DATA } from '@angular/cdk/dialog';
-import { DialogFormDataModel } from '../../../shared/model/dialog/dialog-form-data.model';
 import { CreateEdit } from "../../../shared/component/create-edit/create-edit";
+import { CreateEditDialog } from '../../../shared/component/dialog/create-edit/create-edit-dialog';
 
 @Component({
   selector: 'app-schedule-create-edit',
@@ -18,9 +16,7 @@ import { CreateEdit } from "../../../shared/component/create-edit/create-edit";
   templateUrl: './schedule-create-edit.html',
   styleUrl: './schedule-create-edit.css',
 })
-export class ScheduleCreateEdit extends BaseDialog implements OnInit {
-  data: DialogFormDataModel<ScheduleModel> = inject(DIALOG_DATA)
-
+export class ScheduleCreateEdit extends CreateEditDialog<ScheduleModel> implements OnInit {
   movies = signal<FormOptionModel[]>([]);
   rooms = signal<FormOptionModel[]>([]);
 
@@ -33,10 +29,6 @@ export class ScheduleCreateEdit extends BaseDialog implements OnInit {
 
   ngOnInit(): void {
     this.loadOptions();
-  }
-
-  get form(): FormGroup {
-    return this.data.form;
   }
 
   private loadOptions(): void {
@@ -61,13 +53,4 @@ export class ScheduleCreateEdit extends BaseDialog implements OnInit {
       })));
     });
   }
-
-  onSubmit(): void {
-    if (this.form.invalid) {
-      this.form.markAllAsTouched();
-      return;
-    }
-    this.dialogService.triggerSave();
-  }
-
 }
