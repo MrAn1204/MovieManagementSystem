@@ -1,4 +1,4 @@
-<app-create-edit [formGroup]="form" [title]="data.title" (submitForm)="onSubmit()" (closeDialog)="close()">
+<app-create-edit [formGroup]="form" [title]="data.title" (submitForm)="onSubmit()" (resetForm)="onReset()" (closeDialog)="close()">
   <div class="create-edit-layout">
     <div class="w-full flex-1 gap-4 grid grid-cols-1 sm:grid-cols-2">
       <div class="sm:col-span-2">

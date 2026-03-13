@@ -12,6 +12,7 @@ export class CreateEdit implements OnInit {
   title = input<string>();
 
   submitForm = output<void>();
+  resetForm = output<void>();
   closeDialog = output<void>();
 
   constructor(

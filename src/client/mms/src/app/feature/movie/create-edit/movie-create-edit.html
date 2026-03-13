@@ -1,4 +1,4 @@
-<app-create-edit [formGroup]="form" [title]="data.title" (submitForm)="onSubmit()" (closeDialog)="close()">
+<app-create-edit [formGroup]="form" [title]="data.title" (submitForm)="onSubmit()" (resetForm)="onReset()" (closeDialog)="close()">
   <div class="create-edit-layout">
     <app-image-field formControlName="thumbnail" idName="thumbnail" labelText="Image"></app-image-field>
 

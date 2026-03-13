@@ -16,7 +16,7 @@
   <div class="mt-8 flex justify-center gap-4 *:w-20">
     <button type="submit"
       class="px-4 py-2 text-white rounded-md bg-steel-blue-500 hover:bg-steel-blue-600 focus:outline-none focus:ring-2 focus:ring-steel-blue">Save</button>
-    <button type="reset"
+    <button type="button" (click)="resetForm.emit()"
       class="px-4 py-2 border border-steel-blue rounded-md hover:bg-platinum-100 text-steel-blue focus:outline-none">Reset</button>
   </div>
 </form>
