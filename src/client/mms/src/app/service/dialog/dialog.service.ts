@@ -20,8 +20,8 @@ export class DialogService {
 
   constructor(private readonly dialog: Dialog) { }
 
-  openDialog<R, C>(dialogComponent: ComponentType<C>, dialogData?: DialogDataModel): DialogRef<R, C> {
-    return this.dialog.open<R, DialogDataModel, C>(dialogComponent, {
+  openDialog<R, C>(dialogComponent: ComponentType<C>, dialogData?: DialogDataModel<any>): DialogRef<R, C> {
+    return this.dialog.open<R, DialogDataModel<any>, C>(dialogComponent, {
       backdropClass: 'bg-space-black/50',
       data: dialogData,
     });

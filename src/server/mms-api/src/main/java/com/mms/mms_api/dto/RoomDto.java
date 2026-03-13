@@ -17,4 +17,6 @@ public class RoomDto extends BaseDto {
     private String name;
 
     private List<IdNameDto> seats;
+
+    private int maxCapacity;
 }

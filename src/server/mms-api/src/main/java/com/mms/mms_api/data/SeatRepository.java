@@ -14,4 +14,6 @@ public interface SeatRepository extends JpaRepository<Seat, UUID> {
     Seat findFirstByLinkedSeat(Seat linkedSeat);
 
     boolean existsByRoom(Room room);
+
+    List<Seat> findByRoomId(UUID roomId);
 }

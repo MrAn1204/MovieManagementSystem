@@ -1,9 +1,8 @@
-import { Component, effect, input, output, Type } from '@angular/core';
+import { Component, effect, input, output } from '@angular/core';
 import { FormatCellPipe } from '../../pipe/format-cell/format-cell-pipe';
 import { TableColumnModel } from '../../model/table-column.model';
 import { PaginatedResult } from '../../model/paginated-result.model';
 import { BaseEntityModel } from '../../model/base-entity.model';
-import { FormGroup } from '@angular/forms';
 import { RoleConfigModel } from '../../model/role-config.model';
 import { AuthService } from '../../../service/auth/auth.service';
 
@@ -16,11 +15,6 @@ import { AuthService } from '../../../service/auth/auth.service';
 export class Table<T extends BaseEntityModel> {
   columns = input.required<TableColumnModel<T>[]>();
   data = input.required<PaginatedResult<T>>();
-  entityName = input.required<string>();
-  contentCreateEdit = input.required<Type<unknown>>();
-  contentDetail = input.required<Type<unknown>>();
-
-  form = input.required<FormGroup>();
 
   roleConfig = input.required<RoleConfigModel>();
 

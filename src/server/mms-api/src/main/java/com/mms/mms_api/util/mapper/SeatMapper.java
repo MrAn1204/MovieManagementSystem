@@ -17,6 +17,7 @@ public interface SeatMapper {
     @Mapping(target = "tickets", ignore = true)
     Seat toEntity(SeatCreateCommand command);
 
+    @Mapping(target = "linkedSeatId", expression = "java(seat.getLinkedSeat() != null ? seat.getLinkedSeat().getId() : null)")
     SeatDto toDto(Seat seat);
 
     @Mapping(target = "room", ignore = true)
