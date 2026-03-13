@@ -1,6 +1,6 @@
 import { Component, inject } from '@angular/core';
 import { BaseDialog } from '../../../shared/component/dialog/base/base-dialog';
-import { Detail } from "../../../shared/component/dialog/detail/detail";
+import { Detail } from "../../../shared/component/detail/detail-component/detail";
 import { DialogDataModel } from '../../../shared/model/dialog/dialog-data.model';
 import { DIALOG_DATA } from '@angular/cdk/dialog';
 import { SeatModel } from '../../../model/seat.model';

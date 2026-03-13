@@ -1,5 +1,5 @@
 import { Component, input, OnInit, output } from '@angular/core';
-import { FlowbiteService } from '../../../../service/flowbite.service';
+import { FlowbiteService } from '../../../service/flowbite.service';
 import { ReactiveFormsModule } from '@angular/forms';
 
 @Component({

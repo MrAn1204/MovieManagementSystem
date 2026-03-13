@@ -5,7 +5,7 @@ import { FormatCellPipe } from '../../../shared/pipe/format-cell/format-cell-pip
 import { BaseDialog } from '../../../shared/component/dialog/base/base-dialog';
 import { DialogDataModel } from '../../../shared/model/dialog/dialog-data.model';
 import { DIALOG_DATA } from '@angular/cdk/dialog';
-import { Detail } from "../../../shared/component/dialog/detail/detail";
+import { Detail } from "../../../shared/component/detail/detail-component/detail";
 import { ScheduleCreateEdit } from '../create-edit/schedule-create-edit';
 import { PopupModal } from '../../../shared/component/dialog/popup-modal/popup-modal';
 

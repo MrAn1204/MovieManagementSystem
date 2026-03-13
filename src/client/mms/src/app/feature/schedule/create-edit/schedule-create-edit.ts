@@ -9,7 +9,7 @@ import { FormOptionModel } from '../../../shared/model/form-option.model';
 import { BaseDialog } from '../../../shared/component/dialog/base/base-dialog';
 import { DIALOG_DATA } from '@angular/cdk/dialog';
 import { DialogFormDataModel } from '../../../shared/model/dialog/dialog-form-data.model';
-import { CreateEdit } from "../../../shared/component/dialog/create-edit/create-edit";
+import { CreateEdit } from "../../../shared/component/create-edit/create-edit";
 
 @Component({
   selector: 'app-schedule-create-edit',

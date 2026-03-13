@@ -1,6 +1,6 @@
 import { Component, inject } from '@angular/core';
 import { BaseDialog } from '../../../shared/component/dialog/base/base-dialog';
-import { CreateEdit } from "../../../shared/component/dialog/create-edit/create-edit";
+import { CreateEdit } from "../../../shared/component/create-edit/create-edit";
 import { InputField } from "../../../shared/component/form/input/input-field";
 import { DialogFormDataModel } from '../../../shared/model/dialog/dialog-form-data.model';
 import { DIALOG_DATA } from '@angular/cdk/dialog';

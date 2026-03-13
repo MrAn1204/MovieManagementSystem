@@ -8,7 +8,7 @@ import { DialogDataModel } from '../../../shared/model/dialog/dialog-data.model'
 import { DIALOG_DATA } from '@angular/cdk/dialog';
 import { PopupModal } from '../../../shared/component/dialog/popup-modal/popup-modal';
 import { RoomCreateEdit } from '../create-edit/room-create-edit';
-import { Detail } from "../../../shared/component/dialog/detail/detail";
+import { Detail } from "../../../shared/component/detail/detail-component/detail";
 
 @Component({
   selector: 'app-room-detail',

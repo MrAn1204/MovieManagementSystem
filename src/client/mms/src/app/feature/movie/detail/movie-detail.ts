@@ -4,7 +4,7 @@ import { DetailText } from "../../../shared/component/detail/detail-text/detail-
 import { FormatCellPipe } from '../../../shared/pipe/format-cell/format-cell-pipe';
 import { DIALOG_DATA } from '@angular/cdk/dialog';
 import { DialogDataModel } from '../../../shared/model/dialog/dialog-data.model';
-import { Detail } from "../../../shared/component/dialog/detail/detail";
+import { Detail } from "../../../shared/component/detail/detail-component/detail";
 import { BaseDialog } from '../../../shared/component/dialog/base/base-dialog';
 import { MovieCreateEdit } from '../create-edit/movie-create-edit';
 import { PopupModal } from '../../../shared/component/dialog/popup-modal/popup-modal';

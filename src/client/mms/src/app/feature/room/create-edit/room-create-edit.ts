@@ -5,7 +5,7 @@ import { FormGroup, ReactiveFormsModule } from '@angular/forms';
 import { BaseDialog } from '../../../shared/component/dialog/base/base-dialog';
 import { DialogFormDataModel } from '../../../shared/model/dialog/dialog-form-data.model';
 import { DIALOG_DATA } from '@angular/cdk/dialog';
-import { CreateEdit } from "../../../shared/component/dialog/create-edit/create-edit";
+import { CreateEdit } from "../../../shared/component/create-edit/create-edit";
 
 @Component({
   selector: 'app-room-create-edit',
