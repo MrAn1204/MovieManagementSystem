@@ -1,30 +1,33 @@
-<div class="create-edit-layout">
-  <div class="w-full flex-1 gap-4 grid grid-cols-1 sm:grid-cols-2">
-    <div>
-      <app-input-field formControlName="showTime"
-        inputType="datetime-local" idName="showTime" labelText="Show Time">
-      </app-input-field>
-      @if (form.get('showTime')?.touched && form.get('showTime')?.hasError('required')) {
-        <p class="error-text">Show Time is required</p>
-      }
-    </div>
+<app-create-edit [formGroup]="form" [title]="data.title" (submitForm)="onSubmit()" (closeDialog)="close()">
+  <div class="create-edit-layout">
+    <div class="w-full flex-1 gap-4 grid grid-cols-1 sm:grid-cols-2">
+      <div>
+        <app-input-field formControlName="showTime"
+          inputType="datetime-local" idName="showTime" labelText="Show Time">
+        </app-input-field>
+        @if (form.get('showTime')?.touched && form.get('showTime')?.hasError('required')) {
+          <p class="error-text">Show Time is required</p>
+        }
+      </div>
 
-    <div>
-      <app-select-field formControlName="movieId"
-        idName="movie" labelText="Movie" [options]="movies()">
-      </app-select-field>
-      @if (form.get('movieId')?.touched && form.get('movieId')?.hasError('required')) {
-        <p class="error-text">Movie is required</p>
-      }
-    </div>
+      <div>
+        <app-select-field formControlName="movieId"
+          idName="movie" labelText="Movie" [options]="movies()">
+        </app-select-field>
+        @if (form.get('movieId')?.touched && form.get('movieId')?.hasError('required')) {
+          <p class="error-text">Movie is required</p>
+        }
+      </div>
 
-    <div>
-      <app-select-field formControlName="roomId"
-        idName="room" labelText="Room" [options]="rooms()">
-      </app-select-field>
-      @if (form.get('roomId')?.touched && form.get('roomId')?.hasError('required')) {
-        <p class="error-text">Room is required</p>
-      }
+      <div>
+        <app-select-field formControlName="roomId"
+          idName="room" labelText="Room" [options]="rooms()">
+        </app-select-field>
+        @if (form.get('roomId')?.touched && form.get('roomId')?.hasError('required')) {
+          <p class="error-text">Room is required</p>
+        }
+      </div>
     </div>
   </div>
-</div>
+</app-create-edit>
+

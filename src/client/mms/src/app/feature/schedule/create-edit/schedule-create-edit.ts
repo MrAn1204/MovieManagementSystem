@@ -1,4 +1,4 @@
-import { Component, inject, input, OnInit, signal } from '@angular/core';
+import { Component, inject, OnInit, signal } from '@angular/core';
 import { InputField } from "../../../shared/component/form/input/input-field";
 import { SelectField } from "../../../shared/component/form/select/select-field";
 import { ScheduleModel } from '../../../model/schedule.model';
@@ -6,19 +6,20 @@ import { ControlContainer, FormGroup, FormGroupDirective, ReactiveFormsModule } 
 import { MovieService } from '../../../service/movie/movie.service';
 import { RoomService } from '../../../service/room/room.service';
 import { FormOptionModel } from '../../../shared/model/form-option.model';
+import { BaseDialog } from '../../../shared/component/dialog/base/base-dialog';
+import { DIALOG_DATA } from '@angular/cdk/dialog';
+import { DialogFormDataModel } from '../../../shared/model/dialog/dialog-form-data.model';
+import { CreateEdit } from "../../../shared/component/dialog/create-edit/create-edit";
 
 @Component({
   selector: 'app-schedule-create-edit',
-  imports: [InputField, SelectField, ReactiveFormsModule],
+  imports: [InputField, SelectField, ReactiveFormsModule, CreateEdit],
   viewProviders: [{ provide: ControlContainer, useExisting: FormGroupDirective }],
   templateUrl: './schedule-create-edit.html',
   styleUrl: './schedule-create-edit.css',
 })
-export class ScheduleCreateEdit implements OnInit {
-  model = input<ScheduleModel>();
-  mode = input<'create' | 'edit'>();
-
-  form: FormGroup = inject(ControlContainer).control as FormGroup;
+export class ScheduleCreateEdit extends BaseDialog implements OnInit {
+  data: DialogFormDataModel<ScheduleModel> = inject(DIALOG_DATA)
 
   movies = signal<FormOptionModel[]>([]);
   rooms = signal<FormOptionModel[]>([]);
@@ -26,14 +27,20 @@ export class ScheduleCreateEdit implements OnInit {
   constructor(
     private readonly movieService: MovieService,
     private readonly roomService: RoomService,
-  ) { }
+  ) {
+    super();
+  }
 
   ngOnInit(): void {
     this.loadOptions();
   }
 
+  get form(): FormGroup {
+    return this.data.form;
+  }
+
   private loadOptions(): void {
-    const model = this.model();
+    const model = this.data.model;
 
     const modelMovie = model?.movie.id;
     const modelRoom = model?.room.id;
@@ -54,4 +61,13 @@ export class ScheduleCreateEdit implements OnInit {
       })));
     });
   }
+
+  onSubmit(): void {
+    if (this.form.invalid) {
+      this.form.markAllAsTouched();
+      return;
+    }
+    this.dialogService.triggerSave();
+  }
+
 }

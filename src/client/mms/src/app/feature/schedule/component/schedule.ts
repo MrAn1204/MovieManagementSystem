@@ -8,8 +8,8 @@ import { ScheduleModel } from '../../../model/schedule.model';
 import { ScheduleService } from '../../../service/schedule/schedule.service';
 import { FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { TableColumnModel } from '../../../shared/model/table-column.model';
-import { BaseFeature } from '../../../shared/component/feature/base-feature';
 import { getRoleConfig } from '../../../shared/config/role-config';
+import { SearchableFeature } from '../../../shared/component/feature/searchable-feature';
 
 @Component({
   selector: 'app-schedule',
@@ -17,7 +17,7 @@ import { getRoleConfig } from '../../../shared/config/role-config';
   templateUrl: './schedule.html',
   styleUrl: './schedule.css',
 })
-export class Schedule extends BaseFeature<ScheduleModel> {
+export class Schedule extends SearchableFeature<ScheduleModel> {
   override entityName = "Schedule";
 
   override contentCreateEdit = ScheduleCreateEdit;
