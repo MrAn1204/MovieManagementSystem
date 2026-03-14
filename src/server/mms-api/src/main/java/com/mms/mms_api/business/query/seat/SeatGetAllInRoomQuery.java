@@ -12,4 +12,6 @@ public class SeatGetAllInRoomQuery {
     @NotNull(message = "{seat.room.required}")
     @NonNull
     private UUID roomId;
+
+    private UUID scheduleId;
 }

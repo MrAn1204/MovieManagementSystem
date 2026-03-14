@@ -9,10 +9,11 @@ import org.mapstruct.MappingTarget;
 
 import com.mms.mms_api.business.command.schedule.ScheduleCreateCommand;
 import com.mms.mms_api.business.command.schedule.ScheduleUpdateCommand;
+import com.mms.mms_api.dto.ScheduleDetailDto;
 import com.mms.mms_api.dto.ScheduleDto;
 import com.mms.mms_api.model.Schedule;
 
-@Mapper(config = DefaultMapperConfig.class, uses = { MovieMapper.class, RoomMapper.class })
+@Mapper(config = DefaultMapperConfig.class, uses = { MovieMapper.class, RoomMapper.class, SeatMapper.class })
 public interface ScheduleMapper {
     @Mapping(target = "movie", ignore = true)
     @Mapping(target = "room", ignore = true)
@@ -21,7 +22,13 @@ public interface ScheduleMapper {
     Schedule toEntity(ScheduleCreateCommand command);
 
     @Mapping(target = "name", ignore = true)
+    @Mapping(target = "movie", source = "movie.name")
+    @Mapping(target = "room", source = "room.name")
     ScheduleDto toDto(Schedule schedule);
+
+    @Mapping(target = "name", ignore = true)
+    @Mapping(target = "seats", source = "schedule.scheduleSeats")
+    ScheduleDetailDto toDetailDto(Schedule schedule);
 
     @Mapping(target = "movie", ignore = true)
     @Mapping(target = "room", ignore = true)
@@ -41,4 +48,5 @@ public interface ScheduleMapper {
 
         dto.setName(name);
     }
+
 }

@@ -14,6 +14,7 @@ import com.mms.mms_api.business.query.room.RoomGetByIdQuery;
 import com.mms.mms_api.business.query.room.RoomSearchQuery;
 import com.mms.mms_api.business.service.RoomService;
 import com.mms.mms_api.common.PaginatedResult;
+import com.mms.mms_api.dto.RoomDetailDto;
 import com.mms.mms_api.dto.RoomDto;
 import com.mms.mms_api.util.validator.RoomValidator;
 
@@ -42,8 +43,8 @@ public class RoomController {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<RoomDto> getById(@PathVariable UUID id) {
-        RoomDto room = roomService.handle(new RoomGetByIdQuery(id));
+    public ResponseEntity<RoomDetailDto> getById(@PathVariable UUID id) {
+        RoomDetailDto room = roomService.handle(new RoomGetByIdQuery(id));
         return ResponseEntity.ok(room);
     }
 

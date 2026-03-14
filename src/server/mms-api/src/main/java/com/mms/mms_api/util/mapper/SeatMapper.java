@@ -7,6 +7,7 @@ import org.mapstruct.MappingTarget;
 import com.mms.mms_api.business.command.seat.SeatCreateCommand;
 import com.mms.mms_api.business.command.seat.SeatUpdateCommand;
 import com.mms.mms_api.dto.SeatDto;
+import com.mms.mms_api.model.ScheduleSeat;
 import com.mms.mms_api.model.Seat;
 
 @Mapper(config = DefaultMapperConfig.class)
@@ -18,7 +19,15 @@ public interface SeatMapper {
     Seat toEntity(SeatCreateCommand command);
 
     @Mapping(target = "linkedSeatId", expression = "java(seat.getLinkedSeat() != null ? seat.getLinkedSeat().getId() : null)")
+    @Mapping(target = "reserved", ignore = true)
     SeatDto toDto(Seat seat);
+
+
+    default SeatDto toDto(ScheduleSeat scheduleSeat) {
+        SeatDto seatDto = toDto(scheduleSeat.getSeat());
+        seatDto.setReserved(scheduleSeat.isReserved());
+        return seatDto;
+    }
 
     @Mapping(target = "room", ignore = true)
     @Mapping(target = "scheduleSeats", ignore = true)

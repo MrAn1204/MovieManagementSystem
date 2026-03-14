@@ -18,6 +18,7 @@ import com.mms.mms_api.business.query.room.RoomGetByIdQuery;
 import com.mms.mms_api.business.query.room.RoomSearchQuery;
 import com.mms.mms_api.common.PaginatedResult;
 import com.mms.mms_api.data.RoomRepository;
+import com.mms.mms_api.dto.RoomDetailDto;
 import com.mms.mms_api.dto.RoomDto;
 import com.mms.mms_api.util.mapper.RoomMapper;
 
@@ -40,7 +41,7 @@ public class RoomService {
         return handler.execute();
     }
 
-    public RoomDto handle(RoomGetByIdQuery request) {
+    public RoomDetailDto handle(RoomGetByIdQuery request) {
         RoomGetByIdHandler handler = new RoomGetByIdHandler(request, roomMapper, roomRepository);
         return handler.execute();
     }

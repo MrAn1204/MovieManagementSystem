@@ -21,6 +21,7 @@ import com.mms.mms_api.common.PaginatedResult;
 import com.mms.mms_api.data.MovieRepository;
 import com.mms.mms_api.data.RoomRepository;
 import com.mms.mms_api.data.ScheduleRepository;
+import com.mms.mms_api.dto.ScheduleDetailDto;
 import com.mms.mms_api.dto.ScheduleDto;
 import com.mms.mms_api.util.mapper.ScheduleMapper;
 
@@ -49,7 +50,7 @@ public class ScheduleService {
         return handler.execute();
     }
 
-    public ScheduleDto handle(ScheduleGetByIdQuery request) {
+    public ScheduleDetailDto handle(ScheduleGetByIdQuery request) {
         ScheduleGetByIdHandler handler = new ScheduleGetByIdHandler(request, scheduleMapper, scheduleRepository);
         return handler.execute();
     }

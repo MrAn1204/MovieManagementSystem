@@ -21,6 +21,7 @@ import com.mms.mms_api.business.query.schedule.ScheduleGetByIdQuery;
 import com.mms.mms_api.business.query.schedule.ScheduleSearchQuery;
 import com.mms.mms_api.business.service.ScheduleService;
 import com.mms.mms_api.common.PaginatedResult;
+import com.mms.mms_api.dto.ScheduleDetailDto;
 import com.mms.mms_api.dto.ScheduleDto;
 import com.mms.mms_api.util.validator.ScheduleValidator;
 
@@ -42,8 +43,8 @@ public class ScheduleController {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<ScheduleDto> getById(@PathVariable UUID id) {
-        ScheduleDto schedule = scheduleService.handle(new ScheduleGetByIdQuery(id));
+    public ResponseEntity<ScheduleDetailDto> getById(@PathVariable UUID id) {
+        ScheduleDetailDto schedule = scheduleService.handle(new ScheduleGetByIdQuery(id));
         return ResponseEntity.ok(schedule);
     }
 
