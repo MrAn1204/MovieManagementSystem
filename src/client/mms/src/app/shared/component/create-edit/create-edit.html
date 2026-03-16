@@ -1,4 +1,4 @@
-<form id="create-edit-form" (submit)="submitForm.emit()"
+<form id="create-edit-form" (submit)="submit($event)"
   class="w-screen max-h-screen overflow-auto max-w-6xl bg-ghost-white p-4 md:p-8 rounded-lg shadow-md flex flex-col items-center">
   <div class="mb-8 w-full flex flex-wrap-reverse items-center relative">
     <h2 class="sm:flex-1 text-2xl font-semibold sm:text-center overflow-hidden">{{ title() }}</h2>

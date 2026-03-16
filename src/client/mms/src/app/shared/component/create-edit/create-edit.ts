@@ -25,4 +25,9 @@ export class CreateEdit implements OnInit {
       flowbite.initFlowbite();
     });
   }
+
+  submit(event: Event): void {
+    event.preventDefault();
+    this.submitForm.emit();
+  }
 }
