@@ -19,7 +19,7 @@ import com.mms.mms_api.business.query.invoice.InvoiceGetByIdQuery;
 import com.mms.mms_api.data.InvoiceRepository;
 import com.mms.mms_api.data.TicketRepository;
 import com.mms.mms_api.data.UserRepository;
-import com.mms.mms_api.dto.InvoiceDto;
+import com.mms.mms_api.dto.invoice.InvoiceDto;
 import com.mms.mms_api.util.mapper.InvoiceMapper;
 
 import lombok.AllArgsConstructor;

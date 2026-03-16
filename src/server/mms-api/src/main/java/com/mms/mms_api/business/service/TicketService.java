@@ -22,8 +22,8 @@ import com.mms.mms_api.common.PaginatedResult;
 import com.mms.mms_api.data.InvoiceRepository;
 import com.mms.mms_api.data.ScheduleSeatRepository;
 import com.mms.mms_api.data.TicketRepository;
-import com.mms.mms_api.dto.TicketDetailDto;
-import com.mms.mms_api.dto.TicketDto;
+import com.mms.mms_api.dto.ticket.TicketDetailDto;
+import com.mms.mms_api.dto.ticket.TicketDto;
 import com.mms.mms_api.util.mapper.TicketMapper;
 
 import lombok.AllArgsConstructor;
@@ -42,13 +42,13 @@ public class TicketService {
     private final TicketMapper ticketMapper;
 
     @Transactional
-    public TicketDto handle(TicketCreateCommand request) {
+    public TicketDetailDto handle(TicketCreateCommand request) {
         TicketCreateHandler handler = new TicketCreateHandler(request, ticketMapper, ticketRepository, ticketDependencies, scheduleSeatRepository);
         return handler.execute();
     }
 
     @PreAuthorize("hasAuthority('ADMIN')")
-    public List<TicketDetailDto> handle(TicketGetAllQuery request) {
+    public List<TicketDto> handle(TicketGetAllQuery request) {
         TicketGetAllHandler handler = new TicketGetAllHandler(request, ticketMapper, ticketRepository);
         return handler.execute();
     }
@@ -61,7 +61,7 @@ public class TicketService {
 
     @PreAuthorize("hasAuthority('ADMIN')")
     @Transactional
-    public TicketDto handle(TicketUpdateCommand request) {
+    public TicketDetailDto handle(TicketUpdateCommand request) {
         TicketUpdateHandler handler = new TicketUpdateHandler(request, ticketMapper, ticketRepository, ticketDependencies, invoiceRepository, scheduleSeatRepository);
         return handler.execute();
     }
@@ -74,7 +74,7 @@ public class TicketService {
     }
 
     @PreAuthorize("hasAuthority('ADMIN')")
-    public PaginatedResult<TicketDetailDto> handle(TicketSearchQuery request) {
+    public PaginatedResult<TicketDto> handle(TicketSearchQuery request) {
         TicketSearchHandler handler = new TicketSearchHandler(request, ticketMapper, ticketRepository);
         return handler.execute();
     }

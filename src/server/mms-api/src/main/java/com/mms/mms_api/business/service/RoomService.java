@@ -19,7 +19,8 @@ import com.mms.mms_api.business.query.room.RoomGetByIdQuery;
 import com.mms.mms_api.business.query.room.RoomSearchQuery;
 import com.mms.mms_api.common.PaginatedResult;
 import com.mms.mms_api.data.RoomRepository;
-import com.mms.mms_api.dto.RoomDto;
+import com.mms.mms_api.dto.room.RoomDetailDto;
+import com.mms.mms_api.dto.room.RoomDto;
 import com.mms.mms_api.util.mapper.RoomMapper;
 
 import lombok.AllArgsConstructor;
@@ -32,7 +33,7 @@ public class RoomService {
     private final RoomMapper roomMapper;
 
     @PreAuthorize("hasAuthority('ADMIN')")
-    public RoomDto handle(RoomCreateCommand request) {
+    public RoomDetailDto handle(RoomCreateCommand request) {
         RoomCreateHandler handler = new RoomCreateHandler(request, roomMapper, roomRepository);
         return handler.execute();
     }
@@ -42,13 +43,13 @@ public class RoomService {
         return handler.execute();
     }
 
-    public RoomDto handle(RoomGetByIdQuery request) {
+    public RoomDetailDto handle(RoomGetByIdQuery request) {
         RoomGetByIdHandler handler = new RoomGetByIdHandler(request, roomMapper, roomRepository);
         return handler.execute();
     }
 
     @PreAuthorize("hasAuthority('ADMIN')")
-    public RoomDto handle(RoomUpdateCommand request) {
+    public RoomDetailDto handle(RoomUpdateCommand request) {
         RoomUpdateHandler handler = new RoomUpdateHandler(request, roomMapper, roomRepository);
         return handler.execute();
     }

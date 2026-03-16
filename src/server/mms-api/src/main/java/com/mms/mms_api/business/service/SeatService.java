@@ -13,18 +13,13 @@ import com.mms.mms_api.business.handler.seat.SeatCreateHandler;
 import com.mms.mms_api.business.handler.seat.SeatDeleteHandler;
 import com.mms.mms_api.business.handler.seat.SeatGetAllHandler;
 import com.mms.mms_api.business.handler.seat.SeatGetByIdHandler;
-import com.mms.mms_api.business.handler.seat.SeatGetAllInRoomHandler;
-import com.mms.mms_api.business.handler.seat.SeatGetAllWithStatusHandler;
 import com.mms.mms_api.business.handler.seat.SeatUpdateHandler;
 import com.mms.mms_api.business.query.seat.SeatGetAllQuery;
-import com.mms.mms_api.business.query.seat.SeatGetAllWithStatusQuery;
 import com.mms.mms_api.business.query.seat.SeatGetByIdQuery;
-import com.mms.mms_api.business.query.seat.SeatGetAllInRoomQuery;
 import com.mms.mms_api.data.RoomRepository;
 import com.mms.mms_api.data.ScheduleSeatRepository;
 import com.mms.mms_api.data.SeatRepository;
-import com.mms.mms_api.dto.SeatDto;
-import com.mms.mms_api.dto.SeatStatusDto;
+import com.mms.mms_api.dto.seat.SeatDto;
 import com.mms.mms_api.util.mapper.SeatMapper;
 
 import lombok.AllArgsConstructor;
@@ -69,15 +64,5 @@ public class SeatService {
     public void handle(SeatDeleteCommand request) {
         SeatDeleteHandler handler = new SeatDeleteHandler(request, seatMapper, seatRepository, scheduleSeatRepository);
         handler.execute();
-    }
-
-    public List<SeatDto> handle(SeatGetAllInRoomQuery request) {
-        SeatGetAllInRoomHandler handler = new SeatGetAllInRoomHandler(request, seatMapper, seatRepository);
-        return handler.execute();
-    }
-
-    public List<SeatStatusDto> handle(SeatGetAllWithStatusQuery request) {
-        SeatGetAllWithStatusHandler handler = new SeatGetAllWithStatusHandler(request, scheduleSeatRepository);
-        return handler.execute();
     }
 }

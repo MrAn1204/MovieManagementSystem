@@ -1,4 +1,4 @@
-package com.mms.mms_api.dto;
+package com.mms.mms_api.dto.auth;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;

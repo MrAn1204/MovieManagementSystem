@@ -11,7 +11,7 @@ import org.mapstruct.MappingTarget;
 
 import com.mms.mms_api.business.command.invoice.InvoiceCreateCommand;
 import com.mms.mms_api.business.command.invoice.InvoiceUpdateCommand;
-import com.mms.mms_api.dto.InvoiceDto;
+import com.mms.mms_api.dto.invoice.InvoiceDto;
 import com.mms.mms_api.model.Invoice;
 import com.mms.mms_api.model.Ticket;
 

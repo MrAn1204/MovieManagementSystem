@@ -10,7 +10,7 @@ import com.mms.mms_api.business.query.movie.MovieSearchQuery;
 import com.mms.mms_api.business.specification.MovieSpecification;
 import com.mms.mms_api.common.PaginatedResult;
 import com.mms.mms_api.data.MovieRepository;
-import com.mms.mms_api.dto.MovieDto;
+import com.mms.mms_api.dto.movie.MovieDto;
 import com.mms.mms_api.model.Movie;
 import com.mms.mms_api.util.SearchHelper;
 import com.mms.mms_api.util.mapper.MovieMapper;

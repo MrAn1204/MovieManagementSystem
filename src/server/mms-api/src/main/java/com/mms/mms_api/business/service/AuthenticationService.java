@@ -10,7 +10,7 @@ import com.mms.mms_api.business.handler.auth.LoginCommandHandler;
 import com.mms.mms_api.business.handler.auth.RegisterCommandHandler;
 import com.mms.mms_api.data.RoleRepository;
 import com.mms.mms_api.data.UserRepository;
-import com.mms.mms_api.dto.LoginResultDto;
+import com.mms.mms_api.dto.auth.LoginResultDto;
 import com.mms.mms_api.dto.user.UserDto;
 import com.mms.mms_api.util.JwtHelper;
 import com.mms.mms_api.util.mapper.UserMapper;

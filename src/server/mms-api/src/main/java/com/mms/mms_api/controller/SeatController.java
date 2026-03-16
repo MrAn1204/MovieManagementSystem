@@ -12,13 +12,10 @@ import org.springframework.web.bind.annotation.RestController;
 import com.mms.mms_api.business.command.seat.SeatCreateCommand;
 import com.mms.mms_api.business.command.seat.SeatDeleteCommand;
 import com.mms.mms_api.business.command.seat.SeatUpdateCommand;
-import com.mms.mms_api.business.query.seat.SeatGetAllInRoomQuery;
 import com.mms.mms_api.business.query.seat.SeatGetAllQuery;
-import com.mms.mms_api.business.query.seat.SeatGetAllWithStatusQuery;
 import com.mms.mms_api.business.query.seat.SeatGetByIdQuery;
 import com.mms.mms_api.business.service.SeatService;
-import com.mms.mms_api.dto.SeatDto;
-import com.mms.mms_api.dto.SeatStatusDto;
+import com.mms.mms_api.dto.seat.SeatDto;
 import com.mms.mms_api.util.validator.SeatValidator;
 
 import jakarta.validation.Valid;
@@ -72,19 +69,5 @@ public class SeatController {
     public ResponseEntity<Void> delete(@PathVariable UUID id) {
         seatService.handle(new SeatDeleteCommand(id));
         return ResponseEntity.noContent().build();
-    }
-
-    @PostMapping("/seat-map")
-    public ResponseEntity<List<SeatDto>> getAllInRoom(@RequestBody SeatGetAllInRoomQuery request) {
-        seatValidator.validate(request);
-        List<SeatDto> seats = seatService.handle(request);
-        return ResponseEntity.ok(seats);
-    }
-
-    @PostMapping("/status")
-    public ResponseEntity<List<SeatStatusDto>> getAllWithStatus(@RequestBody SeatGetAllWithStatusQuery request) {
-        seatValidator.validate(request);
-        List<SeatStatusDto> seats = seatService.handle(request);
-        return ResponseEntity.ok(seats);
     }
 }

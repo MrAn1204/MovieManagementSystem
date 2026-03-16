@@ -5,7 +5,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.mms.mms_api.business.query.studio.StudioGetAllQuery;
 import com.mms.mms_api.business.service.StudioService;
-import com.mms.mms_api.dto.StudioDto;
+import com.mms.mms_api.dto.movie.StudioDto;
 
 import lombok.AllArgsConstructor;
 

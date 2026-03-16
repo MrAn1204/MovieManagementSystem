@@ -1,10 +1,10 @@
 package com.mms.mms_api.business.handler.studio;
 import com.mms.mms_api.util.mapper.StudioMapper;
 import com.mms.mms_api.data.StudioRepository;
+import com.mms.mms_api.dto.movie.StudioDto;
 
 import java.util.List;
 import com.mms.mms_api.business.query.studio.StudioGetAllQuery;
-import com.mms.mms_api.dto.StudioDto;
 
 public class StudioGetAllHandler extends StudioBaseHandler<StudioGetAllQuery, List<StudioDto>> {
     private final StudioMapper studioMapper;

@@ -1,9 +1,10 @@
-package com.mms.mms_api.dto;
+package com.mms.mms_api.dto.movie;
 
 import java.time.LocalDate;
 import java.util.List;
 
 import com.mms.mms_api.common.IdNameDto;
+import com.mms.mms_api.dto.BaseDto;
 
 import lombok.Data;
 import lombok.EqualsAndHashCode;

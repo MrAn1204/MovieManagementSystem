@@ -11,7 +11,7 @@ import com.mms.mms_api.business.query.promotion.PromotionGetByIdQuery;
 import com.mms.mms_api.business.query.promotion.PromotionSearchQuery;
 import com.mms.mms_api.business.service.PromotionService;
 import com.mms.mms_api.common.PaginatedResult;
-import com.mms.mms_api.dto.PromotionDto;
+import com.mms.mms_api.dto.promotion.PromotionDto;
 import com.mms.mms_api.util.validator.PromotionValidator;
 
 import jakarta.validation.Valid;

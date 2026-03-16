@@ -1,7 +1,6 @@
 package com.mms.mms_api.business.command.schedule;
 
 import java.time.LocalDateTime;
-import java.util.Map;
 import java.util.UUID;
 
 import org.springframework.lang.NonNull;
@@ -26,6 +25,4 @@ public class ScheduleUpdateCommand extends BaseUpdateCommand {
     @NotNull(message = "{schedule.room.required}")
     @NonNull
     private UUID roomId;
-
-    private Map<UUID, Boolean> seatStatuses;
 }

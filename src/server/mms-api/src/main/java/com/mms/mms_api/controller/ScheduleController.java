@@ -21,7 +21,8 @@ import com.mms.mms_api.business.query.schedule.ScheduleGetByIdQuery;
 import com.mms.mms_api.business.query.schedule.ScheduleSearchQuery;
 import com.mms.mms_api.business.service.ScheduleService;
 import com.mms.mms_api.common.PaginatedResult;
-import com.mms.mms_api.dto.ScheduleDto;
+import com.mms.mms_api.dto.schedule.ScheduleDetailDto;
+import com.mms.mms_api.dto.schedule.ScheduleDto;
 import com.mms.mms_api.util.validator.ScheduleValidator;
 
 import jakarta.validation.Valid;
@@ -42,25 +43,25 @@ public class ScheduleController {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<ScheduleDto> getById(@PathVariable UUID id) {
-        ScheduleDto schedule = scheduleService.handle(new ScheduleGetByIdQuery(id));
+    public ResponseEntity<ScheduleDetailDto> getById(@PathVariable UUID id) {
+        ScheduleDetailDto schedule = scheduleService.handle(new ScheduleGetByIdQuery(id));
         return ResponseEntity.ok(schedule);
     }
 
     @PostMapping("/create")
-    public ResponseEntity<ScheduleDto> create(@Valid @RequestBody ScheduleCreateCommand request) {
+    public ResponseEntity<ScheduleDetailDto> create(@Valid @RequestBody ScheduleCreateCommand request) {
         scheduleValidator.validate(request);
 
-        ScheduleDto scheduleDto = scheduleService.handle(request);
+        ScheduleDetailDto scheduleDto = scheduleService.handle(request);
         return ResponseEntity.ok(scheduleDto);
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<ScheduleDto> update(@PathVariable UUID id, @Valid @RequestBody ScheduleUpdateCommand request) {
+    public ResponseEntity<ScheduleDetailDto> update(@PathVariable UUID id, @Valid @RequestBody ScheduleUpdateCommand request) {
         request.setId(id);
         scheduleValidator.validate(request);
 
-        ScheduleDto updatedSchedule = scheduleService.handle(request);
+        ScheduleDetailDto updatedSchedule = scheduleService.handle(request);
         return ResponseEntity.ok(updatedSchedule);
     }
 

@@ -5,7 +5,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.mms.mms_api.business.query.talent.TalentGetAllQuery;
 import com.mms.mms_api.business.service.TalentService;
-import com.mms.mms_api.dto.TalentDto;
+import com.mms.mms_api.dto.movie.TalentDto;
 
 import lombok.AllArgsConstructor;
 

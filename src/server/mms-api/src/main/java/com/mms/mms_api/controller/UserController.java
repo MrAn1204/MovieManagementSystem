@@ -10,6 +10,7 @@ import com.mms.mms_api.business.query.user.UserGetByIdQuery;
 import com.mms.mms_api.business.query.user.UserSearchQuery;
 import com.mms.mms_api.business.service.UserService;
 import com.mms.mms_api.common.PaginatedResult;
+import com.mms.mms_api.dto.user.UserDetailDto;
 import com.mms.mms_api.dto.user.UserDto;
 import com.mms.mms_api.util.validator.UserValidator;
 
@@ -47,10 +48,10 @@ public class UserController {
     }
 
     @PostMapping("/create")
-    public ResponseEntity<UserDto> create(@Valid @RequestBody UserCreateCommand command) {
+    public ResponseEntity<UserDetailDto> create(@Valid @RequestBody UserCreateCommand command) {
         userValidator.validate(command);
 
-        UserDto result = userService.handle(command);
+        UserDetailDto result = userService.handle(command);
 
         return result != null
                 ? ResponseEntity.status(HttpStatus.CREATED).body(result)
@@ -58,8 +59,8 @@ public class UserController {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<UserDto> getById(@PathVariable UUID id) {
-        UserDto user = userService.handle(new UserGetByIdQuery(id));
+    public ResponseEntity<UserDetailDto> getById(@PathVariable UUID id) {
+        UserDetailDto user = userService.handle(new UserGetByIdQuery(id));
 
         return user != null
                 ? ResponseEntity.ok(user)
@@ -67,11 +68,11 @@ public class UserController {
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<UserDto> update(@PathVariable UUID id, @Valid @RequestBody UserUpdateCommand command) {
+    public ResponseEntity<UserDetailDto> update(@PathVariable UUID id, @Valid @RequestBody UserUpdateCommand command) {
         command.setId(id);
         userValidator.validate(command);
 
-        UserDto updatedUser = userService.handle(command);
+        UserDetailDto updatedUser = userService.handle(command);
 
         return updatedUser != null
                 ? ResponseEntity.ok(updatedUser)

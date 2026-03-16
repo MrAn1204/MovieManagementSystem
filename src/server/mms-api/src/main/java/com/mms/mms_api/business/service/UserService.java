@@ -21,6 +21,7 @@ import com.mms.mms_api.business.query.user.UserSearchQuery;
 import com.mms.mms_api.common.PaginatedResult;
 import com.mms.mms_api.data.RoleRepository;
 import com.mms.mms_api.data.UserRepository;
+import com.mms.mms_api.dto.user.UserDetailDto;
 import com.mms.mms_api.dto.user.UserDto;
 import com.mms.mms_api.util.mapper.UserMapper;
 
@@ -38,7 +39,7 @@ public class UserService {
     private PasswordEncoder passwordEncoder;
 
     @PreAuthorize("hasAuthority('ADMIN')")
-    public UserDto handle(UserCreateCommand request) {
+    public UserDetailDto handle(UserCreateCommand request) {
         UserCreateHandler handler = new UserCreateHandler(request, userMapper, userRepository, roleRepository, passwordEncoder);
 
         return handler.execute();
@@ -52,14 +53,14 @@ public class UserService {
     }
 
     @PreAuthorize("hasAuthority('ADMIN') || #request.id == authentication.principal.id")
-    public UserDto handle(UserGetByIdQuery request) {
+    public UserDetailDto handle(UserGetByIdQuery request) {
         UserGetByIdHandler handler = new UserGetByIdHandler(request, userMapper, userRepository);
 
         return handler.execute();
     }
 
     @PreAuthorize("hasAuthority('ADMIN') || #request.id == authentication.principal.id")
-    public UserDto handle(UserUpdateCommand request) {
+    public UserDetailDto handle(UserUpdateCommand request) {
         UserUpdateHandler handler = new UserUpdateHandler(request, userMapper, userRepository, roleRepository, passwordEncoder);
 
         return handler.execute();

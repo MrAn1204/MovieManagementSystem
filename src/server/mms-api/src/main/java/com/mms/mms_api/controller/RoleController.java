@@ -5,7 +5,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.mms.mms_api.business.query.role.RoleGetAllQuery;
 import com.mms.mms_api.business.service.RoleService;
-import com.mms.mms_api.dto.RoleDto;
+import com.mms.mms_api.dto.user.RoleDto;
 
 import lombok.AllArgsConstructor;
 

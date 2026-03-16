@@ -2,7 +2,7 @@ package com.mms.mms_api.business.handler.seat;
 
 import com.mms.mms_api.business.query.seat.SeatGetAllQuery;
 import com.mms.mms_api.data.SeatRepository;
-import com.mms.mms_api.dto.SeatDto;
+import com.mms.mms_api.dto.seat.SeatDto;
 import com.mms.mms_api.util.mapper.SeatMapper;
 
 import java.util.List;

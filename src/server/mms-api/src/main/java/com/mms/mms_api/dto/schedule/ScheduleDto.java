@@ -1,8 +1,9 @@
-package com.mms.mms_api.dto;
+package com.mms.mms_api.dto.schedule;
 
 import java.time.LocalDateTime;
 
 import com.mms.mms_api.common.IdNameDto;
+import com.mms.mms_api.dto.BaseDto;
 
 import lombok.Data;
 import lombok.EqualsAndHashCode;

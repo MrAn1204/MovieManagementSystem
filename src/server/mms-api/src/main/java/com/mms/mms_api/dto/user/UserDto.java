@@ -4,9 +4,6 @@ import java.time.LocalDate;
 import java.util.List;
 
 import com.mms.mms_api.dto.BaseDto;
-import com.mms.mms_api.dto.InvoiceDto;
-import com.mms.mms_api.dto.RoleDto;
-import com.mms.mms_api.model.Gender;
 
 import lombok.Data;
 import lombok.EqualsAndHashCode;
@@ -18,21 +15,11 @@ public class UserDto extends BaseDto {
 
     private String fullname;
 
-    private Gender gender;
-
     private LocalDate dateOfBirth;
 
     private String email;
 
-    private String citizenIdNumber;
-
     private String phoneNumber;
 
-    private String address;
-
-    private int score;
-
     private List<RoleDto> roles;
-
-    private List<InvoiceDto> invoices;
 }

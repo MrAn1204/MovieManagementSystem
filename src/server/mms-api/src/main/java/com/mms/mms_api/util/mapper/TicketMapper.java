@@ -10,8 +10,8 @@ import org.mapstruct.MappingTarget;
 
 import com.mms.mms_api.business.command.ticket.TicketCreateCommand;
 import com.mms.mms_api.business.command.ticket.TicketUpdateCommand;
-import com.mms.mms_api.dto.TicketDetailDto;
-import com.mms.mms_api.dto.TicketDto;
+import com.mms.mms_api.dto.ticket.TicketDetailDto;
+import com.mms.mms_api.dto.ticket.TicketDto;
 import com.mms.mms_api.model.Ticket;
 
 @Mapper(config = DefaultMapperConfig.class, uses = { ScheduleMapper.class, SeatMapper.class })
@@ -23,13 +23,16 @@ public interface TicketMapper {
     @Mapping(target = "user", ignore = true)
     Ticket toEntity(TicketCreateCommand command);
 
-    @Mapping(target = "promotion.name", source = "ticket.promotion.title")
     @Mapping(target = "name", ignore = true)
-    TicketDto toDto(Ticket ticket);
-
-    @InheritConfiguration(name = "toDto")
+    @Mapping(target = "movie", source = "ticket.schedule.movie")
     @Mapping(target = "username", source = "ticket.user.username")
     @Mapping(target = "phoneNumber", source = "ticket.user.phoneNumber")
+    TicketDto toDto(Ticket ticket);
+    
+    @InheritConfiguration(name = "toDto")
+    @Mapping(target = "promotion.name", source = "ticket.promotion.title")
+    @Mapping(target = "showTime", source = "ticket.schedule.showTime")
+    @Mapping(target = "room", source = "ticket.schedule.room")
     TicketDetailDto toDetailDto(Ticket ticket);
 
     @Mapping(target = "schedule", ignore = true)

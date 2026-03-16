@@ -2,7 +2,7 @@ package com.mms.mms_api.business.handler.schedule;
 
 import com.mms.mms_api.business.query.schedule.ScheduleGetAllQuery;
 import com.mms.mms_api.data.ScheduleRepository;
-import com.mms.mms_api.dto.ScheduleDto;
+import com.mms.mms_api.dto.schedule.ScheduleDto;
 import com.mms.mms_api.util.mapper.ScheduleMapper;
 
 import java.util.List;

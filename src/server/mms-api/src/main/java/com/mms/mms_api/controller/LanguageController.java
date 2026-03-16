@@ -5,7 +5,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.mms.mms_api.business.query.language.LanguageGetAllQuery;
 import com.mms.mms_api.business.service.LanguageService;
-import com.mms.mms_api.dto.LanguageDto;
+import com.mms.mms_api.dto.movie.LanguageDto;
 
 import lombok.AllArgsConstructor;
 

@@ -1,8 +1,8 @@
-package com.mms.mms_api.dto;
+package com.mms.mms_api.dto.seat;
 
 import java.util.UUID;
 
-import com.mms.mms_api.common.IdNameDto;
+import com.mms.mms_api.dto.BaseDto;
 
 import lombok.Data;
 import lombok.EqualsAndHashCode;
@@ -18,7 +18,7 @@ public class SeatDto extends BaseDto {
 
     private String name;
 
-    private IdNameDto room;
-
     private UUID linkedSeatId;
+
+    private Boolean reserved;
 }

@@ -1,10 +1,10 @@
 package com.mms.mms_api.business.handler.talent;
 import com.mms.mms_api.util.mapper.TalentMapper;
 import com.mms.mms_api.data.TalentRepository;
+import com.mms.mms_api.dto.movie.TalentDto;
 
 import java.util.List;
 import com.mms.mms_api.business.query.talent.TalentGetAllQuery;
-import com.mms.mms_api.dto.TalentDto;
 
 public class TalentGetAllHandler extends TalentBaseHandler<TalentGetAllQuery, List<TalentDto>> {
     private final TalentMapper talentMapper;

@@ -14,7 +14,8 @@ import com.mms.mms_api.business.query.room.RoomGetByIdQuery;
 import com.mms.mms_api.business.query.room.RoomSearchQuery;
 import com.mms.mms_api.business.service.RoomService;
 import com.mms.mms_api.common.PaginatedResult;
-import com.mms.mms_api.dto.RoomDto;
+import com.mms.mms_api.dto.room.RoomDetailDto;
+import com.mms.mms_api.dto.room.RoomDto;
 import com.mms.mms_api.util.validator.RoomValidator;
 
 import jakarta.validation.Valid;
@@ -42,23 +43,23 @@ public class RoomController {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<RoomDto> getById(@PathVariable UUID id) {
-        RoomDto room = roomService.handle(new RoomGetByIdQuery(id));
+    public ResponseEntity<RoomDetailDto> getById(@PathVariable UUID id) {
+        RoomDetailDto room = roomService.handle(new RoomGetByIdQuery(id));
         return ResponseEntity.ok(room);
     }
 
     @PostMapping("/create")
-    public ResponseEntity<RoomDto> create(@RequestBody @Valid RoomCreateCommand request) {
+    public ResponseEntity<RoomDetailDto> create(@RequestBody @Valid RoomCreateCommand request) {
         roomValidator.validate(request);
-        RoomDto roomDto = roomService.handle(request);
+        RoomDetailDto roomDto = roomService.handle(request);
         return ResponseEntity.ok(roomDto);
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<RoomDto> update(@PathVariable UUID id, @RequestBody @Valid RoomUpdateCommand request) {
+    public ResponseEntity<RoomDetailDto> update(@PathVariable UUID id, @RequestBody @Valid RoomUpdateCommand request) {
         request.setId(id);
         roomValidator.validate(request);
-        RoomDto updatedRoom = roomService.handle(request);
+        RoomDetailDto updatedRoom = roomService.handle(request);
         return ResponseEntity.ok(updatedRoom);
     }
 

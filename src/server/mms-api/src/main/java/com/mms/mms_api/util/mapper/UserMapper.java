@@ -8,6 +8,7 @@ import org.mapstruct.MappingTarget;
 import com.mms.mms_api.business.command.auth.RegisterCommand;
 import com.mms.mms_api.business.command.user.UserCreateCommand;
 import com.mms.mms_api.business.command.user.UserUpdateCommand;
+import com.mms.mms_api.dto.user.UserDetailDto;
 import com.mms.mms_api.dto.user.UserDto;
 import com.mms.mms_api.model.Role;
 import com.mms.mms_api.model.User;
@@ -30,6 +31,8 @@ public interface UserMapper {
     User toEntity(RegisterCommand command);
 
     UserDto toDto(User user);
+
+    UserDetailDto toDetailDto(User user);
 
     @Mapping(target = "username", ignore = true)
     @Mapping(target = "password", ignore = true)

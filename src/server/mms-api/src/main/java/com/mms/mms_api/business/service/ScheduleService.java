@@ -22,7 +22,8 @@ import com.mms.mms_api.common.PaginatedResult;
 import com.mms.mms_api.data.MovieRepository;
 import com.mms.mms_api.data.RoomRepository;
 import com.mms.mms_api.data.ScheduleRepository;
-import com.mms.mms_api.dto.ScheduleDto;
+import com.mms.mms_api.dto.schedule.ScheduleDetailDto;
+import com.mms.mms_api.dto.schedule.ScheduleDto;
 import com.mms.mms_api.util.mapper.ScheduleMapper;
 
 import lombok.AllArgsConstructor;
@@ -40,7 +41,7 @@ public class ScheduleService {
 
     @PreAuthorize("hasAuthority('ADMIN')")
     @Transactional
-    public ScheduleDto handle(ScheduleCreateCommand request) {
+    public ScheduleDetailDto handle(ScheduleCreateCommand request) {
         ScheduleCreateHandler handler = new ScheduleCreateHandler(request, scheduleMapper,
                 scheduleRepository, movieRepository, roomRepository);
         return handler.execute();
@@ -51,14 +52,14 @@ public class ScheduleService {
         return handler.execute();
     }
 
-    public ScheduleDto handle(ScheduleGetByIdQuery request) {
+    public ScheduleDetailDto handle(ScheduleGetByIdQuery request) {
         ScheduleGetByIdHandler handler = new ScheduleGetByIdHandler(request, scheduleMapper, scheduleRepository);
         return handler.execute();
     }
 
     @PreAuthorize("hasAuthority('ADMIN')")
     @Transactional
-    public ScheduleDto handle(ScheduleUpdateCommand request) {
+    public ScheduleDetailDto handle(ScheduleUpdateCommand request) {
         ScheduleUpdateHandler handler = new ScheduleUpdateHandler(request, scheduleMapper, scheduleRepository,
                 movieRepository, roomRepository);
         return handler.execute();

@@ -6,7 +6,7 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 
 import com.mms.mms_api.business.command.auth.LoginCommand;
-import com.mms.mms_api.dto.LoginResultDto;
+import com.mms.mms_api.dto.auth.LoginResultDto;
 import com.mms.mms_api.security.UserInfo;
 import com.mms.mms_api.util.JwtHelper;
 

@@ -3,11 +3,11 @@ package com.mms.mms_api.business.handler.promotion;
 import java.util.List;
 
 import com.mms.mms_api.business.command.promotion.PromotionCreateCommand;
-import com.mms.mms_api.dto.PromotionDto;
 import com.mms.mms_api.model.Promotion;
 import com.mms.mms_api.model.Ticket;
 import com.mms.mms_api.data.PromotionRepository;
 import com.mms.mms_api.data.TicketRepository;
+import com.mms.mms_api.dto.promotion.PromotionDto;
 import com.mms.mms_api.util.mapper.PromotionMapper;
 
 public class PromotionCreateHandler extends PromotionBaseHandler<PromotionCreateCommand, PromotionDto> {

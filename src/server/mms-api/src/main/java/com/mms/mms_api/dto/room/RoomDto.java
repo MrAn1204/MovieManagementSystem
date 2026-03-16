@@ -1,8 +1,6 @@
-package com.mms.mms_api.dto;
+package com.mms.mms_api.dto.room;
 
-import java.util.List;
-
-import com.mms.mms_api.common.IdNameDto;
+import com.mms.mms_api.dto.BaseDto;
 
 import lombok.Data;
 import lombok.EqualsAndHashCode;
@@ -16,7 +14,7 @@ public class RoomDto extends BaseDto {
 
     private String name;
 
-    private List<IdNameDto> seats;
-
     private int maxCapacity;
+
+    private int currentCapacity;
 }

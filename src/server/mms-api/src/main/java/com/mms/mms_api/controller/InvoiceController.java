@@ -19,7 +19,7 @@ import com.mms.mms_api.business.command.invoice.InvoiceUpdateCommand;
 import com.mms.mms_api.business.query.invoice.InvoiceGetAllQuery;
 import com.mms.mms_api.business.query.invoice.InvoiceGetByIdQuery;
 import com.mms.mms_api.business.service.InvoiceService;
-import com.mms.mms_api.dto.InvoiceDto;
+import com.mms.mms_api.dto.invoice.InvoiceDto;
 import com.mms.mms_api.util.validator.InvoiceValidator;
 
 import jakarta.validation.Valid;
