@@ -20,6 +20,7 @@ import com.mms.mms_api.business.query.user.UserSearchQuery;
 import com.mms.mms_api.common.PaginatedResult;
 import com.mms.mms_api.data.RoleRepository;
 import com.mms.mms_api.data.UserRepository;
+import com.mms.mms_api.dto.user.UserDetailDto;
 import com.mms.mms_api.dto.user.UserDto;
 import com.mms.mms_api.util.mapper.UserMapper;
 
@@ -48,7 +49,7 @@ public class UserService {
         return handler.execute();
     }
 
-    public UserDto handle(UserGetByIdQuery request) {
+    public UserDetailDto handle(UserGetByIdQuery request) {
         UserGetByIdHandler handler = new UserGetByIdHandler(request, userMapper, userRepository);
 
         return handler.execute();

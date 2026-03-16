@@ -10,6 +10,7 @@ import com.mms.mms_api.business.query.user.UserGetByIdQuery;
 import com.mms.mms_api.business.query.user.UserSearchQuery;
 import com.mms.mms_api.business.service.UserService;
 import com.mms.mms_api.common.PaginatedResult;
+import com.mms.mms_api.dto.user.UserDetailDto;
 import com.mms.mms_api.dto.user.UserDto;
 import com.mms.mms_api.util.validator.UserValidator;
 
@@ -58,8 +59,8 @@ public class UserController {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<UserDto> getById(@PathVariable UUID id) {
-        UserDto user = userService.handle(new UserGetByIdQuery(id));
+    public ResponseEntity<UserDetailDto> getById(@PathVariable UUID id) {
+        UserDetailDto user = userService.handle(new UserGetByIdQuery(id));
 
         return user != null
                 ? ResponseEntity.ok(user)
