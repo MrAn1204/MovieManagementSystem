@@ -1,6 +1,9 @@
-package com.mms.mms_api.dto;
+package com.mms.mms_api.dto.invoice;
 
 import java.util.List;
+
+import com.mms.mms_api.dto.BaseDto;
+import com.mms.mms_api.dto.ticket.TicketDto;
 
 import lombok.Data;
 import lombok.EqualsAndHashCode;

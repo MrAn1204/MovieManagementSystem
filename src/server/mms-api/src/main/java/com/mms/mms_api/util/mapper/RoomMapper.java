@@ -7,8 +7,8 @@ import org.mapstruct.MappingTarget;
 
 import com.mms.mms_api.business.command.room.RoomCreateCommand;
 import com.mms.mms_api.business.command.room.RoomUpdateCommand;
-import com.mms.mms_api.dto.RoomDetailDto;
-import com.mms.mms_api.dto.RoomDto;
+import com.mms.mms_api.dto.room.RoomDetailDto;
+import com.mms.mms_api.dto.room.RoomDto;
 import com.mms.mms_api.model.Room;
 
 @Mapper(config = DefaultMapperConfig.class, uses = { SeatMapper.class })

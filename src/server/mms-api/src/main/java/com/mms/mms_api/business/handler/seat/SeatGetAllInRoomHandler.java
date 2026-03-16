@@ -4,7 +4,7 @@ import java.util.List;
 
 import com.mms.mms_api.business.query.seat.SeatGetAllInRoomQuery;
 import com.mms.mms_api.data.SeatRepository;
-import com.mms.mms_api.dto.SeatDto;
+import com.mms.mms_api.dto.seat.SeatDto;
 import com.mms.mms_api.model.Seat;
 import com.mms.mms_api.util.mapper.SeatMapper;
 

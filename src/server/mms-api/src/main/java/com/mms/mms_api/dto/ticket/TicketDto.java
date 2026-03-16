@@ -1,6 +1,8 @@
-package com.mms.mms_api.dto;
+package com.mms.mms_api.dto.ticket;
 
 import com.mms.mms_api.common.IdNameDto;
+import com.mms.mms_api.dto.BaseDto;
+import com.mms.mms_api.dto.schedule.ScheduleDto;
 
 import lombok.Data;
 import lombok.EqualsAndHashCode;

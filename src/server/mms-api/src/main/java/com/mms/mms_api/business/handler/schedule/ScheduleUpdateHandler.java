@@ -1,8 +1,8 @@
 package com.mms.mms_api.business.handler.schedule;
 
 import com.mms.mms_api.business.command.schedule.ScheduleUpdateCommand;
-import com.mms.mms_api.dto.ScheduleDto;
 import com.mms.mms_api.data.ScheduleRepository;
+import com.mms.mms_api.dto.schedule.ScheduleDto;
 import com.mms.mms_api.data.MovieRepository;
 import com.mms.mms_api.data.RoomRepository;
 import com.mms.mms_api.util.mapper.ScheduleMapper;

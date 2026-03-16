@@ -9,7 +9,7 @@ import com.mms.mms_api.business.query.ticket.TicketSearchQuery;
 import com.mms.mms_api.business.specification.TicketSpecification;
 import com.mms.mms_api.common.PaginatedResult;
 import com.mms.mms_api.data.TicketRepository;
-import com.mms.mms_api.dto.TicketDetailDto;
+import com.mms.mms_api.dto.ticket.TicketDetailDto;
 import com.mms.mms_api.model.Ticket;
 import com.mms.mms_api.util.SearchHelper;
 import com.mms.mms_api.util.mapper.TicketMapper;

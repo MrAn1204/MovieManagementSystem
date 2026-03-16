@@ -5,7 +5,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.mms.mms_api.business.query.genre.GenreGetAllQuery;
 import com.mms.mms_api.business.service.GenreService;
-import com.mms.mms_api.dto.GenreDto;
+import com.mms.mms_api.dto.movie.GenreDto;
 
 import lombok.AllArgsConstructor;
 

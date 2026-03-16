@@ -9,7 +9,7 @@ import com.mms.mms_api.data.LanguageRepository;
 import com.mms.mms_api.data.MovieRepository;
 import com.mms.mms_api.data.StudioRepository;
 import com.mms.mms_api.data.TalentRepository;
-import com.mms.mms_api.dto.MovieDto;
+import com.mms.mms_api.dto.movie.MovieDto;
 import com.mms.mms_api.model.Genre;
 import com.mms.mms_api.model.Language;
 import com.mms.mms_api.model.Movie;

@@ -6,7 +6,7 @@ import org.mapstruct.MappingTarget;
 
 import com.mms.mms_api.business.command.promotion.PromotionCreateCommand;
 import com.mms.mms_api.business.command.promotion.PromotionUpdateCommand;
-import com.mms.mms_api.dto.PromotionDto;
+import com.mms.mms_api.dto.promotion.PromotionDto;
 import com.mms.mms_api.model.Promotion;
 
 @Mapper(config = DefaultMapperConfig.class)

@@ -10,8 +10,8 @@ import org.mapstruct.MappingTarget;
 
 import com.mms.mms_api.business.command.ticket.TicketCreateCommand;
 import com.mms.mms_api.business.command.ticket.TicketUpdateCommand;
-import com.mms.mms_api.dto.TicketDetailDto;
-import com.mms.mms_api.dto.TicketDto;
+import com.mms.mms_api.dto.ticket.TicketDetailDto;
+import com.mms.mms_api.dto.ticket.TicketDto;
 import com.mms.mms_api.model.Ticket;
 
 @Mapper(config = DefaultMapperConfig.class, uses = { ScheduleMapper.class, SeatMapper.class })

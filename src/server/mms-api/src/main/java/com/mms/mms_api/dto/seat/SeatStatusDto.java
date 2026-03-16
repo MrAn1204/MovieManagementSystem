@@ -1,4 +1,4 @@
-package com.mms.mms_api.dto;
+package com.mms.mms_api.dto.seat;
 
 import java.util.UUID;
 

@@ -4,10 +4,10 @@ import java.util.UUID;
 
 import com.mms.mms_api.business.command.ticket.TicketCreateCommand;
 import com.mms.mms_api.business.service.TicketDependencies;
-import com.mms.mms_api.dto.TicketDto;
 import com.mms.mms_api.exception.ResourceNotFoundException;
 import com.mms.mms_api.data.ScheduleSeatRepository;
 import com.mms.mms_api.data.TicketRepository;
+import com.mms.mms_api.dto.ticket.TicketDto;
 import com.mms.mms_api.util.mapper.TicketMapper;
 import com.mms.mms_api.model.Promotion;
 import com.mms.mms_api.model.Schedule;

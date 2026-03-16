@@ -9,7 +9,7 @@ import com.mms.mms_api.business.command.schedule.ScheduleCreateCommand;
 import com.mms.mms_api.data.MovieRepository;
 import com.mms.mms_api.data.RoomRepository;
 import com.mms.mms_api.data.ScheduleRepository;
-import com.mms.mms_api.dto.ScheduleDto;
+import com.mms.mms_api.dto.schedule.ScheduleDto;
 import com.mms.mms_api.exception.ResourceNotFoundException;
 import com.mms.mms_api.model.Movie;
 import com.mms.mms_api.model.Room;

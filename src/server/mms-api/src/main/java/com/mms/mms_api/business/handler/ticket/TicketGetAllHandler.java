@@ -1,8 +1,8 @@
 package com.mms.mms_api.business.handler.ticket;
 
 import com.mms.mms_api.business.query.ticket.TicketGetAllQuery;
-import com.mms.mms_api.dto.TicketDetailDto;
 import com.mms.mms_api.data.TicketRepository;
+import com.mms.mms_api.dto.ticket.TicketDetailDto;
 import com.mms.mms_api.util.mapper.TicketMapper;
 import com.mms.mms_api.model.Ticket;
 

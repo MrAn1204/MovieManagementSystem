@@ -6,7 +6,7 @@ import org.mapstruct.MappingTarget;
 
 import com.mms.mms_api.business.command.movie.MovieCreateCommand;
 import com.mms.mms_api.business.command.movie.MovieUpdateCommand;
-import com.mms.mms_api.dto.MovieDto;
+import com.mms.mms_api.dto.movie.MovieDto;
 import com.mms.mms_api.model.Movie;
 
 @Mapper(config = DefaultMapperConfig.class,

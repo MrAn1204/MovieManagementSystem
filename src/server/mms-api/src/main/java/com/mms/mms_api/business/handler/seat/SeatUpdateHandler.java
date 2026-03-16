@@ -3,7 +3,7 @@ package com.mms.mms_api.business.handler.seat;
 import com.mms.mms_api.business.command.seat.SeatUpdateCommand;
 import com.mms.mms_api.data.RoomRepository;
 import com.mms.mms_api.data.SeatRepository;
-import com.mms.mms_api.dto.SeatDto;
+import com.mms.mms_api.dto.seat.SeatDto;
 import com.mms.mms_api.exception.ResourceNotFoundException;
 import com.mms.mms_api.model.Room;
 import com.mms.mms_api.model.Seat;

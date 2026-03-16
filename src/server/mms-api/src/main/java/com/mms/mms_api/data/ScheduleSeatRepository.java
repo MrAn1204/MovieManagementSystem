@@ -6,7 +6,7 @@ import java.util.UUID;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 
-import com.mms.mms_api.dto.SeatStatusDto;
+import com.mms.mms_api.dto.seat.SeatStatusDto;
 import com.mms.mms_api.model.ScheduleSeat;
 import com.mms.mms_api.model.ScheduleSeatId;
 

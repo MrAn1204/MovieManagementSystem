@@ -21,8 +21,8 @@ import com.mms.mms_api.common.PaginatedResult;
 import com.mms.mms_api.data.InvoiceRepository;
 import com.mms.mms_api.data.ScheduleSeatRepository;
 import com.mms.mms_api.data.TicketRepository;
-import com.mms.mms_api.dto.TicketDetailDto;
-import com.mms.mms_api.dto.TicketDto;
+import com.mms.mms_api.dto.ticket.TicketDetailDto;
+import com.mms.mms_api.dto.ticket.TicketDto;
 import com.mms.mms_api.util.mapper.TicketMapper;
 
 import lombok.AllArgsConstructor;

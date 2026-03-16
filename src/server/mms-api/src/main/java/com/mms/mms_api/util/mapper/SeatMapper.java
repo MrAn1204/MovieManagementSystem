@@ -6,7 +6,7 @@ import org.mapstruct.MappingTarget;
 
 import com.mms.mms_api.business.command.seat.SeatCreateCommand;
 import com.mms.mms_api.business.command.seat.SeatUpdateCommand;
-import com.mms.mms_api.dto.SeatDto;
+import com.mms.mms_api.dto.seat.SeatDto;
 import com.mms.mms_api.model.ScheduleSeat;
 import com.mms.mms_api.model.Seat;
 

@@ -17,8 +17,8 @@ import com.mms.mms_api.business.query.seat.SeatGetAllQuery;
 import com.mms.mms_api.business.query.seat.SeatGetAllWithStatusQuery;
 import com.mms.mms_api.business.query.seat.SeatGetByIdQuery;
 import com.mms.mms_api.business.service.SeatService;
-import com.mms.mms_api.dto.SeatDto;
-import com.mms.mms_api.dto.SeatStatusDto;
+import com.mms.mms_api.dto.seat.SeatDto;
+import com.mms.mms_api.dto.seat.SeatStatusDto;
 import com.mms.mms_api.util.validator.SeatValidator;
 
 import jakarta.validation.Valid;

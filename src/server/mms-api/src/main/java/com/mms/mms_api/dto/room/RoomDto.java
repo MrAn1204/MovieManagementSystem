@@ -1,4 +1,6 @@
-package com.mms.mms_api.dto;
+package com.mms.mms_api.dto.room;
+
+import com.mms.mms_api.dto.BaseDto;
 
 import lombok.Data;
 import lombok.EqualsAndHashCode;

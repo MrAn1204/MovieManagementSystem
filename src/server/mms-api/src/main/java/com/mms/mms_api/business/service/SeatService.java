@@ -22,8 +22,8 @@ import com.mms.mms_api.business.query.seat.SeatGetAllInRoomQuery;
 import com.mms.mms_api.data.RoomRepository;
 import com.mms.mms_api.data.ScheduleSeatRepository;
 import com.mms.mms_api.data.SeatRepository;
-import com.mms.mms_api.dto.SeatDto;
-import com.mms.mms_api.dto.SeatStatusDto;
+import com.mms.mms_api.dto.seat.SeatDto;
+import com.mms.mms_api.dto.seat.SeatStatusDto;
 import com.mms.mms_api.util.mapper.SeatMapper;
 
 import lombok.AllArgsConstructor;

@@ -4,8 +4,7 @@ import java.time.LocalDate;
 import java.util.List;
 
 import com.mms.mms_api.dto.BaseDto;
-import com.mms.mms_api.dto.InvoiceDto;
-import com.mms.mms_api.dto.RoleDto;
+import com.mms.mms_api.dto.invoice.InvoiceDto;
 import com.mms.mms_api.model.Gender;
 
 import lombok.Data;

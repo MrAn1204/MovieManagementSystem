@@ -8,7 +8,7 @@ import com.mms.mms_api.business.query.movie.MovieGetByIdQuery;
 import com.mms.mms_api.business.query.movie.MovieSearchQuery;
 import com.mms.mms_api.business.service.MovieService;
 import com.mms.mms_api.common.PaginatedResult;
-import com.mms.mms_api.dto.MovieDto;
+import com.mms.mms_api.dto.movie.MovieDto;
 import com.mms.mms_api.util.validator.MovieValidator;
 
 import jakarta.validation.Valid;

@@ -7,7 +7,7 @@ import org.springframework.stereotype.Service;
 import com.mms.mms_api.business.handler.role.RoleGetAllHandler;
 import com.mms.mms_api.business.query.role.RoleGetAllQuery;
 import com.mms.mms_api.data.RoleRepository;
-import com.mms.mms_api.dto.RoleDto;
+import com.mms.mms_api.dto.user.RoleDto;
 import com.mms.mms_api.util.mapper.RoleMapper;
 
 import lombok.AllArgsConstructor;

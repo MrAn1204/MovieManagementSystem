@@ -9,8 +9,8 @@ import org.mapstruct.MappingTarget;
 
 import com.mms.mms_api.business.command.schedule.ScheduleCreateCommand;
 import com.mms.mms_api.business.command.schedule.ScheduleUpdateCommand;
-import com.mms.mms_api.dto.ScheduleDetailDto;
-import com.mms.mms_api.dto.ScheduleDto;
+import com.mms.mms_api.dto.schedule.ScheduleDetailDto;
+import com.mms.mms_api.dto.schedule.ScheduleDto;
 import com.mms.mms_api.model.Schedule;
 
 @Mapper(config = DefaultMapperConfig.class, uses = { MovieMapper.class, RoomMapper.class, SeatMapper.class })

@@ -4,7 +4,7 @@ import java.util.Objects;
 
 import com.mms.mms_api.business.command.room.RoomCreateCommand;
 import com.mms.mms_api.data.RoomRepository;
-import com.mms.mms_api.dto.RoomDto;
+import com.mms.mms_api.dto.room.RoomDto;
 import com.mms.mms_api.model.Room;
 import com.mms.mms_api.util.mapper.RoomMapper;
 

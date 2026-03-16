@@ -18,8 +18,8 @@ import com.mms.mms_api.business.query.ticket.TicketGetByIdQuery;
 import com.mms.mms_api.business.query.ticket.TicketSearchQuery;
 import com.mms.mms_api.business.service.TicketService;
 import com.mms.mms_api.common.PaginatedResult;
-import com.mms.mms_api.dto.TicketDetailDto;
-import com.mms.mms_api.dto.TicketDto;
+import com.mms.mms_api.dto.ticket.TicketDetailDto;
+import com.mms.mms_api.dto.ticket.TicketDto;
 import com.mms.mms_api.util.validator.TicketValidator;
 
 import jakarta.validation.Valid;

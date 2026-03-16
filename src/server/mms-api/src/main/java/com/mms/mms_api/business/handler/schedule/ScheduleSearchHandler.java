@@ -10,7 +10,7 @@ import com.mms.mms_api.business.query.schedule.ScheduleSearchQuery;
 import com.mms.mms_api.business.specification.ScheduleSpecification;
 import com.mms.mms_api.common.PaginatedResult;
 import com.mms.mms_api.data.ScheduleRepository;
-import com.mms.mms_api.dto.ScheduleDto;
+import com.mms.mms_api.dto.schedule.ScheduleDto;
 import com.mms.mms_api.model.Schedule;
 import com.mms.mms_api.util.SearchHelper;
 import com.mms.mms_api.util.mapper.ScheduleMapper;

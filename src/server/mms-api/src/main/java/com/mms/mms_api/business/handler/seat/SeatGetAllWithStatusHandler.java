@@ -4,7 +4,7 @@ import java.util.List;
 
 import com.mms.mms_api.business.query.seat.SeatGetAllWithStatusQuery;
 import com.mms.mms_api.data.ScheduleSeatRepository;
-import com.mms.mms_api.dto.SeatStatusDto;
+import com.mms.mms_api.dto.seat.SeatStatusDto;
 
 public class SeatGetAllWithStatusHandler extends SeatBaseHandler<SeatGetAllWithStatusQuery, List<SeatStatusDto>>  {
     private final ScheduleSeatRepository scheduleSeatRepository;

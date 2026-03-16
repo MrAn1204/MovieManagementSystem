@@ -18,8 +18,8 @@ import com.mms.mms_api.business.query.room.RoomGetByIdQuery;
 import com.mms.mms_api.business.query.room.RoomSearchQuery;
 import com.mms.mms_api.common.PaginatedResult;
 import com.mms.mms_api.data.RoomRepository;
-import com.mms.mms_api.dto.RoomDetailDto;
-import com.mms.mms_api.dto.RoomDto;
+import com.mms.mms_api.dto.room.RoomDetailDto;
+import com.mms.mms_api.dto.room.RoomDto;
 import com.mms.mms_api.util.mapper.RoomMapper;
 
 import lombok.AllArgsConstructor;

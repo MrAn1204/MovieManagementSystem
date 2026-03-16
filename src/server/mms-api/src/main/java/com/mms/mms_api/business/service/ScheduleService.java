@@ -21,8 +21,8 @@ import com.mms.mms_api.common.PaginatedResult;
 import com.mms.mms_api.data.MovieRepository;
 import com.mms.mms_api.data.RoomRepository;
 import com.mms.mms_api.data.ScheduleRepository;
-import com.mms.mms_api.dto.ScheduleDetailDto;
-import com.mms.mms_api.dto.ScheduleDto;
+import com.mms.mms_api.dto.schedule.ScheduleDetailDto;
+import com.mms.mms_api.dto.schedule.ScheduleDto;
 import com.mms.mms_api.util.mapper.ScheduleMapper;
 
 import lombok.AllArgsConstructor;

@@ -6,7 +6,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.mms.mms_api.business.command.auth.LoginCommand;
 import com.mms.mms_api.business.command.auth.RegisterCommand;
 import com.mms.mms_api.business.service.AuthenticationService;
-import com.mms.mms_api.dto.LoginResultDto;
+import com.mms.mms_api.dto.auth.LoginResultDto;
 import com.mms.mms_api.dto.user.UserDto;
 
 import jakarta.validation.Valid;

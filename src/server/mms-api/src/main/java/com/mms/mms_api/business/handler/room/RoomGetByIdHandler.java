@@ -2,7 +2,7 @@ package com.mms.mms_api.business.handler.room;
 
 import com.mms.mms_api.business.query.room.RoomGetByIdQuery;
 import com.mms.mms_api.data.RoomRepository;
-import com.mms.mms_api.dto.RoomDetailDto;
+import com.mms.mms_api.dto.room.RoomDetailDto;
 import com.mms.mms_api.exception.ResourceNotFoundException;
 import com.mms.mms_api.model.Room;
 import com.mms.mms_api.util.mapper.RoomMapper;

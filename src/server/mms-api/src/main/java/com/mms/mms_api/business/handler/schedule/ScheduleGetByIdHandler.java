@@ -2,7 +2,7 @@ package com.mms.mms_api.business.handler.schedule;
 
 import com.mms.mms_api.business.query.schedule.ScheduleGetByIdQuery;
 import com.mms.mms_api.data.ScheduleRepository;
-import com.mms.mms_api.dto.ScheduleDetailDto;
+import com.mms.mms_api.dto.schedule.ScheduleDetailDto;
 import com.mms.mms_api.util.mapper.ScheduleMapper;
 import com.mms.mms_api.exception.ResourceNotFoundException;
 

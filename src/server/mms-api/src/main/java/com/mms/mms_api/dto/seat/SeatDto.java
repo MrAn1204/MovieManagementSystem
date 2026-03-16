@@ -1,6 +1,8 @@
-package com.mms.mms_api.dto;
+package com.mms.mms_api.dto.seat;
 
 import java.util.UUID;
+
+import com.mms.mms_api.dto.BaseDto;
 
 import lombok.Data;
 import lombok.EqualsAndHashCode;

@@ -4,7 +4,7 @@ import java.util.List;
 
 import com.mms.mms_api.business.query.movie.MovieGetAllQuery;
 import com.mms.mms_api.data.MovieRepository;
-import com.mms.mms_api.dto.MovieDto;
+import com.mms.mms_api.dto.movie.MovieDto;
 import com.mms.mms_api.model.Movie;
 import com.mms.mms_api.util.mapper.MovieMapper;
 
