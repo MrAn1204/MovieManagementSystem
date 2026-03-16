@@ -48,8 +48,8 @@ public class TicketController {
     }
 
     @GetMapping
-    public ResponseEntity<List<TicketDetailDto>> getAll() {
-        List<TicketDetailDto> tickets = ticketService.handle(new TicketGetAllQuery());
+    public ResponseEntity<List<TicketDto>> getAll() {
+        List<TicketDto> tickets = ticketService.handle(new TicketGetAllQuery());
 
         return ResponseEntity.ok(tickets);
     }
@@ -78,8 +78,8 @@ public class TicketController {
     }
 
     @PostMapping("/search")
-    public ResponseEntity<PaginatedResult<TicketDetailDto>> search(@Valid @RequestBody TicketSearchQuery request) {
-        PaginatedResult<TicketDetailDto> result = ticketService.handle(request);
+    public ResponseEntity<PaginatedResult<TicketDto>> search(@Valid @RequestBody TicketSearchQuery request) {
+        PaginatedResult<TicketDto> result = ticketService.handle(request);
         return ResponseEntity.ok(result);
     }
 }

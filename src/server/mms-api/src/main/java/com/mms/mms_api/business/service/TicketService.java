@@ -46,7 +46,7 @@ public class TicketService {
         return handler.execute();
     }
 
-    public List<TicketDetailDto> handle(TicketGetAllQuery request) {
+    public List<TicketDto> handle(TicketGetAllQuery request) {
         TicketGetAllHandler handler = new TicketGetAllHandler(request, ticketMapper, ticketRepository);
         return handler.execute();
     }
@@ -68,7 +68,7 @@ public class TicketService {
         handler.execute();
     }
 
-    public PaginatedResult<TicketDetailDto> handle(TicketSearchQuery request) {
+    public PaginatedResult<TicketDto> handle(TicketSearchQuery request) {
         TicketSearchHandler handler = new TicketSearchHandler(request, ticketMapper, ticketRepository);
         return handler.execute();
     }

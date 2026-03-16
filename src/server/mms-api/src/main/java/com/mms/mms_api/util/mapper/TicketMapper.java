@@ -23,13 +23,16 @@ public interface TicketMapper {
     @Mapping(target = "user", ignore = true)
     Ticket toEntity(TicketCreateCommand command);
 
-    @Mapping(target = "promotion.name", source = "ticket.promotion.title")
     @Mapping(target = "name", ignore = true)
-    TicketDto toDto(Ticket ticket);
-
-    @InheritConfiguration(name = "toDto")
+    @Mapping(target = "movie", source = "ticket.schedule.movie")
     @Mapping(target = "username", source = "ticket.user.username")
     @Mapping(target = "phoneNumber", source = "ticket.user.phoneNumber")
+    TicketDto toDto(Ticket ticket);
+    
+    @InheritConfiguration(name = "toDto")
+    @Mapping(target = "promotion.name", source = "ticket.promotion.title")
+    @Mapping(target = "showTime", source = "ticket.schedule.showTime")
+    @Mapping(target = "room", source = "ticket.schedule.room")
     TicketDetailDto toDetailDto(Ticket ticket);
 
     @Mapping(target = "schedule", ignore = true)
