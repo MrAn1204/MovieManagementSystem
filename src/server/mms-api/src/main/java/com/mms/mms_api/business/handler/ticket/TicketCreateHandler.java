@@ -7,7 +7,7 @@ import com.mms.mms_api.business.service.TicketDependencies;
 import com.mms.mms_api.exception.ResourceNotFoundException;
 import com.mms.mms_api.data.ScheduleSeatRepository;
 import com.mms.mms_api.data.TicketRepository;
-import com.mms.mms_api.dto.ticket.TicketDto;
+import com.mms.mms_api.dto.ticket.TicketDetailDto;
 import com.mms.mms_api.util.mapper.TicketMapper;
 import com.mms.mms_api.model.Promotion;
 import com.mms.mms_api.model.Schedule;
@@ -17,7 +17,7 @@ import com.mms.mms_api.model.Seat;
 import com.mms.mms_api.model.Ticket;
 import com.mms.mms_api.model.User;
 
-public class TicketCreateHandler extends TicketBaseHandler<TicketCreateCommand, TicketDto> {
+public class TicketCreateHandler extends TicketBaseHandler<TicketCreateCommand, TicketDetailDto> {
     private final TicketDependencies ticketDependencies;
 
     private final ScheduleSeatRepository scheduleSeatRepository;
@@ -31,7 +31,7 @@ public class TicketCreateHandler extends TicketBaseHandler<TicketCreateCommand, 
     }
 
     @Override
-    public TicketDto execute() {
+    public TicketDetailDto execute() {
         Ticket ticket = ticketMapper.toEntity(request);
 
         Schedule schedule = ticketDependencies.getScheduleById(request.getScheduleId());
@@ -56,6 +56,6 @@ public class TicketCreateHandler extends TicketBaseHandler<TicketCreateCommand, 
 
         Ticket savedTicket = ticketRepository.save(ticket);
 
-        return ticketMapper.toDto(savedTicket);
+        return ticketMapper.toDetailDto(savedTicket);
     }
 }

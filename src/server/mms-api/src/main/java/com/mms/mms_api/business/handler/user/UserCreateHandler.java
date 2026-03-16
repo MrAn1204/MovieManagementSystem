@@ -8,12 +8,12 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import com.mms.mms_api.business.command.user.UserCreateCommand;
 import com.mms.mms_api.data.RoleRepository;
 import com.mms.mms_api.data.UserRepository;
-import com.mms.mms_api.dto.user.UserDto;
+import com.mms.mms_api.dto.user.UserDetailDto;
 import com.mms.mms_api.model.Role;
 import com.mms.mms_api.model.User;
 import com.mms.mms_api.util.mapper.UserMapper;
 
-public class UserCreateHandler extends UserBaseHandler<UserCreateCommand, UserDto> {
+public class UserCreateHandler extends UserBaseHandler<UserCreateCommand, UserDetailDto> {
     private RoleRepository roleRepository;
 
     private PasswordEncoder passwordEncoder;
@@ -26,7 +26,7 @@ public class UserCreateHandler extends UserBaseHandler<UserCreateCommand, UserDt
         this.passwordEncoder = passwordEncoder;
     }
 
-    public UserDto execute() {
+    public UserDetailDto execute() {
         List<UUID> roleIds = request.getRoleIds();
         List<Role> mappedRoles = roleRepository.findAllById(roleIds);
 
@@ -37,6 +37,6 @@ public class UserCreateHandler extends UserBaseHandler<UserCreateCommand, UserDt
 
         User savedUser = userRepository.save(user);
 
-        return userMapper.toDto(savedUser);
+        return userMapper.toDetailDto(savedUser);
     }
 }

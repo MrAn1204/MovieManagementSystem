@@ -49,17 +49,17 @@ public class RoomController {
     }
 
     @PostMapping("/create")
-    public ResponseEntity<RoomDto> create(@RequestBody @Valid RoomCreateCommand request) {
+    public ResponseEntity<RoomDetailDto> create(@RequestBody @Valid RoomCreateCommand request) {
         roomValidator.validate(request);
-        RoomDto roomDto = roomService.handle(request);
+        RoomDetailDto roomDto = roomService.handle(request);
         return ResponseEntity.ok(roomDto);
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<RoomDto> update(@PathVariable UUID id, @RequestBody @Valid RoomUpdateCommand request) {
+    public ResponseEntity<RoomDetailDto> update(@PathVariable UUID id, @RequestBody @Valid RoomUpdateCommand request) {
         request.setId(id);
         roomValidator.validate(request);
-        RoomDto updatedRoom = roomService.handle(request);
+        RoomDetailDto updatedRoom = roomService.handle(request);
         return ResponseEntity.ok(updatedRoom);
     }
 

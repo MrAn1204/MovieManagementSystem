@@ -39,10 +39,10 @@ public class TicketController {
     private final TicketValidator ticketValidator;
 
     @PostMapping("/create")
-    public ResponseEntity<TicketDto> create(@Valid @RequestBody TicketCreateCommand request) {
+    public ResponseEntity<TicketDetailDto> create(@Valid @RequestBody TicketCreateCommand request) {
         ticketValidator.validate(request);
 
-        TicketDto ticket = ticketService.handle(request);
+        TicketDetailDto ticket = ticketService.handle(request);
 
         return ResponseEntity.status(HttpStatus.CREATED).body(ticket);
     }
@@ -62,11 +62,11 @@ public class TicketController {
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<TicketDto> update(@PathVariable UUID id, @Valid @RequestBody TicketUpdateCommand request) {
+    public ResponseEntity<TicketDetailDto> update(@PathVariable UUID id, @Valid @RequestBody TicketUpdateCommand request) {
         request.setId(id);
         ticketValidator.validate(request);
 
-        TicketDto ticket = ticketService.handle(request);
+        TicketDetailDto ticket = ticketService.handle(request);
 
         return ResponseEntity.ok(ticket);
     }

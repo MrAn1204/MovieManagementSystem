@@ -8,7 +8,7 @@ import com.mms.mms_api.exception.ResourceNotFoundException;
 import com.mms.mms_api.data.InvoiceRepository;
 import com.mms.mms_api.data.ScheduleSeatRepository;
 import com.mms.mms_api.data.TicketRepository;
-import com.mms.mms_api.dto.ticket.TicketDto;
+import com.mms.mms_api.dto.ticket.TicketDetailDto;
 import com.mms.mms_api.util.mapper.TicketMapper;
 import com.mms.mms_api.model.Invoice;
 import com.mms.mms_api.model.Promotion;
@@ -18,7 +18,7 @@ import com.mms.mms_api.model.ScheduleSeatId;
 import com.mms.mms_api.model.Seat;
 import com.mms.mms_api.model.Ticket;
 
-public class TicketUpdateHandler extends TicketBaseHandler<TicketUpdateCommand, TicketDto> {
+public class TicketUpdateHandler extends TicketBaseHandler<TicketUpdateCommand, TicketDetailDto> {
     private final TicketDependencies ticketDependencies;
 
     private final InvoiceRepository invoiceRepository;
@@ -35,7 +35,7 @@ public class TicketUpdateHandler extends TicketBaseHandler<TicketUpdateCommand, 
     }
 
     @Override
-    public TicketDto execute() {
+    public TicketDetailDto execute() {
         Ticket ticket = ticketRepository.findById(request.getId())
                 .orElseThrow(() -> new ResourceNotFoundException("ticket.notFound"));
 
@@ -75,6 +75,6 @@ public class TicketUpdateHandler extends TicketBaseHandler<TicketUpdateCommand, 
             invoiceRepository.save(invoice);
         }
 
-        return ticketMapper.toDto(updatedTicket);
+        return ticketMapper.toDetailDto(updatedTicket);
     }
 }

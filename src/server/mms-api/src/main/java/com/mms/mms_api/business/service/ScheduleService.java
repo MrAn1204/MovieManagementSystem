@@ -39,7 +39,7 @@ public class ScheduleService {
     private final RoomRepository roomRepository;
 
     @Transactional
-    public ScheduleDto handle(ScheduleCreateCommand request) {
+    public ScheduleDetailDto handle(ScheduleCreateCommand request) {
         ScheduleCreateHandler handler = new ScheduleCreateHandler(request, scheduleMapper,
                 scheduleRepository, movieRepository, roomRepository);
         return handler.execute();
@@ -56,7 +56,7 @@ public class ScheduleService {
     }
 
     @Transactional
-    public ScheduleDto handle(ScheduleUpdateCommand request) {
+    public ScheduleDetailDto handle(ScheduleUpdateCommand request) {
         ScheduleUpdateHandler handler = new ScheduleUpdateHandler(request, scheduleMapper, scheduleRepository,
                 movieRepository, roomRepository);
         return handler.execute();

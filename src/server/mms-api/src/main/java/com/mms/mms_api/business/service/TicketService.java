@@ -41,7 +41,7 @@ public class TicketService {
     private final TicketMapper ticketMapper;
 
     @Transactional
-    public TicketDto handle(TicketCreateCommand request) {
+    public TicketDetailDto handle(TicketCreateCommand request) {
         TicketCreateHandler handler = new TicketCreateHandler(request, ticketMapper, ticketRepository, ticketDependencies, scheduleSeatRepository);
         return handler.execute();
     }
@@ -57,7 +57,7 @@ public class TicketService {
     }
 
     @Transactional
-    public TicketDto handle(TicketUpdateCommand request) {
+    public TicketDetailDto handle(TicketUpdateCommand request) {
         TicketUpdateHandler handler = new TicketUpdateHandler(request, ticketMapper, ticketRepository, ticketDependencies, invoiceRepository, scheduleSeatRepository);
         return handler.execute();
     }

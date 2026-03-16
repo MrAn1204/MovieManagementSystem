@@ -31,7 +31,7 @@ public class RoomService {
 
     private final RoomMapper roomMapper;
 
-    public RoomDto handle(RoomCreateCommand request) {
+    public RoomDetailDto handle(RoomCreateCommand request) {
         RoomCreateHandler handler = new RoomCreateHandler(request, roomMapper, roomRepository);
         return handler.execute();
     }
@@ -46,7 +46,7 @@ public class RoomService {
         return handler.execute();
     }
 
-    public RoomDto handle(RoomUpdateCommand request) {
+    public RoomDetailDto handle(RoomUpdateCommand request) {
         RoomUpdateHandler handler = new RoomUpdateHandler(request, roomMapper, roomRepository);
         return handler.execute();
     }

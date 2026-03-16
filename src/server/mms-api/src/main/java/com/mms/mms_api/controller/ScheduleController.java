@@ -49,19 +49,19 @@ public class ScheduleController {
     }
 
     @PostMapping("/create")
-    public ResponseEntity<ScheduleDto> create(@Valid @RequestBody ScheduleCreateCommand request) {
+    public ResponseEntity<ScheduleDetailDto> create(@Valid @RequestBody ScheduleCreateCommand request) {
         scheduleValidator.validate(request);
 
-        ScheduleDto scheduleDto = scheduleService.handle(request);
+        ScheduleDetailDto scheduleDto = scheduleService.handle(request);
         return ResponseEntity.ok(scheduleDto);
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<ScheduleDto> update(@PathVariable UUID id, @Valid @RequestBody ScheduleUpdateCommand request) {
+    public ResponseEntity<ScheduleDetailDto> update(@PathVariable UUID id, @Valid @RequestBody ScheduleUpdateCommand request) {
         request.setId(id);
         scheduleValidator.validate(request);
 
-        ScheduleDto updatedSchedule = scheduleService.handle(request);
+        ScheduleDetailDto updatedSchedule = scheduleService.handle(request);
         return ResponseEntity.ok(updatedSchedule);
     }
 

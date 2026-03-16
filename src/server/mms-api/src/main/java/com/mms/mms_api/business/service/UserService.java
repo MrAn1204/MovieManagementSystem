@@ -37,7 +37,7 @@ public class UserService {
 
     private PasswordEncoder passwordEncoder;
 
-    public UserDto handle(UserCreateCommand request) {
+    public UserDetailDto handle(UserCreateCommand request) {
         UserCreateHandler handler = new UserCreateHandler(request, userMapper, userRepository, roleRepository, passwordEncoder);
 
         return handler.execute();
@@ -55,7 +55,7 @@ public class UserService {
         return handler.execute();
     }
 
-    public UserDto handle(UserUpdateCommand request) {
+    public UserDetailDto handle(UserUpdateCommand request) {
         UserUpdateHandler handler = new UserUpdateHandler(request, userMapper, userRepository, roleRepository, passwordEncoder);
 
         return handler.execute();

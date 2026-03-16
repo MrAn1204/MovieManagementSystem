@@ -4,18 +4,18 @@ import java.util.Objects;
 
 import com.mms.mms_api.business.command.room.RoomUpdateCommand;
 import com.mms.mms_api.data.RoomRepository;
-import com.mms.mms_api.dto.room.RoomDto;
+import com.mms.mms_api.dto.room.RoomDetailDto;
 import com.mms.mms_api.exception.ResourceNotFoundException;
 import com.mms.mms_api.model.Room;
 import com.mms.mms_api.util.mapper.RoomMapper;
 
-public class RoomUpdateHandler extends RoomBaseHandler<RoomUpdateCommand, RoomDto> {
+public class RoomUpdateHandler extends RoomBaseHandler<RoomUpdateCommand, RoomDetailDto> {
     public RoomUpdateHandler(RoomUpdateCommand request, RoomMapper roomMapper, RoomRepository roomRepository) {
         super(request, roomMapper, roomRepository);
     }
 
     @Override
-    public RoomDto execute() {
+    public RoomDetailDto execute() {
         Room room = roomRepository.findById(request.getId()).orElseThrow(
                 () -> new ResourceNotFoundException("room.notFound"));
 
@@ -23,7 +23,7 @@ public class RoomUpdateHandler extends RoomBaseHandler<RoomUpdateCommand, RoomDt
 
         Room updatedRoom = roomRepository.save(Objects.requireNonNull(room));
 
-        return roomMapper.toDto(updatedRoom);
+        return roomMapper.toDetailDto(updatedRoom);
     }
 
 }

@@ -48,10 +48,10 @@ public class UserController {
     }
 
     @PostMapping("/create")
-    public ResponseEntity<UserDto> create(@Valid @RequestBody UserCreateCommand command) {
+    public ResponseEntity<UserDetailDto> create(@Valid @RequestBody UserCreateCommand command) {
         userValidator.validate(command);
 
-        UserDto result = userService.handle(command);
+        UserDetailDto result = userService.handle(command);
 
         return result != null
                 ? ResponseEntity.status(HttpStatus.CREATED).body(result)
@@ -68,11 +68,11 @@ public class UserController {
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<UserDto> update(@PathVariable UUID id, @Valid @RequestBody UserUpdateCommand command) {
+    public ResponseEntity<UserDetailDto> update(@PathVariable UUID id, @Valid @RequestBody UserUpdateCommand command) {
         command.setId(id);
         userValidator.validate(command);
 
-        UserDto updatedUser = userService.handle(command);
+        UserDetailDto updatedUser = userService.handle(command);
 
         return updatedUser != null
                 ? ResponseEntity.ok(updatedUser)
