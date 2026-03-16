@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { CreateEdit } from "../../../shared/component/create-edit/create-edit";
 import { InputField } from "../../../shared/component/form/input/input-field";
-import { SeatModel } from '../../../model/seat.model';
+import { SeatModel } from '../../../model/seat/seat.model';
 import { SelectField } from "../../../shared/component/form/select/select-field";
 import { FormOptionModel } from '../../../shared/model/form-option.model';
 import { ReactiveFormsModule } from "@angular/forms";

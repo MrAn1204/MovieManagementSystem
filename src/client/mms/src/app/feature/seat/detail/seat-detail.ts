@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { Detail } from "../../../shared/component/detail/detail-component/detail";
-import { SeatModel } from '../../../model/seat.model';
+import { SeatModel } from '../../../model/seat/seat.model';
 import { FormatCellPipe } from '../../../shared/pipe/format-cell/format-cell-pipe';
 import { DetailText } from "../../../shared/component/detail/detail-text/detail-text";
 import { SeatCreateEdit } from '../create-edit/seat-create-edit';

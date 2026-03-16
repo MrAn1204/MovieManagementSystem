@@ -1,10 +1,11 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
-import { ScheduleModel } from '../../model/schedule.model';
+import { ScheduleModel } from '../../model/schedule/schedule.model';
 import { ScheduleSearchModel } from '../../model/search/schedule-search.model';
 import { PaginatedResult } from '../../shared/model/paginated-result.model';
 import { ScheduleFormModel } from '../../model/form/schedule-form.model';
+import { ScheduleDetailModel } from '../../model/schedule/schedule-detail.model';
 
 @Injectable({
   providedIn: 'root',
@@ -18,16 +19,16 @@ export class ScheduleService {
     return this.http.get<ScheduleModel[]>(this.baseUrl);
   }
 
-  getById(id: string): Observable<ScheduleModel> {
-    return this.http.get<ScheduleModel>(`${this.baseUrl}/${id}`);
+  getById(id: string): Observable<ScheduleDetailModel> {
+    return this.http.get<ScheduleDetailModel>(`${this.baseUrl}/${id}`);
   }
 
-  create(schedule: ScheduleFormModel): Observable<ScheduleModel> {
-    return this.http.post<ScheduleModel>(`${this.baseUrl}/create`, schedule);
+  create(schedule: ScheduleFormModel): Observable<ScheduleDetailModel> {
+    return this.http.post<ScheduleDetailModel>(`${this.baseUrl}/create`, schedule);
   }
 
-  update(id: string, schedule: ScheduleFormModel): Observable<ScheduleModel> {
-    return this.http.put<ScheduleModel>(`${this.baseUrl}/${id}`, schedule);
+  update(id: string, schedule: ScheduleFormModel): Observable<ScheduleDetailModel> {
+    return this.http.put<ScheduleDetailModel>(`${this.baseUrl}/${id}`, schedule);
   }
 
   delete(id: string): Observable<null> {

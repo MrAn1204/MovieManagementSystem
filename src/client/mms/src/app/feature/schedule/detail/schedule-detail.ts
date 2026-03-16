@@ -1,10 +1,10 @@
 import { Component } from '@angular/core';
 import { DetailText } from "../../../shared/component/detail/detail-text/detail-text";
-import { ScheduleModel } from '../../../model/schedule.model';
 import { FormatCellPipe } from '../../../shared/pipe/format-cell/format-cell-pipe';
 import { Detail } from "../../../shared/component/detail/detail-component/detail";
 import { ScheduleCreateEdit } from '../create-edit/schedule-create-edit';
 import { DetailDialog } from '../../../shared/component/dialog/detail/detail-dialog';
+import { ScheduleDetailModel } from '../../../model/schedule/schedule-detail.model';
 
 @Component({
   selector: 'app-schedule-detail',
@@ -12,6 +12,6 @@ import { DetailDialog } from '../../../shared/component/dialog/detail/detail-dia
   templateUrl: './schedule-detail.html',
   styleUrl: './schedule-detail.css',
 })
-export class ScheduleDetail extends DetailDialog<ScheduleModel> {
+export class ScheduleDetail extends DetailDialog<ScheduleDetailModel> {
   protected override updateDialog = ScheduleCreateEdit;
 }

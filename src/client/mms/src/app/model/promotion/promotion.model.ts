@@ -1,4 +1,4 @@
-import { BaseEntityModel } from '../shared/model/base-entity.model';
+import { BaseEntityModel } from '../../shared/model/base-entity.model';
 
 export interface PromotionModel extends BaseEntityModel {
   title: string;

@@ -1,7 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
-import { GenreModel } from '../../model/genre.model';
+import { GenreModel } from '../../model/movie/genre.model';
 
 @Injectable({
   providedIn: 'root',

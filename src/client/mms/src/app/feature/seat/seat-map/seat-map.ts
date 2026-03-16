@@ -1,6 +1,6 @@
 import { Component, input, signal } from '@angular/core';
 import { SeatService } from '../../../service/seat/seat.service';
-import { SeatModel } from '../../../model/seat.model';
+import { SeatModel } from '../../../model/seat/seat.model';
 import { NgClass } from '@angular/common';
 import { BaseFeature } from '../../../shared/component/feature/base-feature';
 import { FormGroup } from '@angular/forms';
@@ -111,7 +111,10 @@ export class SeatMap extends BaseFeature<SeatModel> {
 
   override patchEntityForm(model: SeatModel): void {
     this.entityForm.patchValue({
-      ...model,
+      name: model.name,
+      seatType: model.seatType,
+      seatRow: model.seatRow,
+      seatColumn: model.seatColumn,
     });
   }
 

@@ -4,7 +4,7 @@ import { Table } from "../../../shared/component/table/table";
 import { MovieFilter } from "../filter/movie-filter";
 import { MovieCreateEdit } from '../create-edit/movie-create-edit';
 import { MovieDetail } from '../detail/movie-detail';
-import { MovieModel } from '../../../model/movie.model';
+import { MovieModel } from '../../../model/movie/movie.model';
 import { MovieService } from '../../../service/movie/movie.service';
 import { FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { TableColumnModel } from '../../../shared/model/table-column.model';

@@ -1,7 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
-import { MovieModel } from '../../model/movie.model';
+import { MovieModel } from '../../model/movie/movie.model';
 import { MovieSearchModel } from '../../model/search/movie-search.model';
 import { PaginatedResult } from '../../shared/model/paginated-result.model';
 import { MovieFormModel } from '../../model/form/movie-form.model';

@@ -1,7 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
-import { StudioModel } from '../../model/studio.model';
+import { StudioModel } from '../../model/movie/studio.model';
 
 @Injectable({
   providedIn: 'root',

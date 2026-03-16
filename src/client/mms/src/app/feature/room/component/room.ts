@@ -4,7 +4,7 @@ import { Table } from "../../../shared/component/table/table";
 import { RoomFilter } from '../filter/room-filter';
 import { RoomCreateEdit } from '../create-edit/room-create-edit';
 import { RoomDetail } from '../detail/room-detail';
-import { RoomModel } from '../../../model/room.model';
+import { RoomModel } from '../../../model/room/room.model';
 import { RoomService } from '../../../service/room/room.service';
 import { FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { TableColumnModel } from '../../../shared/model/table-column.model';

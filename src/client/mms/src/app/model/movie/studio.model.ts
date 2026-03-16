@@ -1,4 +1,4 @@
-import { BaseEntityModel } from '../shared/model/base-entity.model';
+import { BaseEntityModel } from '../../shared/model/base-entity.model';
 
 export interface StudioModel extends BaseEntityModel {
   name: string;

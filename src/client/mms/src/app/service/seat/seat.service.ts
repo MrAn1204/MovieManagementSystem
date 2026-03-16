@@ -1,7 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
-import { SeatModel } from '../../model/seat.model';
+import { SeatModel } from '../../model/seat/seat.model';
 import { SeatFormModel } from '../../model/form/seat-form.model';
 
 @Injectable({

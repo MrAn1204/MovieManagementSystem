@@ -4,7 +4,7 @@ import { DetailText } from "../../../shared/component/detail/detail-text/detail-
 import { FormatCellPipe } from '../../../shared/pipe/format-cell/format-cell-pipe';
 import { Detail } from "../../../shared/component/detail/detail-component/detail";
 import { MovieCreateEdit } from '../create-edit/movie-create-edit';
-import { MovieModel } from '../../../model/movie.model';
+import { MovieModel } from '../../../model/movie/movie.model';
 import { DetailDialog } from '../../../shared/component/dialog/detail/detail-dialog';
 
 @Component({

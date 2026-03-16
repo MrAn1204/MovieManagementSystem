@@ -1,8 +1,8 @@
-import { InvoiceModel } from './invoice.model';
+import { BaseEntityModel } from '../../shared/model/base-entity.model';
+import { InvoiceModel } from '../invoice/invoice.model';
 import { RoleModel } from './role.model';
-import { BaseEntityModel } from '../shared/model/base-entity.model';
 
-export interface UserModel extends BaseEntityModel {
+export interface UserDetailModel extends BaseEntityModel {
   username: string;
   fullname: string;
   gender: string;

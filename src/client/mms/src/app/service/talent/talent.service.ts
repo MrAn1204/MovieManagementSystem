@@ -1,7 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
-import { TalentModel } from '../../model/talent.model';
+import { TalentModel } from '../../model/movie/talent.model';
 
 @Injectable({
   providedIn: 'root',

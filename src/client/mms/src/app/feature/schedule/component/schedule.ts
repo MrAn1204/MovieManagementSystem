@@ -4,7 +4,7 @@ import { Table } from "../../../shared/component/table/table";
 import { ScheduleFilter } from "../filter/schedule-filter";
 import { ScheduleCreateEdit } from '../create-edit/schedule-create-edit';
 import { ScheduleDetail } from '../detail/schedule-detail';
-import { ScheduleModel } from '../../../model/schedule.model';
+import { ScheduleModel } from '../../../model/schedule/schedule.model';
 import { ScheduleService } from '../../../service/schedule/schedule.service';
 import { FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { TableColumnModel } from '../../../shared/model/table-column.model';
