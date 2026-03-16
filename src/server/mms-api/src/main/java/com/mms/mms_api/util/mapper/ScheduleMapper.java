@@ -22,8 +22,6 @@ public interface ScheduleMapper {
     Schedule toEntity(ScheduleCreateCommand command);
 
     @Mapping(target = "name", ignore = true)
-    @Mapping(target = "movie", source = "movie.name")
-    @Mapping(target = "room", source = "room.name")
     ScheduleDto toDto(Schedule schedule);
 
     @Mapping(target = "name", ignore = true)

@@ -2,6 +2,7 @@ package com.mms.mms_api.dto.schedule;
 
 import java.time.LocalDateTime;
 
+import com.mms.mms_api.common.IdNameDto;
 import com.mms.mms_api.dto.BaseDto;
 
 import lombok.Data;
@@ -14,7 +15,7 @@ public class ScheduleDto extends BaseDto {
 
     private LocalDateTime showTime;
 
-    private String movie;
+    private IdNameDto movie;
 
-    private String room;
+    private IdNameDto room;
 }
