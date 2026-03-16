@@ -2,6 +2,7 @@ package com.mms.mms_api.business.service;
 
 import java.util.List;
 
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -34,6 +35,7 @@ public class PromotionService {
 
     private final PromotionMapper promotionMapper;
 
+    @PreAuthorize("hasAuthority('ADMIN')")
     @Transactional
     public PromotionDto handle(PromotionCreateCommand request) {
         PromotionCreateHandler handler = new PromotionCreateHandler(request, promotionMapper, promotionRepository,
@@ -51,6 +53,7 @@ public class PromotionService {
         return handler.execute();
     }
 
+    @PreAuthorize("hasAuthority('ADMIN')")
     @Transactional
     public PromotionDto handle(PromotionUpdateCommand request) {
         PromotionUpdateHandler handler = new PromotionUpdateHandler(request, promotionMapper, promotionRepository,
@@ -63,6 +66,7 @@ public class PromotionService {
         return handler.execute();
     }
 
+    @PreAuthorize("hasAuthority('ADMIN')")
     @Transactional
     public void handle(PromotionDeleteCommand request) {
         PromotionDeleteHandler handler = new PromotionDeleteHandler(request, promotionRepository);

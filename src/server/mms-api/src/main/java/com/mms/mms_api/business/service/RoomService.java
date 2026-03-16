@@ -2,6 +2,7 @@ package com.mms.mms_api.business.service;
 
 import java.util.List;
 
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Service;
 
 import com.mms.mms_api.business.command.room.RoomCreateCommand;
@@ -31,6 +32,7 @@ public class RoomService {
 
     private final RoomMapper roomMapper;
 
+    @PreAuthorize("hasAuthority('ADMIN')")
     public RoomDetailDto handle(RoomCreateCommand request) {
         RoomCreateHandler handler = new RoomCreateHandler(request, roomMapper, roomRepository);
         return handler.execute();
@@ -46,11 +48,13 @@ public class RoomService {
         return handler.execute();
     }
 
+    @PreAuthorize("hasAuthority('ADMIN')")
     public RoomDetailDto handle(RoomUpdateCommand request) {
         RoomUpdateHandler handler = new RoomUpdateHandler(request, roomMapper, roomRepository);
         return handler.execute();
     }
 
+    @PreAuthorize("hasAuthority('ADMIN')")
     public void handle(RoomDeleteCommand request) {
         RoomDeleteHandler handler = new RoomDeleteHandler(request, roomMapper, roomRepository);
         handler.execute();

@@ -2,6 +2,7 @@ package com.mms.mms_api.business.service;
 
 import java.util.List;
 
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -34,6 +35,7 @@ public class InvoiceService {
 
     private final UserRepository userRepository;
 
+    @PreAuthorize("hasAuthority('ADMIN')")
     @Transactional
     public InvoiceDto handle(InvoiceCreateCommand request) {
         InvoiceCreateHandler handler = new InvoiceCreateHandler(request, invoiceMapper, invoiceRepository,
@@ -42,16 +44,19 @@ public class InvoiceService {
 
     }
 
+    @PreAuthorize("hasAuthority('ADMIN')")
     public List<InvoiceDto> handle(InvoiceGetAllQuery request) {
         InvoiceGetAllHandler handler = new InvoiceGetAllHandler(request, invoiceMapper, invoiceRepository);
         return handler.execute();
     }
 
+    @PreAuthorize("hasAuthority('ADMIN') || @invoiceValidationService.isOwnedByUserId(#request.id, authentication.principal.id)")
     public InvoiceDto handle(InvoiceGetByIdQuery request) {
         InvoiceGetByIdHandler handler = new InvoiceGetByIdHandler(request, invoiceMapper, invoiceRepository);
         return handler.execute();
     }
 
+    @PreAuthorize("hasAuthority('ADMIN')")
     @Transactional
     public InvoiceDto handle(InvoiceUpdateCommand request) {
         InvoiceUpdateHandler handler = new InvoiceUpdateHandler(request, invoiceMapper, invoiceRepository,
@@ -59,6 +64,7 @@ public class InvoiceService {
         return handler.execute();
     }
 
+    @PreAuthorize("hasAuthority('ADMIN')")
     @Transactional
     public void handle(InvoiceDeleteCommand request) {
         InvoiceDeleteHandler handler = new InvoiceDeleteHandler(request, invoiceRepository);
