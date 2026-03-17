@@ -6,11 +6,13 @@ import { provideClientHydration, withEventReplay } from '@angular/platform-brows
 import { provideHttpClient, withFetch, withInterceptors } from '@angular/common/http';
 import { authInterceptor } from './interceptor/auth/auth-interceptor';
 import { errorInterceptor } from './interceptor/error/error-interceptor';
+import { OVERLAY_DEFAULT_CONFIG } from '@angular/cdk/overlay';
 
 export const appConfig: ApplicationConfig = {
   providers: [
     provideBrowserGlobalErrorListeners(),
     provideRouter(routes), provideClientHydration(withEventReplay()),
-    provideHttpClient(withFetch(), withInterceptors([authInterceptor, errorInterceptor]))
+    provideHttpClient(withFetch(), withInterceptors([authInterceptor, errorInterceptor])),
+    { provide: OVERLAY_DEFAULT_CONFIG, useValue: { usePopover: false } }
   ]
 };
