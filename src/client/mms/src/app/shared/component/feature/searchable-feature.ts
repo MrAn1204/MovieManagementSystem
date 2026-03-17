@@ -5,6 +5,7 @@ import { FormOptionModel } from "../../model/form-option.model";
 import { FormGroup } from "@angular/forms";
 import { TableColumnModel } from "../../model/table-column.model";
 import { createEmptyPaginatedResult, PaginatedResult } from "../../model/paginated-result.model";
+import { finalize } from "rxjs";
 
 @Directive()
 export abstract class SearchableFeature<T extends BaseEntityModel> extends BaseFeature<T> {
@@ -33,7 +34,15 @@ export abstract class SearchableFeature<T extends BaseEntityModel> extends BaseF
 
   protected abstract getFilterGroup(): FormGroup;
 
-  abstract onSearch(): void;
+  onSearch(): void {
+    this.showSpinner();
+
+    this.entityService.search!(this.searchForm.value)
+      .pipe(finalize(() => this.hideSpinner()))
+      .subscribe(res => {
+        this.data.set(res);
+      });
+  }
 
   onChangePageNumber(page: number): void {
     this.searchForm.controls['pageNumber'].setValue(page);
@@ -43,5 +52,26 @@ export abstract class SearchableFeature<T extends BaseEntityModel> extends BaseF
   onChangePageSize(size: number): void {
     this.searchForm.controls['pageSize'].setValue(size);
     this.onSearch();
+  }
+
+  protected override saveNew(respondHandler?: () => void): void {
+    super.saveNew(() => {
+      respondHandler?.();
+      this.onSearch();
+    });
+  }
+
+  protected override saveUpdate(id: string, respondHandler?: () => void): void {
+    super.saveUpdate(id, () => {
+      respondHandler?.();
+      this.onSearch();
+    });
+  }
+
+  protected override confirmDelete(id: string, respondHandler?: () => void): void {
+    super.confirmDelete(id, () => {
+      respondHandler?.();
+      this.onSearch();
+    });
   }
 }
