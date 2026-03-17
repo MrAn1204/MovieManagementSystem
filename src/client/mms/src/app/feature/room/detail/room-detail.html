@@ -27,7 +27,8 @@
   <app-seat-map #seatMap
     [rowLength]="model?.rowLength ?? 0"
     [columnLength]="model?.columnLength ?? 0"
-    [roomId]="model?.id ?? ''">
+    [roomId]="model?.id ?? ''"
+    [seats]="model?.seats ?? []">
   </app-seat-map>
 
   <div custom-buttons>

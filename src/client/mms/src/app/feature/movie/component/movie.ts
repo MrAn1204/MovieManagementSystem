@@ -41,8 +41,8 @@ export class Movie extends SearchableFeature<MovieModel> {
 
   override roleConfig = getRoleConfig(this.entityName);
 
-  constructor(private readonly movieService: MovieService) {
-    super();
+  constructor(movieService: MovieService) {
+    super(movieService);
   }
 
   protected override getFilterGroup(): FormGroup {
@@ -67,46 +67,6 @@ export class Movie extends SearchableFeature<MovieModel> {
       talentIds: [[]],
       languageId: [''],
     });
-  }
-
-  override onSearch(): void {
-    this.movieService.search(this.searchForm.value).subscribe(res => {
-      this.data.set(res);
-    });
-  }
-
-  override saveNew(): void {
-    this.movieService.create(this.entityForm.value).subscribe(() => {
-      this.onSearch();
-    });
-  }
-
-  override saveUpdate(id: string): void {
-    this.movieService.update(id, this.entityForm.value).subscribe(() => {
-      this.onSearch();
-    });
-  }
-
-  override confirmDelete(id: string): void {
-    this.movieService.delete(id).subscribe(() => {
-      this.onSearch();
-    });
-  }
-
-  override onEdit(id: string): void {
-    this.movieService.getById(id).subscribe(res => {
-      this.displayEdit(res);
-    });
-  }
-
-  override onView(id: string): void {
-    this.movieService.getById(id).subscribe(res => {
-      this.displayInfo(res);
-    });
-  }
-
-  override onDelete(id: string): void {
-    this.displayDelete(id);
   }
 
   override patchEntityForm(model: MovieModel): void {

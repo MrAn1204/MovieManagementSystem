@@ -38,8 +38,8 @@ export class Schedule extends SearchableFeature<ScheduleModel> {
 
   override roleConfig = getRoleConfig(this.entityName);
 
-  constructor(private readonly scheduleService: ScheduleService) {
-    super();
+  constructor(scheduleService: ScheduleService) {
+    super(scheduleService);
   }
 
   protected override getFilterGroup(): FormGroup {
@@ -57,46 +57,6 @@ export class Schedule extends SearchableFeature<ScheduleModel> {
       movieId: ['', [Validators.required]],
       roomId: ['', [Validators.required]],
     });
-  }
-
-  override onSearch(): void {
-    this.scheduleService.search(this.searchForm.value).subscribe(res => {
-      this.data.set(res);
-    });
-  }
-
-  override saveNew(): void {
-    this.scheduleService.create(this.entityForm.value).subscribe(() => {
-      this.onSearch();
-    });
-  }
-
-  override saveUpdate(id: string): void {
-    this.scheduleService.update(id, this.entityForm.value).subscribe(() => {
-      this.onSearch();
-    });
-  }
-
-  override confirmDelete(id: string): void {
-    this.scheduleService.delete(id).subscribe(() => {
-      this.onSearch();
-    });
-  }
-
-  override onEdit(id: string): void {
-    this.scheduleService.getById(id).subscribe(res => {
-      this.displayEdit(res);
-    });
-  }
-
-  override onView(id: string): void {
-    this.scheduleService.getById(id).subscribe(res => {
-      this.displayInfo(res);
-    });
-  }
-
-  override onDelete(id: string): void {
-    this.displayDelete(id);
   }
 
   override patchEntityForm(model: ScheduleModel): void {

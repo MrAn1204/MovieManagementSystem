@@ -9,7 +9,6 @@ import { RoomService } from '../../../service/room/room.service';
 import { FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { TableColumnModel } from '../../../shared/model/table-column.model';
 import { getRoleConfig } from '../../../shared/config/role-config';
-import { RoomSearchModel } from '../../../model/search/room-search.model';
 import { SearchableFeature } from '../../../shared/component/feature/searchable-feature';
 
 @Component({
@@ -36,8 +35,8 @@ export class Room extends SearchableFeature<RoomModel> {
 
   override roleConfig = getRoleConfig(this.entityName);
 
-  constructor(private readonly roomService: RoomService) {
-    super();
+  constructor(roomService: RoomService) {
+    super(roomService);
   }
 
   protected override getFilterGroup(): FormGroup {
@@ -53,50 +52,6 @@ export class Room extends SearchableFeature<RoomModel> {
       rowLength: [1, [Validators.required, Validators.min(1)]],
       columnLength: [1, [Validators.required, Validators.min(1)]],
     });
-  }
-
-  override onSearch(): void {
-    const filter: RoomSearchModel = {
-      ...this.searchForm.value,
-    };
-
-    this.roomService.search(filter).subscribe(res => {
-      this.data.set(res);
-    });
-  }
-
-  override saveNew(): void {
-    this.roomService.create(this.entityForm.value).subscribe(() => {
-      this.onSearch();
-    });
-  }
-
-  override saveUpdate(id: string): void {
-    this.roomService.update(id, this.entityForm.value).subscribe(() => {
-      this.onSearch();
-    });
-  }
-
-  override confirmDelete(id: string): void {
-    this.roomService.delete(id).subscribe(() => {
-      this.onSearch();
-    });
-  }
-
-  override onEdit(id: string): void {
-    this.roomService.getById(id).subscribe(res => {
-      this.displayEdit(res);
-    });
-  }
-
-  override onView(id: string): void {
-    this.roomService.getById(id).subscribe(res => {
-      this.displayInfo(res);
-    });
-  }
-
-  override onDelete(id: string): void {
-    this.displayDelete(id);
   }
 
   override patchEntityForm(model: RoomModel): void {
