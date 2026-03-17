@@ -18,4 +18,13 @@
       </app-detail-text>
     </div>
   </div>
+
+  <hr class="my-8 border-platinum-300">
+
+  <app-seat-map
+    [rowLength]="model?.rowLength ?? 0"
+    [columnLength]="model?.columnLength ?? 0"
+    [roomId]="model?.room?.id ?? ''"
+    [seats]="model?.seats ?? []"
+  ></app-seat-map>
 </app-detail>

@@ -17,6 +17,12 @@
       <app-detail-text label="Column">
         {{ model?.seatColumn | formatCell }}
       </app-detail-text>
+
+      @if (model?.reserved !== null) {
+        <app-detail-text label="Status">
+          {{ model?.reserved ? 'Reserved' : 'Available' }}
+        </app-detail-text>
+      }
     </div>
   </div>
 </app-detail>

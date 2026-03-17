@@ -25,11 +25,12 @@
   <hr class="my-8 border-platinum-300">
 
   <app-seat-map #seatMap
+    [showType]="true"
     [rowLength]="model?.rowLength ?? 0"
     [columnLength]="model?.columnLength ?? 0"
     [roomId]="model?.id ?? ''"
-    [seats]="model?.seats ?? []">
-  </app-seat-map>
+    [seats]="model?.seats ?? []"
+  ></app-seat-map>
 
   <div custom-buttons>
     <button type="button" (click)="openAddSeat()"

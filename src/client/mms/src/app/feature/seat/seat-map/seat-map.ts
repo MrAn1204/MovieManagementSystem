@@ -24,6 +24,7 @@ export class SeatMap extends BaseFeature<SeatModel> {
 
   override roleConfig = getRoleConfig(this.entityName);
 
+  showType = input(false);
   rowLength = input.required<number>();
   columnLength = input.required<number>();
   roomId = input.required<string>();
@@ -88,6 +89,10 @@ export class SeatMap extends BaseFeature<SeatModel> {
   }
 
   getType(seat: SeatModel): string {
+    if (!this.showType()) {
+      return seat.reserved ? 'occupied' : 'seat';
+    }
+
     if (seat.seatType === 'STANDARD') {
       return 'seat';
     } else if (seat.seatType === 'PREMIUM') {
