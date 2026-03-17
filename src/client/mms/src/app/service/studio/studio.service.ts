@@ -1,15 +1,13 @@
-import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { StudioModel } from '../../model/movie/studio.model';
+import { EntityService } from '../entity.service';
 
 @Injectable({
   providedIn: 'root',
 })
-export class StudioService {
-  private readonly baseUrl = 'http://localhost:8080/api/studios';
-
-  constructor(private readonly http: HttpClient) { }
+export class StudioService extends EntityService<StudioModel> {
+  protected override baseUrl = 'http://localhost:8080/api/studios';
 
   getAll(): Observable<StudioModel[]> {
     return this.http.get<StudioModel[]>(this.baseUrl);

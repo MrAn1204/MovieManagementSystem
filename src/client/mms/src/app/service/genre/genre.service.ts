@@ -1,15 +1,13 @@
-import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { GenreModel } from '../../model/movie/genre.model';
+import { EntityService } from '../entity.service';
 
 @Injectable({
   providedIn: 'root',
 })
-export class GenreService {
-  private readonly baseUrl = 'http://localhost:8080/api/genres';
-
-  constructor(private readonly http: HttpClient) { }
+export class GenreService extends EntityService<GenreModel> {
+  protected override baseUrl = 'http://localhost:8080/api/genres';
 
   getAll(): Observable<GenreModel[]> {
     return this.http.get<GenreModel[]>(this.baseUrl);

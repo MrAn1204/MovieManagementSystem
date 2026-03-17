@@ -1,4 +1,3 @@
-import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { ScheduleModel } from '../../model/schedule/schedule.model';
@@ -6,14 +5,13 @@ import { ScheduleSearchModel } from '../../model/search/schedule-search.model';
 import { PaginatedResult } from '../../shared/model/paginated-result.model';
 import { ScheduleFormModel } from '../../model/form/schedule-form.model';
 import { ScheduleDetailModel } from '../../model/schedule/schedule-detail.model';
+import { EntityService } from '../entity.service';
 
 @Injectable({
   providedIn: 'root',
 })
-export class ScheduleService {
-  private readonly baseUrl = 'http://localhost:8080/api/schedules';
-
-  constructor(private readonly http: HttpClient) { }
+export class ScheduleService extends EntityService<ScheduleModel> {
+  protected override baseUrl = 'http://localhost:8080/api/schedules';
 
   getAll(): Observable<ScheduleModel[]> {
     return this.http.get<ScheduleModel[]>(this.baseUrl);
@@ -35,7 +33,7 @@ export class ScheduleService {
     return this.http.delete<null>(`${this.baseUrl}/${id}`);
   }
 
-  search(filter: ScheduleSearchModel): Observable<PaginatedResult<ScheduleModel>> {
+  override search(filter: ScheduleSearchModel): Observable<PaginatedResult<ScheduleModel>> {
     return this.http.post<PaginatedResult<ScheduleModel>>(`${this.baseUrl}/search`, filter);
   }
 }

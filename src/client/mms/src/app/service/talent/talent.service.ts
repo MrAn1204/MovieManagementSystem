@@ -1,15 +1,13 @@
-import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { TalentModel } from '../../model/movie/talent.model';
+import { EntityService } from '../entity.service';
 
 @Injectable({
   providedIn: 'root',
 })
-export class TalentService {
-  private readonly baseUrl = 'http://localhost:8080/api/talents';
-
-  constructor(private readonly http: HttpClient) { }
+export class TalentService extends EntityService<TalentModel> {
+  protected override baseUrl = 'http://localhost:8080/api/talents';
 
   getAll(): Observable<TalentModel[]> {
     return this.http.get<TalentModel[]>(this.baseUrl);

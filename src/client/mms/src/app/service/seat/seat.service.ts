@@ -1,16 +1,14 @@
-import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { SeatModel } from '../../model/seat/seat.model';
 import { SeatFormModel } from '../../model/form/seat-form.model';
+import { EntityService } from '../entity.service';
 
 @Injectable({
   providedIn: 'root',
 })
-export class SeatService {
-    private readonly baseUrl = 'http://localhost:8080/api/seats';
-
-  constructor(private readonly http: HttpClient) { }
+export class SeatService extends EntityService<SeatModel> {
+  protected override baseUrl = 'http://localhost:8080/api/seats';
 
   getAll(): Observable<SeatModel[]> {
     return this.http.get<SeatModel[]>(this.baseUrl);

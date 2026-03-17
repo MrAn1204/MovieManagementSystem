@@ -1,15 +1,13 @@
-import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { LanguageModel } from '../../model/movie/language.model';
+import { EntityService } from '../entity.service';
 
 @Injectable({
   providedIn: 'root',
 })
-export class LanguageService {
-  private readonly baseUrl = 'http://localhost:8080/api/languages';
-
-  constructor(private readonly http: HttpClient) { }
+export class LanguageService extends EntityService<LanguageModel> {
+  protected override baseUrl = 'http://localhost:8080/api/languages';
 
   getAll(): Observable<LanguageModel[]> {
     return this.http.get<LanguageModel[]>(this.baseUrl);
