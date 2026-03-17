@@ -87,14 +87,18 @@ export abstract class BaseFeature<T extends BaseEntityModel> implements OnInit {
       });
   }
 
-  onView(id: string): void {
-    this.showSpinner();
+  onView(param: string | T): void {
+    if (typeof param === 'string') {
+      this.showSpinner();
 
-    this.entityService.getById(id)
-      .pipe(finalize(() => this.hideSpinner()))
-      .subscribe(res => {
-        this.displayInfo(res);
-      });
+      this.entityService.getById(param)
+        .pipe(finalize(() => this.hideSpinner()))
+        .subscribe(res => {
+          this.displayInfo(res);
+        });
+    } else {
+      this.displayInfo(param);
+    }
   }
 
   onDelete(id: string): void {
