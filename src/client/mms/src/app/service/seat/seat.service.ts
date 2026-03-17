@@ -29,8 +29,4 @@ export class SeatService extends EntityService<SeatModel> {
   delete(id: string): Observable<null> {
     return this.http.delete<null>(`${this.baseUrl}/${id}`);
   }
-
-  getAllInRoom(roomId: string): Observable<SeatModel[]> {
-    return this.http.post<SeatModel[]>(`${this.baseUrl}/seat-map`, { roomId: roomId });
-  }
 }
