@@ -11,4 +11,8 @@ import lombok.EqualsAndHashCode;
 @EqualsAndHashCode(callSuper = true)
 public class ScheduleDetailDto extends ScheduleDto {
     private List<SeatDto> seats;
+
+    private int rowLength;
+
+    private int columnLength;
 }

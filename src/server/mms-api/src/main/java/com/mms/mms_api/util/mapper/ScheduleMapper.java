@@ -26,6 +26,8 @@ public interface ScheduleMapper {
 
     @Mapping(target = "name", ignore = true)
     @Mapping(target = "seats", source = "schedule.scheduleSeats")
+    @Mapping(target = "rowLength", source = "schedule.room.rowLength")
+    @Mapping(target = "columnLength", source = "schedule.room.columnLength")
     ScheduleDetailDto toDetailDto(Schedule schedule);
 
     @Mapping(target = "movie", ignore = true)
