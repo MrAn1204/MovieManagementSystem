@@ -25,11 +25,13 @@ export class Room extends SearchableFeature<RoomModel> {
 
   override columns: TableColumnModel<RoomModel>[] = [
     { key: 'name', label: 'Name', type: 'string' },
+    { key: 'currentCapacity', label: 'Current Capacity', type: 'number' },
     { key: 'maxCapacity', label: 'Max Capacity', type: 'number' },
   ];
 
   override sortOptions = [
     { label: 'Name', value: 'name' },
+    { label: 'Current Capacity', value: 'currentCapacity' },
     { label: 'Max Capacity', value: 'maxCapacity' },
   ];
 
