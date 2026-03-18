@@ -32,7 +32,8 @@ export class Schedule extends SearchableFeature<ScheduleModel> {
   ];
 
   override sortOptions = [
-    { label: 'Name', value: 'name' },
+    { label: 'Movie Name', value: 'movieName' },
+    { label: 'Room Name', value: 'roomName' },
     { label: 'Show Time', value: 'showTime' },
   ];
 
