@@ -35,6 +35,8 @@ public class UserSpecification extends BaseSpecification<User, UserSearchQuery> 
             predicates.add(buildRolePredicate(root, criteriaBuilder));
         }
 
+        applyOrderBy(root, query, criteriaBuilder);
+
         return criteriaBuilder.and(predicates.toArray(Predicate[]::new));
     }
 

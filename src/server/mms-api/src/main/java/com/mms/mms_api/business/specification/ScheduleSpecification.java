@@ -15,6 +15,7 @@ import com.mms.mms_api.model.Schedule;
 
 import jakarta.persistence.criteria.CriteriaBuilder;
 import jakarta.persistence.criteria.CriteriaQuery;
+import jakarta.persistence.criteria.Expression;
 import jakarta.persistence.criteria.Join;
 import jakarta.persistence.criteria.Path;
 import jakarta.persistence.criteria.Predicate;
@@ -41,6 +42,8 @@ public class ScheduleSpecification extends BaseSpecification<Schedule, ScheduleS
         if (criteria.getRoomId() != null) {
             predicates.add(buildRoomPredicate(root, criteriaBuilder));
         }
+
+        applyOrderBy(root, query, criteriaBuilder);
 
         return criteriaBuilder.and(predicates.toArray(Predicate[]::new));
     }
@@ -76,5 +79,14 @@ public class ScheduleSpecification extends BaseSpecification<Schedule, ScheduleS
         Join<Schedule, Room> roomJoin = root.join("room");
         
         return criteriaBuilder.equal(roomJoin.get("id"), criteria.getRoomId());
+    }
+
+    @Override
+    protected Expression<?> getSortExpression(Root<Schedule> root, CriteriaBuilder criteriaBuilder) {
+        return switch (criteria.getSortBy()) {
+            case "movieName" -> root.join("movie").get("name");
+            case "roomName" -> root.join("room").get("name");
+            default -> root.get(criteria.getSortBy());
+        };
     }
 }
