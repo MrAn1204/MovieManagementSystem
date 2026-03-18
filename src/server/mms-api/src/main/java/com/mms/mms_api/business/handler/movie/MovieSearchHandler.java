@@ -1,7 +1,5 @@
 package com.mms.mms_api.business.handler.movie;
 
-import java.util.List;
-
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.domain.Specification;
@@ -23,19 +21,13 @@ public class MovieSearchHandler extends MovieBaseHandler<MovieSearchQuery, Pagin
 
     @Override
     public PaginatedResult<MovieDto> execute() {
-        Pageable pageable = SearchHelper.generatePageable(request.getSortDirection(), request.getSortBy(),
-                request.getPageNumber(), request.getPageSize());
+        Pageable pageable = SearchHelper.generatePageable(request.getPageNumber(), request.getPageSize());
 
         Specification<Movie> spec = new MovieSpecification(request);
 
         Page<Movie> moviePage = movieRepository.findAll(spec, pageable);
 
-        List<MovieDto> movieDtos = moviePage.getContent().stream()
-                .map(movieMapper::toDto)
-                .toList();
-
-        return new PaginatedResult<>(movieDtos, moviePage.getTotalElements(), moviePage.getTotalPages(),
-                request.getPageSize(), request.getPageNumber());
+        return SearchHelper.generatePaginatedResult(moviePage, movieMapper::toDto);
     }
 
 }

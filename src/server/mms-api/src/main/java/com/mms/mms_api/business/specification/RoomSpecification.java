@@ -34,6 +34,8 @@ public class RoomSpecification extends BaseSpecification<Room, RoomSearchQuery> 
             predicates.add(buildCapacityPredicate(root, criteriaBuilder));
         }
 
+        applyOrderBy(root, query, criteriaBuilder);
+
         return criteriaBuilder.and(predicates.toArray(Predicate[]::new));
     }
 
@@ -56,5 +58,14 @@ public class RoomSpecification extends BaseSpecification<Room, RoomSearchQuery> 
         } else {
             return criteriaBuilder.conjunction();
         }
+    }
+
+    @Override
+    protected Expression<?> getSortExpression(Root<Room> root, CriteriaBuilder criteriaBuilder) {
+        return switch (criteria.getSortBy()) {
+            case "currentCapacity" -> criteriaBuilder.size(root.get("seats"));
+            case "maxCapacity" -> criteriaBuilder.prod(root.get("rowLength"), root.get("columnLength"));
+            default -> root.get(criteria.getSortBy());
+        };
     }
 }

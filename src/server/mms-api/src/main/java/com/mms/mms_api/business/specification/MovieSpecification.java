@@ -54,6 +54,8 @@ public class MovieSpecification extends BaseSpecification<Movie, MovieSearchQuer
             predicates.add(buildReleaseDatePredicate(root, criteriaBuilder));
         }
 
+        applyOrderBy(root, query, criteriaBuilder);
+
         return criteriaBuilder.and(predicates.toArray(Predicate[]::new));
     }
 

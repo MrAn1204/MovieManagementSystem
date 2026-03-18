@@ -1,7 +1,5 @@
 package com.mms.mms_api.business.handler.room;
 
-import java.util.List;
-
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.domain.Specification;
@@ -23,19 +21,13 @@ public class RoomSearchHandler extends RoomBaseHandler<RoomSearchQuery, Paginate
 
     @Override
     public PaginatedResult<RoomDto> execute() {
-        Pageable pageable = SearchHelper.generatePageable(request.getSortDirection(), request.getSortBy(),
-                request.getPageNumber(), request.getPageSize());
+        Pageable pageable = SearchHelper.generatePageable(request.getPageNumber(), request.getPageSize());
 
         Specification<Room> spec = new RoomSpecification(request);
 
         Page<Room> rooms = roomRepository.findAll(spec, pageable);
 
-        List<RoomDto> roomDtos = rooms.getContent().stream()
-                .map(roomMapper::toDto)
-                .toList();
-
-        return new PaginatedResult<>(roomDtos, rooms.getTotalElements(), rooms.getTotalPages(),
-                request.getPageSize(), request.getPageNumber());
+        return SearchHelper.generatePaginatedResult(rooms, roomMapper::toDto);
     }
 
 }

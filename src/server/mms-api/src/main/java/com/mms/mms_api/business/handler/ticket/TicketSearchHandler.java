@@ -1,6 +1,5 @@
 package com.mms.mms_api.business.handler.ticket;
 
-import java.util.List;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.domain.Specification;
@@ -23,17 +22,13 @@ public class TicketSearchHandler extends TicketBaseHandler<TicketSearchQuery, Pa
 
     @Override
     public PaginatedResult<TicketDto> execute() {
-        Pageable pageable = SearchHelper.generatePageable(request.getSortDirection(), request.getSortBy(),
-                request.getPageNumber(), request.getPageSize());
+        Pageable pageable = SearchHelper.generatePageable(request.getPageNumber(), request.getPageSize());
 
         Specification<Ticket> specification = new TicketSpecification(request);
 
         Page<Ticket> tickets = ticketRepository.findAll(specification, pageable);
 
-        List<TicketDto> ticketDtos = tickets.stream().map(ticketMapper::toDto).toList();
-
-        return new PaginatedResult<>(ticketDtos, tickets.getTotalElements(), tickets.getTotalPages(),
-                request.getPageSize(), request.getPageNumber());
+        return SearchHelper.generatePaginatedResult(tickets, ticketMapper::toDto);
     }
 
 }

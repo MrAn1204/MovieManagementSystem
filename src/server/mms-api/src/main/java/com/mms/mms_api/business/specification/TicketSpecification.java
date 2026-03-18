@@ -52,6 +52,8 @@ public class TicketSpecification extends BaseSpecification<Ticket, TicketSearchQ
             predicates.add(buildPromotionPredicate(root, criteriaBuilder));
         }
 
+        applyOrderBy(root, query, criteriaBuilder);
+
         return criteriaBuilder.and(predicates.toArray(Predicate[]::new));
     }
 
