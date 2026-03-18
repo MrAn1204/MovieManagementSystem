@@ -33,6 +33,8 @@ public class PromotionSpecification extends BaseSpecification<Promotion, Promoti
             predicates.add(buildDatePredicate(root, criteriaBuilder));
         }
 
+        applyOrderBy(root, query, criteriaBuilder);
+
         return criteriaBuilder.and(predicates.toArray(Predicate[]::new));
     }
 

@@ -12,8 +12,6 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.domain.Specification;
 
-import java.util.List;
-
 public class UserSearchHandler extends UserBaseHandler<UserSearchQuery, PaginatedResult<UserDto>> {
     public UserSearchHandler(UserSearchQuery request, UserMapper userMapper, UserRepository userRepository) {
         super(request, userMapper, userRepository);
@@ -21,18 +19,12 @@ public class UserSearchHandler extends UserBaseHandler<UserSearchQuery, Paginate
 
     @Override
     public PaginatedResult<UserDto> execute() {
-        Pageable pageable = SearchHelper.generatePageable(request.getSortDirection(),
-                request.getSortBy(), request.getPageNumber(), request.getPageSize());
+        Pageable pageable = SearchHelper.generatePageable(request.getPageNumber(), request.getPageSize());
 
         Specification<User> spec = new UserSpecification(request);
 
         Page<User> userPage = userRepository.findAll(spec, pageable);
 
-        List<UserDto> userDtos = userPage.getContent().stream()
-                .map(userMapper::toDto)
-                .toList();
-
-        return new PaginatedResult<>(userDtos, userPage.getTotalElements(), userPage.getTotalPages(),
-                request.getPageSize(), request.getPageNumber());
+        return SearchHelper.generatePaginatedResult(userPage, userMapper::toDto);
     }
 }

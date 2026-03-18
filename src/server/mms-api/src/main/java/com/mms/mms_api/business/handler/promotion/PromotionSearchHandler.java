@@ -12,8 +12,6 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.domain.Specification;
 
-import java.util.List;
-
 public class PromotionSearchHandler extends PromotionBaseHandler<PromotionSearchQuery, PaginatedResult<PromotionDto>> {
 
     public PromotionSearchHandler(PromotionSearchQuery request, PromotionMapper promotionMapper,
@@ -23,18 +21,12 @@ public class PromotionSearchHandler extends PromotionBaseHandler<PromotionSearch
 
     @Override
     public PaginatedResult<PromotionDto> execute() {
-        Pageable pageable = SearchHelper.generatePageable(request.getSortDirection(), request.getSortBy(),
-                request.getPageNumber(), request.getPageSize());
+        Pageable pageable = SearchHelper.generatePageable(request.getPageNumber(), request.getPageSize());
 
         Specification<Promotion> spec = new PromotionSpecification(request);
 
         Page<Promotion> promotions = promotionRepository.findAll(spec, pageable);
 
-        List<PromotionDto> promotionDtos = promotions.getContent().stream()
-                .map(promotionMapper::toDto)
-                .toList();
-
-        return new PaginatedResult<>(promotionDtos, promotions.getTotalElements(), promotions.getTotalPages(),
-                request.getPageSize(), request.getPageNumber());
+        return SearchHelper.generatePaginatedResult(promotions, promotionMapper::toDto);
     }
 }
