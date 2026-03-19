@@ -22,4 +22,9 @@ public class AppMessageController {
         return appMessageService.getAllByEntity(entity);
     }
 
+    @GetMapping()
+    public Map<String, String> getAll() {
+        return appMessageService.getAll();
+    }
+
 }
