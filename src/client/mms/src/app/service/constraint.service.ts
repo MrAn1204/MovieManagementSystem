@@ -11,7 +11,7 @@ export class ConstraintService {
 
   constructor(private readonly http: HttpClient) { }
 
-  loadAll(): void {
+  async loadAll(): Promise<void> {
     this.http.get<Record<string, string>>(this.url).subscribe(res => {
       this.constraints = res;
     });
