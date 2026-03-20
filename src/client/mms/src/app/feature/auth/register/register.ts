@@ -9,6 +9,8 @@ import { AuthService } from '../../../service/auth/auth.service';
 import { HttpErrorResponse } from '@angular/common/http';
 import { ValidationError } from "../../../shared/component/form/error/validation-error";
 import { ConstraintService } from '../../../service/constraint.service';
+import { NgxSpinnerService } from 'ngx-spinner';
+import { finalize } from 'rxjs';
 
 @Component({
   selector: 'app-register',
@@ -26,7 +28,9 @@ export class Register {
   ]
 
   constructor(private readonly formBuilder: FormBuilder, private readonly authService: AuthService,
-      private readonly router: Router, private readonly constraintService: ConstraintService) {
+    private readonly router: Router, private readonly constraintService: ConstraintService,
+    private readonly spinner: NgxSpinnerService
+  ) {
     const constrains = this.constraintService.get('USERNAME_MIN', 'USERNAME_MAX', 'FULLNAME_MIN', 'FULLNAME_MAX',
       'PHONE_MIN', 'PHONE_MAX', 'ADDRESS_MIN', 'ADDRESS_MAX', 'PASSWORD_MIN');
 
@@ -46,7 +50,7 @@ export class Register {
         CustomValidators.required("user.fullname.required"),
         CustomValidators.size(constrains['FULLNAME_MIN'], constrains['FULLNAME_MAX'], 'user.fullname.size'),
       ]],
-      gender: ['', [
+      gender: [null, [
         CustomValidators.required("user.gender.required")
       ]],
       dateOfBirth: ['', [
@@ -63,16 +67,20 @@ export class Register {
   }
 
   onSubmit() {
+    this.form.markAllAsTouched();
+
     if (this.form.valid) {
-      this.authService.register(this.form.value).subscribe({
-        next: () => this.navigateToLogin(),
-        error: (res: HttpErrorResponse) => {
-          this.setServerErrors(res.error.messages);
-          this.form.markAllAsTouched();
-        }
-      });
-    } else {
-      this.form.markAllAsTouched();
+      this.spinner.show();
+
+      this.authService.register(this.form.value)
+        .pipe(finalize(() => this.spinner.hide()))
+        .subscribe({
+          next: () => this.navigateToLogin(),
+          error: (res: HttpErrorResponse) => {
+            this.setServerErrors(res.error.messages);
+            this.form.markAllAsTouched();
+          }
+        });
     }
   }
 

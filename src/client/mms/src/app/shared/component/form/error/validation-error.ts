@@ -19,7 +19,6 @@ export class ValidationError {
     const error: ErrorMessageModel | string = this.control().getError(errorKey);
 
     if (typeof error === 'string') {
-      console.log(error);
       return error;
     }
 
