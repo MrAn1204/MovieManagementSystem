@@ -16,7 +16,12 @@ export class ValidationError {
   get errorMessage(): string | null {
     const errorKey = Object.keys({ ...this.control().errors })[0];
 
-    const error: ErrorMessageModel = this.control().getError(errorKey);
+    const error: ErrorMessageModel | string = this.control().getError(errorKey);
+
+    if (typeof error === 'string') {
+      console.log(error);
+      return error;
+    }
 
     return this.messageService.get(error.message, error.args);
   }

@@ -33,7 +33,7 @@ export class CustomValidators {
     return (control: AbstractControl): ValidationErrors | null => {
       if (String(control.value).length < length) {
         return this.buildError('minLength', message, {
-          value: length
+          min: length
         });
       }
 
@@ -45,7 +45,7 @@ export class CustomValidators {
     return (control: AbstractControl): ValidationErrors | null => {
       if (String(control.value).length > length) {
         return this.buildError('maxLength', message, {
-          value: length
+          max: length
         });
       }
 
@@ -114,7 +114,7 @@ export class CustomValidators {
     };
   }
 
-  static passwordValid(message: string): ValidatorFn {
+  static passwordValid(minLength: number, message: string): ValidatorFn {
     return (control: AbstractControl): ValidationErrors | null => {
       const password = control.value;
 
@@ -133,7 +133,9 @@ export class CustomValidators {
         return null;
       }
 
-      return this.buildError('passwordInvalid', message);
+      return this.buildError('passwordInvalid', message, {
+        min: minLength
+      });
     };
   }
 
