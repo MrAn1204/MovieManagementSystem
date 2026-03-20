@@ -8,6 +8,7 @@ import { FormOptionModel } from '../../../shared/model/form-option.model';
 import { AuthService } from '../../../service/auth/auth.service';
 import { HttpErrorResponse } from '@angular/common/http';
 import { ValidationError } from "../../../shared/component/form/error/validation-error";
+import { ConstraintService } from '../../../service/constraint.service';
 
 @Component({
   selector: 'app-register',
@@ -24,75 +25,41 @@ export class Register {
     { label: 'Other', value: 'OTHER' },
   ]
 
-  errorMessages = {
-    username: {
-      required: 'Username is required',
-      minLength: 'Username must be at least 5 characters',
-      maxLength: 'Username cannot exceed 20 characters',
-    },
-    password: {
-      required: 'Password is required',
-      passwordInvalid: 'Password must have at least 8 characters, one uppercase letter, one lowercase letter, one digit, one special character, and no whitespace.',
-    },
-    confirmPassword: {
-      required: 'Confirm password is required',
-      passwordMismatch: 'Passwords do not match',
-    },
-    fullname: {
-      required: 'Full name is required',
-      minLength: 'Full name must be at least 3 characters',
-      maxLength: 'Full name cannot exceed 50 characters',
-    },
-    gender: {
-      required: 'Gender is required',
-    },
-    dateOfBirth: {
-      required: 'Date of birth is required',
-    },
-    phoneNumber: {
-      required: 'Phone number is required',
-      minLength: 'Phone number must be at least 10 characters',
-      maxLength: 'Phone number cannot exceed 15 characters',
-    },
-    email: {
-      email: 'Invalid email format',
-    },
-  };
+  constructor(private readonly formBuilder: FormBuilder, private readonly authService: AuthService,
+      private readonly router: Router, private readonly constraintService: ConstraintService) {
+    const constrains = this.constraintService.get('USERNAME_MIN', 'USERNAME_MAX', 'FULLNAME_MIN', 'FULLNAME_MAX',
+      'PHONE_MIN', 'PHONE_MAX', 'ADDRESS_MIN', 'ADDRESS_MAX', 'PASSWORD_MIN');
 
-  constructor(private readonly formBuilder: FormBuilder, private readonly authService: AuthService, private readonly router: Router) {
     this.form = this.formBuilder.group({
       username: ['', [
-        CustomValidators.required(this.errorMessages.username.required),
-        CustomValidators.minLength(5, this.errorMessages.username.minLength),
-        CustomValidators.maxLength(20, this.errorMessages.username.maxLength)
+        CustomValidators.required("user.username.required"),
+        CustomValidators.size(constrains['USERNAME_MIN'], constrains['USERNAME_MAX'], 'user.username.size'),
       ]],
       password: ['', [
-        CustomValidators.required(this.errorMessages.password.required),
-        CustomValidators.passwordValid
+        CustomValidators.required("user.password.required"),
+        CustomValidators.passwordValid(constrains['PASSWORD_MIN'], "user.password.invalid")
       ]],
       confirmPassword: ['', [
-        CustomValidators.required(this.errorMessages.confirmPassword.required)
+        CustomValidators.required("user.confirmPassword.required")
       ]],
       fullname: ['', [
-        CustomValidators.required(this.errorMessages.fullname.required),
-        CustomValidators.minLength(3, this.errorMessages.fullname.minLength),
-        CustomValidators.maxLength(50, this.errorMessages.fullname.maxLength)
+        CustomValidators.required("user.fullname.required"),
+        CustomValidators.size(constrains['FULLNAME_MIN'], constrains['FULLNAME_MAX'], 'user.fullname.size'),
       ]],
       gender: ['', [
-        CustomValidators.required(this.errorMessages.gender.required)
+        CustomValidators.required("user.gender.required")
       ]],
       dateOfBirth: ['', [
-        CustomValidators.required(this.errorMessages.dateOfBirth.required)
+        CustomValidators.required("user.dob.required")
       ]],
       email: ['', [
-        CustomValidators.email(this.errorMessages.email.email)
+        CustomValidators.email("user.email.invalid")
       ]],
       phoneNumber: ['', [
-        CustomValidators.required(this.errorMessages.phoneNumber.required),
-        CustomValidators.minLength(10, this.errorMessages.phoneNumber.minLength),
-        CustomValidators.maxLength(15, this.errorMessages.phoneNumber.maxLength)
+        CustomValidators.required("user.phone.required"),
+        CustomValidators.size(constrains['PHONE_MIN'], constrains['PHONE_MAX'], 'user.phone.size'),
       ]],
-    }, { validators: CustomValidators.passwordMatch });
+    }, { validators: CustomValidators.passwordMatch("user.password.mismatched") });
   }
 
   onSubmit() {
