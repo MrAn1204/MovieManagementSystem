@@ -10,10 +10,19 @@ export class CustomValidators {
     hasNoWhitespace: /^\S*$/
   }
 
+  private static buildError(name: string, message: string, args?: Record<string, any>): ValidationErrors {
+    return {
+      [name]: {
+        message: message,
+        args: args
+      }
+    };
+  }
+
   static required(message: string): ValidatorFn {
     return (control: AbstractControl): ValidationErrors | null => {
       if (!control.value) {
-        return { required: message };
+        return this.buildError('required', message);
       }
 
       return null;
@@ -23,7 +32,9 @@ export class CustomValidators {
   static minLength(length: number, message: string): ValidatorFn {
     return (control: AbstractControl): ValidationErrors | null => {
       if (String(control.value).length < length) {
-        return { minLength: message };
+        return this.buildError('minLength', message, {
+          value: length
+        });
       }
 
       return null;
@@ -33,7 +44,9 @@ export class CustomValidators {
   static maxLength(length: number, message: string): ValidatorFn {
     return (control: AbstractControl): ValidationErrors | null => {
       if (String(control.value).length > length) {
-        return { maxLength: message };
+        return this.buildError('maxLength', message, {
+          value: length
+        });
       }
 
       return null;
@@ -43,8 +56,11 @@ export class CustomValidators {
   static min(min: number, message: string): ValidatorFn {
     return (control: AbstractControl): ValidationErrors | null => {
       if (control.value < min) {
-        return { min: message };
+        return this.buildError('min', message, {
+          min: min
+        });
       }
+
       return null;
     }
   }
@@ -52,8 +68,11 @@ export class CustomValidators {
   static max(max: number, message: string): ValidatorFn {
     return (control: AbstractControl): ValidationErrors | null => {
       if (control.value > max) {
-        return { max: message };
+        return this.buildError('max', message, {
+          max: max
+        });
       }
+
       return null;
     }
   }
@@ -63,7 +82,10 @@ export class CustomValidators {
       const value = String(control.value);
 
       if (value.length < min || value.length > max) {
-        return { size: message };
+        return this.buildError('size', message, {
+          min: min,
+          max: max
+        });
       }
 
       return null;
@@ -73,57 +95,62 @@ export class CustomValidators {
   static email(message: string): ValidatorFn {
     return (control: AbstractControl): ValidationErrors | null => {
       if (Validators.email(control)) {
-        return { email: message };
+        return this.buildError('email', message);
       }
 
       return null;
     };
   }
 
-  static arrayContainNoNull(control: AbstractControl): ValidationErrors | null {
-    const value = control.value;
+  static arrayContainNoNull(message: string): ValidatorFn {
+    return (control: AbstractControl): ValidationErrors | null => {
+      const value = control.value;
 
-    if (Array.isArray(value) && value.some(item => item === null || item === undefined)) {
+      if (Array.isArray(value) && value.some(item => item === null || item === undefined)) {
+        return this.buildError('arrayContainNull', message);
+      }
 
-      return { arrayContainNull: true };
-    }
-
-    return null;
+      return null;
+    };
   }
 
-  static passwordValid(control: AbstractControl): ValidationErrors | null {
-    const password = control.value;
+  static passwordValid(message: string): ValidatorFn {
+    return (control: AbstractControl): ValidationErrors | null => {
+      const password = control.value;
 
-    const pattern = CustomValidators.passwordPattern;
+      const pattern = CustomValidators.passwordPattern;
 
-    const condition = {
-      minLength: password.length >= pattern.minLength,
-      hasUpper: pattern.hasUpper.test(password),
-      hasLower: pattern.hasLower.test(password),
-      hasDigit: pattern.hasDigit.test(password),
-      hasSpecial: pattern.hasSpecial.test(password),
-      hasNoWhitespace: pattern.hasNoWhitespace.test(password)
+      const condition = {
+        minLength: password.length >= pattern.minLength,
+        hasUpper: pattern.hasUpper.test(password),
+        hasLower: pattern.hasLower.test(password),
+        hasDigit: pattern.hasDigit.test(password),
+        hasSpecial: pattern.hasSpecial.test(password),
+        hasNoWhitespace: pattern.hasNoWhitespace.test(password)
+      };
+
+      if (condition.minLength && condition.hasUpper && condition.hasLower && condition.hasDigit && condition.hasSpecial && condition.hasNoWhitespace) {
+        return null;
+      }
+
+      return this.buildError('passwordInvalid', message);
     };
+  }
 
-    if (condition.minLength && condition.hasUpper && condition.hasLower && condition.hasDigit && condition.hasSpecial && condition.hasNoWhitespace) {
+
+  static passwordMatch(message: string): ValidatorFn {
+    return (control: AbstractControl): ValidationErrors | null => {
+      const password = control.get('password');
+      const confirmPassword = control.get('confirmPassword');
+
+      if (password?.value !== confirmPassword?.value) {
+        const error = this.buildError('passwordMismatch', message);
+
+        confirmPassword?.setErrors(error);
+        return error;
+      }
+
       return null;
     }
-
-    return { passwordInvalid: 'Password must have at least 8 characters, one uppercase letter, one lowercase letter, one digit, one special character, and no whitespace' };
-  }
-
-
-  static passwordMatch(control: AbstractControl): ValidationErrors | null {
-    const password = control.get('password');
-    const confirmPassword = control.get('confirmPassword');
-
-    if (password?.value !== confirmPassword?.value) {
-      const error = { passwordMismatch: 'Passwords do not match' };
-
-      confirmPassword?.setErrors(error);
-      return error;
-    }
-
-    return null;
   }
 }
