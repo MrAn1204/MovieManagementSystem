@@ -1,5 +1,6 @@
 import { Component, input } from '@angular/core';
 import { AbstractControl } from '@angular/forms';
+import { MessageService } from '../../../../service/message.service';
 
 @Component({
   selector: 'app-validation-error',
@@ -10,9 +11,23 @@ import { AbstractControl } from '@angular/forms';
 export class ValidationError {
   control = input.required<AbstractControl>();
 
-  get errorMessage(): string | null {
-    const error = Object.keys({ ...this.control().errors })[0];
+  constructor(private readonly messageService: MessageService) { }
 
-    return this.control().getError(error);
+  get errorMessage(): string | null {
+    const errorKey = Object.keys({ ...this.control().errors })[0];
+
+    const error: ErrorMessageModel | string = this.control().getError(errorKey);
+
+    if (typeof error === 'string') {
+      return error;
+    }
+
+    return this.messageService.get(error.message, error.args);
   }
 }
+
+interface ErrorMessageModel {
+  message: string;
+  args?: Record<string, any>;
+}
+

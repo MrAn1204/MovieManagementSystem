@@ -9,7 +9,6 @@ import java.util.stream.Collectors;
 import org.springframework.context.MessageSource;
 import org.springframework.context.NoSuchMessageException;
 import org.springframework.context.i18n.LocaleContextHolder;
-import org.springframework.lang.NonNull;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -30,10 +29,7 @@ public class AppMessageService {
 
     public String getByCode(String code, Object... args) {
         Locale locale = LocaleContextHolder.getLocale();
-        return getByCode(code, locale, args);
-    }
 
-    private String getByCode(String code, @NonNull Locale locale, Object... args) {
         if (code == null || code.isEmpty()) {
             return null;
         }
@@ -45,12 +41,15 @@ public class AppMessageService {
         }
     }
 
-    public Map<String, String> getAllByEntity(String entity, Object... args) {
+    public Map<String, String> getAllByEntity(String entity) {
         String prefix = entity + ".";
 
-        Locale locale = LocaleContextHolder.getLocale();
-        
         return messageKeys.stream().filter(key -> key.startsWith(prefix))
-                .collect(Collectors.toMap(key -> key, key -> getByCode(key, locale, args)));
+                .collect(Collectors.toMap(key -> key, this::getByCode));
+    }
+
+    public Map<String, String> getAll() {
+        return messageKeys.stream()
+                .collect(Collectors.toMap(key -> key, this::getByCode));
     }
 }

@@ -5,9 +5,9 @@ import lombok.Data;
 
 @Data
 public class LoginCommand {
-    @NotNull(message = "user.username.required")
+    @NotNull(message = "{user.username.required}")
     private String username;
 
-    @NotNull(message = "user.password.required")
+    @NotNull(message = "{user.password.required}")
     private String password;
 }

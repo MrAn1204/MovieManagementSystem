@@ -1,33 +1,50 @@
 import { Component } from '@angular/core';
-import { FormBuilder, FormGroup, Validators, ReactiveFormsModule } from '@angular/forms';
+import { FormBuilder, FormGroup, ReactiveFormsModule } from '@angular/forms';
 import { InputField } from "../../../shared/component/form/input/input-field";
 import { AuthService } from '../../../service/auth/auth.service';
 import { HttpErrorResponse } from '@angular/common/http';
 import { Router } from '@angular/router';
+import { CustomValidators } from '../../../shared/util/custom-validators';
+import { ValidationError } from "../../../shared/component/form/error/validation-error";
+import { NgxSpinnerService } from 'ngx-spinner';
+import { finalize } from 'rxjs';
 
 @Component({
   selector: 'app-login',
-  imports: [InputField, ReactiveFormsModule],
+  imports: [InputField, ReactiveFormsModule, ValidationError],
   templateUrl: './login.html',
   styleUrl: './login.css',
 })
 export class Login {
   form!: FormGroup;
 
-  constructor(private readonly formBuilder: FormBuilder, private readonly authService: AuthService, private readonly router: Router) {
+  constructor(private readonly formBuilder: FormBuilder, private readonly authService: AuthService,
+    private readonly router: Router, private readonly spinner: NgxSpinnerService
+  ) {
     this.form = this.formBuilder.group({
-      username: ['', [Validators.required]],
-      password: ['', [Validators.required]],
+      username: ['', [CustomValidators.required("user.username.required")]],
+      password: ['', [CustomValidators.required("user.password.required")]],
     });
   }
 
   onSubmit() {
+    this.form.markAllAsTouched();
+
     if (this.form.valid) {
-      this.authService.login(this.form.value).subscribe({
-        error: (res: HttpErrorResponse) => {
-          this.form.setErrors({ loginFailed: res.error.message});
-        }
-      });
+      this.spinner.show();
+
+      this.authService.login(this.form.value)
+        .pipe(finalize(() => this.spinner.hide()))
+        .subscribe({
+          error: (res: HttpErrorResponse) => {
+            const error = res.error.messages[Object.keys(res.error.messages)[0]];
+
+            this.form.setErrors({ loginFailed: error });
+            this.form.markAllAsTouched();
+
+            console.log(this.form.errors);
+          }
+        });
     }
   }
 

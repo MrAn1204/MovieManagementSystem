@@ -1,4 +1,4 @@
-import { ApplicationConfig, provideBrowserGlobalErrorListeners } from '@angular/core';
+import { ApplicationConfig, inject, provideAppInitializer, provideBrowserGlobalErrorListeners } from '@angular/core';
 import { provideRouter } from '@angular/router';
 
 import { routes } from './app.routes';
@@ -7,12 +7,25 @@ import { provideHttpClient, withFetch, withInterceptors } from '@angular/common/
 import { authInterceptor } from './interceptor/auth/auth-interceptor';
 import { errorInterceptor } from './interceptor/error/error-interceptor';
 import { OVERLAY_DEFAULT_CONFIG } from '@angular/cdk/overlay';
+import { MessageService } from './service/message.service';
+import { ConstraintService } from './service/constraint.service';
 
 export const appConfig: ApplicationConfig = {
   providers: [
     provideBrowserGlobalErrorListeners(),
     provideRouter(routes), provideClientHydration(withEventReplay()),
     provideHttpClient(withFetch(), withInterceptors([authInterceptor, errorInterceptor])),
-    { provide: OVERLAY_DEFAULT_CONFIG, useValue: { usePopover: false } }
+    { provide: OVERLAY_DEFAULT_CONFIG, useValue: { usePopover: false } },
+    provideAppInitializer(async () => await loadInitialDataAsync())
   ]
 };
+
+async function loadInitialDataAsync() {
+  const messageService = inject(MessageService);
+  const constraintService = inject(ConstraintService);
+
+  await Promise.all([
+    messageService.loadAll(),
+    constraintService.loadAll()
+  ]);
+}

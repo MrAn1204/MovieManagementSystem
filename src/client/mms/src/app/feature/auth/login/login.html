@@ -4,25 +4,33 @@
     <h1 class="font-bold text-2xl mb-8">User Login</h1>
 
     <div class="flex flex-col gap-y-4 items-center">
-      <app-input-field 
-        formControlName="username" inputType="text" idName="username" placeholderText="Username">
-      </app-input-field>
+      <div>
+        <app-input-field
+          formControlName="username" inputType="text" idName="username" placeholderText="Username">
+        </app-input-field>
 
-      <app-input-field 
-        formControlName="password" inputType="password" idName="password" placeholderText="Password">
-      </app-input-field>
+        <app-validation-error [control]="form.get('username')!"></app-validation-error>
+      </div>
 
-      @if (form.hasError('loginFailed')) {
-        <p class="error-text">{{ form.getError('loginFailed') }}</p>
-      }
+      <div>
+        <app-input-field
+          formControlName="password" inputType="password" idName="password" placeholderText="Password">
+        </app-input-field>
+
+        <app-validation-error [control]="form.get('password')!"></app-validation-error>
+      </div>
     </div>
 
-
     <div class="mt-4 w-full flex flex-col gap-y-4">
-      <button type="submit"
-        class="px-4 py-2 text-white rounded-md bg-steel-blue-500 hover:bg-steel-blue-600 focus:outline-none focus:ring-2 focus:ring-steel-blue">
-        Login
-      </button>
+      <div class="flex flex-col">
+        <button type="submit"
+          class="px-4 py-2 text-white rounded-md bg-steel-blue-500 hover:bg-steel-blue-600 focus:outline-none focus:ring-2 focus:ring-steel-blue">
+          Login
+        </button>
+
+        <app-validation-error [control]="form"></app-validation-error>
+      </div>
+
 
       <hr class="border-platinum-300">
 
