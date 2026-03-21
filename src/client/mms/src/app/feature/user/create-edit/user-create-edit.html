@@ -1,0 +1,106 @@
+<app-create-edit [formGroup]="form" [title]="data.title" (submitForm)="onSubmit()" (resetForm)="onReset()" (closeDialog)="close()">
+  <div class="create-edit-layout">
+    <div class="w-full flex-1 gap-4 grid grid-cols-1 sm:grid-cols-2">
+      @if (!isEditMode) {
+      <div>
+        <app-input-field formControlName="username" inputType="text" idName="username" labelText="Username">
+        </app-input-field>
+        <app-validation-error [control]="form.get('username')!"></app-validation-error>
+      </div>
+      } @else {
+      <div>
+        <label for="username" class="block font-medium">Username</label>
+        <p id="username" class="form-field bg-platinum-100">{{ data.model?.username }}</p>
+      </div>
+      }
+
+      <div>
+        <app-input-field formControlName="fullname" inputType="text" idName="fullname" labelText="Full Name">
+        </app-input-field>
+        <app-validation-error [control]="form.get('fullname')!"></app-validation-error>
+      </div>
+
+      <div>
+        <app-select-field formControlName="gender" idName="gender" labelText="Gender" [options]="genders">
+        </app-select-field>
+        <app-validation-error [control]="form.get('gender')!"></app-validation-error>
+      </div>
+
+      <div>
+        <app-input-field formControlName="dateOfBirth" inputType="date" idName="dateOfBirth" labelText="Date of Birth">
+        </app-input-field>
+        <app-validation-error [control]="form.get('dateOfBirth')!"></app-validation-error>
+      </div>
+
+      <div>
+        <app-input-field formControlName="email" inputType="email" idName="email" labelText="Email">
+        </app-input-field>
+        <app-validation-error [control]="form.get('email')!"></app-validation-error>
+      </div>
+
+      <div>
+        <app-input-field formControlName="phoneNumber" inputType="text" idName="phoneNumber" labelText="Phone Number">
+        </app-input-field>
+        <app-validation-error [control]="form.get('phoneNumber')!"></app-validation-error>
+      </div>
+
+      <div>
+        <app-input-field formControlName="citizenIdNumber" inputType="text" idName="citizenIdNumber" labelText="Citizen ID Number">
+        </app-input-field>
+        <app-validation-error [control]="form.get('citizenIdNumber')!"></app-validation-error>
+      </div>
+
+      @if (isEditMode) {
+      <div>
+        <app-input-field formControlName="score" inputType="number" idName="score" labelText="Score">
+        </app-input-field>
+        <app-validation-error [control]="form.get('score')!"></app-validation-error>
+      </div>
+      }
+
+      <div class="sm:col-span-2">
+        <app-textarea-field formControlName="address" idName="address" labelText="Address">
+        </app-textarea-field>
+        <app-validation-error [control]="form.get('address')!"></app-validation-error>
+      </div>
+
+      <div class="sm:col-span-2">
+        <app-multiselect-field formControlName="roleIds" idName="roleIds" labelText="Roles" [options]="roles()">
+        </app-multiselect-field>
+        <app-validation-error [control]="form.get('roleIds')!"></app-validation-error>
+      </div>
+
+      @if (isEditMode && !changingPassword()) {
+      <div class="sm:col-span-2">
+        <button type="button" (click)="togglePasswordChange(true)"
+          class="px-4 py-2 text-white rounded-md bg-steel-blue-500 hover:bg-steel-blue-600 focus:outline-none focus:ring-2 focus:ring-steel-blue">
+          Change Password
+        </button>
+      </div>
+      }
+
+      @if (!isEditMode || changingPassword()) {
+      <div>
+        <app-input-field formControlName="password" inputType="password" idName="password" labelText="Password">
+        </app-input-field>
+        <app-validation-error [control]="form.get('password')!"></app-validation-error>
+      </div>
+
+      <div>
+        <app-input-field formControlName="confirmPassword" inputType="password" idName="confirmPassword" labelText="Confirm Password">
+        </app-input-field>
+        <app-validation-error [control]="form.get('confirmPassword')!"></app-validation-error>
+      </div>
+
+      @if (isEditMode) {
+      <div class="sm:col-span-2">
+        <button type="button" (click)="togglePasswordChange(false)"
+          class="px-4 py-2 border border-steel-blue rounded-md hover:bg-platinum-100 text-steel-blue focus:outline-none">
+          Cancel Password Change
+        </button>
+      </div>
+      }
+      }
+    </div>
+  </div>
+</app-create-edit>
