@@ -17,6 +17,10 @@ export class ConstraintService {
     });
   }
 
+  getConstraint(key: string): any {
+    return this.constraints[key] || key;
+  }
+
   get(...keys: string[]): Record<string, any> {
     const result: Record<string, any> = {
 
