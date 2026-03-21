@@ -1,0 +1,47 @@
+<app-detail [title]="data.title" [roleConfig]="data.roleConfig" (openUpdate)="openUpdate()" (openDelete)="openDelete()" (closeDialog)="close()">
+  <div class="w-full flex-1 gap-8 grid grid-cols-1 sm:grid-cols-2">
+    <app-detail-text label="Username">
+      {{ model?.username | formatCell }}
+    </app-detail-text>
+
+    <app-detail-text label="Full Name">
+      {{ model?.fullname | formatCell }}
+    </app-detail-text>
+
+    <app-detail-text label="Gender">
+      {{ model?.gender | formatCell }}
+    </app-detail-text>
+
+    <app-detail-text label="Date of Birth">
+      {{ model?.dateOfBirth | formatCell:'date' }}
+    </app-detail-text>
+
+    <app-detail-text label="Email">
+      {{ model?.email | formatCell }}
+    </app-detail-text>
+
+    <app-detail-text label="Phone Number">
+      {{ model?.phoneNumber | formatCell }}
+    </app-detail-text>
+
+    <app-detail-text label="Citizen ID Number">
+      {{ model?.citizenIdNumber | formatCell }}
+    </app-detail-text>
+
+    <app-detail-text label="Address">
+      {{ model?.address | formatCell }}
+    </app-detail-text>
+
+    <app-detail-text label="Score">
+      {{ model?.score | formatCell }}
+    </app-detail-text>
+
+    <app-detail-text label="Roles">
+      {{ model?.roles | formatCell:'id-name-array' }}
+    </app-detail-text>
+
+    <app-detail-text label="Invoices" class="sm:col-span-2">
+      {{ model?.invoices | formatCell:'id-name-array' }}
+    </app-detail-text>
+  </div>
+</app-detail>
