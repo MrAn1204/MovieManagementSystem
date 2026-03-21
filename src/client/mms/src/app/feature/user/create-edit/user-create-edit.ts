@@ -29,15 +29,11 @@ export class UserCreateEdit extends CreateEditDialog<UserDetailModel> implements
   roles = signal<FormOptionModel[]>([]);
   changingPassword = signal(false);
 
-  private readonly constraints;
+  private readonly passwordMinLength: number;
 
   constructor(private readonly roleService: RoleService, private readonly constraintService: ConstraintService) {
     super();
-
-    this.constraints = this.constraintService.get(
-      'USERNAME_MIN', 'USERNAME_MAX', 'FULLNAME_MIN', 'FULLNAME_MAX',
-      'PHONE_MIN', 'PHONE_MAX', 'ADDRESS_MIN', 'ADDRESS_MAX', 'PASSWORD_MIN'
-    );
+    this.passwordMinLength = this.constraintService.getConstraint('PASSWORD_MIN');
   }
 
   get isEditMode(): boolean {
@@ -79,7 +75,7 @@ export class UserCreateEdit extends CreateEditDialog<UserDetailModel> implements
     if (enabled) {
       passwordControl.addValidators([
         CustomValidators.required('user.password.required'),
-        CustomValidators.passwordValid(this.constraints['PASSWORD_MIN'], 'user.password.invalid'),
+        CustomValidators.passwordValid(this.passwordMinLength, 'user.password.invalid'),
       ]);
       confirmPasswordControl.addValidators([
         CustomValidators.required('user.confirmPassword.required'),
