@@ -7,6 +7,7 @@ import { authGuard } from './guard/auth/auth-guard';
 import { MainLayout } from './shared/main-layout/main-layout';
 import { Register } from './feature/auth/register/register';
 import { Room } from './feature/room/component/room';
+import { User } from './feature/user/component/user';
 
 export const routes: Routes = [
   {
@@ -43,6 +44,11 @@ export const routes: Routes = [
         path: 'room',
         component: Room,
         title: 'Room',
+      },
+      {
+        path: 'user',
+        component: User,
+        title: 'User',
       },
     ]
   },

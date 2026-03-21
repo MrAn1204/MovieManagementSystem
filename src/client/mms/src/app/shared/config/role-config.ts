@@ -40,6 +40,14 @@ const ROLE_CONFIG: Record<string, RoleConfigModel> = {
     getAll: ['ADMIN', 'USER'],
     getById: ['ADMIN', 'USER'],
   },
+  user: {
+    create: ['ADMIN'],
+    edit: ['ADMIN'],
+    delete: ['ADMIN'],
+    getAll: ['ADMIN'],
+    getById: ['ADMIN'],
+    search: ['ADMIN']
+  },
 }
 
 export function getRoleConfig(feature: string): RoleConfigModel {

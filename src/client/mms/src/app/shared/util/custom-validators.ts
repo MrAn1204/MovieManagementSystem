@@ -102,6 +102,26 @@ export class CustomValidators {
     };
   }
 
+  static pastDate(message: string): ValidatorFn {
+    return (control: AbstractControl): ValidationErrors | null => {
+      if (!control.value) {
+        return null;
+      }
+
+      const inputDate = new Date(control.value);
+      const today = new Date();
+
+      inputDate.setHours(0, 0, 0, 0);
+      today.setHours(0, 0, 0, 0);
+
+      if (inputDate >= today) {
+        return this.buildError('pastDate', message);
+      }
+
+      return null;
+    };
+  }
+
   static arrayContainNoNull(message: string): ValidatorFn {
     return (control: AbstractControl): ValidationErrors | null => {
       const value = control.value;
