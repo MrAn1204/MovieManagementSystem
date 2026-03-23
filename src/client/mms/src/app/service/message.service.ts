@@ -1,6 +1,7 @@
 import { HttpClient } from "@angular/common/http";
 import { Injectable } from "@angular/core";
 import { ErrorMessageModel } from "../shared/model/ErrorMessageModel";
+import { firstValueFrom } from "rxjs";
 
 @Injectable({
   providedIn: 'root'
@@ -8,12 +9,12 @@ import { ErrorMessageModel } from "../shared/model/ErrorMessageModel";
 export class MessageService {
   private readonly url = 'http://localhost:8080/api/app-messages';
 
-  messages: Record<string, string> = {};
+  private messages: Record<string, string> = {};
 
   constructor(private readonly http: HttpClient) { }
 
   async loadAll(): Promise<void> {
-    this.http.get<Record<string, string>>(this.url).subscribe(res => {
+    await firstValueFrom(this.http.get<Record<string, string>>(this.url)).then(res => {
       this.messages = res;
     });
   }

@@ -1,5 +1,6 @@
 import { HttpClient } from "@angular/common/http";
 import { Injectable } from "@angular/core";
+import { firstValueFrom } from "rxjs";
 
 @Injectable({
   providedIn: 'root'
@@ -12,7 +13,7 @@ export class ConstraintService {
   constructor(private readonly http: HttpClient) { }
 
   async loadAll(): Promise<void> {
-    this.http.get<Record<string, string>>(this.url).subscribe(res => {
+    await firstValueFrom(this.http.get<Record<string, string>>(this.url)).then(res => {
       this.constraints = res;
     });
   }
@@ -22,9 +23,8 @@ export class ConstraintService {
   }
 
   get(...keys: string[]): Record<string, any> {
-    const result: Record<string, any> = {
+    const result: Record<string, any> = {};
 
-    };
     keys.forEach(key => {
       result[key] = this.constraints[key] || key;
     });
