@@ -1,6 +1,6 @@
 import { HttpClient } from "@angular/common/http";
 import { Injectable } from "@angular/core";
-import { ErrorMessageModel } from "../shared/model/ErrorMessageModel";
+import { ErrorMessageModel } from "../shared/model/error-message.model";
 import { firstValueFrom } from "rxjs";
 
 @Injectable({
