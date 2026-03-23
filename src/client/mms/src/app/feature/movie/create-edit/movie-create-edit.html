@@ -7,9 +7,8 @@
         <app-input-field formControlName="name"
           inputType="text" idName="name" labelText="Title">
         </app-input-field>
-        @if (form.get('name')?.touched && form.get('name')?.hasError('required')) {
-          <p class="error-text">Name is required</p>
-        }
+
+        <app-validation-error [control]="form.get('name')!"></app-validation-error>
       </div>
 
       <div>
@@ -40,9 +39,8 @@
         <app-input-field formControlName="duration"
           inputType="number" idName="duration" labelText="Duration (minutes)">
         </app-input-field>
-        @if (form.get("duration")?.touched && form.get("duration")?.hasError("min")) {
-          <p class="error-text">Duration must be greater than 0</p>
-        }
+
+        <app-validation-error [control]="form.get('duration')!"></app-validation-error>
       </div>
 
       <div class="sm:col-span-2">

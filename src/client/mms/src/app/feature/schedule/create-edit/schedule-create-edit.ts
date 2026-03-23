@@ -8,10 +8,11 @@ import { FormOptionModel } from '../../../shared/model/form-option.model';
 import { CreateEdit } from "../../../shared/component/create-edit/create-edit";
 import { CreateEditDialog } from '../../../shared/component/dialog/create-edit/create-edit-dialog';
 import { ScheduleDetailModel } from '../../../model/schedule/schedule-detail.model';
+import { ValidationError } from "../../../shared/component/form/error/validation-error";
 
 @Component({
   selector: 'app-schedule-create-edit',
-  imports: [InputField, SelectField, ReactiveFormsModule, CreateEdit],
+  imports: [InputField, SelectField, ReactiveFormsModule, CreateEdit, ValidationError],
   viewProviders: [{ provide: ControlContainer, useExisting: FormGroupDirective }],
   templateUrl: './schedule-create-edit.html',
   styleUrl: './schedule-create-edit.css',

@@ -6,10 +6,11 @@ import { MovieCreateEdit } from '../create-edit/movie-create-edit';
 import { MovieDetail } from '../detail/movie-detail';
 import { MovieModel } from '../../../model/movie/movie.model';
 import { MovieService } from '../../../service/movie/movie.service';
-import { FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
+import { FormGroup, ReactiveFormsModule } from '@angular/forms';
 import { TableColumnModel } from '../../../shared/model/table-column.model';
 import { getRoleConfig } from '../../../shared/config/role-config';
 import { SearchableFeature } from '../../../shared/component/feature/searchable-feature';
+import { CustomValidators } from '../../../shared/util/custom-validators';
 
 @Component({
   selector: 'app-movie',
@@ -57,9 +58,9 @@ export class Movie extends SearchableFeature<MovieModel> {
 
   protected override getUpsertGroup(): FormGroup {
     return this.formBuilder.nonNullable.group({
-      name: ['', [Validators.required]],
+      name: ['', [CustomValidators.required('movie.name.required')]],
       releaseDate: [''],
-      duration: [0, [Validators.min(1)]],
+      duration: [0, [CustomValidators.min(1, 'movie.duration.invalid')]],
       content: [''],
       thumbnail: [null],
       genreIds: [[]],

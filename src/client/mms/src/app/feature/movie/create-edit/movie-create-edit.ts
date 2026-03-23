@@ -13,10 +13,11 @@ import { LanguageService } from '../../../service/language/language.service';
 import { FormOptionModel } from '../../../shared/model/form-option.model';
 import { CreateEdit } from "../../../shared/component/create-edit/create-edit";
 import { CreateEditDialog } from '../../../shared/component/dialog/create-edit/create-edit-dialog';
+import { ValidationError } from "../../../shared/component/form/error/validation-error";
 
 @Component({
   selector: 'app-movie-create-edit',
-  imports: [InputField, ImageField, SelectField, MultiselectField, Textarea, ReactiveFormsModule, CreateEdit],
+  imports: [InputField, ImageField, SelectField, MultiselectField, Textarea, ReactiveFormsModule, CreateEdit, ValidationError],
   templateUrl: './movie-create-edit.html',
   styleUrl: './movie-create-edit.css',
 })

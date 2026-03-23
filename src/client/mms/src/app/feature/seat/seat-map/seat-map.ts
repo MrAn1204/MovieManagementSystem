@@ -60,15 +60,13 @@ export class SeatMap extends BaseFeature<SeatModel> {
 
   protected override getUpsertGroup(): FormGroup {
     return this.formBuilder.nonNullable.group({
-      name: ['', [CustomValidators.required('Name is required')]],
+      name: ['', [CustomValidators.required('seat.name.required')]],
       seatType: ['STANDARD'],
       seatRow: [1, [
-        CustomValidators.min(1, 'Row must be at least 1'),
-        CustomValidators.max(this.rowLength(), `Row must be at most ${this.rowLength()}`)
+        CustomValidators.size(1, this.rowLength(), 'seat.row.invalid'),
       ]],
       seatColumn: [1, [
-        CustomValidators.min(1, 'Column must be at least 1'),
-        CustomValidators.max(this.columnLength(), `Column must be at most ${this.columnLength()}`)
+        CustomValidators.size(1, this.columnLength(), 'seat.column.invalid'),
       ]],
       roomId: [this.roomId()],
     });

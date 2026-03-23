@@ -5,27 +5,24 @@
         <app-input-field formControlName="name"
           inputType="text" idName="name" labelText="Name">
         </app-input-field>
-        @if (form.get('name')?.touched && form.get('name')?.hasError('required')) {
-        <p class="error-text">Name is required</p>
-        }
+
+        <app-validation-error [control]="form.get('name')!"></app-validation-error>
       </div>
 
       <div>
         <app-input-field formControlName="rowLength"
           inputType="number" idName="rowLength" labelText="Row Length">
         </app-input-field>
-        @if (form.get('rowLength')?.touched && (form.get('rowLength')?.hasError('required') || form.get('rowLength')?.hasError('min'))) {
-        <p class="error-text">Row length must be 1 or greater</p>
-        }
+
+        <app-validation-error [control]="form.get('rowLength')!"></app-validation-error>
       </div>
 
       <div>
         <app-input-field formControlName="columnLength"
           inputType="number" idName="columnLength" labelText="Column Length">
         </app-input-field>
-        @if (form.get('columnLength')?.touched && (form.get('columnLength')?.hasError('required') || form.get('columnLength')?.hasError('min'))) {
-        <p class="error-text">Column length must be 1 or greater</p>
-        }
+
+        <app-validation-error [control]="form.get('columnLength')!"></app-validation-error>
       </div>
     </div>
   </div>

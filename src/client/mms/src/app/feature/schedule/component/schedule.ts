@@ -6,10 +6,11 @@ import { ScheduleCreateEdit } from '../create-edit/schedule-create-edit';
 import { ScheduleDetail } from '../detail/schedule-detail';
 import { ScheduleModel } from '../../../model/schedule/schedule.model';
 import { ScheduleService } from '../../../service/schedule/schedule.service';
-import { FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
+import { FormGroup, ReactiveFormsModule } from '@angular/forms';
 import { TableColumnModel } from '../../../shared/model/table-column.model';
 import { getRoleConfig } from '../../../shared/config/role-config';
 import { SearchableFeature } from '../../../shared/component/feature/searchable-feature';
+import { CustomValidators } from '../../../shared/util/custom-validators';
 
 @Component({
   selector: 'app-schedule',
@@ -54,9 +55,9 @@ export class Schedule extends SearchableFeature<ScheduleModel> {
 
   protected override getUpsertGroup(): FormGroup {
     return this.formBuilder.nonNullable.group({
-      showTime: ['', [Validators.required]],
-      movieId: ['', [Validators.required]],
-      roomId: ['', [Validators.required]],
+      showTime: [''],
+      movieId: ['', [CustomValidators.required('schedule.movie.required')]],
+      roomId: ['', [CustomValidators.required('schedule.room.required')]],
     });
   }
 
