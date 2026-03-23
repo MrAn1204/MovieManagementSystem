@@ -7,6 +7,7 @@ import java.util.UUID;
 import com.mms.mms_api.business.command.BaseCreateCommand;
 
 import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Positive;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
@@ -20,6 +21,7 @@ public class MovieCreateCommand extends BaseCreateCommand {
 
     private LocalDate releaseDate;
 
+    @Positive(message = "{movie.duration.invalid}")
     private int duration;
 
     private String content;
