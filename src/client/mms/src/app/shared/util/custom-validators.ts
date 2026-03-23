@@ -31,7 +31,7 @@ export class CustomValidators {
 
   static minLength(length: number, message: string): ValidatorFn {
     return (control: AbstractControl): ValidationErrors | null => {
-      if (String(control.value).length < length) {
+      if (control.value && String(control.value).length < length) {
         return this.buildError('minLength', message, {
           min: length
         });
@@ -43,7 +43,7 @@ export class CustomValidators {
 
   static maxLength(length: number, message: string): ValidatorFn {
     return (control: AbstractControl): ValidationErrors | null => {
-      if (String(control.value).length > length) {
+      if (control.value && String(control.value).length > length) {
         return this.buildError('maxLength', message, {
           max: length
         });
@@ -55,7 +55,7 @@ export class CustomValidators {
 
   static min(min: number, message: string): ValidatorFn {
     return (control: AbstractControl): ValidationErrors | null => {
-      if (control.value < min) {
+      if (control.value && control.value < min) {
         return this.buildError('min', message, {
           min: min
         });
@@ -67,7 +67,7 @@ export class CustomValidators {
 
   static max(max: number, message: string): ValidatorFn {
     return (control: AbstractControl): ValidationErrors | null => {
-      if (control.value > max) {
+      if (control.value && control.value > max) {
         return this.buildError('max', message, {
           max: max
         });
@@ -81,7 +81,7 @@ export class CustomValidators {
     return (control: AbstractControl): ValidationErrors | null => {
       const value = String(control.value);
 
-      if (value.length < min || value.length > max) {
+      if (control.value && (value.length < min || value.length > max)) {
         return this.buildError('size', message, {
           min: min,
           max: max
@@ -94,7 +94,7 @@ export class CustomValidators {
 
   static email(message: string): ValidatorFn {
     return (control: AbstractControl): ValidationErrors | null => {
-      if (Validators.email(control)) {
+      if (control.value && Validators.email(control)) {
         return this.buildError('email', message);
       }
 
@@ -104,18 +104,16 @@ export class CustomValidators {
 
   static pastDate(message: string): ValidatorFn {
     return (control: AbstractControl): ValidationErrors | null => {
-      if (!control.value) {
-        return null;
-      }
+      if (control.value) {
+        const inputDate = new Date(control.value);
+        const today = new Date();
 
-      const inputDate = new Date(control.value);
-      const today = new Date();
+        inputDate.setHours(0, 0, 0, 0);
+        today.setHours(0, 0, 0, 0);
 
-      inputDate.setHours(0, 0, 0, 0);
-      today.setHours(0, 0, 0, 0);
-
-      if (inputDate >= today) {
-        return this.buildError('pastDate', message);
+        if (inputDate >= today) {
+          return this.buildError('pastDate', message);
+        }
       }
 
       return null;
