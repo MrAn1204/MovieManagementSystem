@@ -12,6 +12,7 @@ import { BaseDialog } from "../dialog/base/base-dialog";
 import { DialogDataModel } from "../../model/dialog/dialog-data.model";
 import { NgxSpinnerService } from "ngx-spinner";
 import { EntityService } from "../../../service/entity.service";
+import { FormMapper } from "../../util/form-mapper";
 
 @Directive()
 export abstract class BaseFeature<T extends BaseEntityModel> implements OnInit {
@@ -35,9 +36,7 @@ export abstract class BaseFeature<T extends BaseEntityModel> implements OnInit {
   }
 
   ngOnInit(): void {
-    this.entityForm = this.formBuilder.nonNullable.group({
-      ...this.getUpsertGroup().controls
-    });
+    this.entityForm = this.getUpsertGroup();
   }
 
   protected abstract getUpsertGroup(): FormGroup;
@@ -47,8 +46,9 @@ export abstract class BaseFeature<T extends BaseEntityModel> implements OnInit {
 
     this.entityService.create(this.entityForm.value)
       .pipe(finalize(() => this.hideSpinner()))
-      .subscribe(() => {
-        respondHandler?.();
+      .subscribe({
+        next: () => respondHandler?.(),
+        error: (res) => FormMapper.mapErrorResponse(res, this.entityForm)
       });
   }
 
@@ -57,8 +57,9 @@ export abstract class BaseFeature<T extends BaseEntityModel> implements OnInit {
 
     this.entityService.update(id, this.entityForm.value)
       .pipe(finalize(() => this.hideSpinner()))
-      .subscribe(() => {
-        respondHandler?.();
+      .subscribe({
+        next: () => respondHandler?.(),
+        error: (res) => FormMapper.mapErrorResponse(res, this.entityForm)
       });
   }
 
@@ -67,8 +68,9 @@ export abstract class BaseFeature<T extends BaseEntityModel> implements OnInit {
 
     this.entityService.delete(id)
       .pipe(finalize(() => this.hideSpinner()))
-      .subscribe(() => {
-        respondHandler?.();
+      .subscribe({
+        next: () => respondHandler?.(),
+        error: (res) => FormMapper.mapErrorResponse(res, this.entityForm)
       });
   }
 
@@ -148,8 +150,7 @@ export abstract class BaseFeature<T extends BaseEntityModel> implements OnInit {
       .pipe(takeUntil(dialogRef.closed))
       .subscribe(() => {
         if (this.entityForm.valid) {
-          this.saveNew();
-          dialogRef.close();
+          this.saveNew(() => dialogRef.close());
         }
       });
   }
@@ -169,8 +170,7 @@ export abstract class BaseFeature<T extends BaseEntityModel> implements OnInit {
       .pipe(takeUntil(dialogRef.closed))
       .subscribe(() => {
         if (this.entityForm.valid) {
-          this.saveUpdate(item.id);
-          dialogRef.close();
+          this.saveUpdate(item.id, () => dialogRef.close());
         }
       });
 
@@ -186,8 +186,7 @@ export abstract class BaseFeature<T extends BaseEntityModel> implements OnInit {
     const dialogRef = this.dialogService.openDialog(PopupModal, dialogData);
 
     dialogRef.componentInstance?.dialogService.confirmTask$.subscribe(() => {
-      this.confirmDelete(id);
-      dialogRef.close();
+      this.confirmDelete(id, () => dialogRef.close());
     });
 
     return dialogRef;
