@@ -95,7 +95,7 @@ export class User extends SearchableFeature<UserModel> {
           CustomValidators.arrayContainNoNull('user.roles.invalid'),
         ]],
       },
-      { validators: CustomValidators.passwordMatch('user.password.mismatch') }
+      { validators: CustomValidators.passwordMatch('user.password.mismatched') }
     );
   }
 
