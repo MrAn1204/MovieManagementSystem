@@ -9,8 +9,6 @@ import { ValidationError } from '../../../shared/component/form/error/validation
 import { FormOptionModel } from '../../../shared/model/form-option.model';
 import { UserDetailModel } from '../../../model/user/user-detail.model';
 import { RoleService } from '../../../service/role/role.service';
-import { CustomValidators } from '../../../shared/util/custom-validators';
-import { ConstraintService } from '../../../service/constraint.service';
 import { Textarea } from "../../../shared/component/form/textarea/textarea-field";
 
 @Component({
@@ -29,11 +27,8 @@ export class UserCreateEdit extends CreateEditDialog<UserDetailModel> implements
   roles = signal<FormOptionModel[]>([]);
   changingPassword = signal(false);
 
-  private readonly passwordMinLength: number;
-
-  constructor(private readonly roleService: RoleService, private readonly constraintService: ConstraintService) {
+  constructor(private readonly roleService: RoleService) {
     super();
-    this.passwordMinLength = this.constraintService.getConstraint('PASSWORD_MIN');
   }
 
   get isEditMode(): boolean {
@@ -73,18 +68,11 @@ export class UserCreateEdit extends CreateEditDialog<UserDetailModel> implements
     }
 
     if (enabled) {
-      passwordControl.addValidators([
-        CustomValidators.required('user.password.required'),
-        CustomValidators.passwordValid(this.passwordMinLength, 'user.password.invalid'),
-      ]);
-      confirmPasswordControl.addValidators([
-        CustomValidators.required('user.confirmPassword.required'),
-      ]);
+      passwordControl.enable();
+      confirmPasswordControl.enable();
     } else {
-      passwordControl.clearValidators();
-      confirmPasswordControl.clearValidators();
-      passwordControl.setValue('');
-      confirmPasswordControl.setValue('');
+      passwordControl.disable();
+      confirmPasswordControl.disable();
     }
 
     passwordControl.updateValueAndValidity();

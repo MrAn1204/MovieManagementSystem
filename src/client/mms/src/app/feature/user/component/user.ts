@@ -72,8 +72,11 @@ export class User extends SearchableFeature<UserModel> {
           CustomValidators.required('user.fullname.required'),
           CustomValidators.size(constraints['FULLNAME_MIN'], constraints['FULLNAME_MAX'], 'user.fullname.size'),
         ]],
-        password: ['', [CustomValidators.passwordValid(constraints['PASSWORD_MIN'], 'user.password.invalid')]],
-        confirmPassword: [''],
+        password: ['', [
+          CustomValidators.required('user.password.required'),
+          CustomValidators.passwordValid(constraints['PASSWORD_MIN'], 'user.password.invalid')
+        ]],
+        confirmPassword: ['', [CustomValidators.required('user.confirmPassword.required')]],
         gender: ['', [CustomValidators.required('user.gender.required')]],
         dateOfBirth: ['', [
           CustomValidators.required('user.dob.required'),
