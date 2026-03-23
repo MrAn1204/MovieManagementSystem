@@ -33,7 +33,7 @@ export class CustomValidators {
     return (control: AbstractControl): ValidationErrors | null => {
       if (control.value && String(control.value).length < length) {
         return this.buildError('minLength', message, {
-          min: length
+          value: length
         });
       }
 
@@ -45,7 +45,7 @@ export class CustomValidators {
     return (control: AbstractControl): ValidationErrors | null => {
       if (control.value && String(control.value).length > length) {
         return this.buildError('maxLength', message, {
-          max: length
+          value: length
         });
       }
 
@@ -57,7 +57,7 @@ export class CustomValidators {
     return (control: AbstractControl): ValidationErrors | null => {
       if (control.value && control.value < min) {
         return this.buildError('min', message, {
-          min: min
+          value: min
         });
       }
 
@@ -69,7 +69,7 @@ export class CustomValidators {
     return (control: AbstractControl): ValidationErrors | null => {
       if (control.value && control.value > max) {
         return this.buildError('max', message, {
-          max: max
+          value: max
         });
       }
 
