@@ -1,5 +1,6 @@
 import { HttpClient } from "@angular/common/http";
 import { Injectable } from "@angular/core";
+import { ErrorMessageModel } from "../shared/model/ErrorMessageModel";
 
 @Injectable({
   providedIn: 'root'
@@ -17,19 +18,21 @@ export class MessageService {
     });
   }
 
-  get(key: string, args?: Record<string, any>): string {
-    let message = this.messages[key];
-
-    if (!message) {
-      return key;
+  get(error: ErrorMessageModel | string): string {
+    if (typeof error === 'string') {
+      return error;
     }
+
+    const { message, args } = error;
+
+    let displayMessage = this.messages[message] ?? message;
 
     if (args) {
       for (const argKey in args) {
-        message = message.replace(`{${argKey}}`, args[argKey]);
+        displayMessage = displayMessage.replace(`{${argKey}}`, args[argKey]);
       }
     }
 
-    return message;
+    return displayMessage;
   }
 }

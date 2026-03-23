@@ -1,6 +1,7 @@
 import { Component, input } from '@angular/core';
 import { AbstractControl } from '@angular/forms';
 import { MessageService } from '../../../../service/message.service';
+import { ErrorMessageModel } from '../../../model/ErrorMessageModel';
 
 @Component({
   selector: 'app-validation-error',
@@ -16,18 +17,12 @@ export class ValidationError {
   get errorMessage(): string | null {
     const errorKey = Object.keys({ ...this.control().errors })[0];
 
-    const error: ErrorMessageModel | string = this.control().getError(errorKey);
-
-    if (typeof error === 'string') {
-      return error;
+    if (!errorKey) {
+      return null;
     }
 
-    return this.messageService.get(error.message, error.args);
+    const error: ErrorMessageModel | string = this.control().getError(errorKey);
+
+    return this.messageService.get(error);
   }
 }
-
-interface ErrorMessageModel {
-  message: string;
-  args?: Record<string, any>;
-}
-
