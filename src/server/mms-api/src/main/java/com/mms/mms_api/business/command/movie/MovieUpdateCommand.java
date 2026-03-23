@@ -3,6 +3,7 @@ package com.mms.mms_api.business.command.movie;
 import com.mms.mms_api.business.command.BaseUpdateCommand;
 
 import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Positive;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
@@ -22,6 +23,7 @@ public class MovieUpdateCommand extends BaseUpdateCommand {
 
     private LocalDate releaseDate;
 
+    @Positive(message = "{movie.duration.invalid}")
     private int duration;
 
     private String content;
