@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { AbstractControl, FormGroup, ReactiveFormsModule, ValidationErrors, ValidatorFn } from '@angular/forms';
+import { FormGroup, ReactiveFormsModule } from '@angular/forms';
 import { Search } from '../../../shared/component/search/search';
 import { Table } from '../../../shared/component/table/table';
 import { SearchableFeature } from '../../../shared/component/feature/searchable-feature';
@@ -80,18 +80,14 @@ export class User extends SearchableFeature<UserModel> {
           CustomValidators.pastDate('user.dob.past'),
         ]],
         email: ['', [CustomValidators.email('user.email.invalid')]],
-        citizenIdNumber: ['', [this.optionalValidator(
-          CustomValidators.minLength(constraints['CITIZEN_ID_MIN'], 'user.citizenId.size')
-        )]],
+        citizenIdNumber: [null, [CustomValidators.minLength(constraints['CITIZEN_ID_MIN'], 'user.citizenId.size')]],
         phoneNumber: ['', [
           CustomValidators.required('user.phone.required'),
           CustomValidators.size(constraints['PHONE_MIN'], constraints['PHONE_MAX'], 'user.phone.size'),
         ]],
-        address: ['', [this.optionalValidator(
-          CustomValidators.size(constraints['ADDRESS_MIN'], constraints['ADDRESS_MAX'], 'user.address.size')
-        )]],
+        address: [null, [CustomValidators.size(constraints['ADDRESS_MIN'], constraints['ADDRESS_MAX'], 'user.address.size')]],
         score: [0],
-        roleIds: [[], [
+        roleIds: [null, [
           CustomValidators.required('user.roles.required'),
           CustomValidators.arrayContainNoNull('user.roles.invalid'),
         ]],
@@ -117,17 +113,5 @@ export class User extends SearchableFeature<UserModel> {
       score: detailModel.score ?? 0,
       roleIds: model.roles?.map((role) => role.id) ?? [],
     });
-  }
-
-  private optionalValidator(validator: ValidatorFn): ValidatorFn {
-    return (control: AbstractControl): ValidationErrors | null => {
-      const value = String(control.value ?? '').trim();
-
-      if (!value) {
-        return null;
-      }
-
-      return validator(control);
-    };
   }
 }
