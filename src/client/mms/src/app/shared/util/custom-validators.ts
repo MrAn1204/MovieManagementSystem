@@ -167,7 +167,6 @@ export class CustomValidators {
         const error = this.buildError('passwordMismatch', message);
 
         confirmPassword?.setErrors(error);
-        return error;
       }
 
       return null;
