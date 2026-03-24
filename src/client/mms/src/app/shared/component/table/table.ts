@@ -1,4 +1,4 @@
-import { Component, input, output } from '@angular/core';
+import { Component, input, OnChanges, output, SimpleChanges } from '@angular/core';
 import { FormatCellPipe } from '../../pipe/format-cell/format-cell-pipe';
 import { TableColumnModel } from '../../model/table-column.model';
 import { BaseEntityModel } from '../../model/base-entity.model';
@@ -11,7 +11,7 @@ import { AuthService } from '../../../service/auth/auth.service';
   templateUrl: './table.html',
   styleUrl: './table.css',
 })
-export class Table<T extends BaseEntityModel> {
+export class Table<T extends BaseEntityModel> implements OnChanges {
   columns = input.required<TableColumnModel<T>[]>();
   data = input.required<T[]>();
 
@@ -25,8 +25,20 @@ export class Table<T extends BaseEntityModel> {
   openDetailForm = output<string>();
   openDeleteModal = output<string>();
 
+  selectItem = output<unknown>();
+  selectAllItems = output<void>();
+
+  selectedItems = new Map<number, boolean>();
+
   constructor(private readonly authService: AuthService) {
 
+  }
+
+  ngOnChanges(changes: SimpleChanges): void {
+    if (changes['data']) {
+      this.selectedItems.clear();
+      this.data().forEach((_, i) => this.selectedItems.set(i, false));
+    }
   }
 
   viewDetail(id: string): void {
@@ -59,5 +71,24 @@ export class Table<T extends BaseEntityModel> {
 
   canView(): boolean {
     return this.authService.includeRoles(this.roleConfig().getById ?? []);
+  }
+
+  select(item: unknown, index: number): void {
+    this.selectedItems.set(index, !this.selectedItems.get(index));
+    this.selectItem.emit(item);
+  }
+
+  selectAll(): void {
+    if (this.isAllSelected()) {
+      this.selectedItems.forEach((_, key) => this.selectedItems.set(key, false));
+    } else {
+      this.selectedItems.forEach((_, key) => this.selectedItems.set(key, true));
+    }
+
+    this.selectAllItems.emit();
+  }
+
+  isAllSelected(): boolean {
+    return Array.from(this.selectedItems.values()).every(Boolean);
   }
 }
