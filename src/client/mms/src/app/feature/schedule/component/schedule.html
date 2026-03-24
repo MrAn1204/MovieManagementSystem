@@ -3,9 +3,11 @@
     (triggerSearch)="onSearch()">
   </app-search>
 
-  <app-table [columns]="columns" [data]="data()" [roleConfig]="roleConfig"
-    (changePageNumber)="onChangePageNumber($event)" (changePageSize)="onChangePageSize($event)"
-    (openCreateForm)="onAdd()" (openEditForm)="onEdit($event)" (openDetailForm)="onView($event)"
-    (openDeleteModal)="onDelete($event)">
+  <app-table [columns]="columns" [data]="data().items" [roleConfig]="roleConfig" (openCreateForm)="onAdd()"
+    (openEditForm)="onEdit($event)" (openDetailForm)="onView($event)" (openDeleteModal)="onDelete($event)">
+
+    <app-pagination [pageCount]="data().pageCount" [pageNumber]="data().pageNumber"
+      (changePageNumber)="onChangePageNumber($event)" (changePageSize)="onChangePageSize($event)">
+    </app-pagination>
   </app-table>
 </div>

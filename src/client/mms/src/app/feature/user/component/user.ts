@@ -13,10 +13,11 @@ import { UserDetail } from '../../user/detail/user-detail';
 import { UserFilter } from '../../user/filter/user-filter';
 import { CustomValidators } from '../../../shared/util/custom-validators';
 import { ConstraintService } from '../../../service/constraint.service';
+import { Pagination } from "../../../shared/component/pagination/pagination";
 
 @Component({
   selector: 'app-user',
-  imports: [Search, Table, ReactiveFormsModule],
+  imports: [Search, Table, ReactiveFormsModule, Pagination],
   templateUrl: './user.html',
   styleUrl: './user.css',
 })

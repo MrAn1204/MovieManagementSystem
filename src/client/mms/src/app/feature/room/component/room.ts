@@ -12,10 +12,11 @@ import { getRoleConfig } from '../../../shared/config/role-config';
 import { SearchableFeature } from '../../../shared/component/feature/searchable-feature';
 import { CustomValidators } from '../../../shared/util/custom-validators';
 import { ConstraintService } from '../../../service/constraint.service';
+import { Pagination } from "../../../shared/component/pagination/pagination";
 
 @Component({
   selector: 'app-room',
-  imports: [Search, Table, ReactiveFormsModule],
+  imports: [Search, Table, ReactiveFormsModule, Pagination],
   templateUrl: './room.html',
 })
 export class Room extends SearchableFeature<RoomModel> {

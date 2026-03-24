@@ -11,10 +11,11 @@ import { TableColumnModel } from '../../../shared/model/table-column.model';
 import { getRoleConfig } from '../../../shared/config/role-config';
 import { SearchableFeature } from '../../../shared/component/feature/searchable-feature';
 import { CustomValidators } from '../../../shared/util/custom-validators';
+import { Pagination } from "../../../shared/component/pagination/pagination";
 
 @Component({
   selector: 'app-movie',
-  imports: [Search, Table, ReactiveFormsModule],
+  imports: [Search, Table, ReactiveFormsModule, Pagination],
   templateUrl: './movie.html',
   styleUrl: './movie.css',
 })
