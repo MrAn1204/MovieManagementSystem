@@ -9,6 +9,7 @@ import { errorInterceptor } from './interceptor/error/error-interceptor';
 import { OVERLAY_DEFAULT_CONFIG } from '@angular/cdk/overlay';
 import { MessageService } from './service/message.service';
 import { ConstraintService } from './service/constraint.service';
+import { AuthService } from './service/auth/auth.service';
 
 export const appConfig: ApplicationConfig = {
   providers: [
@@ -16,16 +17,23 @@ export const appConfig: ApplicationConfig = {
     provideRouter(routes), provideClientHydration(withEventReplay()),
     provideHttpClient(withFetch(), withInterceptors([authInterceptor, errorInterceptor])),
     { provide: OVERLAY_DEFAULT_CONFIG, useValue: { usePopover: false } },
-    provideAppInitializer(async () => await loadInitialDataAsync())
+    provideAppInitializer(async () => await initializeApp())
   ]
 };
 
-async function loadInitialDataAsync() {
+async function initializeApp() {
+  const authService = inject(AuthService);
   const messageService = inject(MessageService);
   const constraintService = inject(ConstraintService);
 
+  await new Promise<void>((resolve) => {
+    authService.checkToken();
+    resolve();
+  })
+
   await Promise.all([
     messageService.loadAll(),
-    constraintService.loadAll()
+    constraintService.loadAll(),
   ]);
 }
+

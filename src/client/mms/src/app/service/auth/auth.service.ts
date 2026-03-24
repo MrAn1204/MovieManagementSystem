@@ -19,6 +19,10 @@ export class AuthService {
   isAuthenticated = computed<boolean>(() => this.currentUser() !== null);
 
   constructor(private readonly http: HttpClient, private readonly lsService: LocalStorageService, private readonly router: Router) {
+    this.checkToken();
+  }
+
+  checkToken() {
     const token = this.lsService.getItem("token");
 
     if (!token) {
