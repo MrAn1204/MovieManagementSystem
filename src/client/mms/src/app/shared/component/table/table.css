@@ -3,17 +3,3 @@
 :host {
   @apply flex flex-col flex-1 min-h-0 w-full md:w-11/12;
 }
-
-.page-button {
-  @apply rounded-md border p-2 text-center text-sm shadow-sm transition-all;
-  border-color: var(--color-platinum-300);
-}
-
-.page-button:hover {
-  background-color: var(--color-space-black);
-  @apply shadow-lg text-white; 
-}
-
-.page-button:disabled {
-  @apply pointer-events-none opacity-50 shadow-none;
-}

@@ -8,7 +8,7 @@
   </div>
 }
 
-@if (!data().items.length) {
+@if (!data().length) {
 <div class="border border-platinum-300 h-full bg-platinum-50 flex flex-col items-center justify-center">
   <p class="font-bold text-2xl">No data available</p>
 </div>
@@ -25,7 +25,7 @@
       </tr>
     </thead>
     <tbody class="*:border-b *:border-platinum-300">
-      @for (item of data().items; track $index) {
+      @for (item of data(); track $index) {
       <tr class="group hover:bg-platinum-100 *:border-b *:border-platinum-300 last:*:border-b-0">
         @for (column of columns(); track $index) {
         <td class="px-4 py-2">{{ item[column.key] | formatCell: column.type }}</td>
@@ -58,64 +58,5 @@
 </div>
 
 <!-- Pagination -->
-<div class="flex md:flex-row flex-col justify-between items-center pt-2 gap-2">
-  <div class="w-full flex md:flex-col md:items-baseline items-center flex-row gap-2 md:gap-0 flex-wrap">
-    <p class="flex-1 min-w-fit">1 - 10 of 50 entries</p>
-
-    <div class="w-full sm:w-fit flex md:hidden gap-2 items-center justify-center sm:order-2 order-3">
-      <button disabled
-        class="rounded-md border border-platinum-300 p-2 text-center text-sm transition-all shadow-sm hover:shadow-lg hover:text-white hover:bg-space-black hover:border-space-black focus:text-white focus:bg-space-black focus:border-space-black active:border-space-black active:text-white active:bg-space-black disabled:pointer-events-none disabled:opacity-50 disabled:shadow-none"
-        type="button">
-        Prev
-      </button>
-
-      <p class="text-center">
-        Page <strong>1</strong> of <strong>10</strong>
-      </p>
-
-      <button
-        class="rounded-md border border-platinum-300 p-2 text-center text-sm transition-all shadow-sm hover:shadow-lg hover:text-white hover:bg-space-black hover:border-space-black focus:text-white focus:bg-space-black focus:border-space-black active:border-space-black active:text-white active:bg-space-black disabled:pointer-events-none disabled:opacity-50 disabled:shadow-none"
-        type="button">
-        Next
-      </button>
-    </div>
-
-    <div class="flex-1 min-w-fit flex flex-wrap items-center justify-end md:justify-start sm:order-3 order-2">
-      <label for="pageSize" class="mr-2">Page size:</label>
-      <select id="pageSize" name="pageSize" class="border border-platinum-300 rounded-md w-16 px-2 py-0" (change)="updatePageSize($event)">
-        <option value="10">10</option>
-        <option value="25">25</option>
-        <option value="50">50</option>
-        <option value="100">100</option>
-      </select>
-    </div>
-  </div>
-
-  <div class="hidden md:flex gap-2 justify-center">
-    <button type="button" class="page-button" (click)="updatePageNumber(data().pageNumber - 1)">
-      Prev
-    </button>
-    <div class="flex items-center justify-center gap-2">
-      @for (page of pages; track $index) {
-        @if (page) {
-          <button type="button"
-            [class.bg-space-black]="page === data().pageNumber"
-            [class.text-white]="page === data().pageNumber"
-            [class.shadow-none]="page === data().pageNumber"
-            [class.border-transparent]="page === data().pageNumber"
-            class="page-button w-10" (click)="updatePageNumber(page)">
-            {{ page }}
-          </button>
-        } @else {
-          <span class="page-button w-10 pointer-events-none">
-            ...
-          </span>
-        }
-      }
-    </div>
-    <button type="button" class="page-button" (click)="updatePageNumber(data().pageNumber + 1)">
-      Next
-    </button>
-  </div>
-</div>
+<ng-content></ng-content>
 }
