@@ -1,1 +1,38 @@
-<p>invoice-create-edit works!</p>
+<app-create-edit [formGroup]="form" [title]="data.title" (submitForm)="onSubmit()" (resetForm)="onReset()" (closeDialog)="close()">
+  <div class="create-edit-layout">
+    <div class="w-full flex-1 gap-4 grid grid-cols-1 sm:grid-cols-2">
+      <div>
+        <app-input-field formControlName="totalMoney"
+          inputType="text" idName="totalMoney" labelText="Total Money">
+        </app-input-field>
+
+        <app-validation-error [control]="form.get('totalMoney')!"></app-validation-error>
+      </div>
+
+      <div>
+        <app-input-field formControlName="discount"
+          inputType="number" idName="discount" labelText="Discount">
+        </app-input-field>
+
+        <app-validation-error [control]="form.get('discount')!"></app-validation-error>
+      </div>
+
+      <div>
+        <app-input-field formControlName="addScore"
+          inputType="number" idName="addScore" labelText="Add Score">
+        </app-input-field>
+
+        <app-validation-error [control]="form.get('addScore')!"></app-validation-error>
+      </div>
+
+
+      <div>
+        <app-input-field formControlName="useScore"
+          inputType="number" idName="useScore" labelText="Use Score">
+        </app-input-field>
+
+        <app-validation-error [control]="form.get('useScore')!"></app-validation-error>
+      </div>
+    </div>
+  </div>
+</app-create-edit>
