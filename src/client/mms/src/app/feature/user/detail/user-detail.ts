@@ -5,10 +5,11 @@ import { DetailText } from '../../../shared/component/detail/detail-text/detail-
 import { FormatCellPipe } from '../../../shared/pipe/format-cell/format-cell-pipe';
 import { UserCreateEdit } from '../create-edit/user-create-edit';
 import { UserDetailModel } from '../../../model/user/user-detail.model';
+import { Invoice } from "../../invoice/component/invoice";
 
 @Component({
   selector: 'app-user-detail',
-  imports: [Detail, DetailText, FormatCellPipe],
+  imports: [Detail, DetailText, FormatCellPipe, Invoice],
   templateUrl: './user-detail.html',
   styleUrl: './user-detail.css',
 })

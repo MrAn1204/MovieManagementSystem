@@ -40,8 +40,10 @@
       {{ model?.roles | formatCell:'id-name-array' }}
     </app-detail-text>
 
-    <app-detail-text label="Invoices" class="sm:col-span-2">
-      {{ model?.invoices | formatCell:'id-name-array' }}
-    </app-detail-text>
+    <div class="sm:col-span-2">
+      <app-detail-text label="Invoices"></app-detail-text>
+
+      <app-invoice [data]="model?.invoices ?? []"></app-invoice>
+    </div>
   </div>
 </app-detail>
