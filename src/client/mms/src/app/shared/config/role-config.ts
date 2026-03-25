@@ -48,6 +48,13 @@ const ROLE_CONFIG: Record<string, RoleConfigModel> = {
     getById: ['ADMIN'],
     search: ['ADMIN']
   },
+  invoice: {
+    create: ['ADMIN'],
+    edit: ['ADMIN'],
+    delete: ['ADMIN'],
+    getAll: ['ADMIN'],
+    getById: ['ADMIN', 'USER'],
+  },
 }
 
 export function getRoleConfig(feature: string): RoleConfigModel {
