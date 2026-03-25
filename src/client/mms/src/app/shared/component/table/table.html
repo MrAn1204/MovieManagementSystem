@@ -8,7 +8,7 @@
   <table class="w-full bg-platinum-50 border-separate border-spacing-0">
     <thead class="text-left sticky top-0 z-10">
       <tr class="bg-platinum-200 *:border-b *:border-platinum-300">
-        <th class="min-w-8 w-8 border-r sticky left-0 bg-platinum-200">
+        <th [hidden]="!hasCheckbox()" class="min-w-8 w-8 border-r sticky left-0 bg-platinum-200">
           <div class="flex items-center justify-center">
             <input class="w-4 h-4 text-steel-blue-500 bg-platinum-50 border border-platinum-300 rounded-sm focus:ring-steel-blue-500 focus:ring-2"
               type="checkbox" (change)="selectAll()" [checked]="isAllSelected()">
@@ -31,7 +31,7 @@
     <tbody class="*:border-b *:border-platinum-300">
       @for (item of data(); track $index) {
       <tr class="group hover:bg-platinum-100 *:border-b *:border-platinum-300 last:*:border-b-0">
-        <td class="border-r sticky left-0 bg-platinum-50">
+        <td [hidden]="!hasCheckbox()" class="border-r sticky left-0 bg-platinum-50">
           <div class="flex items-center justify-center">
             <input type="checkbox" class="w-4 h-4 text-steel-blue-500 bg-platinum-50 border border-platinum-300 rounded-sm focus:ring-steel-blue-500 focus:ring-2"
               (change)="select(item, $index)" [checked]="selectedItems.get($index)">
@@ -43,7 +43,7 @@
         }
 
         <td class="sticky right-0 bg-platinum-50 group-hover:bg-platinum-100 border-platinum-300 border-l">
-          <div class="flex w-fit justify-center space-x-2 mx-2">
+          <div class="flex w-fit justify-center gap-x-2 mx-2">
             <button [hidden]="!canView()" type="button" (click)="viewDetail(item.id)">
               <i class="fa-solid fa-circle-info text-steel-blue"></i>
             </button>

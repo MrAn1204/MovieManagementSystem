@@ -17,6 +17,13 @@ export class Table<T extends BaseEntityModel> implements OnChanges {
 
   roleConfig = input.required<RoleConfigModel>();
 
+  tableConfig = input<TableConfig>({
+    checkbox: true,
+    add: true,
+    edit: true,
+    delete: true,
+  });
+
   saveCreate = output<void>();
   saveEdit = output<void>();
 
@@ -58,19 +65,23 @@ export class Table<T extends BaseEntityModel> implements OnChanges {
   }
 
   canCreate(): boolean {
-    return this.authService.includeRoles(this.roleConfig().create);
+    return this.tableConfig().add !== false && this.authService.includeRoles(this.roleConfig().create);
   }
 
   canEdit(): boolean {
-    return this.authService.includeRoles(this.roleConfig().edit);
+    return this.tableConfig().edit !== false && this.authService.includeRoles(this.roleConfig().edit);
   }
 
   canDelete(): boolean {
-    return this.authService.includeRoles(this.roleConfig().delete);
+    return this.tableConfig().delete !== false && this.authService.includeRoles(this.roleConfig().delete);
   }
 
   canView(): boolean {
     return this.authService.includeRoles(this.roleConfig().getById ?? []);
+  }
+
+  hasCheckbox(): boolean {
+    return this.tableConfig().checkbox !== false;
   }
 
   select(item: unknown, index: number): void {
@@ -91,4 +102,11 @@ export class Table<T extends BaseEntityModel> implements OnChanges {
   isAllSelected(): boolean {
     return Array.from(this.selectedItems.values()).every(Boolean);
   }
+}
+
+interface TableConfig {
+  checkbox?: boolean;
+  add?: boolean;
+  edit?: boolean;
+  delete?: boolean;
 }
