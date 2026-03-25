@@ -9,6 +9,8 @@ import { BaseDialog } from '../../shared/component/dialog/base/base-dialog';
   providedIn: 'root',
 })
 export class DialogService {
+  private readonly dialogStack: DialogRef<any, any>[] = [];
+
   private readonly openDialogSubject = new Subject<Type<unknown>>();
   readonly openDialog$ = this.openDialogSubject.asObservable();
 
@@ -21,10 +23,25 @@ export class DialogService {
   constructor(private readonly dialog: Dialog) { }
 
   openDialog<R, C>(dialogComponent: ComponentType<C>, dialogData?: DialogDataModel<any>): DialogRef<R, C> {
-    return this.dialog.open<R, DialogDataModel<any>, C>(dialogComponent, {
+    const dialogRef = this.dialog.open<R, DialogDataModel<any>, C>(dialogComponent, {
       backdropClass: 'bg-space-black/50',
       data: dialogData,
     });
+
+    const prev = this.dialogStack.at(-1);
+
+    this.dialogStack.push(dialogRef);
+
+    if (this.dialogStack.length > 1) {
+      prev?.addPanelClass('opacity-0');
+    }
+
+    dialogRef.closed.subscribe(() => {
+      this.dialogStack.pop();
+      prev?.removePanelClass('opacity-0');
+    });
+
+    return dialogRef;
   }
 
   closeDialog(dialogRef: DialogRef) {
