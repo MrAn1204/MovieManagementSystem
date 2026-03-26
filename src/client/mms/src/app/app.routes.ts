@@ -8,6 +8,7 @@ import { MainLayout } from './shared/main-layout/main-layout';
 import { Register } from './feature/auth/register/register';
 import { Room } from './feature/room/component/room';
 import { User } from './feature/user/component/user';
+import { Promotion } from './feature/promotion/component/promotion';
 
 export const routes: Routes = [
   {
@@ -44,6 +45,11 @@ export const routes: Routes = [
         path: 'room',
         component: Room,
         title: 'Room',
+      },
+      {
+        path: 'promotion',
+        component: Promotion,
+        title: 'Promotion',
       },
       {
         path: 'user',
