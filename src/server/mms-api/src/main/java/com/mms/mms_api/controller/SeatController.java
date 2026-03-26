@@ -1,6 +1,7 @@
 package com.mms.mms_api.controller;
 
 import java.util.List;
+import java.util.Map;
 import java.util.UUID;
 
 import org.springframework.http.ResponseEntity;
@@ -14,6 +15,7 @@ import com.mms.mms_api.business.command.seat.SeatDeleteCommand;
 import com.mms.mms_api.business.command.seat.SeatUpdateCommand;
 import com.mms.mms_api.business.query.seat.SeatGetAllQuery;
 import com.mms.mms_api.business.query.seat.SeatGetByIdQuery;
+import com.mms.mms_api.business.query.seat.SeatTypeGetAllQuery;
 import com.mms.mms_api.business.service.SeatService;
 import com.mms.mms_api.dto.seat.SeatDto;
 import com.mms.mms_api.util.validator.SeatValidator;
@@ -70,4 +72,10 @@ public class SeatController {
         seatService.handle(new SeatDeleteCommand(id));
         return ResponseEntity.noContent().build();
     }
+
+    @GetMapping("/seat-types")
+    public ResponseEntity<Map<String, Double>> getSeatTypes() {
+        return ResponseEntity.ok(seatService.handle(new SeatTypeGetAllQuery()));
+    }
+    
 }

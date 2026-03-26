@@ -1,6 +1,7 @@
 package com.mms.mms_api.business.service;
 
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Service;
@@ -13,9 +14,11 @@ import com.mms.mms_api.business.handler.seat.SeatCreateHandler;
 import com.mms.mms_api.business.handler.seat.SeatDeleteHandler;
 import com.mms.mms_api.business.handler.seat.SeatGetAllHandler;
 import com.mms.mms_api.business.handler.seat.SeatGetByIdHandler;
+import com.mms.mms_api.business.handler.seat.SeatTypeGetAllHandler;
 import com.mms.mms_api.business.handler.seat.SeatUpdateHandler;
 import com.mms.mms_api.business.query.seat.SeatGetAllQuery;
 import com.mms.mms_api.business.query.seat.SeatGetByIdQuery;
+import com.mms.mms_api.business.query.seat.SeatTypeGetAllQuery;
 import com.mms.mms_api.data.RoomRepository;
 import com.mms.mms_api.data.ScheduleSeatRepository;
 import com.mms.mms_api.data.SeatRepository;
@@ -64,5 +67,10 @@ public class SeatService {
     public void handle(SeatDeleteCommand request) {
         SeatDeleteHandler handler = new SeatDeleteHandler(request, seatMapper, seatRepository, scheduleSeatRepository);
         handler.execute();
+    }
+
+    public Map<String, Double> handle(SeatTypeGetAllQuery request) {
+        SeatTypeGetAllHandler handler = new SeatTypeGetAllHandler(request);
+        return handler.execute();
     }
 }
