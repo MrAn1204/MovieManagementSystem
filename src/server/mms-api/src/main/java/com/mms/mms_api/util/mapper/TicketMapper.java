@@ -21,6 +21,7 @@ public interface TicketMapper {
     @Mapping(target = "invoice", ignore = true)
     @Mapping(target = "promotion", ignore = true)
     @Mapping(target = "user", ignore = true)
+    @Mapping(target = "price", ignore = true)
     Ticket toEntity(TicketCreateCommand command);
 
     @Mapping(target = "name", ignore = true)
@@ -40,6 +41,7 @@ public interface TicketMapper {
     @Mapping(target = "invoice", ignore = true)
     @Mapping(target = "promotion", ignore = true)
     @Mapping(target = "user", ignore = true)
+    @Mapping(target = "price", ignore = true)
     void updateEntity(TicketUpdateCommand command, @MappingTarget Ticket ticket);
 
     @AfterMapping

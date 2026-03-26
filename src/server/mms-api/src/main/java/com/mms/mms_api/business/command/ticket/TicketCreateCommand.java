@@ -15,8 +15,6 @@ import lombok.EqualsAndHashCode;
 @EqualsAndHashCode(callSuper = true)
 @AllArgsConstructor
 public class TicketCreateCommand extends BaseCreateCommand {
-    private int price;
-
     @NotNull(message = "{ticket.schedule.required}")
     @NonNull
     private UUID scheduleId;

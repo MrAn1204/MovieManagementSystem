@@ -64,6 +64,8 @@ public class TicketUpdateHandler extends TicketBaseHandler<TicketUpdateCommand, 
         ticket.setSeat(seat);
         ticket.setPromotion(promotion);
 
+        ticket.setPrice(seat.getSeatType());
+
         Ticket updatedTicket = ticketRepository.save(ticket);
 
         Invoice invoice = updatedTicket.getInvoice();

@@ -26,4 +26,6 @@ public class AppConstant {
     public static final int ROW_MAX = 20;
 
     public static final int COLUMN_MAX = 20;
+
+    public static final int BASE_SEAT_PRICE = 20000;
 }

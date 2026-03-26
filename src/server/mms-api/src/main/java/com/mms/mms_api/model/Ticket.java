@@ -1,5 +1,7 @@
 package com.mms.mms_api.model;
 
+import com.mms.mms_api.common.AppConstant;
+
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.JoinColumn;
@@ -37,4 +39,14 @@ public class Ticket extends BaseEntity {
     @ManyToOne
     @JoinColumn(name = "user_id", nullable = false)
     private User user;
+
+    public void setPrice(int price) {
+        this.price = price;
+    }
+
+    public void setPrice(SeatType seatType) {
+        int base = AppConstant.BASE_SEAT_PRICE;
+
+        this.price = (int) (base * seatType.getMultiplier());
+    }
 }

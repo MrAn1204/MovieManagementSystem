@@ -48,6 +48,8 @@ public class TicketCreateHandler extends TicketBaseHandler<TicketCreateCommand, 
         ticket.setPromotion(promotion);
         ticket.setUser(user);
 
+        ticket.setPrice(seat.getSeatType());
+
         ScheduleSeat scheduleSeat = scheduleSeatRepository.findById(new ScheduleSeatId(schedule.getId(), seat.getId()))
                 .orElseThrow(() -> new ResourceNotFoundException("schedule.seat.notFound"));
 
