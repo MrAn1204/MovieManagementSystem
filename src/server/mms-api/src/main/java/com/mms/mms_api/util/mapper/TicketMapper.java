@@ -32,8 +32,6 @@ public interface TicketMapper {
     
     @InheritConfiguration(name = "toDto")
     @Mapping(target = "promotion.name", source = "ticket.promotion.title")
-    @Mapping(target = "showTime", source = "ticket.schedule.showTime")
-    @Mapping(target = "room", source = "ticket.schedule.room")
     TicketDetailDto toDetailDto(Ticket ticket);
 
     @Mapping(target = "schedule", ignore = true)

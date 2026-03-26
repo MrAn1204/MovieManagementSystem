@@ -16,4 +16,6 @@ public class TicketDto extends BaseDto {
     private String username;
 
     private String phoneNumber;
+
+    private int price;
 }

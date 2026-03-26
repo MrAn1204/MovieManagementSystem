@@ -1,8 +1,7 @@
 package com.mms.mms_api.dto.ticket;
 
-import java.time.LocalDateTime;
-
 import com.mms.mms_api.common.IdNameDto;
+import com.mms.mms_api.dto.schedule.ScheduleDto;
 
 import lombok.Data;
 import lombok.EqualsAndHashCode;
@@ -10,13 +9,9 @@ import lombok.EqualsAndHashCode;
 @Data
 @EqualsAndHashCode(callSuper = true)
 public class TicketDetailDto extends TicketDto {
-    private LocalDateTime showTime;
-
-    private IdNameDto room;
+    private ScheduleDto schedule;
 
     private IdNameDto seat;
 
     private IdNameDto promotion;
-
-    private int price;
 }
