@@ -4,7 +4,6 @@ import com.mms.mms_api.business.command.BaseCreateCommand;
 
 import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.NotNull;
-import jakarta.validation.constraints.Positive;
 import jakarta.validation.constraints.PositiveOrZero;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -18,9 +17,6 @@ import org.springframework.lang.NonNull;
 @EqualsAndHashCode(callSuper = true)
 @AllArgsConstructor
 public class InvoiceCreateCommand extends BaseCreateCommand {
-    @Positive(message = "{invoice.totalMoney.invalid}")
-    private int totalMoney;
-
     @PositiveOrZero(message = "{invoice.addScore.invalid}")
     private int addScore;
 

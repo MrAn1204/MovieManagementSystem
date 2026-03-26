@@ -19,6 +19,8 @@ import com.mms.mms_api.model.Ticket;
 public interface InvoiceMapper {
     @Mapping(target = "tickets", ignore = true)
     @Mapping(target = "user", ignore = true)
+    @Mapping(target = "totalMoney", ignore = true)
+    @Mapping(target = "discount", expression = "java(command.getDiscount() / 100.0)")
     Invoice toEntity(InvoiceCreateCommand command);
 
     @Mapping(target = "name", ignore = true)
@@ -26,6 +28,8 @@ public interface InvoiceMapper {
 
     @Mapping(target = "tickets", ignore = true)
     @Mapping(target = "user", ignore = true)
+    @Mapping(target = "totalMoney", ignore = true)
+    @Mapping(target = "discount", expression = "java(command.getDiscount() / 100.0)")
     void updateEntity(InvoiceUpdateCommand command, @MappingTarget Invoice invoice);
 
     default List<UUID> mapTickets(List<Ticket> tickets) {
