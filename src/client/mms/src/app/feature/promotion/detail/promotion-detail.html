@@ -1,0 +1,27 @@
+<app-detail [title]="data.title" [roleConfig]="data.roleConfig" (openUpdate)="openUpdate()" (openDelete)="openDelete()" (closeDialog)="close()">
+  <div class="w-full flex flex-col md:flex-row items-center gap-8">
+    <app-detail-image [src]="model?.image"></app-detail-image>
+
+    <div class="w-full flex-1 gap-8 grid grid-cols-1 sm:grid-cols-2">
+      <app-detail-text label="Title">
+        {{ model?.title | formatCell }}
+      </app-detail-text>
+
+      <app-detail-text label="Discount">
+        {{ model?.discount | formatCell }}
+      </app-detail-text>
+
+      <app-detail-text label="Start Date">
+        {{ model?.startDate | formatCell: 'date' }}
+      </app-detail-text>
+
+      <app-detail-text label="End Date">
+        {{ model?.endDate | formatCell: 'date' }}
+      </app-detail-text>
+
+      <app-detail-text class="sm:col-span-2" label="Description">
+        {{ model?.description | formatCell }}
+      </app-detail-text>
+    </div>
+  </div>
+</app-detail>

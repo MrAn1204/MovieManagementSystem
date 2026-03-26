@@ -1,0 +1,30 @@
+<app-create-edit [formGroup]="form" [title]="data.title" (submitForm)="onSubmit()" (resetForm)="onReset()" (closeDialog)="close()">
+  <div class="create-edit-layout">
+    <app-image-field formControlName="image" idName="image" labelText="Image"></app-image-field>
+
+    <div class="w-full flex-1 gap-4 grid grid-cols-1 sm:grid-cols-2">
+      <div>
+        <app-input-field formControlName="title" inputType="text" idName="title" labelText="Title"></app-input-field>
+        <app-validation-error [control]="form.get('title')!"></app-validation-error>
+      </div>
+
+      <div>
+        <app-input-field formControlName="discount" inputType="number" idName="discount" labelText="Discount (%)"></app-input-field>
+      </div>
+
+      <div>
+        <app-input-field formControlName="startDate" inputType="date" idName="startDate" labelText="Start Date"></app-input-field>
+        <app-validation-error [control]="form.get('startDate')!"></app-validation-error>
+      </div>
+
+      <div>
+        <app-input-field formControlName="endDate" inputType="date" idName="endDate" labelText="End Date"></app-input-field>
+        <app-validation-error [control]="form.get('endDate')!"></app-validation-error>
+      </div>
+
+      <div class="sm:col-span-2">
+        <app-textarea-field formControlName="description" idName="description" labelText="Description"></app-textarea-field>
+      </div>
+    </div>
+  </div>
+</app-create-edit>
