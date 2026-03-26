@@ -23,6 +23,7 @@ public abstract class PromotionMapper {
 
     @Mapping(target = "tickets", ignore = true)
     @Mapping(target = "image", ignore = true)
+    @Mapping(target = "discount", expression = "java(command.getDiscount() / 100.0)")
     public abstract Promotion toEntity(PromotionCreateCommand command);
 
     @Mapping(target = "image", qualifiedByName = "getImageUrl")
@@ -30,6 +31,7 @@ public abstract class PromotionMapper {
 
     @Mapping(target = "tickets", ignore = true)
     @Mapping(target = "image", ignore = true)
+    @Mapping(target = "discount", expression = "java(command.getDiscount() / 100.0)")
     public abstract void updateEntity(PromotionUpdateCommand command, @MappingTarget Promotion promotion);
 
     @Named("getImageUrl")
