@@ -41,8 +41,6 @@ public class PromotionController {
 
     @PostMapping(value = "/create", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
     public ResponseEntity<PromotionDto> create(@Valid @ModelAttribute PromotionCreateCommand request) {
-        promotionValidator.validate(request);
-        
         PromotionDto promotion = promotionService.handle(request);
 
         return ResponseEntity.status(HttpStatus.CREATED).body(promotion);

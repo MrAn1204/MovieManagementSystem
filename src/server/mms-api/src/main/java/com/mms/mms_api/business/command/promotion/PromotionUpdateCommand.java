@@ -7,9 +7,8 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import java.time.LocalDate;
-import java.util.List;
-import java.util.UUID;
 
+import org.hibernate.validator.constraints.Range;
 import org.springframework.web.multipart.MultipartFile;
 
 @Data
@@ -29,7 +28,7 @@ public class PromotionUpdateCommand extends BaseUpdateCommand {
 
     private MultipartFile image;
 
+    @NotNull(message = "{promotion.discount.required}")
+    @Range(min = 5, max = 100, message = "{promotion.discount.invalid}")
     private double discount;
-
-    private List<UUID> ticketIds;
 }
