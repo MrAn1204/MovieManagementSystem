@@ -24,6 +24,8 @@ export class FormatCellPipe implements PipeTransform {
         return Array.isArray(value) && value.length
           ? value.join(', ')
           : this.EMPTY_TEXT;
+      case 'percentage':
+        return typeof value === 'number' ? `${(value * 100).toFixed(2)}%` : this.EMPTY_TEXT;
       default:
         return String(value).length ? value : this.EMPTY_TEXT;
     }

@@ -30,7 +30,7 @@ export class Promotion extends SearchableFeature<PromotionModel> {
     { key: 'title', label: 'Title', type: 'string' },
     { key: 'startDate', label: 'Start Date', type: 'date' },
     { key: 'endDate', label: 'End Date', type: 'date' },
-    { key: 'discount', label: 'Discount (%)', type: 'number' },
+    { key: 'discount', label: 'Discount (%)', type: 'percentage' },
   ];
 
   override sortOptions = [

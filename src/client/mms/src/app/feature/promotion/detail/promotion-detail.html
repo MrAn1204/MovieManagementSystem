@@ -8,7 +8,7 @@
       </app-detail-text>
 
       <app-detail-text label="Discount">
-        {{ model?.discount | formatCell }}
+        {{ model?.discount | formatCell: 'percentage' }}
       </app-detail-text>
 
       <app-detail-text label="Start Date">
