@@ -68,10 +68,7 @@ public class TicketUpdateHandler extends TicketBaseHandler<TicketUpdateCommand, 
 
         Invoice invoice = updatedTicket.getInvoice();
         if (invoice != null) {
-            int totalTicketPrice = invoice.getTickets().stream().mapToInt(Ticket::getPrice).sum();
-            int totalMoney = (int) Math.round(totalTicketPrice * (1 - invoice.getDiscount()));
-
-            invoice.setTotalMoney(totalMoney);
+            invoice.setTotalMoney(invoice.getTickets(), invoice.getDiscount(), invoice.getUseScore());
             invoiceRepository.save(invoice);
         }
 
