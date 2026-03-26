@@ -35,11 +35,13 @@ public class PromotionService {
 
     private final PromotionMapper promotionMapper;
 
+    private final GscService gscService;
+
     @PreAuthorize("hasAuthority('ADMIN')")
     @Transactional
     public PromotionDto handle(PromotionCreateCommand request) {
         PromotionCreateHandler handler = new PromotionCreateHandler(request, promotionMapper, promotionRepository,
-                ticketRepository);
+                ticketRepository, gscService);
         return handler.execute();
     }
 
@@ -57,7 +59,7 @@ public class PromotionService {
     @Transactional
     public PromotionDto handle(PromotionUpdateCommand request) {
         PromotionUpdateHandler handler = new PromotionUpdateHandler(request, promotionMapper, promotionRepository,
-                ticketRepository);
+                ticketRepository, gscService);
         return handler.execute();
     }
 

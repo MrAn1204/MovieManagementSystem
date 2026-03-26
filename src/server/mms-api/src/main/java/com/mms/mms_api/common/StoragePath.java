@@ -1,7 +1,8 @@
 package com.mms.mms_api.common;
 
 public enum StoragePath {
-    MOVIE_THUMBNAIL("movies/");
+    MOVIE_THUMBNAIL("movies/"),
+    PROMOTION_IMAGE("promotions/");
 
     private final String path;
 

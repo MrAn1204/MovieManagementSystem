@@ -21,9 +21,11 @@ import java.util.List;
 import java.util.UUID;
 
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -37,8 +39,8 @@ public class PromotionController {
 
     private final PromotionValidator promotionValidator;
 
-    @PostMapping("/create")
-    public ResponseEntity<PromotionDto> create(@Valid @RequestBody PromotionCreateCommand request) {
+    @PostMapping(value = "/create", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
+    public ResponseEntity<PromotionDto> create(@Valid @ModelAttribute PromotionCreateCommand request) {
         promotionValidator.validate(request);
         
         PromotionDto promotion = promotionService.handle(request);
@@ -60,8 +62,8 @@ public class PromotionController {
         return ResponseEntity.ok(promotion);
     }
 
-    @PutMapping("/{id}")
-    public ResponseEntity<PromotionDto> update(@PathVariable UUID id, @Valid @RequestBody PromotionUpdateCommand request) {
+    @PutMapping(value = "/{id}", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
+    public ResponseEntity<PromotionDto> update(@PathVariable UUID id, @Valid @ModelAttribute PromotionUpdateCommand request) {
         request.setId(id);
 
         promotionValidator.validate(request);

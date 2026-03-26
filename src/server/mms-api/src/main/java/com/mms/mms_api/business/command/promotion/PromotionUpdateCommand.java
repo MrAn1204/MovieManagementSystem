@@ -10,6 +10,8 @@ import java.time.LocalDate;
 import java.util.List;
 import java.util.UUID;
 
+import org.springframework.web.multipart.MultipartFile;
+
 @Data
 @EqualsAndHashCode(callSuper = true)
 @AllArgsConstructor
@@ -25,7 +27,7 @@ public class PromotionUpdateCommand extends BaseUpdateCommand {
 
     private String description;
 
-    private String image;
+    private MultipartFile image;
 
     private double discount;
 
