@@ -14,7 +14,10 @@
   </div>
 
   <app-dialog-buttons>
+    <ng-content select="[custom-buttons]"></ng-content>
+
     <app-button type="submit" variant="primary">Save</app-button>
+
     <app-button type="button" variant="secondary" (clicked)="resetForm.emit()">Reset</app-button>
   </app-dialog-buttons>
 </form>
