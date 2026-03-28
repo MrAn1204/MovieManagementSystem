@@ -1,11 +1,12 @@
 import { Component, input, output } from '@angular/core';
-import { DetailButtons } from "../detail-buttons/detail-buttons";
+import { DialogButtons } from "../../dialog/dialog-buttons/dialog-buttons";
 import { AuthService } from '../../../../service/auth/auth.service';
 import { RoleConfigModel } from '../../../model/role-config.model';
+import { Button } from "../../button/button";
 
 @Component({
   selector: 'app-detail',
-  imports: [DetailButtons],
+  imports: [DialogButtons, Button],
   templateUrl: './detail.html',
   styleUrl: './detail.css',
 })

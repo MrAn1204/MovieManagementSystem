@@ -1,0 +1,29 @@
+@import "../../../../styles.css";
+
+.button {
+  @apply px-4 py-2 w-full rounded-md focus:outline-none focus:ring-2 disabled:opacity-60 disabled:cursor-not-allowed;
+}
+
+.primary {
+  @apply text-white bg-steel-blue-500 hover:bg-steel-blue-600 focus:ring-steel-blue;
+}
+
+.secondary {
+  @apply border border-steel-blue text-steel-blue hover:bg-platinum-100 focus:ring-steel-blue;
+}
+
+.danger {
+  @apply text-white bg-vermilion-500 hover:bg-vermilion-600 focus:ring-vermilion;
+}
+
+.success {
+  @apply text-white bg-bright-fern-500 hover:bg-bright-fern-600 focus:ring-bright-fern;
+}
+
+.warning {
+  @apply text-white bg-carrot-orange-500 hover:bg-carrot-orange-600 focus:ring-carrot-orange;
+}
+
+.icon {
+  @apply hover:bg-platinum-100 size-10 p-0 rounded-0;
+}

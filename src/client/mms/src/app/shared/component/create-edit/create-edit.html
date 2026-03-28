@@ -3,9 +3,9 @@
   <div class="mb-8 w-full flex flex-wrap-reverse items-center relative">
     <h2 class="sm:flex-1 text-2xl font-semibold sm:text-center overflow-hidden">{{ title() }}</h2>
     <div class="sm:absolute sm:right-0 flex flex-1 justify-end">
-      <button type="button" class="w-10 h-10 hover:bg-platinum-100" (click)="closeDialog.emit()">
+      <app-button type="button" variant="icon" (clicked)="closeDialog.emit()">
         <i class="fa-solid fa-xmark"></i>
-      </button>
+      </app-button>
     </div>
   </div>
 
@@ -13,10 +13,11 @@
     <ng-content></ng-content>
   </div>
 
-  <div class="mt-8 flex justify-center gap-4 *:w-20">
-    <button type="submit"
-      class="px-4 py-2 text-white rounded-md bg-steel-blue-500 hover:bg-steel-blue-600 focus:outline-none focus:ring-2 focus:ring-steel-blue">Save</button>
-    <button type="button" (click)="resetForm.emit()"
-      class="px-4 py-2 border border-steel-blue rounded-md hover:bg-platinum-100 text-steel-blue focus:outline-none">Reset</button>
-  </div>
+  <app-dialog-buttons>
+    <ng-content select="[custom-buttons]"></ng-content>
+
+    <app-button type="submit" variant="primary">Save</app-button>
+
+    <app-button type="button" variant="secondary" (clicked)="resetForm.emit()">Reset</app-button>
+  </app-dialog-buttons>
 </form>
