@@ -1,18 +1,18 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { DetailButtons } from './detail-buttons';
+import { DialogButtons } from './dialog-buttons';
 
 describe('DetailButtons', () => {
-  let component: DetailButtons;
-  let fixture: ComponentFixture<DetailButtons>;
+  let component: DialogButtons;
+  let fixture: ComponentFixture<DialogButtons>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [DetailButtons]
+      imports: [DialogButtons]
     })
     .compileComponents();
 
-    fixture = TestBed.createComponent(DetailButtons);
+    fixture = TestBed.createComponent(DialogButtons);
     component = fixture.componentInstance;
     await fixture.whenStable();
   });

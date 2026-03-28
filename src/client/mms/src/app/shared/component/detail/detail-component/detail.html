@@ -13,11 +13,15 @@
     <ng-content></ng-content>
   </div>
 
-  <app-detail-buttons
-    [canEdit]="canEdit()"
-    [canDelete]="canDelete()"
-    (updateItem)="openUpdate.emit()"
-    (deleteItem)="openDelete.emit()">
+  <app-dialog-buttons>
     <ng-content select="[custom-buttons]"></ng-content>
-  </app-detail-buttons>
+
+    @if (canEdit()) {
+      <app-button type="button" variant="primary" (clicked)="openUpdate.emit()">Edit</app-button>
+    }
+
+    @if (canDelete()) {
+      <app-button type="button" variant="danger" (clicked)="openDelete.emit()">Delete</app-button>
+    }
+  </app-dialog-buttons>
 </div>
