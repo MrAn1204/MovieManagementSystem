@@ -1,0 +1,13 @@
+<div class="filter-layout">
+  <div class="filter-common">
+    <app-input-field inputType="datetime-local" formControlName="showTime" idName="filter-show-time" labelText="Show Time"></app-input-field>
+  </div>
+
+  <div class="filter-common">
+    <app-select-field formControlName="movieId" idName="filter-movie" labelText="Movie" [options]="movies()"></app-select-field>
+
+    <app-select-field formControlName="roomId" idName="filter-room" labelText="Room" [options]="rooms()"></app-select-field>
+
+    <app-select-field formControlName="promotionId" idName="filter-promotion" labelText="Promotion" [options]="promotions()"></app-select-field>
+  </div>
+</div>
