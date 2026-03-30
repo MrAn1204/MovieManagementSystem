@@ -1,10 +1,10 @@
 import { IdNameModel } from '../../shared/model/id-name.model';
+import { ScheduleModel } from '../schedule/schedule.model';
 import { TicketModel } from './ticket.model';
 
 export interface TicketDetailModel extends TicketModel {
-  showTime: string;
+  schedule: ScheduleModel;
   room: IdNameModel;
   seat: IdNameModel;
-  promotion: IdNameModel;
-  price: number;
+  promotion: IdNameModel | null;
 }
