@@ -1,5 +1,6 @@
 package com.mms.mms_api.business.service.validation;
 
+import java.util.List;
 import java.util.UUID;
 
 import org.springframework.lang.NonNull;
@@ -26,5 +27,9 @@ public class SeatValidationService {
 
     public boolean existsByRoom(Room room) {
         return seatRepository.existsByRoom(room);
+    }
+
+    public List<Seat> getByIdIn(List<UUID> ids) {
+        return seatRepository.findByIdIn(ids);
     }
 }

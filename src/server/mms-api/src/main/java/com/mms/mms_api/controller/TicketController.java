@@ -39,12 +39,12 @@ public class TicketController {
     private final TicketValidator ticketValidator;
 
     @PostMapping("/create")
-    public ResponseEntity<TicketDetailDto> create(@Valid @RequestBody TicketCreateCommand request) {
+    public ResponseEntity<List<TicketDetailDto>> create(@Valid @RequestBody TicketCreateCommand request) {
         ticketValidator.validate(request);
 
-        TicketDetailDto ticket = ticketService.handle(request);
+        List<TicketDetailDto> tickets = ticketService.handle(request);
 
-        return ResponseEntity.status(HttpStatus.CREATED).body(ticket);
+        return ResponseEntity.status(HttpStatus.CREATED).body(tickets);
     }
 
     @GetMapping

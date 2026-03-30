@@ -1,10 +1,11 @@
 package com.mms.mms_api.business.handler.ticket;
 
+import java.util.LinkedList;
+import java.util.List;
 import java.util.UUID;
 
 import com.mms.mms_api.business.command.ticket.TicketCreateCommand;
 import com.mms.mms_api.business.service.TicketDependencies;
-import com.mms.mms_api.exception.ResourceNotFoundException;
 import com.mms.mms_api.data.ScheduleSeatRepository;
 import com.mms.mms_api.data.TicketRepository;
 import com.mms.mms_api.dto.ticket.TicketDetailDto;
@@ -12,12 +13,11 @@ import com.mms.mms_api.util.mapper.TicketMapper;
 import com.mms.mms_api.model.Promotion;
 import com.mms.mms_api.model.Schedule;
 import com.mms.mms_api.model.ScheduleSeat;
-import com.mms.mms_api.model.ScheduleSeatId;
 import com.mms.mms_api.model.Seat;
 import com.mms.mms_api.model.Ticket;
 import com.mms.mms_api.model.User;
 
-public class TicketCreateHandler extends TicketBaseHandler<TicketCreateCommand, TicketDetailDto> {
+public class TicketCreateHandler extends TicketBaseHandler<TicketCreateCommand, List<TicketDetailDto>> {
     private final TicketDependencies ticketDependencies;
 
     private final ScheduleSeatRepository scheduleSeatRepository;
@@ -31,12 +31,12 @@ public class TicketCreateHandler extends TicketBaseHandler<TicketCreateCommand, 
     }
 
     @Override
-    public TicketDetailDto execute() {
+    public List<TicketDetailDto> execute() {
         Ticket ticket = ticketMapper.toEntity(request);
 
         Schedule schedule = ticketDependencies.getScheduleById(request.getScheduleId());
 
-        Seat seat = ticketDependencies.getSeatById(request.getSeatId());
+        List<Seat> seats = ticketDependencies.getSeatByIdIn(request.getSeatIds());
 
         UUID promotionId = request.getPromotionId();
         Promotion promotion = ticketDependencies.getPromotionById(promotionId);
@@ -44,20 +44,27 @@ public class TicketCreateHandler extends TicketBaseHandler<TicketCreateCommand, 
         User user = ticketDependencies.getUserById(request.getUserId());
 
         ticket.setSchedule(schedule);
-        ticket.setSeat(seat);
         ticket.setPromotion(promotion);
         ticket.setUser(user);
 
-        ticket.setPrice(seat.getSeatType());
+        List<ScheduleSeat> scheduleSeats = scheduleSeatRepository.findByScheduleAndSeatIn(schedule, seats);
 
-        ScheduleSeat scheduleSeat = scheduleSeatRepository.findById(new ScheduleSeatId(schedule.getId(), seat.getId()))
-                .orElseThrow(() -> new ResourceNotFoundException("schedule.seat.notFound"));
+        List<Ticket> newTickets = new LinkedList<>();
 
-        scheduleSeat.setReserved(true);
-        scheduleSeatRepository.save(scheduleSeat);
+        for (ScheduleSeat scheduleSeat : scheduleSeats) {
+            Seat seat = scheduleSeat.getSeat();
 
-        Ticket savedTicket = ticketRepository.save(ticket);
+            ticket.setSeat(seat);
+            ticket.setPrice(seat.getSeatType());
 
-        return ticketMapper.toDetailDto(savedTicket);
+            scheduleSeat.setReserved(true);
+            scheduleSeatRepository.save(scheduleSeat);
+    
+            newTickets.add(ticket);
+        }
+
+        List<Ticket> savedTickets = ticketRepository.saveAll(newTickets);
+
+        return savedTickets.stream().map(ticketMapper::toDetailDto).toList();
     }
 }

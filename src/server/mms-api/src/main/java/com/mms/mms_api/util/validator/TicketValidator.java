@@ -1,5 +1,6 @@
 package com.mms.mms_api.util.validator;
 
+import java.util.List;
 import java.util.UUID;
 
 import org.springframework.lang.NonNull;
@@ -37,21 +38,25 @@ public class TicketValidator implements BaseValidator {
         ErrorLinkedList errors = new ErrorLinkedList();
 
         Schedule schedule = scheduleValidationService.getById(command.getScheduleId());
-        Seat seat = seatValidationService.getById(command.getSeatId());
-        ScheduleSeat scheduleSeat = scheduleSeatValidationService.getById(schedule.getId(), seat.getId());
+        List<Seat> seats = seatValidationService.getByIdIn(command.getSeatIds());
+        List<ScheduleSeat> scheduleSeats = scheduleSeatValidationService.getByScheduleAndSeatIn(schedule, seats);
 
         validateSchedule(errors, schedule);
-        validateSeat(errors, seat);
-        validateScheduleSeat(errors, scheduleSeat);
         validatePromotion(errors, command.getPromotionId());
         validateUser(errors, command.getUserId());
 
-        errors.throwIfNotEmpty(ErrorType.RESOURCE_NOT_FOUND);
+        for (ScheduleSeat scheduleSeat : scheduleSeats) {
+            validateSeat(errors, scheduleSeat.getSeat());
+            validateScheduleSeat(errors, scheduleSeat);
+            errors.throwIfNotEmpty(ErrorType.RESOURCE_NOT_FOUND);
+        }
 
-        validateRoomMismatch(errors, schedule, seat);
-        validateReserved(errors, scheduleSeat);
+        for (ScheduleSeat scheduleSeat : scheduleSeats) {
+            validateRoomMismatch(errors, scheduleSeat.getSchedule(), scheduleSeat.getSeat());
+            validateReserved(errors, scheduleSeat);
+            errors.throwIfNotEmpty(ErrorType.INVALID_INPUT);
+        }
 
-        errors.throwIfNotEmpty(ErrorType.INVALID_INPUT);
     }
 
     public void validate(TicketUpdateCommand command) {

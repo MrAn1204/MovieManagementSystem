@@ -1,5 +1,6 @@
 package com.mms.mms_api.business.service;
 
+import java.util.List;
 import java.util.UUID;
 
 import org.springframework.lang.NonNull;
@@ -48,5 +49,13 @@ public class TicketDependencies {
     public User getUserById(@NonNull UUID userId) {
         return userRepository.findById(userId)
                 .orElseThrow(() -> new ResourceNotFoundException("user.notFound"));
+    }
+
+    public List<Seat> getSeatByIdIn(List<UUID> seatIds) {
+        List<Seat> seats = seatRepository.findByIdIn(seatIds);
+        if (seats == null || seats.size() != seatIds.size()) {
+            throw new ResourceNotFoundException("ticket.seats.invalid");
+        }
+        return seats;
     }
 }

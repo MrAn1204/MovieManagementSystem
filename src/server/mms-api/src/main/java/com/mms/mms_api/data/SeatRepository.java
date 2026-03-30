@@ -16,4 +16,6 @@ public interface SeatRepository extends JpaRepository<Seat, UUID> {
     boolean existsByRoom(Room room);
 
     List<Seat> findByRoomId(UUID roomId);
+
+    List<Seat> findByIdIn(List<UUID> ids);
 }

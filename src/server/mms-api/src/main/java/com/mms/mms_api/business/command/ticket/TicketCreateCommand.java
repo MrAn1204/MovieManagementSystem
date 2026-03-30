@@ -1,11 +1,13 @@
 package com.mms.mms_api.business.command.ticket;
 
+import java.util.List;
 import java.util.UUID;
 
 import org.springframework.lang.NonNull;
 
 import com.mms.mms_api.business.command.BaseCreateCommand;
 
+import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -19,9 +21,9 @@ public class TicketCreateCommand extends BaseCreateCommand {
     @NonNull
     private UUID scheduleId;
 
-    @NotNull(message = "{ticket.seat.required}")
+    @NotEmpty(message = "{ticket.seat.required}")
     @NonNull
-    private UUID seatId;
+    private List<@NotNull(message = "{ticket.seats.invalid}") UUID> seatIds;
 
     private UUID promotionId;
 

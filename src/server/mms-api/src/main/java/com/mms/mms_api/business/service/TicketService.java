@@ -42,7 +42,7 @@ public class TicketService {
     private final TicketMapper ticketMapper;
 
     @Transactional
-    public TicketDetailDto handle(TicketCreateCommand request) {
+    public List<TicketDetailDto> handle(TicketCreateCommand request) {
         TicketCreateHandler handler = new TicketCreateHandler(request, ticketMapper, ticketRepository, ticketDependencies, scheduleSeatRepository);
         return handler.execute();
     }
