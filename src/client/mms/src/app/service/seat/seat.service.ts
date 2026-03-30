@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { SeatModel } from '../../model/seat/seat.model';
 import { SeatFormModel } from '../../model/form/seat-form.model';
+import { SeatTypeModel } from '../../model/seat/seat-type.model';
 import { EntityService } from '../entity.service';
 
 @Injectable({
@@ -28,5 +29,9 @@ export class SeatService extends EntityService<SeatModel> {
 
   delete(id: string): Observable<null> {
     return this.http.delete<null>(`${this.baseUrl}/${id}`);
+  }
+
+  getSeatTypes(): Observable<SeatTypeModel> {
+    return this.http.get<SeatTypeModel>(`${this.baseUrl}/seat-types`);
   }
 }
