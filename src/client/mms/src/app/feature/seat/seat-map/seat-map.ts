@@ -1,4 +1,4 @@
-import { Component, input, signal } from '@angular/core';
+import { Component, input, OnChanges, signal, SimpleChanges } from '@angular/core';
 import { SeatService } from '../../../service/seat/seat.service';
 import { SeatModel } from '../../../model/seat/seat.model';
 import { NgClass } from '@angular/common';
@@ -16,7 +16,7 @@ import { MapDescription } from "../map-description/map-description";
   templateUrl: './seat-map.html',
   styleUrl: './seat-map.css',
 })
-export class SeatMap extends BaseFeature<SeatModel> {
+export class SeatMap extends BaseFeature<SeatModel> implements OnChanges {
   override entityName = 'Seat';
 
   override contentCreateEdit = SeatCreateEdit;
@@ -38,16 +38,20 @@ export class SeatMap extends BaseFeature<SeatModel> {
     super(seatService);
   }
 
+  ngOnChanges(changes: SimpleChanges): void {
+    this.loadMap();
+  }
+
   override ngOnInit(): void {
     super.ngOnInit();
-
-    this.rows = Array.from({ length: this.columnLength() }, (_, i) => i + 1);
-    this.columns = Array.from({ length: this.rowLength() }, (_, i) => i + 1);
 
     this.loadMap();
   }
 
   private loadMap(): void {
+    this.rows = Array.from({ length: this.columnLength() }, (_, i) => i + 1);
+    this.columns = Array.from({ length: this.rowLength() }, (_, i) => i + 1);
+
     const seatMap = new Map<string, SeatModel>();
 
     this.seats().forEach(seat => {
