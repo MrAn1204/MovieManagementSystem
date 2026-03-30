@@ -1,0 +1,39 @@
+<app-detail [title]="data.title" [roleConfig]="data.roleConfig" (openUpdate)="openUpdate()" (openDelete)="openDelete()" (closeDialog)="close()">
+  <div class="w-full flex-1 gap-8 grid grid-cols-1 sm:grid-cols-2">
+    <app-detail-text label="Name">
+      {{ model?.name | formatCell }}
+    </app-detail-text>
+
+    <app-detail-text label="Price">
+      {{ model?.price | formatCell }}
+    </app-detail-text>
+
+    <app-detail-text label="Show Time">
+      {{ model?.schedule?.showTime | formatCell: 'datetime' }}
+    </app-detail-text>
+
+    <app-detail-text label="Movie">
+      {{ model?.schedule?.movie | formatCell: 'id-name' }}
+    </app-detail-text>
+
+    <app-detail-text label="Room">
+      {{ model?.schedule?.room | formatCell: 'id-name' }}
+    </app-detail-text>
+
+    <app-detail-text label="Seat">
+      {{ model?.seat | formatCell: 'id-name' }}
+    </app-detail-text>
+
+    <app-detail-text label="Promotion">
+      {{ model?.promotion | formatCell: 'id-name' }}
+    </app-detail-text>
+
+    <app-detail-text label="Username">
+      {{ model?.username | formatCell }}
+    </app-detail-text>
+
+    <app-detail-text label="Phone Number">
+      {{ model?.phoneNumber | formatCell }}
+    </app-detail-text>
+  </div>
+</app-detail>
