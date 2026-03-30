@@ -9,6 +9,7 @@ import { Register } from './feature/auth/register/register';
 import { Room } from './feature/room/component/room';
 import { User } from './feature/user/component/user';
 import { Promotion } from './feature/promotion/component/promotion';
+import { Ticket } from './feature/ticket/component/ticket';
 
 export const routes: Routes = [
   {
@@ -50,6 +51,11 @@ export const routes: Routes = [
         path: 'promotion',
         component: Promotion,
         title: 'Promotion',
+      },
+      {
+        path: 'ticket',
+        component: Ticket,
+        title: 'Ticket',
       },
       {
         path: 'user',

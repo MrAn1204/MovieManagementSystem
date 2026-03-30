@@ -41,6 +41,14 @@ const ROLE_CONFIG: Record<string, RoleConfigModel> = {
     getById: ['ADMIN', 'USER'],
     search: ['ADMIN', 'USER']
   },
+  ticket: {
+    create: ['ADMIN', 'USER'],
+    edit: ['ADMIN'],
+    delete: ['ADMIN'],
+    getAll: ['ADMIN'],
+    getById: ['ADMIN', 'USER'],
+    search: ['ADMIN']
+  },
   seat: {
     create: ['ADMIN'],
     edit: ['ADMIN'],
