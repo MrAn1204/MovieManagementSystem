@@ -1,0 +1,46 @@
+<app-create-edit [formGroup]="form" [title]="data.title" (submitForm)="onSubmit()"
+  (resetForm)="onReset()" (closeDialog)="close()">
+  <div class="create-edit-layout">
+    <div class="w-full flex-1 gap-4 grid grid-cols-1 sm:grid-cols-2">
+      <div [class.sm:col-span-2]="!isEditMode">
+        <app-select-field formControlName="scheduleId" idName="schedule" labelText="Schedule" [options]="schedules()">
+        </app-select-field>
+
+        <app-validation-error [control]="form.get('scheduleId')!"></app-validation-error>
+      </div>
+
+      @if (!isEditMode) {
+      <div>
+        <app-select-field formControlName="userId" idName="user" labelText="User" [options]="users()">
+        </app-select-field>
+
+        <app-validation-error [control]="form.get('userId')!"></app-validation-error>
+      </div>
+      }
+
+      <div>
+        <app-select-field formControlName="promotionId" idName="promotion" labelText="Promotion"
+          [options]="promotions()">
+        </app-select-field>
+      </div>
+
+      <div [hidden]="!selectedSchedule()" class="sm:col-span-2 gap-4 flex flex-col">
+        <hr class="border-platinum-300 w-full">
+
+        @if (selectedSchedule()) {
+        <app-seat-map class="w-full" [rowLength]="selectedSchedule()!.rowLength"
+          [columnLength]="selectedSchedule()!.columnLength" [seats]="selectedSchedule()!.seats"
+          [roomId]="selectedSchedule()!.room.id">
+        </app-seat-map>
+        }
+
+        <div class="w-full">
+          <app-multiselect-field formControlName="seatIds" idName="seats" labelText="Seats" [options]="seats()">
+          </app-multiselect-field>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <app-validation-error [control]="form"></app-validation-error>
+</app-create-edit>
