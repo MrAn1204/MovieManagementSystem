@@ -53,14 +53,15 @@ public class TicketCreateHandler extends TicketBaseHandler<TicketCreateCommand, 
 
         for (ScheduleSeat scheduleSeat : scheduleSeats) {
             Seat seat = scheduleSeat.getSeat();
+            Ticket newTicket = new Ticket(ticket);
 
-            ticket.setSeat(seat);
-            ticket.setPrice(seat.getSeatType());
+            newTicket.setSeat(seat);
+            newTicket.setPrice(seat.getSeatType());
 
             scheduleSeat.setReserved(true);
             scheduleSeatRepository.save(scheduleSeat);
     
-            newTickets.add(ticket);
+            newTickets.add(newTicket);
         }
 
         List<Ticket> savedTickets = ticketRepository.saveAll(newTickets);

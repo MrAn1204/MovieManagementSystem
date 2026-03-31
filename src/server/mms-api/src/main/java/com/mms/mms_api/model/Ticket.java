@@ -17,6 +17,15 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 public class Ticket extends BaseEntity {
+    public Ticket(Ticket ticket) {
+        this.price = ticket.price;
+        this.schedule = ticket.schedule;
+        this.seat = ticket.seat;
+        this.invoice = ticket.invoice;
+        this.promotion = ticket.promotion;
+        this.user = ticket.user;
+    }
+
     @Column(nullable = false)
     private int price;
 
