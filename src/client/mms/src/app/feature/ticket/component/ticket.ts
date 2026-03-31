@@ -58,7 +58,7 @@ export class Ticket extends SearchableFeature<TicketModel> {
       scheduleId: [null, [CustomValidators.required('ticket.schedule.required')]],
       seatIds: [[], [CustomValidators.required('ticket.seat.required')]],
       promotionId: [''],
-      userId: [''],
+      userId: ['', [CustomValidators.required('user.required')]],
     });
   }
 
