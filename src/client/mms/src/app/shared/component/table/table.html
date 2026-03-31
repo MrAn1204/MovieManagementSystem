@@ -43,19 +43,11 @@
         }
 
         <td class="sticky right-0 bg-platinum-50 group-hover:bg-platinum-100 border-platinum-300 border-l">
-          <div class="flex w-fit justify-center gap-x-2 mx-2">
-            <button [hidden]="!canView()" type="button" (click)="viewDetail(item.id)">
-              <i class="fa-solid fa-circle-info text-steel-blue"></i>
-            </button>
-
-            <button [hidden]="!canEdit()" type="button" (click)="updateItem(item.id)">
-              <i class="fa-solid fa-pen-to-square text-carrot-orange"></i>
-            </button>
-
-            <button [hidden]="!canDelete()" type="button" (click)="deleteItem(item.id)">
-              <i class="fa-solid fa-trash text-vermilion"></i>
-            </button>
-          </div>
+          <app-row-actions
+            [canView]="canView()" (viewDetail)="viewDetail(item.id)"
+            [canEdit]="canEdit()" (editItem)="updateItem(item.id)"
+            [canDelete]="canDelete()" (deleteItem)="deleteItem(item.id)">
+          </app-row-actions>
         </td>
       </tr>
       }

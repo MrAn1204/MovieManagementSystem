@@ -4,10 +4,11 @@ import { TableColumnModel } from '../../model/table-column.model';
 import { BaseEntityModel } from '../../model/base-entity.model';
 import { RoleConfigModel } from '../../model/role-config.model';
 import { AuthService } from '../../../service/auth/auth.service';
+import { RowActions } from '../menu/row-actions/row-actions';
 
 @Component({
   selector: 'app-table',
-  imports: [FormatCellPipe],
+  imports: [FormatCellPipe, RowActions],
   templateUrl: './table.html',
   styleUrl: './table.css',
 })
