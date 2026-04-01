@@ -10,7 +10,6 @@ import { FormGroup, ReactiveFormsModule } from '@angular/forms';
 import { TableColumnModel } from '../../../shared/model/table-column.model';
 import { getRoleConfig } from '../../../shared/config/role-config';
 import { SearchableFeature } from '../../../shared/component/feature/searchable-feature';
-import { CustomValidators } from '../../../shared/util/custom-validators';
 import { Pagination } from '../../../shared/component/pagination/pagination';
 
 @Component({
@@ -50,25 +49,6 @@ export class Promotion extends SearchableFeature<PromotionModel> {
     return this.formBuilder.nonNullable.group({
       startDate: [''],
       endDate: [''],
-    });
-  }
-
-  protected override getUpsertGroup(): FormGroup {
-    return this.formBuilder.nonNullable.group({
-      title: ['', [CustomValidators.required('promotion.title.required')]],
-      startDate: ['', [CustomValidators.required('promotion.startDate.required')]],
-      endDate: ['', [CustomValidators.required('promotion.endDate.required')]],
-      description: [''],
-      image: [''],
-      discount: [0],
-      ticketIds: [[]],
-    });
-  }
-
-  override patchEntityForm(model: PromotionModel): void {
-    this.entityForm.patchValue({
-      ...model,
-      ticketIds: [],
     });
   }
 }

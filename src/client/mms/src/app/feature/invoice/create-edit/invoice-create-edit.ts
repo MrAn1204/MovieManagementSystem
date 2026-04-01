@@ -13,5 +13,30 @@ import { ReactiveFormsModule } from '@angular/forms';
   styleUrl: './invoice-create-edit.css',
 })
 export class InvoiceCreateEdit extends CreateEditDialog<InvoiceModel> {
+  override form = this.createForm();
 
+  override createForm() {
+    return this.formBuilder.nonNullable.group({
+      totalMoney: [0],
+      addScore: [0],
+      useScore: [0],
+      discount: [0],
+      ticketIds: [[] as string[]],
+    });
+  }
+
+  override patchForm(): void {
+    const model = this.data.model;
+    if (!model) {
+      return;
+    }
+
+    this.form.patchValue({
+      totalMoney: model.totalMoney,
+      addScore: model.addScore,
+      useScore: model.useScore,
+      discount: model.discount,
+      ticketIds: model.tickets.map(ticket => ticket.id),
+    });
+  }
 }

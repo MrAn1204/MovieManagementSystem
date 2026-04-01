@@ -1,7 +1,6 @@
 import { Component, input, Type } from '@angular/core';
 import { BaseFeature } from '../../../shared/component/feature/base-feature';
 import { InvoiceModel } from '../../../model/invoice/invoice.model';
-import { FormGroup } from '@angular/forms';
 import { BaseDialog } from '../../../shared/component/dialog/base/base-dialog';
 import { RoleConfigModel } from '../../../shared/model/role-config.model';
 import { InvoiceCreateEdit } from '../create-edit/invoice-create-edit';
@@ -35,25 +34,5 @@ export class Invoice extends BaseFeature<InvoiceModel> {
 
   constructor(invoiceService: InvoiceService) {
     super(invoiceService);
-  }
-
-  protected override getUpsertGroup(): FormGroup {
-    return this.formBuilder.nonNullable.group({
-      totalMoney: [0],
-      addScore: [0],
-      useScore: [0],
-      discount: [0],
-      ticketIds: [[]],
-    });
-  }
-
-  override patchEntityForm(model: InvoiceModel): void {
-    this.entityForm.patchValue({
-      totalMoney: model.totalMoney,
-      addScore: model.addScore,
-      useScore: model.useScore,
-      discount: model.discount,
-      ticketIds: model.tickets.map(ticket => ticket.id),
-    });
   }
 }

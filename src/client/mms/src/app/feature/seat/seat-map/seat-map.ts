@@ -1,13 +1,11 @@
-import { Component, input, OnChanges, signal, SimpleChanges } from '@angular/core';
+import { Component, input, OnChanges, OnInit, signal, SimpleChanges } from '@angular/core';
 import { SeatService } from '../../../service/seat/seat.service';
 import { SeatModel } from '../../../model/seat/seat.model';
 import { NgClass } from '@angular/common';
 import { BaseFeature } from '../../../shared/component/feature/base-feature';
-import { FormGroup } from '@angular/forms';
 import { getRoleConfig } from '../../../shared/config/role-config';
 import { SeatCreateEdit } from '../create-edit/seat-create-edit';
 import { SeatDetail } from '../detail/seat-detail';
-import { CustomValidators } from '../../../shared/util/custom-validators';
 import { MapDescription } from "../map-description/map-description";
 
 @Component({
@@ -16,7 +14,7 @@ import { MapDescription } from "../map-description/map-description";
   templateUrl: './seat-map.html',
   styleUrl: './seat-map.css',
 })
-export class SeatMap extends BaseFeature<SeatModel> implements OnChanges {
+export class SeatMap extends BaseFeature<SeatModel> implements OnChanges, OnInit {
   override entityName = 'Seat';
 
   override contentCreateEdit = SeatCreateEdit;
@@ -42,9 +40,7 @@ export class SeatMap extends BaseFeature<SeatModel> implements OnChanges {
     this.loadMap();
   }
 
-  override ngOnInit(): void {
-    super.ngOnInit();
-
+  ngOnInit(): void {
     this.loadMap();
   }
 
@@ -62,26 +58,11 @@ export class SeatMap extends BaseFeature<SeatModel> implements OnChanges {
     this.seatMap.set(seatMap);
   }
 
-  protected override getUpsertGroup(): FormGroup {
-    return this.formBuilder.nonNullable.group({
-      name: ['', [CustomValidators.required('seat.name.required')]],
-      seatType: ['STANDARD'],
-      seatRow: [1, [
-        CustomValidators.size(1, this.rowLength(), 'seat.row.invalid'),
-      ]],
-      seatColumn: [1, [
-        CustomValidators.size(1, this.columnLength(), 'seat.column.invalid'),
-      ]],
-      roomId: [this.roomId()],
-    });
-  }
-
-  override patchEntityForm(model: SeatModel): void {
-    this.entityForm.patchValue({
-      name: model.name,
-      seatType: model.seatType,
-      seatRow: model.seatRow,
-      seatColumn: model.seatColumn,
+  override displayAdd(): void {
+    super.displayAdd({
+      roomId: this.roomId(),
+      rowLength: this.rowLength(),
+      columnLength: this.columnLength()
     });
   }
 

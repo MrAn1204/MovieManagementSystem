@@ -1,4 +1,4 @@
-import { Component, OnInit, signal } from '@angular/core';
+import { Component, inject, OnInit, signal } from '@angular/core';
 import { ReactiveFormsModule } from '@angular/forms';
 import { CreateEditDialog } from '../../../shared/component/dialog/create-edit/create-edit-dialog';
 import { CreateEdit } from '../../../shared/component/create-edit/create-edit';
@@ -10,6 +10,8 @@ import { FormOptionModel } from '../../../shared/model/form-option.model';
 import { UserDetailModel } from '../../../model/user/user-detail.model';
 import { RoleService } from '../../../service/role/role.service';
 import { Textarea } from "../../../shared/component/form/textarea/textarea-field";
+import { CustomValidators } from '../../../shared/util/custom-validators';
+import { ConstraintService } from '../../../service/constraint.service';
 
 @Component({
   selector: 'app-user-create-edit',
@@ -18,6 +20,10 @@ import { Textarea } from "../../../shared/component/form/textarea/textarea-field
   styleUrl: './user-create-edit.css',
 })
 export class UserCreateEdit extends CreateEditDialog<UserDetailModel> implements OnInit {
+  private readonly roleService = inject(RoleService);
+  private readonly constraintService = inject(ConstraintService);
+  override form = this.createForm();
+
   readonly genders: FormOptionModel[] = [
     { label: 'Male', value: 'MALE' },
     { label: 'Female', value: 'FEMALE' },
@@ -27,8 +33,47 @@ export class UserCreateEdit extends CreateEditDialog<UserDetailModel> implements
   roles = signal<FormOptionModel[]>([]);
   changingPassword = signal(false);
 
-  constructor(private readonly roleService: RoleService) {
-    super();
+  override createForm() {
+    const constraints = this.constraintService.get(
+      'USERNAME_MIN', 'USERNAME_MAX', 'FULLNAME_MIN', 'FULLNAME_MAX',
+      'PHONE_MIN', 'PHONE_MAX', 'ADDRESS_MIN', 'ADDRESS_MAX', 'PASSWORD_MIN'
+    );
+
+    return this.formBuilder.nonNullable.group(
+      {
+        username: ['', [
+          CustomValidators.required('user.username.required'),
+          CustomValidators.size(constraints['USERNAME_MIN'], constraints['USERNAME_MAX'], 'user.username.size'),
+        ]],
+        fullname: ['', [
+          CustomValidators.required('user.fullname.required'),
+          CustomValidators.size(constraints['FULLNAME_MIN'], constraints['FULLNAME_MAX'], 'user.fullname.size'),
+        ]],
+        password: ['', [
+          CustomValidators.required('user.password.required'),
+          CustomValidators.passwordValid(constraints['PASSWORD_MIN'], 'user.password.invalid')
+        ]],
+        confirmPassword: ['', [CustomValidators.required('user.confirmPassword.required')]],
+        gender: ['', [CustomValidators.required('user.gender.required')]],
+        dateOfBirth: ['', [
+          CustomValidators.required('user.dob.required'),
+          CustomValidators.pastDate('user.dob.past'),
+        ]],
+        email: ['', [CustomValidators.email('user.email.invalid')]],
+        citizenIdNumber: ['', [CustomValidators.minLength(constraints['CITIZEN_ID_MIN'], 'user.citizenId.size')]],
+        phoneNumber: ['', [
+          CustomValidators.required('user.phone.required'),
+          CustomValidators.size(constraints['PHONE_MIN'], constraints['PHONE_MAX'], 'user.phone.size'),
+        ]],
+        address: ['', [CustomValidators.size(constraints['ADDRESS_MIN'], constraints['ADDRESS_MAX'], 'user.address.size')]],
+        score: [0],
+        roleIds: [[] as string[], [
+          CustomValidators.required('user.roles.required'),
+          CustomValidators.arrayContainNoNull('user.roles.invalid'),
+        ]],
+      },
+      { validators: CustomValidators.passwordMatch('user.password.mismatched') }
+    );
   }
 
   get isEditMode(): boolean {
@@ -36,8 +81,31 @@ export class UserCreateEdit extends CreateEditDialog<UserDetailModel> implements
   }
 
   ngOnInit(): void {
+    this.patchForm();
     this.applyPasswordMode(!this.isEditMode);
     this.loadRoleOptions();
+  }
+
+  override patchForm(): void {
+    const model = this.data.model;
+    if (!model) {
+      return;
+    }
+
+    this.form.patchValue({
+      username: model.username,
+      fullname: model.fullname,
+      password: '',
+      confirmPassword: '',
+      gender: model.gender,
+      dateOfBirth: model.dateOfBirth,
+      email: model.email,
+      citizenIdNumber: model.citizenIdNumber,
+      phoneNumber: model.phoneNumber,
+      address: model.address,
+      score: model.score ?? 0,
+      roleIds: model.roles?.map((role) => role.id) ?? [],
+    });
   }
 
   togglePasswordChange(status: boolean): void {

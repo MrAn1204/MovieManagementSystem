@@ -10,7 +10,6 @@ import { FormGroup, ReactiveFormsModule } from '@angular/forms';
 import { TableColumnModel } from '../../../shared/model/table-column.model';
 import { getRoleConfig } from '../../../shared/config/role-config';
 import { SearchableFeature } from '../../../shared/component/feature/searchable-feature';
-import { CustomValidators } from '../../../shared/util/custom-validators';
 import { Pagination } from "../../../shared/component/pagination/pagination";
 
 @Component({
@@ -51,22 +50,6 @@ export class Schedule extends SearchableFeature<ScheduleModel> {
       minTime: [''],
       maxTime: [''],
       roomId: [''],
-    });
-  }
-
-  protected override getUpsertGroup(): FormGroup {
-    return this.formBuilder.nonNullable.group({
-      showTime: [''],
-      movieId: ['', [CustomValidators.required('schedule.movie.required')]],
-      roomId: ['', [CustomValidators.required('schedule.room.required')]],
-    });
-  }
-
-  override patchEntityForm(model: ScheduleModel): void {
-    this.entityForm.patchValue({
-      ...model,
-      movieId: model.movie?.id ?? null,
-      roomId: model.room?.id ?? null,
     });
   }
 }

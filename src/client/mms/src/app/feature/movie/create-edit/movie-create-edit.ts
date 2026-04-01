@@ -14,6 +14,7 @@ import { FormOptionModel } from '../../../shared/model/form-option.model';
 import { CreateEdit } from "../../../shared/component/create-edit/create-edit";
 import { CreateEditDialog } from '../../../shared/component/dialog/create-edit/create-edit-dialog';
 import { ValidationError } from "../../../shared/component/form/error/validation-error";
+import { CustomValidators } from '../../../shared/util/custom-validators';
 
 @Component({
   selector: 'app-movie-create-edit',
@@ -22,6 +23,8 @@ import { ValidationError } from "../../../shared/component/form/error/validation
   styleUrl: './movie-create-edit.css',
 })
 export class MovieCreateEdit extends CreateEditDialog<MovieModel> implements OnInit {
+  override form = this.createForm();
+
   genres = signal<FormOptionModel[]>([]);
   studios = signal<FormOptionModel[]>([]);
   talents = signal<FormOptionModel[]>([]);
@@ -37,7 +40,37 @@ export class MovieCreateEdit extends CreateEditDialog<MovieModel> implements OnI
   }
 
   ngOnInit(): void {
+    this.patchForm();
     this.loadOptions();
+  }
+
+  override createForm() {
+    return this.formBuilder.nonNullable.group({
+      name: ['', [CustomValidators.required('movie.name.required')]],
+      releaseDate: [''],
+      duration: [0, [CustomValidators.min(1, 'movie.duration.invalid')]],
+      content: [''],
+      thumbnail: [''],
+      genreIds: [[] as string[]],
+      studioIds: [[] as string[]],
+      talentIds: [[] as string[]],
+      languageId: [''],
+    });
+  }
+
+  override patchForm(): void {
+    const model = this.data.model;
+    if (!model) {
+      return;
+    }
+
+    this.form.patchValue({
+      ...model,
+      genreIds: model.genres?.map(genre => genre.id) ?? [],
+      studioIds: model.studios?.map(studio => studio.id) ?? [],
+      talentIds: model.talents?.map(talent => talent.id) ?? [],
+      languageId: model.language?.id ?? null,
+    });
   }
 
   private loadOptions(): void {

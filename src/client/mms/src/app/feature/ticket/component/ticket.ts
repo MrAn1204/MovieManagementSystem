@@ -6,9 +6,7 @@ import { Table } from '../../../shared/component/table/table';
 import { Pagination } from '../../../shared/component/pagination/pagination';
 import { TableColumnModel } from '../../../shared/model/table-column.model';
 import { getRoleConfig } from '../../../shared/config/role-config';
-import { CustomValidators } from '../../../shared/util/custom-validators';
 import { TicketModel } from '../../../model/ticket/ticket.model';
-import { TicketDetailModel } from '../../../model/ticket/ticket-detail.model';
 import { TicketService } from '../../../service/ticket/ticket.service';
 import { TicketCreateEdit } from '../create-edit/ticket-create-edit';
 import { TicketDetail } from '../detail/ticket-detail';
@@ -50,25 +48,6 @@ export class Ticket extends SearchableFeature<TicketModel> {
       movieId: [''],
       roomId: [''],
       promotionId: [''],
-    });
-  }
-
-  protected override getUpsertGroup(): FormGroup {
-    return this.formBuilder.nonNullable.group({
-      scheduleId: [null, [CustomValidators.required('ticket.schedule.required')]],
-      seatIds: [[], [CustomValidators.required('ticket.seat.required')]],
-      promotionId: [''],
-      userId: ['', [CustomValidators.required('user.required')]],
-    });
-  }
-
-  override patchEntityForm(model: TicketModel): void {
-    const detailModel = model as TicketDetailModel;
-
-    this.entityForm.patchValue({
-      scheduleId: detailModel.schedule.id,
-      seatIds: [detailModel.seat.id],
-      promotionId: detailModel.promotion?.id ?? '',
     });
   }
 }

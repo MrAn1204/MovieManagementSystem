@@ -6,13 +6,10 @@ import { SearchableFeature } from '../../../shared/component/feature/searchable-
 import { getRoleConfig } from '../../../shared/config/role-config';
 import { TableColumnModel } from '../../../shared/model/table-column.model';
 import { UserModel } from '../../../model/user/user.model';
-import { UserDetailModel } from '../../../model/user/user-detail.model';
 import { UserService } from '../../../service/user/user.service';
 import { UserCreateEdit } from '../../user/create-edit/user-create-edit';
 import { UserDetail } from '../../user/detail/user-detail';
 import { UserFilter } from '../../user/filter/user-filter';
-import { CustomValidators } from '../../../shared/util/custom-validators';
-import { ConstraintService } from '../../../service/constraint.service';
 import { Pagination } from "../../../shared/component/pagination/pagination";
 
 @Component({
@@ -47,75 +44,13 @@ export class User extends SearchableFeature<UserModel> {
 
   override roleConfig = getRoleConfig(this.entityName);
 
-  constructor(userService: UserService, private readonly constraintService: ConstraintService) {
+  constructor(userService: UserService) {
     super(userService);
   }
 
   protected override getFilterGroup(): FormGroup {
     return this.formBuilder.nonNullable.group({
       roleId: [''],
-    });
-  }
-
-  protected override getUpsertGroup(): FormGroup {
-    const constraints = this.constraintService.get(
-      'USERNAME_MIN', 'USERNAME_MAX', 'FULLNAME_MIN', 'FULLNAME_MAX',
-      'PHONE_MIN', 'PHONE_MAX', 'ADDRESS_MIN', 'ADDRESS_MAX', 'PASSWORD_MIN'
-    );
-
-    return this.formBuilder.nonNullable.group(
-      {
-        username: ['', [
-          CustomValidators.required('user.username.required'),
-          CustomValidators.size(constraints['USERNAME_MIN'], constraints['USERNAME_MAX'], 'user.username.size'),
-        ]],
-        fullname: ['', [
-          CustomValidators.required('user.fullname.required'),
-          CustomValidators.size(constraints['FULLNAME_MIN'], constraints['FULLNAME_MAX'], 'user.fullname.size'),
-        ]],
-        password: ['', [
-          CustomValidators.required('user.password.required'),
-          CustomValidators.passwordValid(constraints['PASSWORD_MIN'], 'user.password.invalid')
-        ]],
-        confirmPassword: ['', [CustomValidators.required('user.confirmPassword.required')]],
-        gender: ['', [CustomValidators.required('user.gender.required')]],
-        dateOfBirth: ['', [
-          CustomValidators.required('user.dob.required'),
-          CustomValidators.pastDate('user.dob.past'),
-        ]],
-        email: ['', [CustomValidators.email('user.email.invalid')]],
-        citizenIdNumber: [null, [CustomValidators.minLength(constraints['CITIZEN_ID_MIN'], 'user.citizenId.size')]],
-        phoneNumber: ['', [
-          CustomValidators.required('user.phone.required'),
-          CustomValidators.size(constraints['PHONE_MIN'], constraints['PHONE_MAX'], 'user.phone.size'),
-        ]],
-        address: [null, [CustomValidators.size(constraints['ADDRESS_MIN'], constraints['ADDRESS_MAX'], 'user.address.size')]],
-        score: [0],
-        roleIds: [null, [
-          CustomValidators.required('user.roles.required'),
-          CustomValidators.arrayContainNoNull('user.roles.invalid'),
-        ]],
-      },
-      { validators: CustomValidators.passwordMatch('user.password.mismatched') }
-    );
-  }
-
-  override patchEntityForm(model: UserModel): void {
-    const detailModel = model as UserDetailModel;
-
-    this.entityForm.patchValue({
-      username: model.username,
-      fullname: model.fullname,
-      password: '',
-      confirmPassword: '',
-      gender: detailModel.gender,
-      dateOfBirth: model.dateOfBirth,
-      email: model.email,
-      citizenIdNumber: detailModel.citizenIdNumber,
-      phoneNumber: model.phoneNumber,
-      address: detailModel.address,
-      score: detailModel.score ?? 0,
-      roleIds: model.roles?.map((role) => role.id) ?? [],
     });
   }
 }

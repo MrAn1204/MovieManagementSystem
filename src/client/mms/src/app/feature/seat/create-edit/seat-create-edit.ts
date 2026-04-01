@@ -9,6 +9,14 @@ import { ValidationError } from "../../../shared/component/form/error/validation
 import { merge } from 'rxjs';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop'
 import { CreateEditDialog } from '../../../shared/component/dialog/create-edit/create-edit-dialog';
+import { DialogDataModel } from '../../../shared/model/dialog/dialog-data.model';
+import { CustomValidators } from '../../../shared/util/custom-validators';
+
+interface SeatDialogDataModel extends DialogDataModel<SeatModel> {
+  roomId?: string;
+  rowLength?: number;
+  columnLength?: number;
+}
 
 @Component({
   selector: 'app-seat-create-edit',
@@ -17,6 +25,9 @@ import { CreateEditDialog } from '../../../shared/component/dialog/create-edit/c
   styleUrl: './seat-create-edit.css',
 })
 export class SeatCreateEdit extends CreateEditDialog<SeatModel> {
+  private readonly seatData = this.data as SeatDialogDataModel;
+  override form = this.createForm();
+
   enableNameAutofill = false;
 
   seatTypes: FormOptionModel[] = [
@@ -37,6 +48,8 @@ export class SeatCreateEdit extends CreateEditDialog<SeatModel> {
   constructor() {
     super();
 
+    this.patchForm();
+
     if (!this.rowControl || !this.columnControl) {
       return;
     }
@@ -48,6 +61,30 @@ export class SeatCreateEdit extends CreateEditDialog<SeatModel> {
       if (this.enableNameAutofill) {
         this.updateSeatName();
       }
+    });
+  }
+
+  override createForm() {
+    return this.formBuilder.nonNullable.group({
+      name: ['', [CustomValidators.required('seat.name.required')]],
+      seatType: ['STANDARD'],
+      seatRow: [1, [CustomValidators.size(1, this.seatData.rowLength ?? 1, 'seat.row.invalid')]],
+      seatColumn: [1, [CustomValidators.size(1, this.seatData.columnLength ?? 1, 'seat.column.invalid')]],
+      roomId: [this.seatData.roomId ?? ''],
+    });
+  }
+
+  override patchForm(): void {
+    const model = this.data.model;
+    if (!model) {
+      return;
+    }
+
+    this.form.patchValue({
+      name: model.name,
+      seatType: model.seatType,
+      seatRow: model.seatRow,
+      seatColumn: model.seatColumn,
     });
   }
 

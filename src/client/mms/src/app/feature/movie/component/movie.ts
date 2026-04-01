@@ -10,7 +10,6 @@ import { FormGroup, ReactiveFormsModule } from '@angular/forms';
 import { TableColumnModel } from '../../../shared/model/table-column.model';
 import { getRoleConfig } from '../../../shared/config/role-config';
 import { SearchableFeature } from '../../../shared/component/feature/searchable-feature';
-import { CustomValidators } from '../../../shared/util/custom-validators';
 import { Pagination } from "../../../shared/component/pagination/pagination";
 
 @Component({
@@ -54,30 +53,6 @@ export class Movie extends SearchableFeature<MovieModel> {
       studioIds: [[]],
       releaseAfter: [''],
       releaseBefore: [''],
-    });
-  }
-
-  protected override getUpsertGroup(): FormGroup {
-    return this.formBuilder.nonNullable.group({
-      name: ['', [CustomValidators.required('movie.name.required')]],
-      releaseDate: [''],
-      duration: [0, [CustomValidators.min(1, 'movie.duration.invalid')]],
-      content: [''],
-      thumbnail: [null],
-      genreIds: [[]],
-      studioIds: [[]],
-      talentIds: [[]],
-      languageId: [''],
-    });
-  }
-
-  override patchEntityForm(model: MovieModel): void {
-    this.entityForm.patchValue({
-      ...model,
-      genreIds: model.genres?.map(genre => genre.id) ?? [],
-      studioIds: model.studios?.map(studio => studio.id) ?? [],
-      talentIds: model.talents?.map(talent => talent.id) ?? [],
-      languageId: model.language?.id ?? null,
     });
   }
 }

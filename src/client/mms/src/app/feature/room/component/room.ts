@@ -10,8 +10,6 @@ import { FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { TableColumnModel } from '../../../shared/model/table-column.model';
 import { getRoleConfig } from '../../../shared/config/role-config';
 import { SearchableFeature } from '../../../shared/component/feature/searchable-feature';
-import { CustomValidators } from '../../../shared/util/custom-validators';
-import { ConstraintService } from '../../../service/constraint.service';
 import { Pagination } from "../../../shared/component/pagination/pagination";
 
 @Component({
@@ -40,7 +38,7 @@ export class Room extends SearchableFeature<RoomModel> {
 
   override roleConfig = getRoleConfig(this.entityName);
 
-  constructor(roomService: RoomService, private readonly constraintService: ConstraintService) {
+  constructor(roomService: RoomService) {
     super(roomService);
   }
 
@@ -48,32 +46,6 @@ export class Room extends SearchableFeature<RoomModel> {
     return this.formBuilder.nonNullable.group({
       minCapacity: [null, [Validators.min(0)]],
       maxCapacity: [null, [Validators.min(0)]],
-    });
-  }
-
-  protected override getUpsertGroup(): FormGroup {
-    const constraints = this.constraintService.get('ROW_MAX', 'COLUMN_MAX');
-
-    return this.formBuilder.nonNullable.group({
-      name: ['', [CustomValidators.required('room.name.required')]],
-      rowLength: [1, [
-        CustomValidators.required('room.rowLength.required'),
-        CustomValidators.min(1, 'room.rowLength.invalid'),
-        CustomValidators.max(constraints['ROW_MAX'], 'room.rowLength.max')
-      ]],
-      columnLength: [1, [
-        CustomValidators.required('room.columnLength.required'),
-        CustomValidators.min(1, 'room.columnLength.invalid'),
-        CustomValidators.max(constraints['COLUMN_MAX'], 'room.columnLength.max')
-      ]],
-    });
-  }
-
-  override patchEntityForm(model: RoomModel): void {
-    this.entityForm.patchValue({
-      name: model.name,
-      rowLength: model.rowLength,
-      columnLength: model.columnLength,
     });
   }
 }

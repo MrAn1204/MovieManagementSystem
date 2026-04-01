@@ -9,6 +9,7 @@ import { CreateEdit } from "../../../shared/component/create-edit/create-edit";
 import { CreateEditDialog } from '../../../shared/component/dialog/create-edit/create-edit-dialog';
 import { ScheduleDetailModel } from '../../../model/schedule/schedule-detail.model';
 import { ValidationError } from "../../../shared/component/form/error/validation-error";
+import { CustomValidators } from '../../../shared/util/custom-validators';
 
 @Component({
   selector: 'app-schedule-create-edit',
@@ -18,6 +19,8 @@ import { ValidationError } from "../../../shared/component/form/error/validation
   styleUrl: './schedule-create-edit.css',
 })
 export class ScheduleCreateEdit extends CreateEditDialog<ScheduleDetailModel> implements OnInit {
+  override form = this.createForm();
+
   movies = signal<FormOptionModel[]>([]);
   rooms = signal<FormOptionModel[]>([]);
 
@@ -29,7 +32,29 @@ export class ScheduleCreateEdit extends CreateEditDialog<ScheduleDetailModel> im
   }
 
   ngOnInit(): void {
+    this.patchForm();
     this.loadOptions();
+  }
+
+  override createForm() {
+    return this.formBuilder.nonNullable.group({
+      showTime: [''],
+      movieId: ['', [CustomValidators.required('schedule.movie.required')]],
+      roomId: ['', [CustomValidators.required('schedule.room.required')]],
+    });
+  }
+
+  override patchForm(): void {
+    const model = this.data.model;
+    if (!model) {
+      return;
+    }
+
+    this.form.patchValue({
+      ...model,
+      movieId: model.movie?.id ?? null,
+      roomId: model.room?.id ?? null,
+    });
   }
 
   private loadOptions(): void {
