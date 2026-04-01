@@ -1,20 +1,20 @@
 <div class="flex justify-center">
-  <button (click)="isOpen = !isOpen" type="button" [cdkMenuTriggerFor]="menu" [cdkMenuPosition]="positions">
+  <app-button variant="icon" [cdkMenuTriggerFor]="menu" [cdkMenuPosition]="positions">
     <i class="fa-solid fa-ellipsis"></i>
-  </button>
+  </app-button>
 </div>
 
 <ng-template #menu>
   <div cdkMenu class="flex flex-col bg-platinum-50 border border-platinum-300 rounded-md shadow-xl">
     <div class="flex flex-col items-start">
-      <app-button [hidden]="!canView()" variant="icon" (clicked)="viewDetail.emit()">
-        <div class="flex items-center px-2 gap-2">
+      <app-button [hidden]="!canView()" variant="simple" (clicked)="viewDetail.emit()">
+        <div class="flex items-center gap-2">
           <i class="fa-solid fa-circle-info text-steel-blue"></i> View
         </div>
       </app-button>
 
-      <app-button [hidden]="!canEdit()" variant="icon" (clicked)="updateItem.emit()">
-        <div class="flex items-center px-2 gap-2">
+      <app-button [hidden]="!canEdit()" variant="simple" (clicked)="updateItem.emit()">
+        <div class="flex items-center gap-2">
           <i class="fa-solid fa-pen-to-square text-carrot-orange"></i> Edit
         </div>
       </app-button>
@@ -23,8 +23,8 @@
     <div [hidden]="!canDelete()">
       <hr class="w-full border-platinum-300" />
 
-      <app-button variant="icon" (clicked)="deleteItem.emit()">
-        <div class="flex items-center px-2 gap-2">
+      <app-button variant="simple" (clicked)="deleteItem.emit()">
+        <div class="flex items-center gap-2">
           <i class="fa-solid fa-trash text-vermilion"></i> Delete
         </div>
       </app-button>

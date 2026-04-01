@@ -20,17 +20,21 @@
         }
 
         <th class="border-l sticky right-0 bg-platinum-200 w-0">
-          <button [hidden]="!canCreate()" type="button" (click)="addItem()"
-            class="min-w-20 w-full space-x-2 p-2 bg-bright-fern-500 hover:bg-bright-fern-600 text-white font-semibold">
-            <i class="fa-solid fa-plus"></i>
-            <span>Add</span>
-          </button>
+          <app-table-actions>
+            <app-button [hidden]="!canCreate()" variant="success" (clicked)="addItem()">
+              <div class="flex items-center gap-2">
+                <i class="fa-solid fa-plus"></i> Add
+              </div>
+            </app-button>
+
+            <ng-content select="[table-actions]"></ng-content>
+          </app-table-actions>
         </th>
       </tr>
     </thead>
     <tbody class="*:border-b *:border-platinum-300">
       @for (item of data(); track $index) {
-      <tr class="group hover:bg-platinum-100 *:border-b *:border-platinum-300 last:*:border-b-0">
+      <tr class="hover:bg-platinum-100 *:border-b *:border-platinum-300 last:*:border-b-0">
         <td [hidden]="!hasCheckbox()" class="border-r sticky left-0 bg-platinum-50">
           <div class="flex items-center justify-center">
             <input type="checkbox" class="w-4 h-4 text-steel-blue-500 bg-platinum-50 border border-platinum-300 rounded-sm focus:ring-steel-blue-500 focus:ring-2"
@@ -42,7 +46,7 @@
           <td class="px-4 py-2">{{ item[column.key] | formatCell: column.type }}</td>
         }
 
-        <td class="sticky right-0 bg-platinum-50 group-hover:bg-platinum-100 border-platinum-300 border-l">
+        <td class="sticky right-0 bg-platinum-50 border-platinum-300 border-l">
           <app-row-actions
             [canView]="canView()" (viewDetail)="viewDetail(item.id)"
             [canEdit]="canEdit()" (editItem)="updateItem(item.id)"

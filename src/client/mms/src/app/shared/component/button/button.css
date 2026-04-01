@@ -1,11 +1,7 @@
 @import "../../../../styles.css";
 
-:host {
-  @apply w-full
-}
-
 .button {
-  @apply px-4 py-2 w-full rounded-md focus:outline-none focus:ring-2 disabled:opacity-60 disabled:cursor-not-allowed;
+  @apply p-2 w-full h-full rounded-md disabled:opacity-60 disabled:cursor-not-allowed;
 }
 
 .primary {
@@ -29,5 +25,9 @@
 }
 
 .icon {
-  @apply hover:bg-platinum-100 p-0 min-w-10 min-h-10 rounded-0;
+  @apply hover:bg-platinum-100 p-0 size-10 rounded-0;
+}
+
+.simple {
+  @apply hover:bg-platinum-100 rounded-0;
 }

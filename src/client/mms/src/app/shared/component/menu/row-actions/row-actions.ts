@@ -18,8 +18,6 @@ export class RowActions {
   updateItem = output<void>()
   deleteItem = output<void>();
 
-  isOpen = false;
-
   positions: ConnectedPosition[] = [
     { originX: 'center', originY: 'bottom', overlayX: 'center', overlayY: 'top', offsetY: 4 }
   ];

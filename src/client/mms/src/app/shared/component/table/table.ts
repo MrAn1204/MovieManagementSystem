@@ -5,10 +5,12 @@ import { BaseEntityModel } from '../../model/base-entity.model';
 import { RoleConfigModel } from '../../model/role-config.model';
 import { AuthService } from '../../../service/auth/auth.service';
 import { RowActions } from '../menu/row-actions/row-actions';
+import { TableActions } from '../menu/table-actions/table-actions';
+import { Button } from "../button/button";
 
 @Component({
   selector: 'app-table',
-  imports: [FormatCellPipe, RowActions],
+  imports: [FormatCellPipe, RowActions, TableActions, Button],
   templateUrl: './table.html',
   styleUrl: './table.css',
 })

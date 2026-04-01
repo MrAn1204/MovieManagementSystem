@@ -1,10 +1,13 @@
 import { Component, input, output } from '@angular/core';
 
-export type ButtonVariant = 'primary' | 'secondary' | 'danger' | 'success' | 'warning' |'icon';
+export type ButtonVariant = 'primary' | 'secondary' | 'danger' | 'success' | 'warning' | 'icon' | 'simple';
 
 @Component({
   selector: 'app-button',
   imports: [],
+  host: {
+    '[class.w-full]': 'variant() !== "icon"',
+  },
   templateUrl: './button.html',
   styleUrl: './button.css',
 })
