@@ -1,4 +1,4 @@
-import { Directive, signal, Type } from "@angular/core";
+import { Directive, OnInit, signal, Type } from "@angular/core";
 import { BaseEntityModel } from "../../model/base-entity.model";
 import { BaseFeature } from "./base-feature";
 import { FormOptionModel } from "../../model/form-option.model";
@@ -8,7 +8,7 @@ import { createEmptyPaginatedResult, PaginatedResult } from "../../model/paginat
 import { finalize } from "rxjs";
 
 @Directive()
-export abstract class SearchableFeature<T extends BaseEntityModel> extends BaseFeature<T> {
+export abstract class SearchableFeature<T extends BaseEntityModel> extends BaseFeature<T> implements OnInit {
   abstract contentFilter: Type<unknown>;
 
   abstract sortOptions: FormOptionModel[];
@@ -19,9 +19,7 @@ export abstract class SearchableFeature<T extends BaseEntityModel> extends BaseF
 
   searchForm!: FormGroup;
 
-  override ngOnInit(): void {
-    super.ngOnInit();
-
+  ngOnInit(): void {
     this.searchForm = this.formBuilder.nonNullable.group({
       keyword: [''],
       sortBy: ['id'],
@@ -54,22 +52,22 @@ export abstract class SearchableFeature<T extends BaseEntityModel> extends BaseF
     this.onSearch();
   }
 
-  protected override saveNew(respondHandler?: () => void): void {
-    super.saveNew(() => {
+  protected override saveNew(form: FormGroup, respondHandler?: () => void): void {
+    super.saveNew(form, () => {
       respondHandler?.();
       this.onSearch();
     });
   }
 
-  protected override saveUpdate(id: string, respondHandler?: () => void): void {
-    super.saveUpdate(id, () => {
+  protected override saveUpdate(id: string, form: FormGroup, respondHandler?: () => void): void {
+    super.saveUpdate(id, form, () => {
       respondHandler?.();
       this.onSearch();
     });
   }
 
-  protected override confirmDelete(id: string, respondHandler?: () => void): void {
-    super.confirmDelete(id, () => {
+  protected override confirmDelete(id: string, form?: FormGroup, respondHandler?: () => void): void {
+    super.confirmDelete(id, form, () => {
       respondHandler?.();
       this.onSearch();
     });

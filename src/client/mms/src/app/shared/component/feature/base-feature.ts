@@ -1,5 +1,5 @@
 import { FormBuilder, FormGroup } from "@angular/forms";
-import { Directive, inject, OnInit, Type } from "@angular/core";
+import { Directive, inject, Type } from "@angular/core";
 import { BaseEntityModel } from "../../model/base-entity.model";
 import { DialogService } from "../../../service/dialog/dialog.service";
 import { finalize, takeUntil } from "rxjs";
@@ -7,7 +7,6 @@ import { PopupModal } from "../dialog/popup-modal/popup-modal";
 import { DialogPopupDataModel } from "../../model/dialog/dialog-popup-data.model";
 import { DialogRef } from "@angular/cdk/dialog";
 import { RoleConfigModel } from "../../model/role-config.model";
-import { DialogFormDataModel } from "../../model/dialog/dialog-form-data.model";
 import { BaseDialog } from "../dialog/base/base-dialog";
 import { DialogDataModel } from "../../model/dialog/dialog-data.model";
 import { NgxSpinnerService } from "ngx-spinner";
@@ -15,15 +14,13 @@ import { EntityService } from "../../../service/entity.service";
 import { FormMapper } from "../../util/form-mapper";
 
 @Directive()
-export abstract class BaseFeature<T extends BaseEntityModel> implements OnInit {
+export abstract class BaseFeature<T extends BaseEntityModel> {
   abstract entityName: string;
 
   abstract contentCreateEdit: Type<BaseDialog>;
   abstract contentDetail: Type<BaseDialog>;
 
   abstract roleConfig: RoleConfigModel;
-
-  entityForm!: FormGroup;
 
   protected readonly dialogService = inject(DialogService);
   protected readonly formBuilder = inject(FormBuilder);
@@ -35,47 +32,44 @@ export abstract class BaseFeature<T extends BaseEntityModel> implements OnInit {
     this.entityService = entityService;
   }
 
-  ngOnInit(): void {
-    this.entityForm = this.getUpsertGroup();
-  }
-
-  protected abstract getUpsertGroup(): FormGroup;
-
-  protected saveNew(respondHandler?: () => void): void {
+  protected saveNew(form: FormGroup, respondHandler?: () => void): void {
     this.showSpinner();
 
-    this.entityService.create(this.entityForm.value)
+    this.entityService.create(form.value)
       .pipe(finalize(() => this.hideSpinner()))
       .subscribe({
         next: () => respondHandler?.(),
-        error: (res) => FormMapper.mapErrorResponse(res, this.entityForm)
+        error: (res) => FormMapper.mapErrorResponse(res, form)
       });
   }
 
-  protected saveUpdate(id: string, respondHandler?: () => void): void {
+  protected saveUpdate(id: string, form: FormGroup, respondHandler?: () => void): void {
     this.showSpinner();
 
-    this.entityService.update(id, this.entityForm.value)
+    this.entityService.update(id, form.value)
       .pipe(finalize(() => this.hideSpinner()))
       .subscribe({
         next: () => respondHandler?.(),
-        error: (res) => FormMapper.mapErrorResponse(res, this.entityForm)
+        error: (res) => FormMapper.mapErrorResponse(res, form)
       });
   }
 
-  protected confirmDelete(id: string, respondHandler?: () => void): void {
+  protected confirmDelete(id: string, form?: FormGroup, respondHandler?: () => void): void {
     this.showSpinner();
 
     this.entityService.delete(id)
       .pipe(finalize(() => this.hideSpinner()))
       .subscribe({
         next: () => respondHandler?.(),
-        error: (res) => FormMapper.mapErrorResponse(res, this.entityForm)
+        error: (res) => {
+          if (form) {
+            FormMapper.mapErrorResponse(res, form);
+          }
+        }
       });
   }
 
   onAdd(): void {
-    this.entityForm.reset();
     this.displayAdd();
   }
 
@@ -138,39 +132,37 @@ export abstract class BaseFeature<T extends BaseEntityModel> implements OnInit {
       });
   }
 
-  protected displayAdd(): void {
-    const dialogData: DialogFormDataModel<T> = {
+  protected displayAdd(data?: Record<string, unknown>): void {
+    const dialogData: DialogDataModel<T> & Record<string, unknown> = {
       title: `Create ${this.entityName}`,
-      form: this.entityForm,
+      ...data
     };
 
     const dialogRef = this.dialogService.openDialog(this.contentCreateEdit, dialogData);
 
     dialogRef.componentInstance?.dialogService.saveForm$
       .pipe(takeUntil(dialogRef.closed))
-      .subscribe(() => {
-        if (this.entityForm.valid) {
-          this.saveNew(() => dialogRef.close());
+      .subscribe((form) => {
+        if (form.valid) {
+          this.saveNew(form, () => dialogRef.close());
         }
       });
   }
 
-  protected displayEdit(item: T): DialogRef<unknown, BaseDialog> {
-    this.patchEntityForm(item);
-
-    const dialogData: DialogFormDataModel<T> = {
+  protected displayEdit(item: T, data?: Record<string, unknown>): DialogRef<unknown, BaseDialog> {
+    const dialogData: DialogDataModel<T> & Record<string, unknown> = {
       title: `Edit ${this.entityName}`,
       model: item,
-      form: this.entityForm,
+      ...data
     };
 
     const dialogRef = this.dialogService.openDialog(this.contentCreateEdit, dialogData);
 
     dialogRef.componentInstance?.dialogService.saveForm$
       .pipe(takeUntil(dialogRef.closed))
-      .subscribe(() => {
-        if (this.entityForm.valid) {
-          this.saveUpdate(item.id, () => dialogRef.close());
+      .subscribe((form) => {
+        if (form.valid) {
+          this.saveUpdate(item.id, form, () => dialogRef.close());
         }
       });
 
@@ -186,13 +178,11 @@ export abstract class BaseFeature<T extends BaseEntityModel> implements OnInit {
     const dialogRef = this.dialogService.openDialog(PopupModal, dialogData);
 
     dialogRef.componentInstance?.dialogService.confirmTask$.subscribe(() => {
-      this.confirmDelete(id, () => dialogRef.close());
+      this.confirmDelete(id, undefined, () => dialogRef.close());
     });
 
     return dialogRef;
   }
-
-  abstract patchEntityForm(model: T): void;
 
   protected showSpinner(): void {
     this.spinner.show();

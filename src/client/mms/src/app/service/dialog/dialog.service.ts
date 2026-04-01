@@ -4,6 +4,7 @@ import { Injectable, Type } from '@angular/core';
 import { DialogDataModel } from '../../shared/model/dialog/dialog-data.model';
 import { Subject } from 'rxjs';
 import { BaseDialog } from '../../shared/component/dialog/base/base-dialog';
+import { FormGroup } from '@angular/forms';
 
 @Injectable({
   providedIn: 'root',
@@ -14,7 +15,7 @@ export class DialogService {
   private readonly openDialogSubject = new Subject<Type<unknown>>();
   readonly openDialog$ = this.openDialogSubject.asObservable();
 
-  private readonly saveFormSubject = new Subject<void>();
+  private readonly saveFormSubject = new Subject<FormGroup>();
   readonly saveForm$ = this.saveFormSubject.asObservable();
 
   private readonly confirmTaskSubject = new Subject<void>();
@@ -52,8 +53,8 @@ export class DialogService {
     this.openDialogSubject.next(dialog);
   }
 
-  triggerSave(): void {
-    this.saveFormSubject.next();
+  triggerSave(form: FormGroup): void {
+    this.saveFormSubject.next(form);
   }
 
   triggerConfirm(): void {

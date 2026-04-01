@@ -1,9 +1,9 @@
 import { Component, inject } from '@angular/core';
 import { BaseDialog } from '../base/base-dialog';
-import { DialogFormDataModel } from '../../../model/dialog/dialog-form-data.model';
+import { DialogDataModel } from '../../../model/dialog/dialog-data.model';
 import { DIALOG_DATA } from '@angular/cdk/dialog';
 import { BaseEntityModel } from '../../../model/base-entity.model';
-import { FormGroup } from '@angular/forms';
+import { FormBuilder, FormGroup } from '@angular/forms';
 
 @Component({
   selector: 'app-create-edit-dialog',
@@ -12,21 +12,28 @@ import { FormGroup } from '@angular/forms';
   styleUrl: './create-edit-dialog.css',
 })
 export abstract class CreateEditDialog<T extends BaseEntityModel> extends BaseDialog {
-  data: DialogFormDataModel<T> = inject(DIALOG_DATA);
+  data: DialogDataModel<T> = inject(DIALOG_DATA);
+  protected readonly formBuilder = inject(FormBuilder);
 
-  get form(): FormGroup {
-    return this.data.form;
+  abstract form: FormGroup;
+
+  get model(): T | undefined {
+    return this.data.model;
   }
 
   onSubmit(): void {
-    this.data.form.markAllAsTouched();
-    if (this.data.form.invalid) {
+    this.form.markAllAsTouched();
+    if (this.form.invalid) {
       return;
     }
-    this.dialogService.triggerSave();
+    this.dialogService.triggerSave(this.form);
   }
 
   onReset(): void {
     this.form.reset();
   }
+
+  abstract createForm(): FormGroup;
+
+  abstract patchForm(): void;
 }
