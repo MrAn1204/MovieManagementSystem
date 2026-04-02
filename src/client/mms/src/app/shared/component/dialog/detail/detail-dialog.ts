@@ -27,4 +27,8 @@ export abstract class DetailDialog<T extends BaseEntityModel> extends BaseDialog
   openDelete(): void {
     this.dialogService.triggerOpen(PopupModal);
   }
+
+  reload(): void {
+    this.dialogService.triggerReload();
+  }
 }

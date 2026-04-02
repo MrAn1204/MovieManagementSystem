@@ -30,6 +30,7 @@
     [columnLength]="model?.columnLength ?? 0"
     [roomId]="model?.id ?? ''"
     [seats]="model?.seats ?? []"
+    (reloadDialog)="reload()"
   ></app-seat-map>
 
   <div custom-buttons>

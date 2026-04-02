@@ -1,4 +1,4 @@
-import { Component, input, OnChanges, OnInit, signal, SimpleChanges } from '@angular/core';
+import { Component, input, OnChanges, OnInit, output, signal, SimpleChanges } from '@angular/core';
 import { SeatService } from '../../../service/seat/seat.service';
 import { SeatModel } from '../../../model/seat/seat.model';
 import { NgClass } from '@angular/common';
@@ -7,6 +7,7 @@ import { getRoleConfig } from '../../../shared/config/role-config';
 import { SeatCreateEdit } from '../create-edit/seat-create-edit';
 import { SeatDetail } from '../detail/seat-detail';
 import { MapDescription } from "../map-description/map-description";
+import { FormGroup } from '@angular/forms';
 
 @Component({
   selector: 'app-seat-map',
@@ -31,6 +32,8 @@ export class SeatMap extends BaseFeature<SeatModel> implements OnChanges, OnInit
   seatMap = signal(new Map<string, SeatModel>());
   rows: number[] = [];
   columns: number[] = [];
+
+  reloadDialog = output<void>();
 
   constructor(seatService: SeatService) {
     super(seatService);
@@ -87,5 +90,12 @@ export class SeatMap extends BaseFeature<SeatModel> implements OnChanges, OnInit
     } else {
       return '';
     }
+  }
+
+  protected override saveNew(form: FormGroup, respondHandler?: () => void): void {
+    super.saveNew(form, () => {
+      respondHandler?.();
+      this.reloadDialog.emit();
+    });
   }
 }

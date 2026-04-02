@@ -130,15 +130,22 @@ export abstract class BaseFeature<T extends BaseEntityModel> {
             .subscribe(() => ref.close());
         }
       });
+
+    ref.componentInstance?.dialogService.reload$
+      .pipe(takeUntil(ref.closed))
+      .subscribe(() => {
+        this.onView(item.id);
+        ref.close();
+      });
   }
 
-  protected displayAdd(data?: Record<string, unknown>): void {
-    const dialogData: DialogDataModel<T> & Record<string, unknown> = {
+  protected displayAdd(data?: Record<string, unknown>, dialog: Type<BaseDialog> = this.contentCreateEdit): void {
+    const dialogData: DialogDataModel<T> = {
       title: `Create ${this.entityName}`,
       ...data
     };
 
-    const dialogRef = this.dialogService.openDialog(this.contentCreateEdit, dialogData);
+    const dialogRef = this.dialogService.openDialog(dialog, dialogData);
 
     dialogRef.componentInstance?.dialogService.saveForm$
       .pipe(takeUntil(dialogRef.closed))
@@ -149,14 +156,14 @@ export abstract class BaseFeature<T extends BaseEntityModel> {
       });
   }
 
-  protected displayEdit(item: T, data?: Record<string, unknown>): DialogRef<unknown, BaseDialog> {
-    const dialogData: DialogDataModel<T> & Record<string, unknown> = {
+  protected displayEdit(item: T, data?: Record<string, unknown>, dialog: Type<BaseDialog> = this.contentCreateEdit): DialogRef<unknown, BaseDialog> {
+    const dialogData: DialogDataModel<T> = {
       title: `Edit ${this.entityName}`,
       model: item,
       ...data
     };
 
-    const dialogRef = this.dialogService.openDialog(this.contentCreateEdit, dialogData);
+    const dialogRef = this.dialogService.openDialog(dialog, dialogData);
 
     dialogRef.componentInstance?.dialogService.saveForm$
       .pipe(takeUntil(dialogRef.closed))
