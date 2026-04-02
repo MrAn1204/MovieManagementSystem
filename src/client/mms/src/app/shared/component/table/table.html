@@ -49,7 +49,7 @@
         <td class="sticky right-0 bg-platinum-50 border-platinum-300 border-l">
           <app-row-actions
             [canView]="canView()" (viewDetail)="viewDetail(item.id)"
-            [canEdit]="canEdit()" (editItem)="updateItem(item.id)"
+            [canEdit]="canEdit()" (updateItem)="updateItem(item.id)"
             [canDelete]="canDelete()" (deleteItem)="deleteItem(item.id)">
           </app-row-actions>
         </td>
