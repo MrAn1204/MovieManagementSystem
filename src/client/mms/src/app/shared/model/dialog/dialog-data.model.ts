@@ -5,4 +5,5 @@ export interface DialogDataModel<T extends BaseEntityModel | null> {
   title?: string;
   model?: T;
   roleConfig?: RoleConfigModel;
+  [key: string]: unknown;
 }
