@@ -1,4 +1,4 @@
-import { Component, computed, input, output } from '@angular/core';
+import { Component, computed, input, output, signal } from '@angular/core';
 
 @Component({
   selector: 'app-pagination',
@@ -9,11 +9,21 @@ import { Component, computed, input, output } from '@angular/core';
 export class Pagination {
   pageNumber = input.required<number>();
   pageCount = input.required<number>();
+  itemCount = input.required<number>();
 
   changePageNumber = output<number>();
   changePageSize = output<number>();
 
+  pageSizes = [10, 25, 50, 100];
+  currentSize = signal(this.pageSizes[0]);
+
   pages = computed(() => this.setPagination());
+  pageSummary = computed(() => {
+    const start = (this.pageNumber() - 1) * this.currentSize() + 1;
+    const end = Math.min(this.pageNumber() * this.currentSize(), this.itemCount());
+
+    return `${start} - ${end} of ${this.itemCount()} entries`;
+  });
 
   private setPagination(): (number | null)[] {
     const pageCount = this.pageCount();
@@ -38,6 +48,7 @@ export class Pagination {
 
   updatePageSize(event: Event): void {
     const size = Number.parseInt((event.target as HTMLSelectElement).value);
+    this.currentSize.set(size);
     this.changePageSize.emit(size);
   }
 

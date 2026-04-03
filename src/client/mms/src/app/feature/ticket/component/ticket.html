@@ -16,7 +16,7 @@
       </app-button>
     </ng-container>
 
-    <app-pagination [pageCount]="data().pageCount" [pageNumber]="data().pageNumber"
+    <app-pagination [itemCount]="data().itemCount" [pageCount]="data().pageCount" [pageNumber]="data().pageNumber"
       (changePageNumber)="onChangePageNumber($event)" (changePageSize)="onChangePageSize($event)">
     </app-pagination>
   </app-table>

@@ -115,7 +115,7 @@ export class Ticket extends SearchableFeature<TicketModel> {
   }
 
   selectAll(): void {
-    if (this.selectedItems.length === this.data().itemCount) {
+    if (this.selectedItems.length === this.data().items.length) {
       this.selectedItems = [];
     } else {
       this.selectedItems = [...this.data().items];
