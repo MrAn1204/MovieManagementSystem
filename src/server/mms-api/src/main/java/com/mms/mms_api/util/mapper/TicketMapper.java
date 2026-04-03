@@ -26,6 +26,7 @@ public interface TicketMapper {
 
     @Mapping(target = "name", ignore = true)
     @Mapping(target = "movie", source = "ticket.schedule.movie")
+    @Mapping(target = "paid", expression = "java(ticket.getInvoice() != null)")
     TicketDto toDto(Ticket ticket);
     
     @InheritConfiguration(name = "toDto")

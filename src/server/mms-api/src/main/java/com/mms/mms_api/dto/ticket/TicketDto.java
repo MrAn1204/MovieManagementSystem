@@ -17,4 +17,6 @@ public class TicketDto extends BaseDto {
     private UserSummaryDto user;
 
     private int price;
+
+    private boolean paid;
 }
