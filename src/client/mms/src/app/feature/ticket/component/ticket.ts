@@ -60,21 +60,29 @@ export class Ticket extends SearchableFeature<TicketModel> {
     });
   }
 
-  createInvoice(): void {
+  matchId(): boolean {
     if (this.selectedItems.length === 0) {
-      return;
+      return false;
     }
 
     const ticket = this.selectedItems[0];
 
     if (!ticket || !this.selectedItems.every(selected => selected.user.id === ticket.user.id)) {
+      return false;
+    }
+
+    return true;
+  }
+
+  createInvoice(): void {
+    if (!this.matchId()) {
       return;
     }
 
     const invoiceDialogData: DialogDataModel<InvoiceModel> = {
       title: 'Create Invoice',
       tickets: this.selectedItems,
-      user: ticket.user,
+      user: this.selectedItems[0].user,
     }
 
     const dialogRef = this.dialogService.openDialog(InvoiceCreateEdit, invoiceDialogData)

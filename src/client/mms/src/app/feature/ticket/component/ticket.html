@@ -8,7 +8,7 @@
     (selectItem)="select($event)" (selectAllItems)="selectAll()">
 
     <ng-container table-actions>
-      <app-button (clicked)="createInvoice()">
+      <app-button [disabled]="!matchId()" [rounded]="false" (clicked)="createInvoice()">
         <div class="flex items-center gap-2">
           <i class="fa-solid fa-receipt"></i>
           <span class="text-nowrap">New Invoice</span>
