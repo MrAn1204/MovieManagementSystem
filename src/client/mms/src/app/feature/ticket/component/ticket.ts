@@ -37,6 +37,7 @@ export class Ticket extends SearchableFeature<TicketModel> {
     { key: 'movie', label: 'Movie', type: 'id-name' },
     { key: 'user', label: 'Username', type: 'string', getValue: (item) => item.user?.username },
     { key: 'user', label: 'Phone Number', type: 'string', getValue: (item) => item.user?.phoneNumber },
+    { key: 'paid', label: 'Status', type: 'string', getValue: (item) => item.paid ? 'Paid' : 'Unpaid' },
   ];
 
   override sortOptions = [
@@ -60,22 +61,22 @@ export class Ticket extends SearchableFeature<TicketModel> {
     });
   }
 
-  matchId(): boolean {
+  validateSelected(): boolean {
     if (this.selectedItems.length === 0) {
       return false;
     }
 
     const ticket = this.selectedItems[0];
 
-    if (!ticket || !this.selectedItems.every(selected => selected.user.id === ticket.user.id)) {
+    if (ticket) {
+      return this.selectedItems.every(selected => selected.user.id === ticket.user.id && !selected.paid);
+    } else {
       return false;
     }
-
-    return true;
   }
 
   createInvoice(): void {
-    if (!this.matchId()) {
+    if (!this.validateSelected()) {
       return;
     }
 

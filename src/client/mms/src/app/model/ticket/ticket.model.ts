@@ -7,4 +7,5 @@ export interface TicketModel extends BaseEntityModel {
   movie: IdNameModel;
   user: UserSummaryModel;
   price: number;
+  paid: boolean;
 }
