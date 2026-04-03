@@ -2,11 +2,15 @@
   <div class="create-edit-layout">
     <div class="w-full flex-1 gap-4 grid grid-cols-1 sm:grid-cols-2">
       <div>
-        <app-input-field formControlName="totalMoney"
-          inputType="text" idName="totalMoney" labelText="Total Money">
-        </app-input-field>
+        <app-detail-text label="Total Money">
+          {{ totalMoney }}
+        </app-detail-text>
+      </div>
 
-        <app-validation-error [control]="form.get('totalMoney')!"></app-validation-error>
+      <div>
+        <app-detail-text label="User">
+          {{ user }}
+        </app-detail-text>
       </div>
 
       <div>
