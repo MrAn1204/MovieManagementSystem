@@ -28,8 +28,8 @@ export class Ticket extends SearchableFeature<TicketModel> {
   override columns: TableColumnModel<TicketModel>[] = [
     { key: 'name', label: 'Name', type: 'string' },
     { key: 'movie', label: 'Movie', type: 'id-name' },
-    { key: 'username', label: 'Username', type: 'string' },
-    { key: 'phoneNumber', label: 'Phone Number', type: 'string' },
+    { key: 'user', label: 'Username', type: 'string', getValue: (item) => item.user?.username },
+    { key: 'user', label: 'Phone Number', type: 'string', getValue: (item) => item.user?.phoneNumber },
   ];
 
   override sortOptions = [
