@@ -21,7 +21,7 @@
 
         <th class="border-l sticky right-0 bg-platinum-200 w-0">
           <app-table-actions>
-            <app-button [hidden]="!canCreate()" variant="success" (clicked)="addItem()">
+            <app-button [hidden]="!canCreate()" variant="success" [rounded]="false" (clicked)="addItem()">
               <div class="flex items-center gap-2">
                 <i class="fa-solid fa-plus"></i> Add
               </div>
