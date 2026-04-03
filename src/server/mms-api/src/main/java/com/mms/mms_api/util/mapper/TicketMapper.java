@@ -26,8 +26,6 @@ public interface TicketMapper {
 
     @Mapping(target = "name", ignore = true)
     @Mapping(target = "movie", source = "ticket.schedule.movie")
-    @Mapping(target = "username", source = "ticket.user.username")
-    @Mapping(target = "phoneNumber", source = "ticket.user.phoneNumber")
     TicketDto toDto(Ticket ticket);
     
     @InheritConfiguration(name = "toDto")

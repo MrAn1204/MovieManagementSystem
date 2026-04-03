@@ -2,6 +2,7 @@ package com.mms.mms_api.dto.ticket;
 
 import com.mms.mms_api.common.IdNameDto;
 import com.mms.mms_api.dto.BaseDto;
+import com.mms.mms_api.dto.user.UserSummaryDto;
 
 import lombok.Data;
 import lombok.EqualsAndHashCode;
@@ -13,9 +14,7 @@ public class TicketDto extends BaseDto {
 
     private IdNameDto movie;
 
-    private String username;
-
-    private String phoneNumber;
+    private UserSummaryDto user;
 
     private int price;
 }
