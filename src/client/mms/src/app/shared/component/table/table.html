@@ -43,7 +43,7 @@
         </td>
 
         @for (column of columns(); track $index) {
-          <td class="px-4 py-2">{{ item[column.key] | formatCell: column.type }}</td>
+          <td class="px-4 py-2">{{ getColumnValue(item, column) | formatCell: column.type }}</td>
         }
 
         <td class="sticky right-0 bg-platinum-50 border-platinum-300 border-l">

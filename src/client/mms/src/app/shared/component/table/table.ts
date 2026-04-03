@@ -105,6 +105,13 @@ export class Table<T extends BaseEntityModel> implements OnChanges {
   isAllSelected(): boolean {
     return Array.from(this.selectedItems.values()).every(Boolean);
   }
+
+  getColumnValue(item: T, column: TableColumnModel<T>): any {
+    if (column.getValue) {
+      return column.getValue(item);
+    }
+    return item[column.key];
+  }
 }
 
 interface TableConfig {
