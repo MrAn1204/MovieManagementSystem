@@ -16,6 +16,7 @@ export class Button {
   variant = input<ButtonVariant>('primary');
   customStyles = input<string>('');
   disabled = input<boolean>(false);
+  rounded = input<boolean>(true);
 
   clicked = output<MouseEvent>();
 
@@ -27,7 +28,8 @@ export class Button {
     const baseClass = 'button';
     const variantClass = this.variant();
     const customClass = this.customStyles().trim();
+    const roundedClass = this.rounded() ? 'rounded' : '';
 
-    return [baseClass, variantClass, customClass].join(' ');
+    return [baseClass, variantClass, customClass, roundedClass].join(' ');
   }
 }

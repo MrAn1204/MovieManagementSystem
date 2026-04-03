@@ -1,7 +1,11 @@
 @import "../../../../styles.css";
 
+.rounded {
+  @apply rounded-md;
+}
+
 .button {
-  @apply p-2 w-full h-full rounded-md disabled:opacity-60 disabled:cursor-not-allowed;
+  @apply p-2 w-full h-full disabled:opacity-60 disabled:cursor-not-allowed;
 }
 
 .primary {
