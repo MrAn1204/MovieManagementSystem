@@ -28,6 +28,8 @@ export abstract class BaseFeature<T extends BaseEntityModel> {
 
   protected readonly entityService!: EntityService<T>;
 
+  protected selectedItems: T[] = [];
+
   constructor(entityService: EntityService<T>) {
     this.entityService = entityService;
   }
@@ -197,5 +199,19 @@ export abstract class BaseFeature<T extends BaseEntityModel> {
 
   protected hideSpinner(timeout: number = 500): void {
     setTimeout(() => this.spinner.hide(), timeout);
+  }
+
+  select(item: T): void {
+    const index = this.selectedItems.indexOf(item);
+
+    if (index === -1) {
+      this.selectedItems.push(item);
+    } else {
+      this.selectedItems.splice(index, 1);
+    }
+  }
+
+  selectAll(items: T[]): void {
+    this.selectedItems = [...items];
   }
 }

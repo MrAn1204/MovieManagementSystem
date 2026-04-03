@@ -5,7 +5,7 @@
 
   <app-table [columns]="columns" [data]="data().items" [roleConfig]="roleConfig" (openCreateForm)="onAdd()"
     (openEditForm)="onEdit($event)" (openDetailForm)="onView($event)" (openDeleteModal)="onDelete($event)"
-    (selectItem)="select($event)" (selectAllItems)="selectAll()">
+    (selectItem)="select($event)" (selectAllItems)="selectAll($event)">
 
     <ng-container table-actions>
       <app-button [disabled]="!validateSelected()" [rounded]="false" (clicked)="createInvoice()">

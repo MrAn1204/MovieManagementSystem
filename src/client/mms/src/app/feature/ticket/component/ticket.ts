@@ -46,8 +46,6 @@ export class Ticket extends SearchableFeature<TicketModel> {
 
   override roleConfig = getRoleConfig(this.entityName);
 
-  private selectedItems: TicketModel[] = [];
-
   constructor(ticketService: TicketService, private readonly invoiceService: InvoiceService) {
     super(ticketService);
   }
@@ -100,25 +98,5 @@ export class Ticket extends SearchableFeature<TicketModel> {
           error: (res) => FormMapper.mapErrorResponse(res, form)
         });
     });
-  }
-
-  select(item: unknown): void {
-    const selected = item as TicketModel;
-
-    const index = this.selectedItems.indexOf(selected);
-
-    if (index === -1) {
-      this.selectedItems.push(selected);
-    } else {
-      this.selectedItems.splice(index, 1);
-    }
-  }
-
-  selectAll(): void {
-    if (this.selectedItems.length === this.data().items.length) {
-      this.selectedItems = [];
-    } else {
-      this.selectedItems = [...this.data().items];
-    }
   }
 }

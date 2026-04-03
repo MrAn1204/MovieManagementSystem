@@ -35,8 +35,8 @@ export class Table<T extends BaseEntityModel> implements OnChanges {
   openDetailForm = output<string>();
   openDeleteModal = output<string>();
 
-  selectItem = output<unknown>();
-  selectAllItems = output<void>();
+  selectItem = output<T>();
+  selectAllItems = output<T[]>();
 
   selectedItems = new Map<number, boolean>();
 
@@ -49,6 +49,7 @@ export class Table<T extends BaseEntityModel> implements OnChanges {
       this.selectedItems.clear();
       this.data().forEach((_, i) => this.selectedItems.set(i, false));
     }
+    this.selectAllItems.emit([]);
   }
 
   viewDetail(id: string): void {
@@ -87,7 +88,7 @@ export class Table<T extends BaseEntityModel> implements OnChanges {
     return this.tableConfig().checkbox !== false;
   }
 
-  select(item: unknown, index: number): void {
+  select(item: T, index: number): void {
     this.selectedItems.set(index, !this.selectedItems.get(index));
     this.selectItem.emit(item);
   }
@@ -95,11 +96,11 @@ export class Table<T extends BaseEntityModel> implements OnChanges {
   selectAll(): void {
     if (this.isAllSelected()) {
       this.selectedItems.forEach((_, key) => this.selectedItems.set(key, false));
+      this.selectAllItems.emit([]);
     } else {
       this.selectedItems.forEach((_, key) => this.selectedItems.set(key, true));
+      this.selectAllItems.emit(this.data());
     }
-
-    this.selectAllItems.emit();
   }
 
   isAllSelected(): boolean {
