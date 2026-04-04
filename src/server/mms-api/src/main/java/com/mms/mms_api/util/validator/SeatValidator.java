@@ -80,11 +80,11 @@ public class SeatValidator implements BaseValidator {
     }
 
     private void validatePosition(ErrorLinkedList errors, Room room, int seatColumn, int seatRow) {
-        if (seatColumn <= 0 || seatColumn > room.getColumnLength()) {
+        if (seatColumn <= 0 || seatColumn > room.getRowLength()) {
             errors.add("seatColumn", "seat.column.invalid");
         }
 
-        if (seatRow <= 0 || seatRow > room.getRowLength()) {
+        if (seatRow <= 0 || seatRow > room.getColumnLength()) {
             errors.add("seatRow", "seat.row.invalid");
         }
 
