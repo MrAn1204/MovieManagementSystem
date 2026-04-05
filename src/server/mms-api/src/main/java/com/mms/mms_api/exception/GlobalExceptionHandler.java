@@ -6,12 +6,14 @@ import java.util.stream.Collectors;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.http.converter.HttpMessageNotReadableException;
 import org.springframework.security.core.AuthenticationException;
 import org.springframework.validation.FieldError;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 
+import com.fasterxml.jackson.databind.exc.InvalidFormatException;
 import com.mms.mms_api.business.service.AppMessageService;
 
 @RestControllerAdvice
@@ -63,5 +65,26 @@ public class GlobalExceptionHandler {
     @ExceptionHandler(AuthenticationException.class)
     public ResponseEntity<ErrorResponse> handleAuthenticationException(AuthenticationException exception) {
         return handleApiException(new InvalidInputException("auth.credentials.incorrect"));
+    }
+
+    @ExceptionHandler(HttpMessageNotReadableException.class)
+    public ResponseEntity<ErrorResponse> handleHttpMessageNotReadableException(HttpMessageNotReadableException exception) {
+        Throwable cause = exception.getMostSpecificCause();
+        
+        if (cause instanceof InvalidFormatException ife) {
+            String path = ife.getPath().get(0).getFieldName();
+
+            String message = messageService.getByCode("field.invalid");
+            
+            ErrorResponse errorResponse = new ErrorResponse(
+                    LocalDateTime.now(),
+                    HttpStatus.BAD_REQUEST.value(),
+                    ErrorType.INVALID_INPUT.getValue(),
+                    Map.of(path, message));
+
+            return ResponseEntity.badRequest().body(errorResponse);
+        }
+
+        return ResponseEntity.badRequest().build();
     }
 }
