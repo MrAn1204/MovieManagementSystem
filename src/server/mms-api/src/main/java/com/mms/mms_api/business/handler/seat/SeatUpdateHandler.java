@@ -1,7 +1,6 @@
 package com.mms.mms_api.business.handler.seat;
 
 import com.mms.mms_api.business.command.seat.SeatUpdateCommand;
-import com.mms.mms_api.data.RoomRepository;
 import com.mms.mms_api.data.SeatRepository;
 import com.mms.mms_api.dto.seat.SeatDto;
 import com.mms.mms_api.exception.ResourceNotFoundException;
@@ -11,12 +10,8 @@ import com.mms.mms_api.model.SeatType;
 import com.mms.mms_api.util.mapper.SeatMapper;
 
 public class SeatUpdateHandler extends SeatBaseHandler<SeatUpdateCommand, SeatDto> {
-    private final RoomRepository roomRepository;
-
-    public SeatUpdateHandler(SeatUpdateCommand request, SeatMapper seatMapper, SeatRepository seatRepository,
-            RoomRepository roomRepository) {
+    public SeatUpdateHandler(SeatUpdateCommand request, SeatMapper seatMapper, SeatRepository seatRepository) {
         super(request, seatMapper, seatRepository);
-        this.roomRepository = roomRepository;
     }
 
     @Override
@@ -24,13 +19,12 @@ public class SeatUpdateHandler extends SeatBaseHandler<SeatUpdateCommand, SeatDt
         Seat seat = seatRepository.findById(request.getId())
                 .orElseThrow(() -> new ResourceNotFoundException("seat.notFound"));
 
-        Room room = roomRepository.findById(request.getRoomId())
-                .orElseThrow(() -> new ResourceNotFoundException("room.notFound"));
+        Room room = seat.getRoom();
 
         Seat secondSeat = seatRepository.findFirstByLinkedSeat(seat);
 
         SeatType oldSeatType = seat.getSeatType();
-        SeatType newSeatType = SeatType.valueOf(request.getSeatType());
+        SeatType newSeatType = request.getSeatType();
 
         seatMapper.updateEntity(request, seat);
         
@@ -42,7 +36,6 @@ public class SeatUpdateHandler extends SeatBaseHandler<SeatUpdateCommand, SeatDt
         } else if (oldSeatType != SeatType.COUPLE && newSeatType == SeatType.COUPLE) {
             secondSeat = linkCoupleSeat(savedSeat, room);
         }
-
 
         if (secondSeat != null) {
             seatRepository.save(secondSeat);

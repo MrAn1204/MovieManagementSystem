@@ -7,6 +7,7 @@ import org.springframework.lang.NonNull;
 
 import com.mms.mms_api.business.command.BaseCreateCommand;
 import com.mms.mms_api.common.AppConstant;
+import com.mms.mms_api.model.SeatType;
 
 import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
@@ -26,7 +27,7 @@ public class SeatCreateCommand extends BaseCreateCommand {
     private int seatRow;
 
     @NotNull(message = "{seat.type.required}")
-    private String seatType;
+    private SeatType seatType;
 
     @NotNull(message = "{seat.name.required}")
     private String name;
