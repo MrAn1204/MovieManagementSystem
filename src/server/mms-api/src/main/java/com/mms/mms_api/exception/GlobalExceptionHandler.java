@@ -1,6 +1,5 @@
 package com.mms.mms_api.exception;
 
-import java.time.LocalDateTime;
 import java.util.Map;
 import java.util.stream.Collectors;
 
@@ -35,7 +34,6 @@ public class GlobalExceptionHandler {
                 .collect(Collectors.toMap(FieldError::getField, FieldError::getDefaultMessage));
 
         ErrorResponse errorResponse = new ErrorResponse(
-                LocalDateTime.now(),
                 HttpStatus.BAD_REQUEST.value(),
                 ErrorType.CONSTRAINT_VIOLATION.getValue(),
                 errorMessages);
@@ -58,7 +56,6 @@ public class GlobalExceptionHandler {
         HttpStatus statusCode = exception.getStatusCode();
 
         ErrorResponse errorResponse = new ErrorResponse(
-                LocalDateTime.now(),
                 statusCode.value(),
                 exception.getErrorType().getValue(),
                 messages);
@@ -69,7 +66,6 @@ public class GlobalExceptionHandler {
     @ExceptionHandler(AuthenticationException.class)
     public ResponseEntity<ErrorResponse> handleAuthenticationException(AuthenticationException exception) {
         ErrorResponse errorResponse = new ErrorResponse(
-                LocalDateTime.now(),
                 HttpStatus.UNAUTHORIZED.value(),
                 ErrorType.AUTHENTICATION_FAILED.getValue(),
                 Map.of("message", messageService.getByCode("auth.credentials.incorrect")));
@@ -80,7 +76,6 @@ public class GlobalExceptionHandler {
     @ExceptionHandler(AccessDeniedException.class)
     public ResponseEntity<ErrorResponse> handleAccessDeniedException(AccessDeniedException exception) {
         ErrorResponse errorResponse = new ErrorResponse(
-                LocalDateTime.now(),
                 HttpStatus.FORBIDDEN.value(),
                 ErrorType.ACCESS_DENIED.getValue(),
                 Map.of("message", messageService.getByCode("auth.access.denied")));
@@ -94,7 +89,6 @@ public class GlobalExceptionHandler {
         String message = messageService.getByCode("auth.credentials.invalid");
             
         ErrorResponse errorResponse = new ErrorResponse(
-                LocalDateTime.now(),
                 HttpStatus.UNAUTHORIZED.value(),
                 ErrorType.ACCESS_DENIED.getValue(),
                 Map.of("message", message));
@@ -112,7 +106,6 @@ public class GlobalExceptionHandler {
             String message = messageService.getByCode("field.invalid");
             
             ErrorResponse errorResponse = new ErrorResponse(
-                    LocalDateTime.now(),
                     HttpStatus.BAD_REQUEST.value(),
                     ErrorType.INVALID_INPUT.getValue(),
                     Map.of(path, message));
@@ -130,7 +123,6 @@ public class GlobalExceptionHandler {
         String message = messageService.getByCode("field.invalid");
             
         ErrorResponse errorResponse = new ErrorResponse(
-                LocalDateTime.now(),
                 HttpStatus.BAD_REQUEST.value(),
                 ErrorType.INVALID_INPUT.getValue(),
                 Map.of(path, message));
@@ -141,7 +133,6 @@ public class GlobalExceptionHandler {
     @ExceptionHandler(Exception.class)
     public ResponseEntity<ErrorResponse> handleException(Exception exception) {
         ErrorResponse errorResponse = new ErrorResponse(
-                LocalDateTime.now(),
                 HttpStatus.INTERNAL_SERVER_ERROR.value(),
                 ErrorType.SERVER_ERROR.getValue(),
                 Map.of("message", messageService.getByCode("error.general")));
