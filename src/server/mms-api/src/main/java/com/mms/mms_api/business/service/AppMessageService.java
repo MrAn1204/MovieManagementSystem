@@ -1,5 +1,6 @@
 package com.mms.mms_api.business.service;
 
+import java.util.LinkedList;
 import java.util.Locale;
 import java.util.Map;
 import java.util.ResourceBundle;
@@ -10,6 +11,7 @@ import org.springframework.context.MessageSource;
 import org.springframework.context.NoSuchMessageException;
 import org.springframework.context.i18n.LocaleContextHolder;
 import org.springframework.stereotype.Service;
+import org.springframework.util.PropertyPlaceholderHelper;
 
 @Service
 public class AppMessageService {
@@ -28,14 +30,24 @@ public class AppMessageService {
     }
 
     public String getByCode(String code, Object... args) {
-        Locale locale = LocaleContextHolder.getLocale();
-
         if (code == null || code.isEmpty()) {
             return null;
         }
+        
+        Locale locale = LocaleContextHolder.getLocale();
+        
+        PropertyPlaceholderHelper helper = new PropertyPlaceholderHelper("{", "}");
 
         try {
-            return messageSource.getMessage(code, args, locale);
+            String rawMessage = messageSource.getMessage(code, args, locale);
+
+            if (args == null || args.length == 0) {
+                return rawMessage;
+            }
+
+            LinkedList<Object> argQueue = new LinkedList<>(Set.of(args));
+
+            return helper.replacePlaceholders(rawMessage, placeholder -> (String) argQueue.poll());
         } catch (NoSuchMessageException e) {
             return String.format("[%s]", code);
         }

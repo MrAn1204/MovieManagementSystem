@@ -1,18 +1,23 @@
 package com.mms.mms_api.exception;
 
-import java.time.LocalDateTime;
 import java.util.Map;
 import java.util.stream.Collectors;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.http.converter.HttpMessageNotReadableException;
+import org.springframework.security.access.AccessDeniedException;
 import org.springframework.security.core.AuthenticationException;
 import org.springframework.validation.FieldError;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
+import org.springframework.web.method.annotation.MethodArgumentTypeMismatchException;
 
+import com.fasterxml.jackson.databind.exc.InvalidFormatException;
 import com.mms.mms_api.business.service.AppMessageService;
+
+import io.jsonwebtoken.JwtException;
 
 @RestControllerAdvice
 public class GlobalExceptionHandler {
@@ -29,7 +34,6 @@ public class GlobalExceptionHandler {
                 .collect(Collectors.toMap(FieldError::getField, FieldError::getDefaultMessage));
 
         ErrorResponse errorResponse = new ErrorResponse(
-                LocalDateTime.now(),
                 HttpStatus.BAD_REQUEST.value(),
                 ErrorType.CONSTRAINT_VIOLATION.getValue(),
                 errorMessages);
@@ -52,7 +56,6 @@ public class GlobalExceptionHandler {
         HttpStatus statusCode = exception.getStatusCode();
 
         ErrorResponse errorResponse = new ErrorResponse(
-                LocalDateTime.now(),
                 statusCode.value(),
                 exception.getErrorType().getValue(),
                 messages);
@@ -62,6 +65,78 @@ public class GlobalExceptionHandler {
 
     @ExceptionHandler(AuthenticationException.class)
     public ResponseEntity<ErrorResponse> handleAuthenticationException(AuthenticationException exception) {
-        return handleApiException(new InvalidInputException("auth.credentials.incorrect"));
+        ErrorResponse errorResponse = new ErrorResponse(
+                HttpStatus.UNAUTHORIZED.value(),
+                ErrorType.AUTHENTICATION_FAILED.getValue(),
+                Map.of("message", messageService.getByCode("auth.credentials.incorrect")));
+
+        return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(errorResponse);
+    }
+
+    @ExceptionHandler(AccessDeniedException.class)
+    public ResponseEntity<ErrorResponse> handleAccessDeniedException(AccessDeniedException exception) {
+        ErrorResponse errorResponse = new ErrorResponse(
+                HttpStatus.FORBIDDEN.value(),
+                ErrorType.ACCESS_DENIED.getValue(),
+                Map.of("message", messageService.getByCode("auth.access.denied")));
+
+        return ResponseEntity.status(HttpStatus.FORBIDDEN).body(errorResponse);
+    }
+
+
+    @ExceptionHandler(JwtException.class)
+    public ResponseEntity<ErrorResponse> handleJwtException(JwtException exception) {
+        String message = messageService.getByCode("auth.credentials.invalid");
+            
+        ErrorResponse errorResponse = new ErrorResponse(
+                HttpStatus.UNAUTHORIZED.value(),
+                ErrorType.ACCESS_DENIED.getValue(),
+                Map.of("message", message));
+
+        return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(errorResponse);
+    }
+
+    @ExceptionHandler(HttpMessageNotReadableException.class)
+    public ResponseEntity<ErrorResponse> handleHttpMessageNotReadableException(HttpMessageNotReadableException exception) {
+        Throwable cause = exception.getMostSpecificCause();
+        
+        if (cause instanceof InvalidFormatException ife) {
+            String path = ife.getPath().get(0).getFieldName();
+
+            String message = messageService.getByCode("field.invalid");
+            
+            ErrorResponse errorResponse = new ErrorResponse(
+                    HttpStatus.BAD_REQUEST.value(),
+                    ErrorType.INVALID_INPUT.getValue(),
+                    Map.of(path, message));
+
+            return ResponseEntity.badRequest().body(errorResponse);
+        }
+
+        return ResponseEntity.badRequest().build();
+    }
+
+    @ExceptionHandler(MethodArgumentTypeMismatchException.class)
+    public ResponseEntity<ErrorResponse> handleMethodArgumentTypeMismatchException(MethodArgumentTypeMismatchException exception) {
+        String path = exception.getName();
+
+        String message = messageService.getByCode("field.invalid");
+            
+        ErrorResponse errorResponse = new ErrorResponse(
+                HttpStatus.BAD_REQUEST.value(),
+                ErrorType.INVALID_INPUT.getValue(),
+                Map.of(path, message));
+
+        return ResponseEntity.badRequest().body(errorResponse);
+    }
+
+    @ExceptionHandler(Exception.class)
+    public ResponseEntity<ErrorResponse> handleException(Exception exception) {
+        ErrorResponse errorResponse = new ErrorResponse(
+                HttpStatus.INTERNAL_SERVER_ERROR.value(),
+                ErrorType.SERVER_ERROR.getValue(),
+                Map.of("message", messageService.getByCode("error.general")));
+
+        return ResponseEntity.internalServerError().body(errorResponse);
     }
 }

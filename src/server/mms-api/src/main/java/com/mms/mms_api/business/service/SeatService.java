@@ -58,7 +58,7 @@ public class SeatService {
     @PreAuthorize("hasAuthority('ADMIN')")
     @Transactional
     public SeatDto handle(SeatUpdateCommand request) {
-        SeatUpdateHandler handler = new SeatUpdateHandler(request, seatMapper, seatRepository, roomRepository);
+        SeatUpdateHandler handler = new SeatUpdateHandler(request, seatMapper, seatRepository);
         return handler.execute();
     }
 

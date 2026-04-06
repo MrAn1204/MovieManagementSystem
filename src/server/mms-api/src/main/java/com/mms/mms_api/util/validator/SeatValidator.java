@@ -38,8 +38,7 @@ public class SeatValidator implements BaseValidator {
         errors.throwIfNotEmpty(ErrorType.INVALID_INPUT);
 
         validatePosition(errors, room, command.getSeatColumn(), command.getSeatRow());
-        validateSeatType(errors, command.getSeatType());
-        if (isCoupleSeat(command.getSeatType())) {
+        if (command.getSeatType() == SeatType.COUPLE) {
             validateCoupleSeatPosition(errors, command.getSeatColumn(), command.getSeatRow(), room);
         }
 
@@ -50,27 +49,17 @@ public class SeatValidator implements BaseValidator {
         ErrorLinkedList errors = new ErrorLinkedList();
 
         validateId(errors, command.getId());
-        validateRoomId(errors, command.getRoomId());
 
         errors.throwIfNotEmpty(ErrorType.RESOURCE_NOT_FOUND);
 
-        Room room = roomValidationService.getById(command.getRoomId());
+        Seat seat = seatValidationService.getById(command.getId());
 
-        validateSeatType(errors, command.getSeatType());
-        validatePosition(errors, room, command.getSeatColumn(), command.getSeatRow());
-        if (isCoupleSeat(command.getSeatType())) {
-            validateCoupleSeatPosition(errors, command.getSeatColumn(), command.getSeatRow(), room);
+        validatePosition(errors, seat.getRoom(), command.getSeatColumn(), command.getSeatRow());
+        if (command.getSeatType() == SeatType.COUPLE) {
+            validateCoupleSeatPosition(errors, command.getSeatColumn(), command.getSeatRow(), seat.getRoom());
         }
 
         errors.throwIfNotEmpty(ErrorType.INVALID_INPUT);
-    }
-
-    private boolean isCoupleSeat(String seatType) {
-        try {
-            return SeatType.valueOf(seatType) == SeatType.COUPLE;
-        } catch (IllegalArgumentException e) {
-            return false;
-        }
     }
 
     private void validateId(ErrorLinkedList errors, @NonNull UUID id) {
@@ -80,25 +69,17 @@ public class SeatValidator implements BaseValidator {
     }
 
     private void validatePosition(ErrorLinkedList errors, Room room, int seatColumn, int seatRow) {
-        if (seatColumn <= 0 || seatColumn > room.getColumnLength()) {
+        if (seatColumn <= 0 || seatColumn > room.getRowLength()) {
             errors.add("seatColumn", "seat.column.invalid");
         }
 
-        if (seatRow <= 0 || seatRow > room.getRowLength()) {
+        if (seatRow <= 0 || seatRow > room.getColumnLength()) {
             errors.add("seatRow", "seat.row.invalid");
         }
 
         if (room.getSeats().stream()
                 .anyMatch((seat -> seat.getSeatRow() == seatRow && seat.getSeatColumn() == seatColumn))) {
             errors.add("position", "seat.position.invalid");
-        }
-    }
-
-    private void validateSeatType(ErrorLinkedList errors, String seatType) {
-        try {
-            SeatType.valueOf(seatType);
-        } catch (IllegalArgumentException e) {
-            errors.add("seatType", "seat.type.invalid");
         }
     }
 
