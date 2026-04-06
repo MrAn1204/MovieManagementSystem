@@ -25,6 +25,10 @@ import lombok.AllArgsConstructor;
 public class SecurityConfiguration {
     private JwtAuthenticationFilter jwtAuthFilter;
 
+    private CustomAuthenticationEntryPoint authEntryPoint;
+
+    private CustomAccessDeniedHandler accessDeniedHandler;
+
     @Bean
     SecurityFilterChain securityFilterChain(HttpSecurity httpSecurity) throws Exception {
         return httpSecurity
@@ -37,6 +41,9 @@ public class SecurityConfiguration {
                         .anyRequest().authenticated())
                 .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                 .addFilterBefore(jwtAuthFilter, UsernamePasswordAuthenticationFilter.class)
+                .exceptionHandling(exception -> exception
+                        .authenticationEntryPoint(authEntryPoint)
+                        .accessDeniedHandler(accessDeniedHandler))
                 .build();
     }
 
