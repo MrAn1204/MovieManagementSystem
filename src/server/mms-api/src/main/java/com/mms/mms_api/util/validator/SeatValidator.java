@@ -9,7 +9,7 @@ import com.mms.mms_api.business.command.seat.SeatCreateCommand;
 import com.mms.mms_api.business.command.seat.SeatUpdateCommand;
 import com.mms.mms_api.business.service.validation.RoomValidationService;
 import com.mms.mms_api.business.service.validation.SeatValidationService;
-import com.mms.mms_api.exception.ErrorLinkedList;
+import com.mms.mms_api.exception.ErrorSet;
 import com.mms.mms_api.exception.ErrorType;
 import com.mms.mms_api.model.Room;
 import com.mms.mms_api.model.Seat;
@@ -25,7 +25,7 @@ public class SeatValidator implements BaseValidator {
     private final RoomValidationService roomValidationService;
 
     public void validate(SeatCreateCommand command) {
-        ErrorLinkedList errors = new ErrorLinkedList();
+        ErrorSet errors = new ErrorSet();
 
         validateRoomId(errors, command.getRoomId());
 
@@ -45,7 +45,7 @@ public class SeatValidator implements BaseValidator {
     }
 
     public void validate(SeatUpdateCommand command) {
-        ErrorLinkedList errors = new ErrorLinkedList();
+        ErrorSet errors = new ErrorSet();
 
         validateId(errors, command.getId());
 
@@ -62,13 +62,13 @@ public class SeatValidator implements BaseValidator {
         }
     }
 
-    private void validateId(ErrorLinkedList errors, @NonNull UUID id) {
+    private void validateId(ErrorSet errors, @NonNull UUID id) {
         if (!seatValidationService.existsById(id)) {
             errors.add("id", "seat.notFound");
         }
     }
 
-    private void validatePosition(ErrorLinkedList errors, Room room, int seatColumn, int seatRow) {
+    private void validatePosition(ErrorSet errors, Room room, int seatColumn, int seatRow) {
         if (seatColumn <= 0 || seatColumn > room.getRowLength()) {
             errors.add("seatColumn", "seat.column.invalid");
         }
@@ -78,7 +78,7 @@ public class SeatValidator implements BaseValidator {
         }
     }
 
-    private void validatePosition(ErrorLinkedList errors, Room room, int seatColumn, int seatRow, UUID seatId) {
+    private void validatePosition(ErrorSet errors, Room room, int seatColumn, int seatRow, UUID seatId) {
         validatePosition(errors, room, seatColumn, seatRow);
 
         if (room.getSeats().stream()
@@ -88,7 +88,7 @@ public class SeatValidator implements BaseValidator {
         }
     }
 
-    private void validateCoupleSeatPosition(ErrorLinkedList errors, int seatColumn, int seatRow, Room room) {
+    private void validateCoupleSeatPosition(ErrorSet errors, int seatColumn, int seatRow, Room room) {
         int secondColumn = seatColumn + 1;
 
         if (secondColumn > room.getRowLength()) {
@@ -104,13 +104,13 @@ public class SeatValidator implements BaseValidator {
         }
     }
 
-    private void validateRoomId(ErrorLinkedList errors, @NonNull UUID roomId) {
+    private void validateRoomId(ErrorSet errors, @NonNull UUID roomId) {
         if (!roomValidationService.existsById(roomId)) {
             errors.add("room", "room.notFound");
         }
     }
 
-    private void validateRoomCapacity(ErrorLinkedList errors, Room room) {
+    private void validateRoomCapacity(ErrorSet errors, Room room) {
         int capacity = room.getRowLength() * room.getColumnLength();
 
         if (room.getSeats().size() >= capacity) {

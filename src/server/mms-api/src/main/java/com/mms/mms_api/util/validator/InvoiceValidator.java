@@ -12,7 +12,7 @@ import com.mms.mms_api.business.command.invoice.InvoiceUpdateCommand;
 import com.mms.mms_api.business.service.validation.InvoiceValidationService;
 import com.mms.mms_api.business.service.validation.TicketValidationService;
 import com.mms.mms_api.business.service.validation.UserValidationService;
-import com.mms.mms_api.exception.ErrorLinkedList;
+import com.mms.mms_api.exception.ErrorSet;
 import com.mms.mms_api.exception.ErrorType;
 
 import lombok.AllArgsConstructor;
@@ -27,7 +27,7 @@ public class InvoiceValidator implements BaseValidator {
     private final UserValidationService userValidationService;
 
     public void validate(InvoiceCreateCommand command) {
-        ErrorLinkedList errors = new ErrorLinkedList();
+        ErrorSet errors = new ErrorSet();
 
         validateTickets(errors, command.getTicketIds());
         validateUser(errors, command.getUserId());
@@ -36,7 +36,7 @@ public class InvoiceValidator implements BaseValidator {
     }
 
     public void validate(InvoiceUpdateCommand command) {
-        ErrorLinkedList errors = new ErrorLinkedList();
+        ErrorSet errors = new ErrorSet();
 
         validateId(errors, command.getId());
 
@@ -48,13 +48,13 @@ public class InvoiceValidator implements BaseValidator {
         errors.throwIfNotEmpty(ErrorType.INVALID_INPUT);
     }
 
-    private void validateId(ErrorLinkedList errors, @NonNull UUID id) {
+    private void validateId(ErrorSet errors, @NonNull UUID id) {
         if (!invoiceValidationService.existsById(id)) {
             errors.add("id", "invoice.notFound");
         }
     }
 
-    private void validateTickets(ErrorLinkedList errors, List<UUID> ticketIds) {
+    private void validateTickets(ErrorSet errors, List<UUID> ticketIds) {
         if (CollectionUtils.isEmpty(ticketIds)) {
             return;
         }
@@ -64,13 +64,13 @@ public class InvoiceValidator implements BaseValidator {
         }
     }
 
-    private void validateUser(ErrorLinkedList errors, @NonNull UUID userId) {
+    private void validateUser(ErrorSet errors, @NonNull UUID userId) {
         if (!userValidationService.existsById(userId)) {
             errors.add("user", "user.notFound");
         }
     }
 
-    private void validateScore(ErrorLinkedList errors, @NonNull UUID invoiceId, int useScore) {
+    private void validateScore(ErrorSet errors, @NonNull UUID invoiceId, int useScore) {
         if (!invoiceValidationService.hasUserSufficientScore(invoiceId, useScore)) {
             errors.add("useScore", "user.score.insufficient");
         }
