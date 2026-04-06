@@ -18,6 +18,8 @@ import org.springframework.web.method.annotation.MethodArgumentTypeMismatchExcep
 import com.fasterxml.jackson.databind.exc.InvalidFormatException;
 import com.mms.mms_api.business.service.AppMessageService;
 
+import io.jsonwebtoken.JwtException;
+
 @RestControllerAdvice
 public class GlobalExceptionHandler {
     private final AppMessageService messageService;
@@ -84,6 +86,20 @@ public class GlobalExceptionHandler {
                 Map.of("message", messageService.getByCode("auth.access.denied")));
 
         return ResponseEntity.status(HttpStatus.FORBIDDEN).body(errorResponse);
+    }
+
+
+    @ExceptionHandler(JwtException.class)
+    public ResponseEntity<ErrorResponse> handleJwtException(JwtException exception) {
+        String message = messageService.getByCode("auth.credentials.invalid");
+            
+        ErrorResponse errorResponse = new ErrorResponse(
+                LocalDateTime.now(),
+                HttpStatus.UNAUTHORIZED.value(),
+                ErrorType.ACCESS_DENIED.getValue(),
+                Map.of("message", message));
+
+        return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(errorResponse);
     }
 
     @ExceptionHandler(HttpMessageNotReadableException.class)
