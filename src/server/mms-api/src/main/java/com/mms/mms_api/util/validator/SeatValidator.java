@@ -69,11 +69,11 @@ public class SeatValidator implements BaseValidator {
     }
 
     private void validatePosition(ErrorSet errors, Room room, int seatColumn, int seatRow) {
-        if (seatColumn <= 0 || seatColumn > room.getRowLength()) {
+        if (!room.isValidColumn(seatColumn)) {
             errors.add("seatColumn", "seat.column.invalid");
         }
-
-        if (seatRow <= 0 || seatRow > room.getColumnLength()) {
+        
+        if (!room.isValidRow(seatRow)) {
             errors.add("seatRow", "seat.row.invalid");
         }
     }
@@ -81,9 +81,7 @@ public class SeatValidator implements BaseValidator {
     private void validatePosition(ErrorSet errors, Room room, int seatColumn, int seatRow, UUID seatId) {
         validatePosition(errors, room, seatColumn, seatRow);
 
-        if (room.getSeats().stream()
-                .filter(existingSeat -> !existingSeat.getId().equals(seatId))
-                .anyMatch(existingSeat -> existingSeat.getSeatRow() == seatRow && existingSeat.getSeatColumn() == seatColumn)) {
+        if (room.hasOtherSeatAt(seatRow, seatColumn, seatId)) {
             errors.add("position", "seat.position.invalid");
         }
     }
@@ -91,13 +89,11 @@ public class SeatValidator implements BaseValidator {
     private void validateCoupleSeatPosition(ErrorSet errors, int seatColumn, int seatRow, Room room) {
         int secondColumn = seatColumn + 1;
 
-        if (secondColumn > room.getRowLength()) {
+        if (!room.isValidColumn(secondColumn)) {
             errors.add("seatColumn", "seat.column.invalid");
         }
 
-        Seat secondSeat = room.getSeats().stream()
-                .filter(seat -> seat.getSeatRow() == seatRow && seat.getSeatColumn() == secondColumn)
-                .findFirst().orElse(null);
+        Seat secondSeat = room.getSeatAt(seatRow, secondColumn);
 
         if (secondSeat != null && secondSeat.getSeatType() == SeatType.COUPLE) {
             errors.add("position", "seat.position.invalid");
@@ -111,9 +107,7 @@ public class SeatValidator implements BaseValidator {
     }
 
     private void validateRoomCapacity(ErrorSet errors, Room room) {
-        int capacity = room.getRowLength() * room.getColumnLength();
-
-        if (room.getSeats().size() >= capacity) {
+        if (!room.hasSpace()) {
             errors.add("room", "room.full");
         }
     }

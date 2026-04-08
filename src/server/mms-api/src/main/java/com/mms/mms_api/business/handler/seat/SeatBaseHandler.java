@@ -22,11 +22,7 @@ public abstract class SeatBaseHandler<I, O> extends BaseHandler<I, O> {
     protected Seat linkCoupleSeat(Seat seat, Room room) {
         Seat secondSeat;
 
-        secondSeat = room.getSeats().stream()
-                .filter(s -> s.getSeatColumn() == seat.getSeatColumn() + 1
-                        && s.getSeatRow() == seat.getSeatRow())
-                .findFirst()
-                .orElse(null);
+        secondSeat = room.getSeatAt(seat.getSeatRow(), seat.getSeatColumn() + 1);
 
         if (secondSeat == null || secondSeat.getSeatType() != SeatType.COUPLE) {
             secondSeat = seatMapper.mapLinkedSeat(seat, secondSeat);

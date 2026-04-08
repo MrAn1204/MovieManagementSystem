@@ -61,13 +61,12 @@ public class RoomValidator implements BaseValidator {
     private void validateCapacity(ErrorSet errors, @NonNull UUID id, int rowLength, int columnLength) {
         Room room = roomValidationService.getById(id);
 
-        if (room.getSeats().stream()
-                .anyMatch(seat -> seat.getSeatRow() > rowLength || seat.getSeatColumn() > columnLength)) {
+        if (room.hasSeatFrom(columnLength, rowLength)) {
             errors.add("room", "room.capacity.invalid");
             return;
         }
 
-        if (room.getSeats().size() > rowLength * columnLength) {
+        if (!room.hasSpace()) {
             errors.add("room", "room.full");
         }
     }
