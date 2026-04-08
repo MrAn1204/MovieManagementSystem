@@ -43,4 +43,8 @@ public class Seat extends BaseEntity {
 
     @OneToMany(mappedBy = "seat")
     private List<Ticket> tickets;
+
+    public boolean hasPosition(int seatRow, int seatColumn) {
+        return this.seatRow == seatRow && this.seatColumn == seatColumn;
+    }
 }
