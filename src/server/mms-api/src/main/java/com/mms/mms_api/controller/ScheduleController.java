@@ -23,7 +23,6 @@ import com.mms.mms_api.business.service.ScheduleService;
 import com.mms.mms_api.common.PaginatedResult;
 import com.mms.mms_api.dto.schedule.ScheduleDetailDto;
 import com.mms.mms_api.dto.schedule.ScheduleDto;
-import com.mms.mms_api.util.validator.ScheduleValidator;
 
 import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
@@ -33,8 +32,6 @@ import lombok.AllArgsConstructor;
 @AllArgsConstructor
 public class ScheduleController {
     private final ScheduleService scheduleService;
-
-    private final ScheduleValidator scheduleValidator;
 
     @GetMapping
     public ResponseEntity<List<ScheduleDto>> getAll() {
@@ -50,8 +47,6 @@ public class ScheduleController {
 
     @PostMapping("/create")
     public ResponseEntity<ScheduleDetailDto> create(@Valid @RequestBody ScheduleCreateCommand request) {
-        scheduleValidator.validate(request);
-
         ScheduleDetailDto scheduleDto = scheduleService.handle(request);
         return ResponseEntity.ok(scheduleDto);
     }
@@ -59,7 +54,6 @@ public class ScheduleController {
     @PutMapping("/{id}")
     public ResponseEntity<ScheduleDetailDto> update(@PathVariable UUID id, @Valid @RequestBody ScheduleUpdateCommand request) {
         request.setId(id);
-        scheduleValidator.validate(request);
 
         ScheduleDetailDto updatedSchedule = scheduleService.handle(request);
         return ResponseEntity.ok(updatedSchedule);

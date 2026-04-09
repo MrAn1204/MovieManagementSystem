@@ -9,8 +9,7 @@ public abstract class ScheduleBaseHandler<I, O> extends BaseHandler<I, O> {
 
     protected final ScheduleRepository scheduleRepository;
 
-    protected ScheduleBaseHandler(I request, ScheduleMapper scheduleMapper, ScheduleRepository scheduleRepository) {
-        super(request);
+    protected ScheduleBaseHandler(ScheduleMapper scheduleMapper, ScheduleRepository scheduleRepository) {
         this.scheduleMapper = scheduleMapper;
         this.scheduleRepository = scheduleRepository;
     }

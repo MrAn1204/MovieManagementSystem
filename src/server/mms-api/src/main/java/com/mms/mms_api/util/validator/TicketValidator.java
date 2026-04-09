@@ -13,7 +13,7 @@ import com.mms.mms_api.business.service.validation.ScheduleValidationService;
 import com.mms.mms_api.business.service.validation.ScheduleSeatValidationService;
 import com.mms.mms_api.business.service.validation.SeatValidationService;
 import com.mms.mms_api.business.service.validation.UserValidationService;
-import com.mms.mms_api.exception.ErrorLinkedList;
+import com.mms.mms_api.exception.ErrorSet;
 import com.mms.mms_api.exception.ErrorType;
 import com.mms.mms_api.model.Schedule;
 import com.mms.mms_api.model.ScheduleSeat;
@@ -35,7 +35,7 @@ public class TicketValidator implements BaseValidator {
     private final ScheduleSeatValidationService scheduleSeatValidationService;
 
     public void validate(TicketCreateCommand command) {
-        ErrorLinkedList errors = new ErrorLinkedList();
+        ErrorSet errors = new ErrorSet();
 
         Schedule schedule = scheduleValidationService.getById(command.getScheduleId());
         List<Seat> seats = seatValidationService.getByIdIn(command.getSeatIds());
@@ -60,7 +60,7 @@ public class TicketValidator implements BaseValidator {
     }
 
     public void validate(TicketUpdateCommand command) {
-        ErrorLinkedList errors = new ErrorLinkedList();
+        ErrorSet errors = new ErrorSet();
 
         Schedule schedule = scheduleValidationService.getById(command.getScheduleId());
         Seat seat = seatValidationService.getById(command.getSeatId());
@@ -79,7 +79,7 @@ public class TicketValidator implements BaseValidator {
         errors.throwIfNotEmpty(ErrorType.INVALID_INPUT);
     }
 
-    private void validatePromotion(ErrorLinkedList errors, UUID promotionId) {
+    private void validatePromotion(ErrorSet errors, UUID promotionId) {
         if (promotionId == null) {
             return;
         }
@@ -89,37 +89,37 @@ public class TicketValidator implements BaseValidator {
         }
     }
 
-    private void validateUser(ErrorLinkedList errors, @NonNull UUID userId) {
+    private void validateUser(ErrorSet errors, @NonNull UUID userId) {
         if (!userValidationService.existsById(userId)) {
             errors.add("user", "user.notFound");
         }
     }
 
-    private void validateSchedule(ErrorLinkedList errors, Schedule schedule) {
+    private void validateSchedule(ErrorSet errors, Schedule schedule) {
         if (schedule == null) {
             errors.add("schedule", "schedule.notFound");
         }
     }
 
-    private void validateSeat(ErrorLinkedList errors, Seat seat) {
+    private void validateSeat(ErrorSet errors, Seat seat) {
         if (seat == null) {
             errors.add("seat", "seat.notFound");
         }
     }
 
-    private void validateScheduleSeat(ErrorLinkedList errors, ScheduleSeat scheduleSeat) {
+    private void validateScheduleSeat(ErrorSet errors, ScheduleSeat scheduleSeat) {
         if (scheduleSeat == null) {
             errors.add("scheduleSeat", "schedule.seat.notFound");
         }
     }
 
-    private void validateReserved(ErrorLinkedList errors, ScheduleSeat scheduleSeat) {
+    private void validateReserved(ErrorSet errors, ScheduleSeat scheduleSeat) {
         if (scheduleSeat != null && scheduleSeat.isReserved()) {
             errors.add("seat", "ticket.seat.reserved");
         }
     }
 
-    private void validateRoomMismatch(ErrorLinkedList errors, Schedule schedule, Seat seat) {
+    private void validateRoomMismatch(ErrorSet errors, Schedule schedule, Seat seat) {
         if (!seat.getRoom().getId().equals(schedule.getRoom().getId())) {
             errors.add("room", "ticket.room.mismatch");
         }

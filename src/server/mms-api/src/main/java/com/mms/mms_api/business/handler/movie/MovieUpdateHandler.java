@@ -1,5 +1,7 @@
 package com.mms.mms_api.business.handler.movie;
 
+import org.springframework.stereotype.Component;
+
 import com.mms.mms_api.business.command.movie.MovieUpdateCommand;
 import com.mms.mms_api.business.service.GscService;
 import com.mms.mms_api.common.StoragePath;
@@ -20,6 +22,7 @@ import com.mms.mms_api.util.mapper.MovieMapper;
 import java.util.List;
 import java.util.UUID;
 
+@Component
 public class MovieUpdateHandler extends MovieBaseHandler<MovieUpdateCommand, MovieDto> {
     private GenreRepository genreRepository;
 
@@ -32,7 +35,6 @@ public class MovieUpdateHandler extends MovieBaseHandler<MovieUpdateCommand, Mov
     private GscService gscService;
 
     public MovieUpdateHandler(
-            MovieUpdateCommand request,
             MovieMapper movieMapper,
             MovieRepository movieRepository,
             GenreRepository genreRepository,
@@ -40,7 +42,7 @@ public class MovieUpdateHandler extends MovieBaseHandler<MovieUpdateCommand, Mov
             StudioRepository studioRepository,
             TalentRepository talentRepository,
             GscService gscService) {
-        super(request, movieMapper, movieRepository);
+        super(movieMapper, movieRepository);
         this.genreRepository = genreRepository;
         this.languageRepository = languageRepository;
         this.studioRepository = studioRepository;
@@ -49,7 +51,7 @@ public class MovieUpdateHandler extends MovieBaseHandler<MovieUpdateCommand, Mov
     }
 
     @Override
-    public MovieDto execute() {
+    public MovieDto execute(MovieUpdateCommand request) {
         Movie movie = movieRepository.findById(request.getId()).orElseThrow(
                 () -> new ResourceNotFoundException("movie.notFound"));
 

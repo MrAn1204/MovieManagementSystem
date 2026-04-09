@@ -12,7 +12,7 @@ import com.mms.mms_api.business.command.user.UserCreateCommand;
 import com.mms.mms_api.business.command.user.UserUpdateCommand;
 import com.mms.mms_api.business.service.validation.RoleValidationService;
 import com.mms.mms_api.business.service.validation.UserValidationService;
-import com.mms.mms_api.exception.ErrorLinkedList;
+import com.mms.mms_api.exception.ErrorSet;
 import com.mms.mms_api.exception.ErrorType;
 
 import lombok.AllArgsConstructor;
@@ -25,7 +25,7 @@ public class UserValidator implements BaseValidator {
     private final RoleValidationService roleValidationService;
 
     public void validate(UserCreateCommand command) {
-        ErrorLinkedList errors = new ErrorLinkedList();
+        ErrorSet errors = new ErrorSet();
 
         validateRoles(errors, command.getRoleIds());
         validateUsername(errors, command.getUsername());
@@ -36,7 +36,7 @@ public class UserValidator implements BaseValidator {
     }
 
     public void validate(UserUpdateCommand command) {
-        ErrorLinkedList errors = new ErrorLinkedList();
+        ErrorSet errors = new ErrorSet();
 
         validateId(errors, command.getId());
 
@@ -51,7 +51,7 @@ public class UserValidator implements BaseValidator {
     }
 
     public void validate(RegisterCommand command) {
-        ErrorLinkedList errors = new ErrorLinkedList();
+        ErrorSet errors = new ErrorSet();
 
         validateUsername(errors, command.getUsername());
         validateEmail(errors, command.getEmail());
@@ -60,13 +60,13 @@ public class UserValidator implements BaseValidator {
         errors.throwIfNotEmpty(ErrorType.INVALID_INPUT);
     }
 
-    private void validateId(ErrorLinkedList errors, @NonNull UUID id) {
+    private void validateId(ErrorSet errors, @NonNull UUID id) {
         if (!userValidationService.existsById(id)) {
             errors.add("id", "user.notFound");
         }
     }
 
-    private void validateRoles(ErrorLinkedList errors, List<UUID> roleIds) {
+    private void validateRoles(ErrorSet errors, List<UUID> roleIds) {
         if (CollectionUtils.isEmpty(roleIds)) {
             errors.add("roleIds", "user.roles.required");
             return;
@@ -77,13 +77,13 @@ public class UserValidator implements BaseValidator {
         }
     }
 
-    private void validateUsername(ErrorLinkedList errors, String username) {
+    private void validateUsername(ErrorSet errors, String username) {
         if (userValidationService.existsByUsername(username)) {
             errors.add("username", "user.username.unique");
         }
     }
 
-    private void validateEmail(ErrorLinkedList errors, String email) {
+    private void validateEmail(ErrorSet errors, String email) {
         if (email == null || email.isBlank()) {
             return;
         }
@@ -93,7 +93,7 @@ public class UserValidator implements BaseValidator {
         }
     }
 
-    private void validateEmail(ErrorLinkedList errors, String email, UUID id) {
+    private void validateEmail(ErrorSet errors, String email, UUID id) {
         if (email == null || email.isBlank()) {
             return;
         }
@@ -103,13 +103,13 @@ public class UserValidator implements BaseValidator {
         }
     }
 
-    private void validatePhoneNumber(ErrorLinkedList errors, String phoneNumber) {
+    private void validatePhoneNumber(ErrorSet errors, String phoneNumber) {
         if (userValidationService.existsByPhoneNumber(phoneNumber)) {
             errors.add("phoneNumber", "user.phone.unique");
         }
     }
 
-    private void validatePhoneNumber(ErrorLinkedList errors, String phoneNumber, UUID id) {
+    private void validatePhoneNumber(ErrorSet errors, String phoneNumber, UUID id) {
         if (userValidationService.existsByPhoneNumberAndIdNot(phoneNumber, id)) {
             errors.add("phoneNumber", "user.phone.unique");
         }

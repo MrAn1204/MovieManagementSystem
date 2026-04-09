@@ -40,7 +40,7 @@ public interface SeatMapper {
             secondSeat = new Seat();
         }
 
-        secondSeat.setName(mainSeat.getName());
+        secondSeat.setName(mainSeat.getName() + ".2");
         secondSeat.setSeatType(mainSeat.getSeatType());
         secondSeat.setSeatColumn(mainSeat.getSeatColumn() + 1);
         secondSeat.setSeatRow(mainSeat.getSeatRow());

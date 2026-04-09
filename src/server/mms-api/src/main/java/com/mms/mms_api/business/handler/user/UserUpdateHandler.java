@@ -1,5 +1,7 @@
 package com.mms.mms_api.business.handler.user;
 
+import org.springframework.stereotype.Component;
+
 import java.util.List;
 import java.util.UUID;
 
@@ -14,21 +16,21 @@ import com.mms.mms_api.model.Role;
 import com.mms.mms_api.model.User;
 import com.mms.mms_api.util.mapper.UserMapper;
 
+@Component
 public class UserUpdateHandler extends UserBaseHandler<UserUpdateCommand, UserDetailDto> {
     private RoleRepository roleRepository;
 
     private PasswordEncoder passwordEncoder;
 
-    public UserUpdateHandler(
-            UserUpdateCommand request, UserMapper userMapper,
+    public UserUpdateHandler(UserMapper userMapper,
             UserRepository userRepository, RoleRepository roleRepository, PasswordEncoder passwordEncoder) {
-        super(request, userMapper, userRepository);
+        super(userMapper, userRepository);
         this.roleRepository = roleRepository;
         this.passwordEncoder = passwordEncoder;
     }
 
     @Override
-    public UserDetailDto execute() {
+    public UserDetailDto execute(UserUpdateCommand request) {
         User user = userRepository.findById(request.getId()).orElseThrow(
                 () -> new ResourceNotFoundException("user.notFound"));
 

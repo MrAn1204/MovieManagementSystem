@@ -10,67 +10,50 @@ import org.springframework.transaction.annotation.Transactional;
 import com.mms.mms_api.business.command.seat.SeatCreateCommand;
 import com.mms.mms_api.business.command.seat.SeatDeleteCommand;
 import com.mms.mms_api.business.command.seat.SeatUpdateCommand;
-import com.mms.mms_api.business.handler.seat.SeatCreateHandler;
-import com.mms.mms_api.business.handler.seat.SeatDeleteHandler;
-import com.mms.mms_api.business.handler.seat.SeatGetAllHandler;
-import com.mms.mms_api.business.handler.seat.SeatGetByIdHandler;
-import com.mms.mms_api.business.handler.seat.SeatTypeGetAllHandler;
-import com.mms.mms_api.business.handler.seat.SeatUpdateHandler;
 import com.mms.mms_api.business.query.seat.SeatGetAllQuery;
 import com.mms.mms_api.business.query.seat.SeatGetByIdQuery;
 import com.mms.mms_api.business.query.seat.SeatTypeGetAllQuery;
-import com.mms.mms_api.data.RoomRepository;
-import com.mms.mms_api.data.ScheduleSeatRepository;
-import com.mms.mms_api.data.SeatRepository;
 import com.mms.mms_api.dto.seat.SeatDto;
-import com.mms.mms_api.util.mapper.SeatMapper;
+import com.mms.mms_api.mediator.RequestMediator;
+import com.mms.mms_api.util.validator.SeatValidator;
 
 import lombok.AllArgsConstructor;
 
 @Service
 @AllArgsConstructor
 public class SeatService {
-    private final SeatRepository seatRepository;
-
-    private final RoomRepository roomRepository;
-
-    private final ScheduleSeatRepository scheduleSeatRepository;
-
-    private final SeatMapper seatMapper;
+    private final RequestMediator mediator;
+    private final SeatValidator seatValidator;
 
     @PreAuthorize("hasAuthority('ADMIN')")
     @Transactional
     public SeatDto handle(SeatCreateCommand request) {
-        SeatCreateHandler handler = new SeatCreateHandler(request, seatMapper, seatRepository, roomRepository);
-        return handler.execute();
+        seatValidator.validate(request);
+        return mediator.execute(request);
     }
 
     public List<SeatDto> handle(SeatGetAllQuery request) {
-        SeatGetAllHandler handler = new SeatGetAllHandler(request, seatMapper, seatRepository); 
-        return handler.execute();
+        return mediator.execute(request);
     }
 
     public SeatDto handle(SeatGetByIdQuery request) {
-        SeatGetByIdHandler handler = new SeatGetByIdHandler(request, seatMapper, seatRepository);
-        return handler.execute();
+        return mediator.execute(request);
     }
 
     @PreAuthorize("hasAuthority('ADMIN')")
     @Transactional
     public SeatDto handle(SeatUpdateCommand request) {
-        SeatUpdateHandler handler = new SeatUpdateHandler(request, seatMapper, seatRepository);
-        return handler.execute();
+        seatValidator.validate(request);
+        return mediator.execute(request);
     }
 
     @PreAuthorize("hasAuthority('ADMIN')")
     @Transactional
     public void handle(SeatDeleteCommand request) {
-        SeatDeleteHandler handler = new SeatDeleteHandler(request, seatMapper, seatRepository, scheduleSeatRepository);
-        handler.execute();
+        mediator.execute(request);
     }
 
     public Map<String, Double> handle(SeatTypeGetAllQuery request) {
-        SeatTypeGetAllHandler handler = new SeatTypeGetAllHandler(request);
-        return handler.execute();
+        return mediator.execute(request);
     }
 }

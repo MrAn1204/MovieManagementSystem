@@ -1,5 +1,7 @@
 package com.mms.mms_api.business.handler.invoice;
 
+import org.springframework.stereotype.Component;
+
 import com.mms.mms_api.business.command.invoice.InvoiceUpdateCommand;
 import com.mms.mms_api.data.InvoiceRepository;
 import com.mms.mms_api.data.TicketRepository;
@@ -12,17 +14,18 @@ import com.mms.mms_api.util.mapper.InvoiceMapper;
 
 import java.util.List;
 
+@Component
 public class InvoiceUpdateHandler extends InvoiceBaseHandler<InvoiceUpdateCommand, InvoiceDto> {
     private final TicketRepository ticketRepository;
 
-    public InvoiceUpdateHandler(InvoiceUpdateCommand request, InvoiceMapper invoiceMapper,
+    public InvoiceUpdateHandler(InvoiceMapper invoiceMapper,
             InvoiceRepository invoiceRepository, TicketRepository ticketRepository) {
-        super(request, invoiceMapper, invoiceRepository);
+        super(invoiceMapper, invoiceRepository);
         this.ticketRepository = ticketRepository;
     }
 
     @Override
-    public InvoiceDto execute() {
+    public InvoiceDto execute(InvoiceUpdateCommand request) {
         Invoice invoice = invoiceRepository.findById(request.getId())
                 .orElseThrow(() -> new ResourceNotFoundException("invoice.notFound"));
 

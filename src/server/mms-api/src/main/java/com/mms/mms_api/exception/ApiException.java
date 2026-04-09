@@ -1,6 +1,6 @@
 package com.mms.mms_api.exception;
 
-import java.util.List;
+import java.util.Set;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.lang.NonNull;
@@ -14,11 +14,11 @@ public abstract class ApiException extends RuntimeException {
 
     protected final ErrorType errorType;
 
-    protected final transient List<ErrorDetail> messages;
+    protected final transient Set<ErrorDetail> messages;
 
     protected final transient Object[] args;
 
-    protected ApiException(List<ErrorDetail> messages, HttpStatus statusCode, ErrorType errorType, Object... args) {
+    protected ApiException(Set<ErrorDetail> messages, HttpStatus statusCode, ErrorType errorType, Object... args) {
         super();
         this.statusCode = statusCode != null ? statusCode : HttpStatus.BAD_REQUEST;
         this.errorType = errorType;

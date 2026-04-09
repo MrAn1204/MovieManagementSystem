@@ -8,7 +8,7 @@ import org.springframework.lang.NonNull;
 import lombok.Data;
 
 @Data
-public abstract class BaseUpdateCommand {
+public abstract class BaseUpdateCommand implements BaseCommand {
     private UUID id;
 
     public void setId(UUID id) {

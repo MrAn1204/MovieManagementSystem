@@ -1,8 +1,8 @@
 package com.mms.mms_api.exception;
 
-import java.util.LinkedList;
+import java.util.HashSet;
 
-public class ErrorLinkedList extends LinkedList<ErrorDetail> {
+public class ErrorSet extends HashSet<ErrorDetail> {
     public void add(String field, String message, Object... args) {
         this.add(new ErrorDetail(field, message, args));
     }

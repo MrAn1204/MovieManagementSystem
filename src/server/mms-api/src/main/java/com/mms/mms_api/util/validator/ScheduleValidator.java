@@ -10,7 +10,7 @@ import com.mms.mms_api.business.command.schedule.ScheduleUpdateCommand;
 import com.mms.mms_api.business.service.validation.MovieValidationService;
 import com.mms.mms_api.business.service.validation.RoomValidationService;
 import com.mms.mms_api.business.service.validation.ScheduleValidationService;
-import com.mms.mms_api.exception.ErrorLinkedList;
+import com.mms.mms_api.exception.ErrorSet;
 import com.mms.mms_api.exception.ErrorType;
 
 import lombok.AllArgsConstructor;
@@ -25,7 +25,7 @@ public class ScheduleValidator implements BaseValidator {
     private final RoomValidationService roomValidationService;
 
     public void validate(ScheduleCreateCommand command) {
-        ErrorLinkedList errors = new ErrorLinkedList();
+        ErrorSet errors = new ErrorSet();
 
         validateMovie(errors, command.getMovieId());
         validateRoom(errors, command.getRoomId());
@@ -34,7 +34,7 @@ public class ScheduleValidator implements BaseValidator {
     }
 
     public void validate(ScheduleUpdateCommand command) {
-        ErrorLinkedList errors = new ErrorLinkedList();
+        ErrorSet errors = new ErrorSet();
 
         validateId(errors, command.getId());
 
@@ -46,19 +46,19 @@ public class ScheduleValidator implements BaseValidator {
         errors.throwIfNotEmpty(ErrorType.INVALID_INPUT);
     }
 
-    private void validateId(ErrorLinkedList errors, @NonNull UUID id) {
+    private void validateId(ErrorSet errors, @NonNull UUID id) {
         if (!scheduleValidationService.existsById(id)) {
             errors.add("id", "schedule.notFound");
         }
     }
 
-    private void validateMovie(ErrorLinkedList errors, @NonNull UUID id) {
+    private void validateMovie(ErrorSet errors, @NonNull UUID id) {
         if (!movieValidationService.existsById(id)) {
             errors.add("movie", "movie.notFound");
         }
     }
 
-    private void validateRoom(ErrorLinkedList errors, @NonNull UUID id) {
+    private void validateRoom(ErrorSet errors, @NonNull UUID id) {
         if (!roomValidationService.existsById(id)) {
             errors.add("room", "room.notFound");
         }

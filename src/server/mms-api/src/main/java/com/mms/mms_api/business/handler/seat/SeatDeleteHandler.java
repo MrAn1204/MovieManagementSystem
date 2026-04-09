@@ -1,5 +1,7 @@
 package com.mms.mms_api.business.handler.seat;
 
+import org.springframework.stereotype.Component;
+
 import java.util.List;
 
 import org.springframework.util.CollectionUtils;
@@ -12,17 +14,18 @@ import com.mms.mms_api.model.ScheduleSeat;
 import com.mms.mms_api.model.Seat;
 import com.mms.mms_api.util.mapper.SeatMapper;
 
+@Component
 public class SeatDeleteHandler extends SeatBaseHandler<SeatDeleteCommand, Void> {
     private final ScheduleSeatRepository scheduleSeatRepository;
 
-    public SeatDeleteHandler(SeatDeleteCommand request, SeatMapper seatMapper, SeatRepository seatRepository,
+    public SeatDeleteHandler(SeatMapper seatMapper, SeatRepository seatRepository,
             ScheduleSeatRepository scheduleSeatRepository) {
-        super(request, seatMapper, seatRepository);
+        super(seatMapper, seatRepository);
         this.scheduleSeatRepository = scheduleSeatRepository;
     }
 
     @Override
-    public Void execute() {
+    public Void execute(SeatDeleteCommand request) {
         Seat seat = seatRepository.findById(request.getId())
                 .orElseThrow(() -> new ResourceNotFoundException("seat.notFound"));
 

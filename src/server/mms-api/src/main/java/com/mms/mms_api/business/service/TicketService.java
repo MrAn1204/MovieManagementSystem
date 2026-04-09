@@ -9,73 +9,54 @@ import org.springframework.transaction.annotation.Transactional;
 import com.mms.mms_api.business.command.ticket.TicketCreateCommand;
 import com.mms.mms_api.business.command.ticket.TicketDeleteCommand;
 import com.mms.mms_api.business.command.ticket.TicketUpdateCommand;
-import com.mms.mms_api.business.handler.ticket.TicketCreateHandler;
-import com.mms.mms_api.business.handler.ticket.TicketDeleteHandler;
-import com.mms.mms_api.business.handler.ticket.TicketGetAllHandler;
-import com.mms.mms_api.business.handler.ticket.TicketGetByIdHandler;
-import com.mms.mms_api.business.handler.ticket.TicketSearchHandler;
-import com.mms.mms_api.business.handler.ticket.TicketUpdateHandler;
 import com.mms.mms_api.business.query.ticket.TicketGetAllQuery;
 import com.mms.mms_api.business.query.ticket.TicketGetByIdQuery;
 import com.mms.mms_api.business.query.ticket.TicketSearchQuery;
 import com.mms.mms_api.common.PaginatedResult;
-import com.mms.mms_api.data.InvoiceRepository;
-import com.mms.mms_api.data.ScheduleSeatRepository;
-import com.mms.mms_api.data.TicketRepository;
 import com.mms.mms_api.dto.ticket.TicketDetailDto;
 import com.mms.mms_api.dto.ticket.TicketDto;
-import com.mms.mms_api.util.mapper.TicketMapper;
+import com.mms.mms_api.mediator.RequestMediator;
+import com.mms.mms_api.util.validator.TicketValidator;
 
 import lombok.AllArgsConstructor;
 
 @Service
 @AllArgsConstructor
 public class TicketService {
-    private final TicketRepository ticketRepository;
-
-    private final TicketDependencies ticketDependencies;
-
-    private final ScheduleSeatRepository scheduleSeatRepository;
-
-    private final InvoiceRepository invoiceRepository;
-
-    private final TicketMapper ticketMapper;
+    private final RequestMediator mediator;
+    private final TicketValidator ticketValidator;
 
     @Transactional
     public List<TicketDetailDto> handle(TicketCreateCommand request) {
-        TicketCreateHandler handler = new TicketCreateHandler(request, ticketMapper, ticketRepository, ticketDependencies, scheduleSeatRepository);
-        return handler.execute();
+        ticketValidator.validate(request);
+        return mediator.execute(request);
     }
 
     @PreAuthorize("hasAuthority('ADMIN')")
     public List<TicketDto> handle(TicketGetAllQuery request) {
-        TicketGetAllHandler handler = new TicketGetAllHandler(request, ticketMapper, ticketRepository);
-        return handler.execute();
+        return mediator.execute(request);
     }
 
     @PreAuthorize("hasAuthority('ADMIN') || @ticketValidationService.isOwnedByUserId(#request.id, authentication.principal.id)")
     public TicketDetailDto handle(TicketGetByIdQuery request) {
-        TicketGetByIdHandler handler = new TicketGetByIdHandler(request, ticketMapper, ticketRepository);
-        return handler.execute();
+        return mediator.execute(request);
     }
 
     @PreAuthorize("hasAuthority('ADMIN')")
     @Transactional
     public TicketDetailDto handle(TicketUpdateCommand request) {
-        TicketUpdateHandler handler = new TicketUpdateHandler(request, ticketMapper, ticketRepository, ticketDependencies, invoiceRepository, scheduleSeatRepository);
-        return handler.execute();
+        ticketValidator.validate(request);
+        return mediator.execute(request);
     }
 
     @PreAuthorize("hasAuthority('ADMIN')")
     @Transactional
     public void handle(TicketDeleteCommand request) {
-        TicketDeleteHandler handler = new TicketDeleteHandler(request, ticketRepository);
-        handler.execute();
+        mediator.execute(request);
     }
 
     @PreAuthorize("hasAuthority('ADMIN')")
     public PaginatedResult<TicketDto> handle(TicketSearchQuery request) {
-        TicketSearchHandler handler = new TicketSearchHandler(request, ticketMapper, ticketRepository);
-        return handler.execute();
+        return mediator.execute(request);
     }
 }

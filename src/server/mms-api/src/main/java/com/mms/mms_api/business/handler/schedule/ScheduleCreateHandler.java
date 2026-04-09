@@ -1,5 +1,7 @@
 package com.mms.mms_api.business.handler.schedule;
 
+import org.springframework.stereotype.Component;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -19,20 +21,21 @@ import com.mms.mms_api.model.ScheduleSeatId;
 import com.mms.mms_api.model.Seat;
 import com.mms.mms_api.util.mapper.ScheduleMapper;
 
+@Component
 public class ScheduleCreateHandler extends ScheduleBaseHandler<ScheduleCreateCommand, ScheduleDetailDto> {
     private final MovieRepository movieRepository;
 
     private final RoomRepository roomRepository;
 
-    public ScheduleCreateHandler(ScheduleCreateCommand request, ScheduleMapper scheduleMapper,
+    public ScheduleCreateHandler(ScheduleMapper scheduleMapper,
             ScheduleRepository scheduleRepository, MovieRepository movieRepository, RoomRepository roomRepository) {
-        super(request, scheduleMapper, scheduleRepository);
+        super(scheduleMapper, scheduleRepository);
         this.movieRepository = movieRepository;
         this.roomRepository = roomRepository;
     }
 
     @Override
-    public ScheduleDetailDto execute() {
+    public ScheduleDetailDto execute(ScheduleCreateCommand request) {
         Schedule schedule = scheduleMapper.toEntity(request);
 
         Movie movie = movieRepository.findById(request.getMovieId())

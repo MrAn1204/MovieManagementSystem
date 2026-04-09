@@ -1,5 +1,7 @@
 package com.mms.mms_api.business.handler.ticket;
 
+import org.springframework.stereotype.Component;
+
 import java.util.LinkedList;
 import java.util.List;
 import java.util.UUID;
@@ -17,21 +19,22 @@ import com.mms.mms_api.model.Seat;
 import com.mms.mms_api.model.Ticket;
 import com.mms.mms_api.model.User;
 
+@Component
 public class TicketCreateHandler extends TicketBaseHandler<TicketCreateCommand, List<TicketDetailDto>> {
     private final TicketDependencies ticketDependencies;
 
     private final ScheduleSeatRepository scheduleSeatRepository;
 
-    public TicketCreateHandler(TicketCreateCommand request, TicketMapper ticketMapper,
+    public TicketCreateHandler(TicketMapper ticketMapper,
             TicketRepository ticketRepository, TicketDependencies ticketDependencies,
             ScheduleSeatRepository scheduleSeatRepository) {
-        super(request, ticketMapper, ticketRepository);
+        super(ticketMapper, ticketRepository);
         this.ticketDependencies = ticketDependencies;
         this.scheduleSeatRepository = scheduleSeatRepository;
     }
 
     @Override
-    public List<TicketDetailDto> execute() {
+    public List<TicketDetailDto> execute(TicketCreateCommand request) {
         Ticket ticket = ticketMapper.toEntity(request);
 
         Schedule schedule = ticketDependencies.getScheduleById(request.getScheduleId());

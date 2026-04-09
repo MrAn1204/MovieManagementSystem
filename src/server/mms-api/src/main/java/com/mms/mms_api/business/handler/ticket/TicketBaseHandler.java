@@ -9,8 +9,7 @@ public abstract class TicketBaseHandler<I, O> extends BaseHandler<I, O> {
     
     protected TicketRepository ticketRepository;
     
-    protected TicketBaseHandler(I request, TicketMapper ticketMapper, TicketRepository ticketRepository) {
-        super(request);
+    protected TicketBaseHandler(TicketMapper ticketMapper, TicketRepository ticketRepository) {
         this.ticketMapper = ticketMapper;
         this.ticketRepository = ticketRepository;
     }

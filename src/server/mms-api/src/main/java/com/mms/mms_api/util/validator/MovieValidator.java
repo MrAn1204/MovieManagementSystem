@@ -7,7 +7,7 @@ import com.mms.mms_api.business.service.validation.GenreValidationService;
 import com.mms.mms_api.business.service.validation.LanguageValidationService;
 import com.mms.mms_api.business.service.validation.MovieValidationService;
 import com.mms.mms_api.business.service.validation.StudioValidationService;
-import com.mms.mms_api.exception.ErrorLinkedList;
+import com.mms.mms_api.exception.ErrorSet;
 import com.mms.mms_api.exception.ErrorType;
 
 import lombok.AllArgsConstructor;
@@ -33,7 +33,7 @@ public class MovieValidator implements BaseValidator {
     private final TalentValidationService talentValidationService;
 
     public void validate(MovieCreateCommand command) {
-        ErrorLinkedList errors = new ErrorLinkedList();
+        ErrorSet errors = new ErrorSet();
 
         validateGenres(errors, command.getGenreIds());
         validateLanguage(errors, command.getLanguageId());
@@ -44,7 +44,7 @@ public class MovieValidator implements BaseValidator {
     }
 
     public void validate(MovieUpdateCommand command) {
-        ErrorLinkedList errors = new ErrorLinkedList();
+        ErrorSet errors = new ErrorSet();
 
         validateId(errors, command.getId());
 
@@ -58,13 +58,13 @@ public class MovieValidator implements BaseValidator {
         errors.throwIfNotEmpty(ErrorType.INVALID_INPUT);
     }
 
-    private void validateId(ErrorLinkedList errors, @NonNull UUID id) {
+    private void validateId(ErrorSet errors, @NonNull UUID id) {
         if (!movieValidationService.existsById(id)) {
             errors.add("id", "movie.notFound");
         }
     }
 
-    private void validateGenres(ErrorLinkedList errors, List<UUID> genreIds) {
+    private void validateGenres(ErrorSet errors, List<UUID> genreIds) {
         if (CollectionUtils.isEmpty(genreIds)) {
             return;
         }
@@ -74,7 +74,7 @@ public class MovieValidator implements BaseValidator {
         }
     }
 
-    private void validateLanguage(ErrorLinkedList errors, UUID languageId) {
+    private void validateLanguage(ErrorSet errors, UUID languageId) {
         if (languageId == null) {
             return;
         }
@@ -84,7 +84,7 @@ public class MovieValidator implements BaseValidator {
         }
     }
 
-    private void validateStudios(ErrorLinkedList errors, List<UUID> studioIds) {
+    private void validateStudios(ErrorSet errors, List<UUID> studioIds) {
         if (CollectionUtils.isEmpty(studioIds)) {
             return;
         }
@@ -94,7 +94,7 @@ public class MovieValidator implements BaseValidator {
         }
     }
 
-    private void validateTalents(ErrorLinkedList errors, List<UUID> talentIds) {
+    private void validateTalents(ErrorSet errors, List<UUID> talentIds) {
         if (CollectionUtils.isEmpty(talentIds)) {
             return;
         }

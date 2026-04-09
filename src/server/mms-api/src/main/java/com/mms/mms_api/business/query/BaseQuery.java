@@ -1,5 +1,7 @@
 package com.mms.mms_api.business.query;
 
-public interface BaseQuery {
+import com.mms.mms_api.mediator.Request;
+
+public interface BaseQuery extends Request {
     
 }

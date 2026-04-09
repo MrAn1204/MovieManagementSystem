@@ -1,5 +1,7 @@
 package com.mms.mms_api.business.command;
 
-public interface BaseCommand {
+import com.mms.mms_api.mediator.Request;
+
+public interface BaseCommand extends Request {
     
 }

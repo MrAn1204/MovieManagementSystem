@@ -10,8 +10,7 @@ public abstract class AuthBaseHandler<I, O> extends BaseHandler<I, O> {
 
     protected JwtHelper jwtHelper;
 
-    protected AuthBaseHandler(I request, AuthenticationManager authenticationManager, JwtHelper jwtHelper) {
-        super(request);
+    protected AuthBaseHandler(AuthenticationManager authenticationManager, JwtHelper jwtHelper) {
         this.authenticationManager = authenticationManager;
         this.jwtHelper = jwtHelper;
     }

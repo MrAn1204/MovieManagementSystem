@@ -1,5 +1,7 @@
 package com.mms.mms_api.business.handler.auth;
 
+import org.springframework.stereotype.Component;
+
 import java.util.List;
 
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -12,6 +14,7 @@ import com.mms.mms_api.model.Role;
 import com.mms.mms_api.model.User;
 import com.mms.mms_api.util.mapper.UserMapper;
 
+@Component
 public class RegisterCommandHandler extends AuthBaseHandler<RegisterCommand, UserDto> {
     private final UserRepository userRepository;
 
@@ -21,9 +24,9 @@ public class RegisterCommandHandler extends AuthBaseHandler<RegisterCommand, Use
 
     private final PasswordEncoder passwordEncoder;
 
-    public RegisterCommandHandler(RegisterCommand request, UserRepository userRepository, RoleRepository roleRepository,
+    public RegisterCommandHandler(UserRepository userRepository, RoleRepository roleRepository,
             UserMapper userMapper, PasswordEncoder passwordEncoder) {
-        super(request, null, null);
+        super(null, null);
         this.userRepository = userRepository;
         this.roleRepository = roleRepository;
         this.userMapper = userMapper;
@@ -31,7 +34,7 @@ public class RegisterCommandHandler extends AuthBaseHandler<RegisterCommand, Use
     }
 
     @Override
-    public UserDto execute() {
+    public UserDto execute(RegisterCommand request) {
         Role userRole = roleRepository.findByName("USER");
 
         User user = userMapper.toEntity(request);

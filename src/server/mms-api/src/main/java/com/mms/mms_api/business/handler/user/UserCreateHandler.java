@@ -1,5 +1,7 @@
 package com.mms.mms_api.business.handler.user;
 
+import org.springframework.stereotype.Component;
+
 import java.util.List;
 import java.util.UUID;
 
@@ -13,20 +15,20 @@ import com.mms.mms_api.model.Role;
 import com.mms.mms_api.model.User;
 import com.mms.mms_api.util.mapper.UserMapper;
 
+@Component
 public class UserCreateHandler extends UserBaseHandler<UserCreateCommand, UserDetailDto> {
     private RoleRepository roleRepository;
 
     private PasswordEncoder passwordEncoder;
 
-    public UserCreateHandler(
-            UserCreateCommand request, UserMapper userMapper,
+    public UserCreateHandler(UserMapper userMapper,
             UserRepository userRepository, RoleRepository roleRepository, PasswordEncoder passwordEncoder) {
-        super(request, userMapper, userRepository);
+        super(userMapper, userRepository);
         this.roleRepository = roleRepository;
         this.passwordEncoder = passwordEncoder;
     }
 
-    public UserDetailDto execute() {
+    public UserDetailDto execute(UserCreateCommand request) {
         List<UUID> roleIds = request.getRoleIds();
         List<Role> mappedRoles = roleRepository.findAllById(roleIds);
 

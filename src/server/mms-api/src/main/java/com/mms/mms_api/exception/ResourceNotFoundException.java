@@ -1,6 +1,6 @@
 package com.mms.mms_api.exception;
 
-import java.util.List;
+import java.util.Set;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.ResponseStatus;
@@ -15,7 +15,7 @@ public class ResourceNotFoundException extends ApiException {
         super(messageKey, STATUS_CODE, ERROR_TYPE);
     }
 
-    public ResourceNotFoundException(List<ErrorDetail> messages) {
+    public ResourceNotFoundException(Set<ErrorDetail> messages) {
         super(messages, STATUS_CODE, ERROR_TYPE);
     }
 }

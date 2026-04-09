@@ -16,7 +16,6 @@ import com.mms.mms_api.business.service.RoomService;
 import com.mms.mms_api.common.PaginatedResult;
 import com.mms.mms_api.dto.room.RoomDetailDto;
 import com.mms.mms_api.dto.room.RoomDto;
-import com.mms.mms_api.util.validator.RoomValidator;
 
 import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
@@ -34,8 +33,6 @@ import org.springframework.web.bind.annotation.PutMapping;
 public class RoomController {
     private final RoomService roomService;
 
-    private final RoomValidator roomValidator;
-
     @GetMapping
     public ResponseEntity<List<RoomDto>> getAll() {
         List<RoomDto> rooms = roomService.handle(new RoomGetAllQuery());
@@ -50,7 +47,6 @@ public class RoomController {
 
     @PostMapping("/create")
     public ResponseEntity<RoomDetailDto> create(@RequestBody @Valid RoomCreateCommand request) {
-        roomValidator.validate(request);
         RoomDetailDto roomDto = roomService.handle(request);
         return ResponseEntity.ok(roomDto);
     }
@@ -58,7 +54,6 @@ public class RoomController {
     @PutMapping("/{id}")
     public ResponseEntity<RoomDetailDto> update(@PathVariable UUID id, @RequestBody @Valid RoomUpdateCommand request) {
         request.setId(id);
-        roomValidator.validate(request);
         RoomDetailDto updatedRoom = roomService.handle(request);
         return ResponseEntity.ok(updatedRoom);
     }
