@@ -9,8 +9,7 @@ public abstract class UserBaseHandler<I, O> extends BaseHandler<I, O>  {
 
     protected UserRepository userRepository;
 
-    protected UserBaseHandler(I request, UserMapper userMapper, UserRepository userRepository) {
-        super(request);
+    protected UserBaseHandler(UserMapper userMapper, UserRepository userRepository) {
         this.userMapper = userMapper;
         this.userRepository = userRepository;
     }

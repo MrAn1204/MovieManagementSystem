@@ -9,8 +9,7 @@ public abstract class RoomBaseHandler<I, O> extends BaseHandler<I, O> {
 
     protected RoomRepository roomRepository;
 
-    protected RoomBaseHandler(I request, RoomMapper roomMapper, RoomRepository roomRepository) {
-        super(request);
+    protected RoomBaseHandler(RoomMapper roomMapper, RoomRepository roomRepository) {
         this.roomMapper = roomMapper;
         this.roomRepository = roomRepository;
     }

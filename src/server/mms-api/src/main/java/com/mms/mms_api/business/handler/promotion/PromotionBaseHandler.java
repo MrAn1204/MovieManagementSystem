@@ -9,9 +9,8 @@ public abstract class PromotionBaseHandler<I, O> extends BaseHandler<I, O> {
 
     protected PromotionMapper promotionMapper;
 
-    protected PromotionBaseHandler(I request, PromotionMapper promotionMapper,
+    protected PromotionBaseHandler(PromotionMapper promotionMapper,
             PromotionRepository promotionRepository) {
-        super(request);
         this.promotionMapper = promotionMapper;
         this.promotionRepository = promotionRepository;
     }

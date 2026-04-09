@@ -1,5 +1,7 @@
 package com.mms.mms_api.business.handler.schedule;
 
+import org.springframework.stereotype.Component;
+
 import com.mms.mms_api.business.command.schedule.ScheduleUpdateCommand;
 import com.mms.mms_api.data.ScheduleRepository;
 import com.mms.mms_api.dto.schedule.ScheduleDetailDto;
@@ -11,20 +13,21 @@ import com.mms.mms_api.model.Schedule;
 import com.mms.mms_api.model.Movie;
 import com.mms.mms_api.model.Room;
 
+@Component
 public class ScheduleUpdateHandler extends ScheduleBaseHandler<ScheduleUpdateCommand, ScheduleDetailDto> {
     private final MovieRepository movieRepository;
 
     private final RoomRepository roomRepository;
 
-    public ScheduleUpdateHandler(ScheduleUpdateCommand request, ScheduleMapper scheduleMapper,
+    public ScheduleUpdateHandler(ScheduleMapper scheduleMapper,
             ScheduleRepository scheduleRepository, MovieRepository movieRepository, RoomRepository roomRepository) {
-        super(request, scheduleMapper, scheduleRepository);
+        super(scheduleMapper, scheduleRepository);
         this.movieRepository = movieRepository;
         this.roomRepository = roomRepository;
     }
 
     @Override
-    public ScheduleDetailDto execute() {
+    public ScheduleDetailDto execute(ScheduleUpdateCommand request) {
         Schedule schedule = scheduleRepository.findById(request.getId())
                 .orElseThrow(() -> new ResourceNotFoundException("schedule.notFound"));
 

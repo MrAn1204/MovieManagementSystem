@@ -1,5 +1,7 @@
 package com.mms.mms_api.business.handler.promotion;
 
+import org.springframework.stereotype.Component;
+
 import com.mms.mms_api.business.command.promotion.PromotionUpdateCommand;
 import com.mms.mms_api.business.service.GscService;
 import com.mms.mms_api.common.StoragePath;
@@ -10,17 +12,18 @@ import com.mms.mms_api.data.PromotionRepository;
 import com.mms.mms_api.dto.promotion.PromotionDto;
 import com.mms.mms_api.util.mapper.PromotionMapper;
 
+@Component
 public class PromotionUpdateHandler extends PromotionBaseHandler<PromotionUpdateCommand, PromotionDto> {
     private final GscService gscService;
 
-    public PromotionUpdateHandler(PromotionUpdateCommand request, PromotionMapper promotionMapper,
+    public PromotionUpdateHandler(PromotionMapper promotionMapper,
             PromotionRepository promotionRepository, GscService gscService) {
-        super(request, promotionMapper, promotionRepository);
+        super(promotionMapper, promotionRepository);
         this.gscService = gscService;
     }
 
     @Override
-    public PromotionDto execute() {
+    public PromotionDto execute(PromotionUpdateCommand request) {
         Promotion promotion = promotionRepository.findById(request.getId())
                 .orElseThrow(() -> new ResourceNotFoundException("promotion.notFound"));
 

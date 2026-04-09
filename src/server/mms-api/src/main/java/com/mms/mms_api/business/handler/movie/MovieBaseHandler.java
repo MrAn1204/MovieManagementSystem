@@ -9,8 +9,7 @@ public abstract class MovieBaseHandler<I, O> extends BaseHandler<I, O> {
 
     protected MovieMapper movieMapper;
 
-    protected MovieBaseHandler(I request, MovieMapper movieMapper, MovieRepository movieRepository) {
-        super(request);
+    protected MovieBaseHandler(MovieMapper movieMapper, MovieRepository movieRepository) {
         this.movieMapper = movieMapper;
         this.movieRepository = movieRepository;
     }

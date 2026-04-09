@@ -1,5 +1,7 @@
 package com.mms.mms_api.business.handler.invoice;
 
+import org.springframework.stereotype.Component;
+
 import com.mms.mms_api.business.command.invoice.InvoiceCreateCommand;
 import com.mms.mms_api.exception.ResourceNotFoundException;
 import com.mms.mms_api.data.InvoiceRepository;
@@ -13,21 +15,22 @@ import com.mms.mms_api.util.mapper.InvoiceMapper;
 
 import java.util.List;
 
+@Component
 public class InvoiceCreateHandler extends InvoiceBaseHandler<InvoiceCreateCommand, InvoiceDto> {
 
     private final TicketRepository ticketRepository;
 
     private final UserRepository userRepository;
 
-    public InvoiceCreateHandler(InvoiceCreateCommand request, InvoiceMapper invoiceMapper,
+    public InvoiceCreateHandler(InvoiceMapper invoiceMapper,
             InvoiceRepository invoiceRepository, TicketRepository ticketRepository, UserRepository userRepository) {
-        super(request, invoiceMapper, invoiceRepository);
+        super(invoiceMapper, invoiceRepository);
         this.ticketRepository = ticketRepository;
         this.userRepository = userRepository;
     }
 
     @Override
-    public InvoiceDto execute() {
+    public InvoiceDto execute(InvoiceCreateCommand request) {
         List<Ticket> tickets = ticketRepository.findByIdIn(request.getTicketIds());
 
         Invoice invoice = invoiceMapper.toEntity(request);

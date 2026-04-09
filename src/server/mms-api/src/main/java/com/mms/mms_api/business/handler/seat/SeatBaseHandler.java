@@ -13,8 +13,7 @@ public abstract class SeatBaseHandler<I, O> extends BaseHandler<I, O> {
 
     protected final SeatMapper seatMapper;
 
-    protected SeatBaseHandler(I request, SeatMapper seatMapper, SeatRepository seatRepository) {
-        super(request);
+    protected SeatBaseHandler(SeatMapper seatMapper, SeatRepository seatRepository) {
         this.seatMapper = seatMapper;
         this.seatRepository = seatRepository;
     }

@@ -1,5 +1,7 @@
 package com.mms.mms_api.business.handler.promotion;
 
+import org.springframework.stereotype.Component;
+
 import com.mms.mms_api.business.query.promotion.PromotionSearchQuery;
 import com.mms.mms_api.business.specification.PromotionSpecification;
 import com.mms.mms_api.common.PaginatedResult;
@@ -12,15 +14,16 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.domain.Specification;
 
+@Component
 public class PromotionSearchHandler extends PromotionBaseHandler<PromotionSearchQuery, PaginatedResult<PromotionDto>> {
 
-    public PromotionSearchHandler(PromotionSearchQuery request, PromotionMapper promotionMapper,
+    public PromotionSearchHandler(PromotionMapper promotionMapper,
             PromotionRepository promotionRepository) {
-        super(request, promotionMapper, promotionRepository);
+        super(promotionMapper, promotionRepository);
     }
 
     @Override
-    public PaginatedResult<PromotionDto> execute() {
+    public PaginatedResult<PromotionDto> execute(PromotionSearchQuery request) {
         Pageable pageable = SearchHelper.generatePageable(request.getPageNumber(), request.getPageSize());
 
         Specification<Promotion> spec = new PromotionSpecification(request);

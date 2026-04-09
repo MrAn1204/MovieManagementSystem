@@ -3,6 +3,8 @@ package com.mms.mms_api.business.handler.movie;
 import java.util.List;
 import java.util.UUID;
 
+import org.springframework.stereotype.Component;
+
 import com.mms.mms_api.business.command.movie.MovieCreateCommand;
 import com.mms.mms_api.business.service.GscService;
 import com.mms.mms_api.common.StoragePath;
@@ -19,19 +21,19 @@ import com.mms.mms_api.model.Studio;
 import com.mms.mms_api.model.Talent;
 import com.mms.mms_api.util.mapper.MovieMapper;
 
+@Component
 public class MovieCreateHandler extends MovieBaseHandler<MovieCreateCommand, MovieDto> {
-    private GenreRepository genreRepository;
+    private final GenreRepository genreRepository;
 
-    private LanguageRepository languageRepository;
+    private final LanguageRepository languageRepository;
 
-    private StudioRepository studioRepository;
+    private final StudioRepository studioRepository;
 
-    private TalentRepository talentRepository;
+    private final TalentRepository talentRepository;
 
-    private GscService gscService;
+    private final GscService gscService;
 
     public MovieCreateHandler(
-            MovieCreateCommand request,
             MovieMapper movieMapper,
             MovieRepository movieRepository,
             GenreRepository genreRepository,
@@ -39,7 +41,7 @@ public class MovieCreateHandler extends MovieBaseHandler<MovieCreateCommand, Mov
             StudioRepository studioRepository,
             TalentRepository talentRepository,
             GscService gscService) {
-        super(request, movieMapper, movieRepository);
+        super(movieMapper, movieRepository);
         this.movieRepository = movieRepository;
         this.genreRepository = genreRepository;
         this.languageRepository = languageRepository;
@@ -48,7 +50,7 @@ public class MovieCreateHandler extends MovieBaseHandler<MovieCreateCommand, Mov
         this.gscService = gscService;
     }
 
-    public MovieDto execute() {
+    public MovieDto execute(MovieCreateCommand request) {
         List<UUID> genreIds = request.getGenreIds();
         List<UUID> studioIds = request.getStudioIds();
         List<UUID> talentIds = request.getTalentIds();

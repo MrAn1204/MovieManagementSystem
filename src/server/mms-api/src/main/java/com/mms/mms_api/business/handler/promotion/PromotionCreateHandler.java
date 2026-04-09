@@ -1,5 +1,7 @@
 package com.mms.mms_api.business.handler.promotion;
 
+import org.springframework.stereotype.Component;
+
 import com.mms.mms_api.business.command.promotion.PromotionCreateCommand;
 import com.mms.mms_api.business.service.GscService;
 import com.mms.mms_api.common.StoragePath;
@@ -8,17 +10,18 @@ import com.mms.mms_api.data.PromotionRepository;
 import com.mms.mms_api.dto.promotion.PromotionDto;
 import com.mms.mms_api.util.mapper.PromotionMapper;
 
+@Component
 public class PromotionCreateHandler extends PromotionBaseHandler<PromotionCreateCommand, PromotionDto> {
     private final GscService gscService;
 
-    public PromotionCreateHandler(PromotionCreateCommand request, PromotionMapper promotionMapper,
+    public PromotionCreateHandler(PromotionMapper promotionMapper,
             PromotionRepository promotionRepository, GscService gscService) {
-        super(request, promotionMapper, promotionRepository);
+        super(promotionMapper, promotionRepository);
         this.gscService = gscService;
     }
 
     @Override
-    public PromotionDto execute() {
+    public PromotionDto execute(PromotionCreateCommand request) {
         String imageUrl = gscService.upload(request.getImage(), StoragePath.PROMOTION_IMAGE);
 
         Promotion promotion = promotionMapper.toEntity(request);

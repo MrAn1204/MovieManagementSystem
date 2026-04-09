@@ -1,5 +1,7 @@
 package com.mms.mms_api.business.handler.movie;
 
+import org.springframework.stereotype.Component;
+
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.domain.Specification;
@@ -13,14 +15,15 @@ import com.mms.mms_api.model.Movie;
 import com.mms.mms_api.util.SearchHelper;
 import com.mms.mms_api.util.mapper.MovieMapper;
 
+@Component
 public class MovieSearchHandler extends MovieBaseHandler<MovieSearchQuery, PaginatedResult<MovieDto>> {
 
-    public MovieSearchHandler(MovieSearchQuery request, MovieMapper movieMapper, MovieRepository movieRepository) {
-        super(request, movieMapper, movieRepository);
+    public MovieSearchHandler(MovieMapper movieMapper, MovieRepository movieRepository) {
+        super(movieMapper, movieRepository);
     }
 
     @Override
-    public PaginatedResult<MovieDto> execute() {
+    public PaginatedResult<MovieDto> execute(MovieSearchQuery request) {
         Pageable pageable = SearchHelper.generatePageable(request.getPageNumber(), request.getPageSize());
 
         Specification<Movie> spec = new MovieSpecification(request);

@@ -1,5 +1,7 @@
 package com.mms.mms_api.business.handler.ticket;
 
+import org.springframework.stereotype.Component;
+
 import java.util.UUID;
 
 import com.mms.mms_api.business.command.ticket.TicketUpdateCommand;
@@ -18,6 +20,7 @@ import com.mms.mms_api.model.ScheduleSeatId;
 import com.mms.mms_api.model.Seat;
 import com.mms.mms_api.model.Ticket;
 
+@Component
 public class TicketUpdateHandler extends TicketBaseHandler<TicketUpdateCommand, TicketDetailDto> {
     private final TicketDependencies ticketDependencies;
 
@@ -25,17 +28,17 @@ public class TicketUpdateHandler extends TicketBaseHandler<TicketUpdateCommand, 
 
     private final ScheduleSeatRepository scheduleSeatRepository;
 
-    public TicketUpdateHandler(TicketUpdateCommand request, TicketMapper ticketMapper,
+    public TicketUpdateHandler(TicketMapper ticketMapper,
             TicketRepository ticketRepository, TicketDependencies ticketDependencies,
             InvoiceRepository invoiceRepository, ScheduleSeatRepository scheduleSeatRepository) {
-        super(request, ticketMapper, ticketRepository);
+        super(ticketMapper, ticketRepository);
         this.ticketDependencies = ticketDependencies;
         this.invoiceRepository = invoiceRepository;
         this.scheduleSeatRepository = scheduleSeatRepository;
     }
 
     @Override
-    public TicketDetailDto execute() {
+    public TicketDetailDto execute(TicketUpdateCommand request) {
         Ticket ticket = ticketRepository.findById(request.getId())
                 .orElseThrow(() -> new ResourceNotFoundException("ticket.notFound"));
 

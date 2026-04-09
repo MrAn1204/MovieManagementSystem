@@ -1,5 +1,7 @@
 package com.mms.mms_api.business.handler.schedule;
 
+import org.springframework.stereotype.Component;
+
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.domain.Specification;
@@ -13,14 +15,15 @@ import com.mms.mms_api.model.Schedule;
 import com.mms.mms_api.util.SearchHelper;
 import com.mms.mms_api.util.mapper.ScheduleMapper;
 
+@Component
 public class ScheduleSearchHandler extends ScheduleBaseHandler<ScheduleSearchQuery, PaginatedResult<ScheduleDto>> {
-    public ScheduleSearchHandler(ScheduleSearchQuery request, ScheduleMapper scheduleMapper,
+    public ScheduleSearchHandler(ScheduleMapper scheduleMapper,
             ScheduleRepository scheduleRepository) {
-        super(request, scheduleMapper, scheduleRepository);
+        super(scheduleMapper, scheduleRepository);
     }
 
     @Override
-    public PaginatedResult<ScheduleDto> execute() {
+    public PaginatedResult<ScheduleDto> execute(ScheduleSearchQuery request) {
         Pageable pageable = SearchHelper.generatePageable(request.getPageNumber(), request.getPageSize());
 
         Specification<Schedule> spec = new ScheduleSpecification(request);

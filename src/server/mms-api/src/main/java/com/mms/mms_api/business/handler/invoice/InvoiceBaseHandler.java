@@ -9,8 +9,7 @@ public abstract class InvoiceBaseHandler<I, O> extends BaseHandler<I, O> {
 
     protected InvoiceRepository invoiceRepository;
     
-    protected InvoiceBaseHandler(I request, InvoiceMapper invoiceMapper, InvoiceRepository invoiceRepository) {
-        super(request);
+    protected InvoiceBaseHandler(InvoiceMapper invoiceMapper, InvoiceRepository invoiceRepository) {
         this.invoiceMapper = invoiceMapper;
         this.invoiceRepository = invoiceRepository;
     }

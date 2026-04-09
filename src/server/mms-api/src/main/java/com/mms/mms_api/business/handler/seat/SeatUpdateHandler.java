@@ -1,5 +1,7 @@
 package com.mms.mms_api.business.handler.seat;
 
+import org.springframework.stereotype.Component;
+
 import com.mms.mms_api.business.command.seat.SeatUpdateCommand;
 import com.mms.mms_api.data.SeatRepository;
 import com.mms.mms_api.dto.seat.SeatDto;
@@ -9,13 +11,14 @@ import com.mms.mms_api.model.Seat;
 import com.mms.mms_api.model.SeatType;
 import com.mms.mms_api.util.mapper.SeatMapper;
 
+@Component
 public class SeatUpdateHandler extends SeatBaseHandler<SeatUpdateCommand, SeatDto> {
-    public SeatUpdateHandler(SeatUpdateCommand request, SeatMapper seatMapper, SeatRepository seatRepository) {
-        super(request, seatMapper, seatRepository);
+    public SeatUpdateHandler(SeatMapper seatMapper, SeatRepository seatRepository) {
+        super(seatMapper, seatRepository);
     }
 
     @Override
-    public SeatDto execute() {
+    public SeatDto execute(SeatUpdateCommand request) {
         Seat seat = seatRepository.findById(request.getId())
                 .orElseThrow(() -> new ResourceNotFoundException("seat.notFound"));
 
