@@ -15,6 +15,7 @@ import com.mms.mms_api.common.PaginatedResult;
 import com.mms.mms_api.dto.user.UserDetailDto;
 import com.mms.mms_api.dto.user.UserDto;
 import com.mms.mms_api.mediator.RequestMediator;
+import com.mms.mms_api.util.validator.UserValidator;
 
 import lombok.AllArgsConstructor;
 
@@ -22,9 +23,11 @@ import lombok.AllArgsConstructor;
 @AllArgsConstructor
 public class UserService {
     private final RequestMediator mediator;
+    private final UserValidator userValidator;
 
     @PreAuthorize("hasAuthority('ADMIN')")
     public UserDetailDto handle(UserCreateCommand request) {
+        userValidator.validate(request);
         return mediator.execute(request);
     }
 
@@ -40,6 +43,7 @@ public class UserService {
 
     @PreAuthorize("hasAuthority('ADMIN') || #request.id == authentication.principal.id")
     public UserDetailDto handle(UserUpdateCommand request) {
+        userValidator.validate(request);
         return mediator.execute(request);
     }
 

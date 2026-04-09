@@ -12,7 +12,6 @@ import com.mms.mms_api.business.service.UserService;
 import com.mms.mms_api.common.PaginatedResult;
 import com.mms.mms_api.dto.user.UserDetailDto;
 import com.mms.mms_api.dto.user.UserDto;
-import com.mms.mms_api.util.validator.UserValidator;
 
 import java.util.List;
 import java.util.UUID;
@@ -36,8 +35,6 @@ import lombok.AllArgsConstructor;
 public class UserController {
     private UserService userService;
 
-    private UserValidator userValidator;
-
     @GetMapping
     public ResponseEntity<List<UserDto>> getAll() {
         UserGetAllQuery query = new UserGetAllQuery();
@@ -49,8 +46,6 @@ public class UserController {
 
     @PostMapping("/create")
     public ResponseEntity<UserDetailDto> create(@Valid @RequestBody UserCreateCommand command) {
-        userValidator.validate(command);
-
         UserDetailDto result = userService.handle(command);
 
         return result != null
@@ -70,7 +65,6 @@ public class UserController {
     @PutMapping("/{id}")
     public ResponseEntity<UserDetailDto> update(@PathVariable UUID id, @Valid @RequestBody UserUpdateCommand command) {
         command.setId(id);
-        userValidator.validate(command);
 
         UserDetailDto updatedUser = userService.handle(command);
 

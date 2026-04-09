@@ -11,6 +11,7 @@ import com.mms.mms_api.business.query.movie.MovieSearchQuery;
 import com.mms.mms_api.common.PaginatedResult;
 import com.mms.mms_api.dto.movie.MovieDto;
 import com.mms.mms_api.mediator.RequestMediator;
+import com.mms.mms_api.util.validator.MovieValidator;
 import lombok.AllArgsConstructor;
 
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -20,9 +21,11 @@ import org.springframework.stereotype.Service;
 @AllArgsConstructor
 public class MovieService {
     private final RequestMediator mediator;
+    private final MovieValidator movieValidator;
 
     @PreAuthorize("hasAuthority('ADMIN')")
     public MovieDto handle(MovieCreateCommand request) {
+        movieValidator.validate(request);
         return mediator.execute(request);
     }
 
@@ -36,6 +39,7 @@ public class MovieService {
 
     @PreAuthorize("hasAuthority('ADMIN')")
     public MovieDto handle(MovieUpdateCommand request) {
+        movieValidator.validate(request);
         return mediator.execute(request);
     }
 

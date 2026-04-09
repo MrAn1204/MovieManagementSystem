@@ -15,6 +15,7 @@ import com.mms.mms_api.business.query.seat.SeatGetByIdQuery;
 import com.mms.mms_api.business.query.seat.SeatTypeGetAllQuery;
 import com.mms.mms_api.dto.seat.SeatDto;
 import com.mms.mms_api.mediator.RequestMediator;
+import com.mms.mms_api.util.validator.SeatValidator;
 
 import lombok.AllArgsConstructor;
 
@@ -22,10 +23,12 @@ import lombok.AllArgsConstructor;
 @AllArgsConstructor
 public class SeatService {
     private final RequestMediator mediator;
+    private final SeatValidator seatValidator;
 
     @PreAuthorize("hasAuthority('ADMIN')")
     @Transactional
     public SeatDto handle(SeatCreateCommand request) {
+        seatValidator.validate(request);
         return mediator.execute(request);
     }
 
@@ -40,6 +43,7 @@ public class SeatService {
     @PreAuthorize("hasAuthority('ADMIN')")
     @Transactional
     public SeatDto handle(SeatUpdateCommand request) {
+        seatValidator.validate(request);
         return mediator.execute(request);
     }
 

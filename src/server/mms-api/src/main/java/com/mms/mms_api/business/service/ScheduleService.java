@@ -16,6 +16,7 @@ import com.mms.mms_api.common.PaginatedResult;
 import com.mms.mms_api.dto.schedule.ScheduleDetailDto;
 import com.mms.mms_api.dto.schedule.ScheduleDto;
 import com.mms.mms_api.mediator.RequestMediator;
+import com.mms.mms_api.util.validator.ScheduleValidator;
 
 import lombok.AllArgsConstructor;
 
@@ -23,10 +24,12 @@ import lombok.AllArgsConstructor;
 @AllArgsConstructor
 public class ScheduleService {
     private final RequestMediator mediator;
+    private final ScheduleValidator scheduleValidator;
 
     @PreAuthorize("hasAuthority('ADMIN')")
     @Transactional
     public ScheduleDetailDto handle(ScheduleCreateCommand request) {
+        scheduleValidator.validate(request);
         return mediator.execute(request);
     }
 
@@ -41,6 +44,7 @@ public class ScheduleService {
     @PreAuthorize("hasAuthority('ADMIN')")
     @Transactional
     public ScheduleDetailDto handle(ScheduleUpdateCommand request) {
+        scheduleValidator.validate(request);
         return mediator.execute(request);
     }
 

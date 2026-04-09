@@ -9,7 +9,6 @@ import com.mms.mms_api.business.query.movie.MovieSearchQuery;
 import com.mms.mms_api.business.service.MovieService;
 import com.mms.mms_api.common.PaginatedResult;
 import com.mms.mms_api.dto.movie.MovieDto;
-import com.mms.mms_api.util.validator.MovieValidator;
 
 import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
@@ -26,8 +25,6 @@ import java.util.UUID;
 @AllArgsConstructor
 public class MovieController {
     private final MovieService movieService;
-
-    private final MovieValidator movieValidator;
 
     @GetMapping
     public ResponseEntity<List<MovieDto>> getAll() {
@@ -48,8 +45,6 @@ public class MovieController {
 
     @PostMapping(value = "/create", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
     public ResponseEntity<MovieDto> create(@Valid @ModelAttribute MovieCreateCommand command) {
-        movieValidator.validate(command);
-        
         MovieDto result = movieService.handle(command);
 
         return result != null
@@ -60,7 +55,6 @@ public class MovieController {
     @PutMapping(value = "/{id}", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
     public ResponseEntity<MovieDto> update(@PathVariable UUID id, @Valid @ModelAttribute MovieUpdateCommand command) {
         command.setId(id);
-        movieValidator.validate(command);
 
         MovieDto updatedMovie = movieService.handle(command);
 

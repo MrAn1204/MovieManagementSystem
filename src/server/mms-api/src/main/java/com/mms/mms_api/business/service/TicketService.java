@@ -16,6 +16,7 @@ import com.mms.mms_api.common.PaginatedResult;
 import com.mms.mms_api.dto.ticket.TicketDetailDto;
 import com.mms.mms_api.dto.ticket.TicketDto;
 import com.mms.mms_api.mediator.RequestMediator;
+import com.mms.mms_api.util.validator.TicketValidator;
 
 import lombok.AllArgsConstructor;
 
@@ -23,9 +24,11 @@ import lombok.AllArgsConstructor;
 @AllArgsConstructor
 public class TicketService {
     private final RequestMediator mediator;
+    private final TicketValidator ticketValidator;
 
     @Transactional
     public List<TicketDetailDto> handle(TicketCreateCommand request) {
+        ticketValidator.validate(request);
         return mediator.execute(request);
     }
 
@@ -42,6 +45,7 @@ public class TicketService {
     @PreAuthorize("hasAuthority('ADMIN')")
     @Transactional
     public TicketDetailDto handle(TicketUpdateCommand request) {
+        ticketValidator.validate(request);
         return mediator.execute(request);
     }
 

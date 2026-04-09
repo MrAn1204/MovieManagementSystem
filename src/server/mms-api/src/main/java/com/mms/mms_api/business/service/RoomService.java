@@ -15,6 +15,7 @@ import com.mms.mms_api.common.PaginatedResult;
 import com.mms.mms_api.dto.room.RoomDetailDto;
 import com.mms.mms_api.dto.room.RoomDto;
 import com.mms.mms_api.mediator.RequestMediator;
+import com.mms.mms_api.util.validator.RoomValidator;
 
 import lombok.AllArgsConstructor;
 
@@ -22,9 +23,11 @@ import lombok.AllArgsConstructor;
 @AllArgsConstructor
 public class RoomService {
     private final RequestMediator mediator;
+    private final RoomValidator roomValidator;
 
     @PreAuthorize("hasAuthority('ADMIN')")
     public RoomDetailDto handle(RoomCreateCommand request) {
+        roomValidator.validate(request);
         return mediator.execute(request);
     }
 
@@ -38,6 +41,7 @@ public class RoomService {
 
     @PreAuthorize("hasAuthority('ADMIN')")
     public RoomDetailDto handle(RoomUpdateCommand request) {
+        roomValidator.validate(request);
         return mediator.execute(request);
     }
 

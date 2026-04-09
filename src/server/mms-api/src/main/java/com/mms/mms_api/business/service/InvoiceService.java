@@ -13,6 +13,7 @@ import com.mms.mms_api.business.query.invoice.InvoiceGetAllQuery;
 import com.mms.mms_api.business.query.invoice.InvoiceGetByIdQuery;
 import com.mms.mms_api.dto.invoice.InvoiceDto;
 import com.mms.mms_api.mediator.RequestMediator;
+import com.mms.mms_api.util.validator.InvoiceValidator;
 
 import lombok.AllArgsConstructor;
 
@@ -20,10 +21,12 @@ import lombok.AllArgsConstructor;
 @AllArgsConstructor
 public class InvoiceService {
     private final RequestMediator mediator;
+    private final InvoiceValidator invoiceValidator;
 
     @PreAuthorize("hasAuthority('ADMIN')")
     @Transactional
     public InvoiceDto handle(InvoiceCreateCommand request) {
+        invoiceValidator.validate(request);
         return mediator.execute(request);
 
     }
@@ -41,6 +44,7 @@ public class InvoiceService {
     @PreAuthorize("hasAuthority('ADMIN')")
     @Transactional
     public InvoiceDto handle(InvoiceUpdateCommand request) {
+        invoiceValidator.validate(request);
         return mediator.execute(request);
     }
 

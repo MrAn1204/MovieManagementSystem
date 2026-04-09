@@ -15,6 +15,7 @@ import com.mms.mms_api.business.query.promotion.PromotionSearchQuery;
 import com.mms.mms_api.common.PaginatedResult;
 import com.mms.mms_api.dto.promotion.PromotionDto;
 import com.mms.mms_api.mediator.RequestMediator;
+import com.mms.mms_api.util.validator.PromotionValidator;
 
 import lombok.AllArgsConstructor;
 
@@ -22,6 +23,7 @@ import lombok.AllArgsConstructor;
 @AllArgsConstructor
 public class PromotionService {
     private final RequestMediator mediator;
+    private final PromotionValidator promotionValidator;
 
     @PreAuthorize("hasAuthority('ADMIN')")
     @Transactional
@@ -40,6 +42,7 @@ public class PromotionService {
     @PreAuthorize("hasAuthority('ADMIN')")
     @Transactional
     public PromotionDto handle(PromotionUpdateCommand request) {
+        promotionValidator.validate(request);
         return mediator.execute(request);
     }
 
