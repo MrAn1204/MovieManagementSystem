@@ -98,4 +98,11 @@ export class SeatMap extends BaseFeature<SeatModel> implements OnChanges, OnInit
       this.reloadDialog.emit();
     });
   }
+
+  protected override saveUpdate(id: string, form: FormGroup, respondHandler?: () => void): void {
+    super.saveUpdate(id, form, () => {
+      respondHandler?.();
+      this.reloadDialog.emit();
+    });
+  }
 }
