@@ -8,7 +8,7 @@ import org.springframework.lang.NonNull;
 import lombok.Data;
 
 @Data
-public abstract class BaseDeleteCommand {
+public abstract class BaseDeleteCommand implements BaseCommand {
     @NonNull
     private UUID id;
 
