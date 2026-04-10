@@ -59,13 +59,17 @@ export class UserCreateEdit extends CreateEditDialog<UserDetailModel> implements
           CustomValidators.required('user.dob.required'),
           CustomValidators.pastDate('user.dob.past'),
         ]],
-        email: ['', [CustomValidators.email('user.email.invalid')]],
-        citizenIdNumber: ['', [CustomValidators.minLength(constraints['CITIZEN_ID_MIN'], 'user.citizenId.size')]],
-        phoneNumber: ['', [
+        email: this.formBuilder.control<string | null>(null, [CustomValidators.email('user.email.invalid')]),
+        citizenIdNumber: this.formBuilder.control<string | null>(null, [
+          CustomValidators.minLength(constraints['CITIZEN_ID_MIN'], 'user.citizenId.size')
+        ]),
+        phoneNumber: this.formBuilder.control<string | null>(null, [
           CustomValidators.required('user.phone.required'),
           CustomValidators.length(constraints['PHONE_MIN'], constraints['PHONE_MAX'], 'user.phone.size'),
-        ]],
-        address: ['', [CustomValidators.length(constraints['ADDRESS_MIN'], constraints['ADDRESS_MAX'], 'user.address.size')]],
+        ]),
+        address: this.formBuilder.control<string | null>(null, [
+          CustomValidators.length(constraints['ADDRESS_MIN'], constraints['ADDRESS_MAX'], 'user.address.size')
+        ]),
         score: [0],
         roleIds: [[] as string[], [
           CustomValidators.required('user.roles.required'),

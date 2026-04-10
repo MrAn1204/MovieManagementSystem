@@ -22,7 +22,7 @@ export class RoomCreateEdit extends CreateEditDialog<RoomDetailModel> {
     const constraints = this.constraintService.get('ROW_MAX', 'COLUMN_MAX');
 
     return this.formBuilder.nonNullable.group({
-      name: ['', [CustomValidators.required('room.name.required')]],
+      name: this.formBuilder.control<string | null>(null, [CustomValidators.required('room.name.required')]),
       rowLength: [1, [
         CustomValidators.required('room.rowLength.required'),
         CustomValidators.min(1, 'room.rowLength.invalid'),
