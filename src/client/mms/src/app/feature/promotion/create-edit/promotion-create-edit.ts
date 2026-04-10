@@ -25,8 +25,7 @@ export class PromotionCreateEdit extends CreateEditDialog<PromotionModel> {
       endDate: ['', [CustomValidators.required('promotion.endDate.required')]],
       description: [''],
       image: [''],
-      discount: [0],
-      ticketIds: [[] as string[]],
+      discount: [0, [CustomValidators.required('promotion.discount.required'), CustomValidators.range(5, 100, 'promotion.discount.invalid')]],
     });
   }
 
@@ -38,7 +37,6 @@ export class PromotionCreateEdit extends CreateEditDialog<PromotionModel> {
 
     this.form.patchValue({
       ...model,
-      ticketIds: [],
     });
   }
 }

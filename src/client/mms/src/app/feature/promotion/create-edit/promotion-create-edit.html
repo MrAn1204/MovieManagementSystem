@@ -10,6 +10,7 @@
 
       <div>
         <app-input-field formControlName="discount" inputType="number" idName="discount" labelText="Discount (%)"></app-input-field>
+        <app-validation-error [control]="form.get('discount')!"></app-validation-error>
       </div>
 
       <div>

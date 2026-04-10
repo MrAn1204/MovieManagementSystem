@@ -5,5 +5,4 @@ export interface PromotionFormModel {
   description: string;
   image: string;
   discount: number;
-  ticketIds: string[];
 }
