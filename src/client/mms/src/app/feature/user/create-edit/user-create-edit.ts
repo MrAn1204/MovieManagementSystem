@@ -43,11 +43,11 @@ export class UserCreateEdit extends CreateEditDialog<UserDetailModel> implements
       {
         username: ['', [
           CustomValidators.required('user.username.required'),
-          CustomValidators.size(constraints['USERNAME_MIN'], constraints['USERNAME_MAX'], 'user.username.size'),
+          CustomValidators.length(constraints['USERNAME_MIN'], constraints['USERNAME_MAX'], 'user.username.size'),
         ]],
         fullname: ['', [
           CustomValidators.required('user.fullname.required'),
-          CustomValidators.size(constraints['FULLNAME_MIN'], constraints['FULLNAME_MAX'], 'user.fullname.size'),
+          CustomValidators.length(constraints['FULLNAME_MIN'], constraints['FULLNAME_MAX'], 'user.fullname.size'),
         ]],
         password: ['', [
           CustomValidators.required('user.password.required'),
@@ -63,9 +63,9 @@ export class UserCreateEdit extends CreateEditDialog<UserDetailModel> implements
         citizenIdNumber: ['', [CustomValidators.minLength(constraints['CITIZEN_ID_MIN'], 'user.citizenId.size')]],
         phoneNumber: ['', [
           CustomValidators.required('user.phone.required'),
-          CustomValidators.size(constraints['PHONE_MIN'], constraints['PHONE_MAX'], 'user.phone.size'),
+          CustomValidators.length(constraints['PHONE_MIN'], constraints['PHONE_MAX'], 'user.phone.size'),
         ]],
-        address: ['', [CustomValidators.size(constraints['ADDRESS_MIN'], constraints['ADDRESS_MAX'], 'user.address.size')]],
+        address: ['', [CustomValidators.length(constraints['ADDRESS_MIN'], constraints['ADDRESS_MAX'], 'user.address.size')]],
         score: [0],
         roleIds: [[] as string[], [
           CustomValidators.required('user.roles.required'),

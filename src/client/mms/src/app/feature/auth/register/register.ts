@@ -37,7 +37,7 @@ export class Register {
     this.form = this.formBuilder.group({
       username: ['', [
         CustomValidators.required("user.username.required"),
-        CustomValidators.size(constrains['USERNAME_MIN'], constrains['USERNAME_MAX'], 'user.username.size'),
+        CustomValidators.length(constrains['USERNAME_MIN'], constrains['USERNAME_MAX'], 'user.username.size'),
       ]],
       password: ['', [
         CustomValidators.required("user.password.required"),
@@ -48,7 +48,7 @@ export class Register {
       ]],
       fullname: ['', [
         CustomValidators.required("user.fullname.required"),
-        CustomValidators.size(constrains['FULLNAME_MIN'], constrains['FULLNAME_MAX'], 'user.fullname.size'),
+        CustomValidators.length(constrains['FULLNAME_MIN'], constrains['FULLNAME_MAX'], 'user.fullname.size'),
       ]],
       gender: [null, [
         CustomValidators.required("user.gender.required")
@@ -61,7 +61,7 @@ export class Register {
       ]],
       phoneNumber: ['', [
         CustomValidators.required("user.phone.required"),
-        CustomValidators.size(constrains['PHONE_MIN'], constrains['PHONE_MAX'], 'user.phone.size'),
+        CustomValidators.length(constrains['PHONE_MIN'], constrains['PHONE_MAX'], 'user.phone.size'),
       ]],
     }, { validators: CustomValidators.passwordMatch("user.password.mismatched") });
   }

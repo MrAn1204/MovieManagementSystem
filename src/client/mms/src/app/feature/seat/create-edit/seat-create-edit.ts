@@ -74,8 +74,8 @@ export class SeatCreateEdit extends CreateEditDialog<SeatModel> implements OnIni
     return this.formBuilder.nonNullable.group({
       name: ['', [CustomValidators.required('seat.name.required')]],
       seatType: ['STANDARD'],
-      seatRow: [1, [CustomValidators.size(1, this.seatData.rowLength ?? 1, 'seat.row.invalid')]],
-      seatColumn: [1, [CustomValidators.size(1, this.seatData.columnLength ?? 1, 'seat.column.invalid')]],
+      seatRow: [1, [CustomValidators.range(1, this.seatData.rowLength ?? 1, 'seat.row.invalid')]],
+      seatColumn: [1, [CustomValidators.range(1, this.seatData.columnLength ?? 1, 'seat.column.invalid')]],
       roomId: [this.seatData.roomId ?? ''],
     });
   }

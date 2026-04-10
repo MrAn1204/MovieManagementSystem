@@ -53,9 +53,24 @@ export class CustomValidators {
     };
   }
 
+  static length(min: number, max: number, message: string): ValidatorFn {
+    return (control: AbstractControl): ValidationErrors | null => {
+      const valueLength = control.value ? String(control.value).length : 0;
+
+      if (valueLength < min || valueLength > max) {
+        return this.buildError('length', message, {
+          min: min,
+          max: max
+        });
+      }
+
+      return null;
+    }
+  }
+
   static min(min: number, message: string): ValidatorFn {
     return (control: AbstractControl): ValidationErrors | null => {
-      if (control.value && control.value < min) {
+      if (control.value != null && control.value < min) {
         return this.buildError('min', message, {
           value: min
         });
@@ -67,7 +82,7 @@ export class CustomValidators {
 
   static max(max: number, message: string): ValidatorFn {
     return (control: AbstractControl): ValidationErrors | null => {
-      if (control.value && control.value > max) {
+      if (control.value != null && control.value > max) {
         return this.buildError('max', message, {
           value: max
         });
@@ -77,12 +92,12 @@ export class CustomValidators {
     }
   }
 
-  static size(min: number, max: number, message: string): ValidatorFn {
+  static range(min: number, max: number, message: string): ValidatorFn {
     return (control: AbstractControl): ValidationErrors | null => {
-      const value = String(control.value);
+      const value = Number(control.value);
 
-      if (control.value && (value.length < min || value.length > max)) {
-        return this.buildError('size', message, {
+      if (value < min || value > max) {
+        return this.buildError('range', message, {
           min: min,
           max: max
         });
