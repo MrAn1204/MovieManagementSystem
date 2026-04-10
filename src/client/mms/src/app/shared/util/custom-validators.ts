@@ -21,7 +21,13 @@ export class CustomValidators {
 
   static required(message: string): ValidatorFn {
     return (control: AbstractControl): ValidationErrors | null => {
-      if (!control.value) {
+      const value = control.value;
+
+      if (value == null ||
+          (typeof value === 'string' && value.trim() === '') ||
+          (Array.isArray(value) && value.length === 0) ||
+          (typeof value === 'object' && Object.keys(value).length === 0)
+      ) {
         return this.buildError('required', message);
       }
 
@@ -55,7 +61,11 @@ export class CustomValidators {
 
   static length(min: number, max: number, message: string): ValidatorFn {
     return (control: AbstractControl): ValidationErrors | null => {
-      const valueLength = control.value ? String(control.value).length : 0;
+      if (!control.value) {
+        return null;
+      }
+
+      const valueLength = String(control.value).length;
 
       if (valueLength < min || valueLength > max) {
         return this.buildError('length', message, {
@@ -94,6 +104,10 @@ export class CustomValidators {
 
   static range(min: number, max: number, message: string): ValidatorFn {
     return (control: AbstractControl): ValidationErrors | null => {
+      if (!control.value) {
+        return null;
+      }
+
       const value = Number(control.value);
 
       if (value < min || value > max) {
@@ -150,6 +164,10 @@ export class CustomValidators {
   static passwordValid(minLength: number, message: string): ValidatorFn {
     return (control: AbstractControl): ValidationErrors | null => {
       const password = control.value;
+
+      if (!password) {
+        return null;
+      }
 
       const pattern = CustomValidators.passwordPattern;
 
