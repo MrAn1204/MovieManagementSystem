@@ -5,9 +5,6 @@ export type ButtonVariant = 'primary' | 'secondary' | 'danger' | 'success' | 'wa
 @Component({
   selector: 'app-button',
   imports: [],
-  host: {
-    '[class.w-full]': 'variant() !== "icon"',
-  },
   templateUrl: './button.html',
   styleUrl: './button.css',
 })

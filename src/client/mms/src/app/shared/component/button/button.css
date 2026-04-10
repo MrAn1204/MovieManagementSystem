@@ -1,5 +1,9 @@
 @import "../../../../styles.css";
 
+:host {
+  @apply w-fit;
+}
+
 .rounded {
   @apply rounded-md;
 }

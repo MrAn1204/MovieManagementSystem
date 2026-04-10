@@ -6,10 +6,11 @@ import { RoomCreateEdit } from '../create-edit/room-create-edit';
 import { Detail } from "../../../shared/component/detail/detail-component/detail";
 import { DetailDialog } from '../../../shared/component/dialog/detail/detail-dialog';
 import { RoomDetailModel } from '../../../model/room/room-detail.model';
+import { Button } from "../../../shared/component/button/button";
 
 @Component({
   selector: 'app-room-detail',
-  imports: [DetailText, FormatCellPipe, SeatMap, Detail],
+  imports: [DetailText, FormatCellPipe, SeatMap, Detail, Button],
   templateUrl: './room-detail.html',
   styleUrl: './room-detail.css'
 })

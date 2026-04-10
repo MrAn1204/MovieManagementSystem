@@ -6,7 +6,7 @@
 
 <ng-template #menu>
   <div cdkMenu class="flex flex-col bg-platinum-50 border border-platinum-300 rounded-md shadow-xl">
-    <div class="flex flex-col items-start">
+    <div class="flex flex-col *:min-w-full">
       <app-button [hidden]="!canView()" variant="simple" (clicked)="viewDetail.emit()">
         <div class="flex items-center gap-2">
           <i class="fa-solid fa-circle-info text-steel-blue"></i> View
@@ -20,8 +20,8 @@
       </app-button>
     </div>
 
-    <div [hidden]="!canDelete()">
-      <hr class="w-full border-platinum-300" />
+    <div class="flex flex-col *:min-w-full" [hidden]="!canDelete()">
+      <hr class="border-platinum-300" />
 
       <app-button variant="simple" (clicked)="deleteItem.emit()">
         <div class="flex items-center gap-2">
