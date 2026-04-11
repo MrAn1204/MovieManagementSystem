@@ -13,6 +13,9 @@ import java.util.UUID;
 
 import org.springframework.lang.NonNull;
 
+/**
+ * Command payload for creating invoices.
+ */
 @Data
 @EqualsAndHashCode(callSuper = true)
 @AllArgsConstructor

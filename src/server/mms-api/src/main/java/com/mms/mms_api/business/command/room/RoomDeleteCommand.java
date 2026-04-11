@@ -4,6 +4,9 @@ import java.util.UUID;
 
 import com.mms.mms_api.business.command.BaseDeleteCommand;
 
+/**
+ * Command payload for deleting rooms.
+ */
 public class RoomDeleteCommand extends BaseDeleteCommand {
     public RoomDeleteCommand(UUID id) {
         super(id);

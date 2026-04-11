@@ -22,6 +22,9 @@ import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 
+/**
+ * Command payload for creating users.
+ */
 @Data
 @EqualsAndHashCode(callSuper = true)
 @NoArgsConstructor

@@ -21,6 +21,9 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 
+/**
+ * Command payload for updating users.
+ */
 @Data
 @EqualsAndHashCode(callSuper = true)
 @AllArgsConstructor

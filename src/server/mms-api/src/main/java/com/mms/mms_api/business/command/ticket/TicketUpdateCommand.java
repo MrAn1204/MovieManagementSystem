@@ -11,6 +11,9 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 
+/**
+ * Command payload for updating tickets.
+ */
 @Data
 @EqualsAndHashCode(callSuper = true)
 @AllArgsConstructor

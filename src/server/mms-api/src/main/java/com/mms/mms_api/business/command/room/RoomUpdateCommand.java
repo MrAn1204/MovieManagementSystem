@@ -10,6 +10,9 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 
+/**
+ * Command payload for updating rooms.
+ */
 @Data
 @EqualsAndHashCode(callSuper = true)
 @AllArgsConstructor

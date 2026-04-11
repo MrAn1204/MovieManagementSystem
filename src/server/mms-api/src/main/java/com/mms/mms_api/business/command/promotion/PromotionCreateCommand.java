@@ -11,6 +11,9 @@ import java.time.LocalDate;
 import org.hibernate.validator.constraints.Range;
 import org.springframework.web.multipart.MultipartFile;
 
+/**
+ * Command payload for creating promotions.
+ */
 @Data
 @EqualsAndHashCode(callSuper = true)
 @AllArgsConstructor

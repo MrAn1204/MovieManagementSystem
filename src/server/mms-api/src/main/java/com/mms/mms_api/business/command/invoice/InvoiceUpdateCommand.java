@@ -10,6 +10,9 @@ import lombok.EqualsAndHashCode;
 import java.util.List;
 import java.util.UUID;
 
+/**
+ * Command payload for updating invoices.
+ */
 @Data
 @EqualsAndHashCode(callSuper = true)
 @AllArgsConstructor
