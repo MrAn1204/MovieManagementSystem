@@ -13,6 +13,9 @@ import jakarta.persistence.OneToMany;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 
+/**
+ * Entity representing a movie and its production metadata.
+ */
 @Entity
 @Data
 @EqualsAndHashCode(callSuper = true)

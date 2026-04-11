@@ -7,6 +7,13 @@ import com.mms.mms_api.dto.BaseDto;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 
+/**
+ * DTO representing promotion details.
+ *
+ * Maps from {@link com.mms.mms_api.model.Promotion Promotion}.
+ *
+ * @see com.mms.mms_api.model.Promotion Promotion
+ */
 @Data
 @EqualsAndHashCode(callSuper = true)
 public class PromotionDto extends BaseDto {

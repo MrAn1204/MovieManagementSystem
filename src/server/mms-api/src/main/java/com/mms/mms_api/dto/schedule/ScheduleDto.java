@@ -8,6 +8,14 @@ import com.mms.mms_api.dto.BaseDto;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 
+/**
+ * DTO representing schedule summary information.
+ *
+ * Maps from {@link com.mms.mms_api.model.Schedule Schedule}.
+ * Includes movie and room information.
+ *
+ * @see com.mms.mms_api.model.Schedule Schedule
+ */
 @Data
 @EqualsAndHashCode(callSuper = true)
 public class ScheduleDto extends BaseDto {

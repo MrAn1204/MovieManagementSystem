@@ -8,6 +8,9 @@ import jakarta.persistence.ManyToMany;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 
+/**
+ * Entity representing an authorization role.
+ */
 @Entity
 @Data
 @EqualsAndHashCode(callSuper = true)

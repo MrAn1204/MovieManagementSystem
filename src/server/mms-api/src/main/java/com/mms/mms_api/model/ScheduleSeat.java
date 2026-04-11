@@ -13,6 +13,9 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.RequiredArgsConstructor;
 
+/**
+ * Join entity mapping seat reservation state within a schedule.
+ */
 @Entity
 @Data
 @NoArgsConstructor

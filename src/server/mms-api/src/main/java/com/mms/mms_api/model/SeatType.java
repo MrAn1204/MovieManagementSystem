@@ -1,5 +1,8 @@
 package com.mms.mms_api.model;
 
+/**
+ * Seat categories and their price multipliers.
+ */
 public enum SeatType {
     STANDARD(1.0),
     PREMIUM(1.5),

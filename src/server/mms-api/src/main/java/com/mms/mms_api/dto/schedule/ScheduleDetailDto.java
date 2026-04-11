@@ -7,6 +7,16 @@ import com.mms.mms_api.dto.seat.SeatDto;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 
+/**
+ * DTO representing detailed schedule data and seat availability.
+ *
+ * Maps from {@link com.mms.mms_api.model.Schedule Schedule}.
+ * Extends {@link ScheduleDto ScheduleDto} with detailed seat layout information.
+ *
+ * @see com.mms.mms_api.model.Schedule Schedule
+ * @see ScheduleDto ScheduleDto
+ * @see com.mms.mms_api.dto.seat.SeatDto SeatDto
+ */
 @Data
 @EqualsAndHashCode(callSuper = true)
 public class ScheduleDetailDto extends ScheduleDto {

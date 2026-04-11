@@ -11,6 +11,9 @@ import jakarta.persistence.OneToMany;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 
+/**
+ * Entity representing a movie show schedule in a room.
+ */
 @Entity
 @Data
 @EqualsAndHashCode(callSuper = true)

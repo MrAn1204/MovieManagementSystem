@@ -12,6 +12,9 @@ import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 
+/**
+ * Entity representing an invoice for one or more tickets.
+ */
 @Entity
 @Data
 @EqualsAndHashCode(callSuper = true)

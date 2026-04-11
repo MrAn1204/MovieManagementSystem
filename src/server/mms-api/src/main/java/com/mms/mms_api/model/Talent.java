@@ -8,6 +8,9 @@ import jakarta.persistence.ManyToMany;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 
+/**
+ * Entity representing an actor participating in a movie.
+ */
 @Entity
 @Data
 @EqualsAndHashCode(callSuper = true)

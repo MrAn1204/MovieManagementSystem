@@ -8,6 +8,9 @@ import jakarta.persistence.OneToMany;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 
+/**
+ * Entity representing a spoken language for movies.
+ */
 @Entity
 @Data
 @EqualsAndHashCode(callSuper = true)

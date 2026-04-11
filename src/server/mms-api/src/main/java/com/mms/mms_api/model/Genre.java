@@ -8,6 +8,9 @@ import jakarta.persistence.ManyToMany;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 
+/**
+ * Entity representing a movie genre.
+ */
 @Entity
 @Data
 @EqualsAndHashCode(callSuper = true)
