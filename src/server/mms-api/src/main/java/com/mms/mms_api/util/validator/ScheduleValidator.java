@@ -15,6 +15,9 @@ import com.mms.mms_api.exception.ErrorType;
 
 import lombok.AllArgsConstructor;
 
+/**
+ * Validates schedule create and update commands.
+ */
 @Component
 @AllArgsConstructor
 public class ScheduleValidator implements BaseValidator {

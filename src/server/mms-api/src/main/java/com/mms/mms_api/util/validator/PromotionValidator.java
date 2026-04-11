@@ -12,6 +12,9 @@ import com.mms.mms_api.exception.ErrorType;
 
 import lombok.AllArgsConstructor;
 
+/**
+ * Validates promotion update commands.
+ */
 @Component
 @AllArgsConstructor
 public class PromotionValidator implements BaseValidator {

@@ -13,6 +13,9 @@ import com.mms.mms_api.dto.schedule.ScheduleDetailDto;
 import com.mms.mms_api.dto.schedule.ScheduleDto;
 import com.mms.mms_api.model.Schedule;
 
+/**
+ * Mapper for schedule commands and schedule DTO outputs.
+ */
 @Mapper(config = DefaultMapperConfig.class, uses = { MovieMapper.class, RoomMapper.class, SeatMapper.class })
 public interface ScheduleMapper {
     @Mapping(target = "movie", ignore = true)

@@ -17,6 +17,9 @@ import com.mms.mms_api.exception.ErrorType;
 
 import lombok.AllArgsConstructor;
 
+/**
+ * Validates invoice create and update commands.
+ */
 @Component
 @AllArgsConstructor
 public class InvoiceValidator implements BaseValidator {

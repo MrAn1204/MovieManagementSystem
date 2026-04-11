@@ -19,6 +19,9 @@ import org.springframework.lang.NonNull;
 import org.springframework.stereotype.Component;
 import org.springframework.util.CollectionUtils;
 
+/**
+ * Validates movie create and update commands.
+ */
 @Component
 @AllArgsConstructor
 public class MovieValidator implements BaseValidator {

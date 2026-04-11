@@ -12,6 +12,9 @@ import com.mms.mms_api.business.service.GscService;
 import com.mms.mms_api.dto.movie.MovieDto;
 import com.mms.mms_api.model.Movie;
 
+/**
+ * Mapper for movie commands and DTOs with thumbnail URL enrichment.
+ */
 @Mapper(config = DefaultMapperConfig.class, uses = { GenreMapper.class, LanguageMapper.class, StudioMapper.class,
         TalentMapper.class })
 public abstract class MovieMapper {

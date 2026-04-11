@@ -10,6 +10,9 @@ import com.mms.mms_api.annotation.PasswordMatch;
 import jakarta.validation.ConstraintValidator;
 import jakarta.validation.ConstraintValidatorContext;
 
+/**
+ * Validates password and confirm-password fields for password match rules.
+ */
 public class PasswordValidator implements ConstraintValidator<PasswordMatch, Object> {
     private int minLength;
 

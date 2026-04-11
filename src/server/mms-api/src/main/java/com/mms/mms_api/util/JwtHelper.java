@@ -17,10 +17,16 @@ import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.security.Keys;
 
+/**
+ * Helper component for generating and validating JWT tokens.
+ */
 @Component
 public class JwtHelper {
     private static final long EXPIRATION_TIME = 86400000;
 
+    /**
+     * Generates a signed token containing user identity and role claims.
+     */
     public String generateToken(UserInfo userInfo) {
         Map<String, Object> claims = new HashMap<>();
 
@@ -54,10 +60,16 @@ public class JwtHelper {
         return Keys.hmacShaKeyFor(System.getenv("JWT_SECRET_KEY").getBytes());
     }
 
+    /**
+     * Extracts the username subject from the token.
+     */
     public String extractUsername(String token) {
         return extractAllClaims(token).getSubject();
     }
 
+    /**
+     * Extracts role claims from the token payload.
+     */
     public String extractRole(String token) {
         return (String) extractAllClaims(token).get("roles");
     }
@@ -66,6 +78,9 @@ public class JwtHelper {
         return Jwts.parser().verifyWith(getSigningKey()).build().parseSignedClaims(token).getPayload();
     }
 
+    /**
+     * Validates that a token belongs to the username and is not expired.
+     */
     public boolean isTokenValid(String token, String username) {
         return username.equals(extractUsername(token)) && !isTokenExpired(token);
     }

@@ -21,6 +21,9 @@ import com.mms.mms_api.model.Seat;
 
 import lombok.AllArgsConstructor;
 
+/**
+ * Validator for ticket create and update command payloads.
+ */
 @Component
 @AllArgsConstructor
 public class TicketValidator implements BaseValidator {

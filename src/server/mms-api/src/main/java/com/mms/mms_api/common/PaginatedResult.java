@@ -6,6 +6,11 @@ import lombok.NoArgsConstructor;
 
 import java.util.List;
 
+/**
+ * Generic pagination payload for list responses.
+ *
+ * @param <T> type of item in the paginated collection
+ */
 @Data
 @AllArgsConstructor
 @NoArgsConstructor

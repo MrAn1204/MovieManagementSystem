@@ -14,6 +14,9 @@ import com.mms.mms_api.model.Room;
 
 import lombok.AllArgsConstructor;
 
+/**
+ * Validates room create and update commands.
+ */
 @Component
 @AllArgsConstructor
 public class RoomValidator implements BaseValidator {

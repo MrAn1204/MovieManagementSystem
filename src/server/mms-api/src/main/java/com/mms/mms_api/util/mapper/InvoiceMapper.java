@@ -15,6 +15,9 @@ import com.mms.mms_api.dto.invoice.InvoiceDto;
 import com.mms.mms_api.model.Invoice;
 import com.mms.mms_api.model.Ticket;
 
+/**
+ * Mapper for invoice create/update commands and DTO projections.
+ */
 @Mapper(config = DefaultMapperConfig.class, uses = { TicketMapper.class })
 public interface InvoiceMapper {
     @Mapping(target = "tickets", ignore = true)

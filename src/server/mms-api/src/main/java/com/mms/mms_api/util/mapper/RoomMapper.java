@@ -11,6 +11,9 @@ import com.mms.mms_api.dto.room.RoomDetailDto;
 import com.mms.mms_api.dto.room.RoomDto;
 import com.mms.mms_api.model.Room;
 
+/**
+ * Mapper for room commands and DTO projections.
+ */
 @Mapper(config = DefaultMapperConfig.class, uses = { SeatMapper.class })
 public interface RoomMapper {
     @Mapping(target = "seats", ignore = true)

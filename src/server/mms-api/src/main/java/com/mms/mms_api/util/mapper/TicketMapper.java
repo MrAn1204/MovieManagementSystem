@@ -14,6 +14,9 @@ import com.mms.mms_api.dto.ticket.TicketDetailDto;
 import com.mms.mms_api.dto.ticket.TicketDto;
 import com.mms.mms_api.model.Ticket;
 
+/**
+ * Mapper for ticket commands and ticket DTO projections.
+ */
 @Mapper(config = DefaultMapperConfig.class, uses = { ScheduleMapper.class, SeatMapper.class })
 public interface TicketMapper {
     @Mapping(target = "schedule", ignore = true)

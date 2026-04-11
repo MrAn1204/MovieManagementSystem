@@ -17,6 +17,9 @@ import com.mms.mms_api.exception.ErrorType;
 
 import lombok.AllArgsConstructor;
 
+/**
+ * Validator for user-related create, update, and registration commands.
+ */
 @Component
 @AllArgsConstructor
 public class UserValidator implements BaseValidator {
