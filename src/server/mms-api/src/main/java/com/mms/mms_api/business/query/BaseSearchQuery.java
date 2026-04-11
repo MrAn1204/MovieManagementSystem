@@ -9,6 +9,9 @@ import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotNull;
 import lombok.Data;
 
+/**
+ * Base type for search queries with pagination and sorting.
+ */
 @Data
 public abstract class BaseSearchQuery implements BaseQuery, Serializable {
     @Min(value = 1, message = "{search.pageNumber.min}")

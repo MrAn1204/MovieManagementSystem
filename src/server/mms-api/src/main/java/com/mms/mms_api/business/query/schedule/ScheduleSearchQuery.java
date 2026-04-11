@@ -10,6 +10,9 @@ import jakarta.validation.constraints.AssertTrue;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 
+/**
+ * Query payload for searching schedules.
+ */
 @Data
 @EqualsAndHashCode(callSuper = true)
 public class ScheduleSearchQuery extends BaseSearchQuery {

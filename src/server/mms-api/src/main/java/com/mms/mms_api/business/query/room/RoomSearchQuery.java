@@ -7,6 +7,9 @@ import jakarta.validation.constraints.PositiveOrZero;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 
+/**
+ * Query payload for searching rooms.
+ */
 @Data
 @EqualsAndHashCode(callSuper = true)
 public class RoomSearchQuery extends BaseSearchQuery {

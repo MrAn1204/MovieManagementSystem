@@ -7,6 +7,9 @@ import com.mms.mms_api.business.query.BaseSearchQuery;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 
+/**
+ * Query payload for searching users.
+ */
 @Data
 @EqualsAndHashCode(callSuper = true)
 public class UserSearchQuery extends BaseSearchQuery {
