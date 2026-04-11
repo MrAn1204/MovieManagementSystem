@@ -9,6 +9,9 @@ import com.mms.mms_api.model.ScheduleSeat;
 import com.mms.mms_api.model.ScheduleSeatId;
 import com.mms.mms_api.model.Seat;
 
+/**
+ * Repository for schedule-seat relation persistence.
+ */
 public interface ScheduleSeatRepository extends JpaRepository<ScheduleSeat, ScheduleSeatId> {
     List<ScheduleSeat> findByScheduleAndSeatIn(Schedule schedule, List<Seat> seats);
 }

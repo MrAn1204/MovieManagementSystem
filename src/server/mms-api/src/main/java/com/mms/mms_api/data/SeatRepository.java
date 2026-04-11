@@ -8,6 +8,9 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import com.mms.mms_api.model.Room;
 import com.mms.mms_api.model.Seat;
 
+/**
+ * Repository for seat persistence and lookup operations.
+ */
 public interface SeatRepository extends JpaRepository<Seat, UUID> {
     List<Seat> findByLinkedSeatIsNull();
 

@@ -6,6 +6,9 @@ import org.springframework.stereotype.Repository;
 
 import java.util.UUID;
 
+/**
+ * Repository for language lookup and persistence.
+ */
 @Repository
 public interface LanguageRepository extends JpaRepository<Language, UUID> {
     Language findByName(String name);
