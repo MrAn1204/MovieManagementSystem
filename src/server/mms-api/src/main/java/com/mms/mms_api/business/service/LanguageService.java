@@ -10,11 +10,20 @@ import com.mms.mms_api.mediator.RequestMediator;
 
 import lombok.AllArgsConstructor;
 
+/**
+ * Provides read operations for languages.
+ */
 @Service
 @AllArgsConstructor
 public class LanguageService {
     private final RequestMediator mediator;
 
+    /**
+     * Returns all languages.
+     *
+     * @param request get-all query
+     * @return list of language DTOs
+     */
     public List<LanguageDto> handle(LanguageGetAllQuery request) {
         return mediator.execute(request);
     }

@@ -13,6 +13,9 @@ import org.springframework.context.i18n.LocaleContextHolder;
 import org.springframework.stereotype.Service;
 import org.springframework.util.PropertyPlaceholderHelper;
 
+/**
+ * Resolves localized message values from the message bundle and Spring message source.
+ */
 @Service
 public class AppMessageService {
     private final MessageSource messageSource;
@@ -29,6 +32,13 @@ public class AppMessageService {
         return resourceBundle.keySet();
     }
 
+    /**
+     * Resolves a localized message by code.
+     *
+     * @param code message code
+     * @param args optional formatting arguments
+     * @return resolved message or a fallback token when missing
+     */
     public String getByCode(String code, Object... args) {
         if (code == null || code.isEmpty()) {
             return null;
@@ -53,6 +63,12 @@ public class AppMessageService {
         }
     }
 
+    /**
+     * Returns all message entries for a specific entity prefix.
+     *
+     * @param entity message namespace prefix
+     * @return map of message keys and localized values
+     */
     public Map<String, String> getAllByEntity(String entity) {
         String prefix = entity + ".";
 
@@ -60,6 +76,11 @@ public class AppMessageService {
                 .collect(Collectors.toMap(key -> key, this::getByCode));
     }
 
+    /**
+     * Returns all available message entries.
+     *
+     * @return map of message keys and localized values
+     */
     public Map<String, String> getAll() {
         return messageKeys.stream()
                 .collect(Collectors.toMap(key -> key, this::getByCode));

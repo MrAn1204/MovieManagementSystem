@@ -10,11 +10,20 @@ import com.mms.mms_api.mediator.RequestMediator;
 
 import lombok.AllArgsConstructor;
 
+/**
+ * Provides read operations for talents.
+ */
 @Service
 @AllArgsConstructor
 public class TalentService {
     private final RequestMediator mediator;
 
+    /**
+     * Returns all talents.
+     *
+     * @param request get-all query
+     * @return list of talent DTOs
+     */
     public List<TalentDto> handle(TalentGetAllQuery request) {
         return mediator.execute(request);
     }

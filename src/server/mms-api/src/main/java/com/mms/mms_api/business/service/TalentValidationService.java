@@ -9,11 +9,20 @@ import com.mms.mms_api.data.TalentRepository;
 
 import lombok.AllArgsConstructor;
 
+/**
+ * Validation helper for talent existence checks.
+ */
 @Service
 @AllArgsConstructor
 public class TalentValidationService {
     private final TalentRepository talentRepository;
 
+    /**
+     * Checks whether all given talent ids exist.
+     *
+     * @param ids talent identifiers
+     * @return true when all identifiers exist
+     */
     public boolean existsAllById(List<UUID> ids) {
         return talentRepository.existsAllByIdIn(ids);
     }
