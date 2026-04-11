@@ -14,12 +14,20 @@ import java.util.List;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 
+/**
+ * Exposes read endpoints for movie genres.
+ */
 @RestController
 @RequestMapping("/api/genres")
 @AllArgsConstructor
 public class GenreController {
     private final GenreService genreService;
 
+    /**
+     * Returns all available genres.
+     *
+     * @return list of genres
+     */
     @GetMapping
     public ResponseEntity<List<GenreDto>> getAll() {
         GenreGetAllQuery request = new GenreGetAllQuery();

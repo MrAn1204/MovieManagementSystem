@@ -12,12 +12,20 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 
+/**
+ * Exposes application constraint values required by client-side validation.
+ */
 @RestController
 @RequestMapping("/api/app-constraints")
 @AllArgsConstructor
 public class AppConstraintController {
     private final AppConstraintService appConstraintService;
 
+    /**
+     * Returns all configured application constraints.
+     *
+     * @return map of constraint keys and values
+     */
     @GetMapping()
     public Map<String, String> getAllConstraints() {
         return appConstraintService.getAllConstraints();

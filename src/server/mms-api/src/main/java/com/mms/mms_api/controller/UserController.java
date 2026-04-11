@@ -29,12 +29,20 @@ import org.springframework.web.bind.annotation.RequestBody;
 import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
 
+/**
+ * Provides CRUD and search endpoints for users.
+ */
 @RestController
 @RequestMapping("/api/users")
 @AllArgsConstructor
 public class UserController {
     private UserService userService;
 
+    /**
+     * Returns all users.
+     *
+     * @return list of users
+     */
     @GetMapping
     public ResponseEntity<List<UserDto>> getAll() {
         UserGetAllQuery query = new UserGetAllQuery();
@@ -44,6 +52,12 @@ public class UserController {
         return ResponseEntity.ok(users);
     }
 
+    /**
+     * Creates a user account.
+     *
+     * @param command create payload
+     * @return created user details
+     */
     @PostMapping("/create")
     public ResponseEntity<UserDetailDto> create(@Valid @RequestBody UserCreateCommand command) {
         UserDetailDto result = userService.handle(command);
@@ -53,6 +67,12 @@ public class UserController {
                 : ResponseEntity.status(HttpStatus.BAD_REQUEST).body(null);
     }
 
+    /**
+     * Returns user details by id.
+     *
+     * @param id user identifier
+     * @return user details when found
+     */
     @GetMapping("/{id}")
     public ResponseEntity<UserDetailDto> getById(@PathVariable UUID id) {
         UserDetailDto user = userService.handle(new UserGetByIdQuery(id));
@@ -62,6 +82,13 @@ public class UserController {
                 : ResponseEntity.notFound().build();
     }
 
+    /**
+     * Updates a user by id.
+     *
+     * @param id user identifier
+     * @param command update payload
+     * @return updated user when found
+     */
     @PutMapping("/{id}")
     public ResponseEntity<UserDetailDto> update(@PathVariable UUID id, @Valid @RequestBody UserUpdateCommand command) {
         command.setId(id);
@@ -73,6 +100,12 @@ public class UserController {
                 : ResponseEntity.notFound().build();
     }
 
+    /**
+     * Deletes a user by id.
+     *
+     * @param id user identifier
+     * @return no-content response
+     */
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> delete(@PathVariable UUID id) {
         UserDeleteCommand command = new UserDeleteCommand(id);
@@ -82,6 +115,12 @@ public class UserController {
         return ResponseEntity.noContent().build();
     }
 
+    /**
+     * Searches users with filter and pagination.
+     *
+     * @param query search criteria
+     * @return paginated user result
+     */
     @PostMapping("/search")
     public ResponseEntity<PaginatedResult<UserDto>> search(@Valid @RequestBody UserSearchQuery query) {
         PaginatedResult<UserDto> users = userService.handle(query);

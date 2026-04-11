@@ -26,30 +26,57 @@ import lombok.AllArgsConstructor;
 import org.springframework.web.bind.annotation.PutMapping;
 
 
+/**
+ * Provides CRUD endpoints for invoices.
+ */
 @RestController
 @RequestMapping("/api/invoices")
 @AllArgsConstructor
 public class InvoiceController {
     private final InvoiceService invoiceService;
 
+    /**
+     * Creates an invoice.
+     *
+     * @param command create payload
+     * @return created invoice
+     */
     @PostMapping("/create")
     public ResponseEntity<InvoiceDto> create(@Valid @RequestBody InvoiceCreateCommand command) {
         InvoiceDto invoiceDto = invoiceService.handle(command);
         return ResponseEntity.status(HttpStatus.CREATED).body(invoiceDto);
     }
 
+    /**
+     * Returns all invoices.
+     *
+     * @return list of invoices
+     */
     @GetMapping
     public ResponseEntity<List<InvoiceDto>> getAll() {
         List<InvoiceDto> invoices = invoiceService.handle(new InvoiceGetAllQuery());
         return ResponseEntity.ok(invoices);
     }
 
+    /**
+     * Returns an invoice by id.
+     *
+     * @param id invoice identifier
+     * @return invoice details
+     */
     @GetMapping("/{id}")
     public ResponseEntity<InvoiceDto> getById(@PathVariable UUID id) {
         InvoiceDto invoice = invoiceService.handle(new InvoiceGetByIdQuery(id));
         return ResponseEntity.ok(invoice);
     }
 
+    /**
+     * Updates an invoice by id.
+     *
+     * @param id invoice identifier
+     * @param command update payload
+     * @return updated invoice
+     */
     @PutMapping("/{id}")
     public ResponseEntity<InvoiceDto> update(@PathVariable UUID id, @Valid @RequestBody InvoiceUpdateCommand command) {
         command.setId(id);
@@ -57,6 +84,12 @@ public class InvoiceController {
         return ResponseEntity.ok(updatedInvoice);
     }
 
+    /**
+     * Deletes an invoice by id.
+     *
+     * @param id invoice identifier
+     * @return no-content response
+     */
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> delete(@PathVariable UUID id) {
         invoiceService.handle(new InvoiceDeleteCommand(id));

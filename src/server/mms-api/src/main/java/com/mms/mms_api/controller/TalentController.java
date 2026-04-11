@@ -14,12 +14,20 @@ import java.util.List;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 
+/**
+ * Exposes read endpoints for movie talents.
+ */
 @RestController
 @RequestMapping("/api/talents")
 @AllArgsConstructor
 public class TalentController {
     private final TalentService talentService;
 
+    /**
+     * Returns all available talents.
+     *
+     * @return list of talents
+     */
     @GetMapping
     public ResponseEntity<List<TalentDto>> getAll() {
         TalentGetAllQuery request = new TalentGetAllQuery();

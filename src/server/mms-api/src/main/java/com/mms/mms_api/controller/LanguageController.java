@@ -14,12 +14,20 @@ import java.util.List;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 
+/**
+ * Exposes read endpoints for movie languages.
+ */
 @RestController
 @RequestMapping("/api/languages")
 @AllArgsConstructor
 public class LanguageController {
     private final LanguageService languageService;
 
+    /**
+     * Returns all available languages.
+     *
+     * @return list of languages
+     */
     @GetMapping
     public ResponseEntity<List<LanguageDto>> getAll() {
         LanguageGetAllQuery request = new LanguageGetAllQuery();
