@@ -15,13 +15,28 @@ import com.mms.mms_api.model.Schedule;
 import com.mms.mms_api.util.SearchHelper;
 import com.mms.mms_api.util.mapper.ScheduleMapper;
 
+/**
+ * Handles schedule search queries.
+ */
 @Component
 public class ScheduleSearchHandler extends ScheduleBaseHandler<ScheduleSearchQuery, PaginatedResult<ScheduleDto>> {
+    /**
+     * Creates a ScheduleSearchHandler.
+     *
+     * @param scheduleMapper schedule mapper
+     * @param scheduleRepository schedule repository
+     */
     public ScheduleSearchHandler(ScheduleMapper scheduleMapper,
             ScheduleRepository scheduleRepository) {
         super(scheduleMapper, scheduleRepository);
     }
 
+    /**
+     * Executes a paginated schedule search using the supplied filters.
+     *
+     * @param request search query with filters and pagination parameters
+     * @return paginated result of schedule DTOs
+     */
     @Override
     public PaginatedResult<ScheduleDto> execute(ScheduleSearchQuery request) {
         Pageable pageable = SearchHelper.generatePageable(request.getPageNumber(), request.getPageSize());

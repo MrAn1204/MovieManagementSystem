@@ -12,16 +12,33 @@ import com.mms.mms_api.data.PromotionRepository;
 import com.mms.mms_api.dto.promotion.PromotionDto;
 import com.mms.mms_api.util.mapper.PromotionMapper;
 
+/**
+ * Handles promotion update commands.
+ */
 @Component
 public class PromotionUpdateHandler extends PromotionBaseHandler<PromotionUpdateCommand, PromotionDto> {
     private final GscService gscService;
 
+    /**
+     * Creates a PromotionUpdateHandler.
+     *
+     * @param promotionMapper promotion mapper
+     * @param promotionRepository promotion repository
+     * @param gscService Google Cloud Storage service for image management
+     */
     public PromotionUpdateHandler(PromotionMapper promotionMapper,
             PromotionRepository promotionRepository, GscService gscService) {
         super(promotionMapper, promotionRepository);
         this.gscService = gscService;
     }
 
+    /**
+     * Updates an existing promotion, replaces its stored image and removes the old one.
+     *
+     * @param request promotion update command
+     * @return updated promotion DTO
+     * @throws com.mms.mms_api.exception.ResourceNotFoundException when the promotion does not exist
+     */
     @Override
     public PromotionDto execute(PromotionUpdateCommand request) {
         Promotion promotion = promotionRepository.findById(request.getId())

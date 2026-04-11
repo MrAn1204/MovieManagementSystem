@@ -16,12 +16,23 @@ import com.mms.mms_api.model.Role;
 import com.mms.mms_api.model.User;
 import com.mms.mms_api.util.mapper.UserMapper;
 
+/**
+ * Handles user update commands.
+ */
 @Component
 public class UserUpdateHandler extends UserBaseHandler<UserUpdateCommand, UserDetailDto> {
     private RoleRepository roleRepository;
 
     private PasswordEncoder passwordEncoder;
 
+    /**
+     * Creates a UserUpdateHandler.
+     *
+     * @param userMapper user mapper
+     * @param userRepository user repository
+     * @param roleRepository role repository
+     * @param passwordEncoder password encoder
+     */
     public UserUpdateHandler(UserMapper userMapper,
             UserRepository userRepository, RoleRepository roleRepository, PasswordEncoder passwordEncoder) {
         super(userMapper, userRepository);
@@ -29,6 +40,13 @@ public class UserUpdateHandler extends UserBaseHandler<UserUpdateCommand, UserDe
         this.passwordEncoder = passwordEncoder;
     }
 
+    /**
+     * Updates an existing user, re-encodes the password when changed, and reassigns roles.
+     *
+     * @param request user update command
+     * @return updated user detail DTO
+     * @throws com.mms.mms_api.exception.ResourceNotFoundException when the user does not exist
+     */
     @Override
     public UserDetailDto execute(UserUpdateCommand request) {
         User user = userRepository.findById(request.getId()).orElseThrow(

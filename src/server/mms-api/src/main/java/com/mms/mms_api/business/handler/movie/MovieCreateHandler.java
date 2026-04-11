@@ -21,6 +21,9 @@ import com.mms.mms_api.model.Studio;
 import com.mms.mms_api.model.Talent;
 import com.mms.mms_api.util.mapper.MovieMapper;
 
+/**
+ * Handles movie creation commands.
+ */
 @Component
 public class MovieCreateHandler extends MovieBaseHandler<MovieCreateCommand, MovieDto> {
     private final GenreRepository genreRepository;
@@ -33,6 +36,17 @@ public class MovieCreateHandler extends MovieBaseHandler<MovieCreateCommand, Mov
 
     private final GscService gscService;
 
+    /**
+     * Creates a MovieCreateHandler.
+     *
+     * @param movieMapper movie mapper
+     * @param movieRepository movie repository
+     * @param genreRepository genre repository
+     * @param languageRepository language repository
+     * @param studioRepository studio repository
+     * @param talentRepository talent repository
+     * @param gscService Google Cloud Storage service for thumbnail upload
+     */
     public MovieCreateHandler(
             MovieMapper movieMapper,
             MovieRepository movieRepository,
@@ -50,6 +64,12 @@ public class MovieCreateHandler extends MovieBaseHandler<MovieCreateCommand, Mov
         this.gscService = gscService;
     }
 
+    /**
+     * Creates a new movie, resolves associations, uploads the thumbnail and persists the entity.
+     *
+     * @param request movie create command
+     * @return created movie DTO
+     */
     public MovieDto execute(MovieCreateCommand request) {
         List<UUID> genreIds = request.getGenreIds();
         List<UUID> studioIds = request.getStudioIds();

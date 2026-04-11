@@ -14,6 +14,9 @@ import com.mms.mms_api.model.Role;
 import com.mms.mms_api.model.User;
 import com.mms.mms_api.util.mapper.UserMapper;
 
+/**
+ * Handles registration commands.
+ */
 @Component
 public class RegisterCommandHandler extends AuthBaseHandler<RegisterCommand, UserDto> {
     private final UserRepository userRepository;
@@ -24,6 +27,14 @@ public class RegisterCommandHandler extends AuthBaseHandler<RegisterCommand, Use
 
     private final PasswordEncoder passwordEncoder;
 
+    /**
+     * Creates a RegisterCommandHandler.
+     *
+     * @param userRepository user repository
+     * @param roleRepository role repository
+     * @param userMapper user mapper
+     * @param passwordEncoder password encoder
+     */
     public RegisterCommandHandler(UserRepository userRepository, RoleRepository roleRepository,
             UserMapper userMapper, PasswordEncoder passwordEncoder) {
         super(null, null);
@@ -33,6 +44,12 @@ public class RegisterCommandHandler extends AuthBaseHandler<RegisterCommand, Use
         this.passwordEncoder = passwordEncoder;
     }
 
+    /**
+     * Registers a new user with the default USER role.
+     *
+     * @param request registration command containing user details
+     * @return created user DTO
+     */
     @Override
     public UserDto execute(RegisterCommand request) {
         Role userRole = roleRepository.findByName("USER");

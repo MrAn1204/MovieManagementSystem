@@ -10,13 +10,28 @@ import com.mms.mms_api.dto.user.UserDto;
 import com.mms.mms_api.model.User;
 import com.mms.mms_api.util.mapper.UserMapper;
 
+/**
+ * Handles requests to retrieve all users.
+ */
 @Component
 public class UserGetAllHandler extends UserBaseHandler<UserGetAllQuery, List<UserDto>> {
+    /**
+     * Creates a UserGetAllHandler.
+     *
+     * @param userMapper user mapper
+     * @param userRepository user repository
+     */
     public UserGetAllHandler(UserMapper userMapper, UserRepository userRepository) {
         super(userMapper, userRepository);
         this.userRepository = userRepository;
     }
 
+    /**
+     * Retrieves all users.
+     *
+     * @param request query object
+     * @return list of user DTOs
+     */
     @Override
     public List<UserDto> execute(UserGetAllQuery request) {
         List<User> users = userRepository.findAll();

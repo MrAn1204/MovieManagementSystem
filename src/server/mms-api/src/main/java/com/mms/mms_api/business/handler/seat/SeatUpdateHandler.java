@@ -11,12 +11,28 @@ import com.mms.mms_api.model.Seat;
 import com.mms.mms_api.model.SeatType;
 import com.mms.mms_api.util.mapper.SeatMapper;
 
+/**
+ * Handles seat update commands.
+ */
 @Component
 public class SeatUpdateHandler extends SeatBaseHandler<SeatUpdateCommand, SeatDto> {
+    /**
+     * Creates a SeatUpdateHandler.
+     *
+     * @param seatMapper seat mapper
+     * @param seatRepository seat repository
+     */
     public SeatUpdateHandler(SeatMapper seatMapper, SeatRepository seatRepository) {
         super(seatMapper, seatRepository);
     }
 
+    /**
+     * Updates a seat's properties and manages couple-seat linkage changes.
+     *
+     * @param request seat update command
+     * @return updated seat DTO
+     * @throws com.mms.mms_api.exception.ResourceNotFoundException when the seat does not exist
+     */
     @Override
     public SeatDto execute(SeatUpdateCommand request) {
         Seat seat = seatRepository.findById(request.getId())

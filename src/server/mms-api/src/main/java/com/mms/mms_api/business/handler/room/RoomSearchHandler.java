@@ -15,13 +15,28 @@ import com.mms.mms_api.model.Room;
 import com.mms.mms_api.util.SearchHelper;
 import com.mms.mms_api.util.mapper.RoomMapper;
 
+/**
+ * Handles room search queries.
+ */
 @Component
 public class RoomSearchHandler extends RoomBaseHandler<RoomSearchQuery, PaginatedResult<RoomDto>> {
 
+    /**
+     * Creates a RoomSearchHandler.
+     *
+     * @param roomMapper room mapper
+     * @param roomRepository room repository
+     */
     public RoomSearchHandler(RoomMapper roomMapper, RoomRepository roomRepository) {
         super(roomMapper, roomRepository);
     }
 
+    /**
+     * Executes a paginated room search using the supplied filters.
+     *
+     * @param request search query with filters and pagination parameters
+     * @return paginated result of room DTOs
+     */
     @Override
     public PaginatedResult<RoomDto> execute(RoomSearchQuery request) {
         Pageable pageable = SearchHelper.generatePageable(request.getPageNumber(), request.getPageSize());

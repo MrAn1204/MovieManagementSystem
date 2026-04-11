@@ -9,13 +9,29 @@ import com.mms.mms_api.dto.ticket.TicketDetailDto;
 import com.mms.mms_api.util.mapper.TicketMapper;
 import com.mms.mms_api.model.Ticket;
 
+/**
+ * Handles requests to retrieve ticket by id.
+ */
 @Component
 public class TicketGetByIdHandler extends TicketBaseHandler<TicketGetByIdQuery, TicketDetailDto> {
 
+    /**
+     * Creates a TicketGetByIdHandler.
+     *
+     * @param ticketMapper ticket mapper
+     * @param ticketRepository ticket repository
+     */
     public TicketGetByIdHandler(TicketMapper ticketMapper, TicketRepository ticketRepository) {
         super(ticketMapper, ticketRepository);
     }
 
+    /**
+     * Retrieves a ticket by its identifier.
+     *
+     * @param request query containing the target ticket id
+     * @return ticket detail DTO
+     * @throws com.mms.mms_api.exception.ResourceNotFoundException when the ticket does not exist
+     */
     @Override
     public TicketDetailDto execute(TicketGetByIdQuery request) {
         Ticket ticket = ticketRepository.findById(request.getId())

@@ -10,13 +10,28 @@ import com.mms.mms_api.dto.invoice.InvoiceDto;
 
 import java.util.List;
 
+/**
+ * Handles requests to retrieve all invoices.
+ */
 @Component
 public class InvoiceGetAllHandler extends InvoiceBaseHandler<InvoiceGetAllQuery, List<InvoiceDto>> {
 
+    /**
+     * Creates an InvoiceGetAllHandler.
+     *
+     * @param invoiceMapper invoice mapper
+     * @param invoiceRepository invoice repository
+     */
     public InvoiceGetAllHandler(InvoiceMapper invoiceMapper, InvoiceRepository invoiceRepository) {
         super(invoiceMapper, invoiceRepository);
     }
 
+    /**
+     * Retrieves all invoices.
+     *
+     * @param request query object
+     * @return list of invoice DTOs
+     */
     @Override
     public List<InvoiceDto> execute(InvoiceGetAllQuery request) {
         List<Invoice> invoices = invoiceRepository.findAll();

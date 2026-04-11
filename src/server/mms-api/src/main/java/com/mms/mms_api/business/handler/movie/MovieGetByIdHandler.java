@@ -9,12 +9,28 @@ import com.mms.mms_api.exception.ResourceNotFoundException;
 import com.mms.mms_api.model.Movie;
 import com.mms.mms_api.util.mapper.MovieMapper;
 
+/**
+ * Handles requests to retrieve movie by id.
+ */
 @Component
 public class MovieGetByIdHandler extends MovieBaseHandler<MovieGetByIdQuery, MovieDto> {
+    /**
+     * Creates a MovieGetByIdHandler.
+     *
+     * @param movieMapper movie mapper
+     * @param movieRepository movie repository
+     */
     public MovieGetByIdHandler(MovieMapper movieMapper, MovieRepository movieRepository) {
         super(movieMapper, movieRepository);
     }
 
+    /**
+     * Retrieves a movie by its identifier.
+     *
+     * @param request query containing the target movie id
+     * @return movie DTO
+     * @throws com.mms.mms_api.exception.ResourceNotFoundException when the movie does not exist
+     */
     @Override
     public MovieDto execute(MovieGetByIdQuery request) {
         Movie movie = movieRepository.findById(request.getId()).orElseThrow(

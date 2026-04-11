@@ -10,13 +10,28 @@ import com.mms.mms_api.model.Ticket;
 
 import java.util.List;
 
+/**
+ * Handles requests to retrieve all tickets.
+ */
 @Component
 public class TicketGetAllHandler extends TicketBaseHandler<TicketGetAllQuery, List<TicketDto>> {
 
+    /**
+     * Creates a TicketGetAllHandler.
+     *
+     * @param ticketMapper ticket mapper
+     * @param ticketRepository ticket repository
+     */
     public TicketGetAllHandler(TicketMapper ticketMapper, TicketRepository ticketRepository) {
         super(ticketMapper, ticketRepository);
     }
 
+    /**
+     * Retrieves all tickets.
+     *
+     * @param request query object
+     * @return list of ticket DTOs
+     */
     @Override
     public List<TicketDto> execute(TicketGetAllQuery request) {
         List<Ticket> tickets = ticketRepository.findAll();
