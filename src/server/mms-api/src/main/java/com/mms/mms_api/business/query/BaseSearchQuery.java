@@ -24,7 +24,7 @@ public abstract class BaseSearchQuery implements BaseQuery, Serializable {
 
     @NotNull(message = "{search.sortBy.required}")
     @NonNull
-    private String sortBy = "id";
+    private String sortBy = "createdAt";
 
     @NotNull(message = "{search.sortDirection.required}")
     @NonNull
