@@ -16,11 +16,27 @@ import jakarta.persistence.criteria.Expression;
 import jakarta.persistence.criteria.Predicate;
 import jakarta.persistence.criteria.Root;
 
+/**
+ * JPA specification for filtering and sorting room search results.
+ */
 public class RoomSpecification extends BaseSpecification<Room, RoomSearchQuery> {
+    /**
+     * Creates a room specification from the given search criteria.
+     *
+     * @param criteria the room search criteria
+     */
     public RoomSpecification(RoomSearchQuery criteria) {
         super(criteria);
     }
 
+    /**
+     * Builds the predicate set for room searches.
+     *
+     * @param root the root room entity
+     * @param query the criteria query being built
+     * @param criteriaBuilder the criteria builder used to create predicates
+     * @return the combined room search predicate
+     */
     @Override
     public Predicate toPredicate(@NonNull Root<Room> root, @Nullable CriteriaQuery<?> query,
             @NonNull CriteriaBuilder criteriaBuilder) {
@@ -39,6 +55,13 @@ public class RoomSpecification extends BaseSpecification<Room, RoomSearchQuery> 
         return criteriaBuilder.and(predicates.toArray(Predicate[]::new));
     }
 
+    /**
+     * Builds a keyword predicate that matches room names.
+     *
+     * @param root the root room entity
+     * @param criteriaBuilder the criteria builder used to create predicates
+     * @return the keyword predicate for room search
+     */
     @Override
     protected Predicate buildKeywordPredicate(Root<Room> root, CriteriaBuilder criteriaBuilder) {
         String pattern = "%" + criteria.getKeyword().toLowerCase() + "%";
@@ -46,6 +69,13 @@ public class RoomSpecification extends BaseSpecification<Room, RoomSearchQuery> 
         return criteriaBuilder.like(root.get("name"), pattern);
     }
 
+    /**
+     * Builds a predicate that filters rooms by computed capacity.
+     *
+     * @param root the root room entity
+     * @param criteriaBuilder the criteria builder used to create predicates
+     * @return the capacity filter predicate
+     */
     private Predicate buildCapacityPredicate(Root<Room> root, CriteriaBuilder criteriaBuilder) {
         Expression<Integer> seatQuantityPath = criteriaBuilder.prod(root.get("rowLength"), root.get("columnLength"));
 
@@ -60,6 +90,13 @@ public class RoomSpecification extends BaseSpecification<Room, RoomSearchQuery> 
         }
     }
 
+    /**
+     * Resolves the sort expression for room searches, including derived capacity fields.
+     *
+     * @param root the root room entity
+     * @param criteriaBuilder the criteria builder used for derived expressions
+     * @return the expression used for sorting room results
+     */
     @Override
     protected Expression<?> getSortExpression(Root<Room> root, CriteriaBuilder criteriaBuilder) {
         return switch (criteria.getSortBy()) {
