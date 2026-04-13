@@ -20,6 +20,17 @@ import lombok.AllArgsConstructor;
 public class PromotionValidator implements BaseValidator {
     private final PromotionValidationService promotionValidationService;
 
+    /**
+     * Validates a promotion update command.
+     *
+     * <p>Performs the following validations:
+     * <ul>
+     *   <li>A promotion with the given id exists.</li>
+     * </ul>
+     *
+     * @param command the promotion update command to validate
+     * @throws com.mms.mms_api.exception.ResourceNotFoundException if the promotion is not found
+     */
     public void validate(PromotionUpdateCommand command) {
         ErrorSet errors = new ErrorSet();
 
@@ -28,6 +39,12 @@ public class PromotionValidator implements BaseValidator {
         errors.throwIfNotEmpty(ErrorType.RESOURCE_NOT_FOUND);
     }
 
+    /**
+     * Checks that a promotion with the given id exists and adds an error if not.
+     *
+     * @param errors the error accumulator
+     * @param id the promotion id to look up
+     */
     private void validateId(ErrorSet errors, @NonNull UUID id) {
         if (!promotionValidationService.existsById(id)) {
             errors.add("id", "promotion.notFound");
