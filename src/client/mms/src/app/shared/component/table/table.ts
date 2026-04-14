@@ -18,7 +18,7 @@ export class Table<T extends BaseEntityModel> implements OnChanges {
   columns = input.required<TableColumnModel<T>[]>();
   data = input.required<T[]>();
 
-  roleConfig = input.required<RoleConfigModel>();
+  roleConfig = input<RoleConfigModel>();
 
   tableConfig = input<TableConfig>({
     checkbox: true,
@@ -69,19 +69,19 @@ export class Table<T extends BaseEntityModel> implements OnChanges {
   }
 
   canCreate(): boolean {
-    return this.tableConfig().add !== false && this.authService.includeRoles(this.roleConfig().create);
+    return this.tableConfig().add !== false && this.authService.includeRoles(this.roleConfig()?.create ?? []);
   }
 
   canEdit(): boolean {
-    return this.tableConfig().edit !== false && this.authService.includeRoles(this.roleConfig().edit);
+    return this.tableConfig().edit !== false && this.authService.includeRoles(this.roleConfig()?.edit ?? []);
   }
 
   canDelete(): boolean {
-    return this.tableConfig().delete !== false && this.authService.includeRoles(this.roleConfig().delete);
+    return this.tableConfig().delete !== false && this.authService.includeRoles(this.roleConfig()?.delete ?? []);
   }
 
   canView(): boolean {
-    return this.authService.includeRoles(this.roleConfig().getById ?? []);
+    return this.authService.includeRoles(this.roleConfig()?.getById ?? []);
   }
 
   hasCheckbox(): boolean {

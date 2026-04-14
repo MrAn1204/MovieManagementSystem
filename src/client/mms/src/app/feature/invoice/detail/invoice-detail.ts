@@ -8,7 +8,6 @@ import { DetailText } from "../../../shared/component/detail/detail-text/detail-
 import { Table } from "../../../shared/component/table/table";
 import { TableColumnModel } from '../../../shared/model/table-column.model';
 import { TicketModel } from '../../../model/ticket/ticket.model';
-import { getRoleConfig } from '../../../shared/config/role-config';
 import { FormatCellPipe } from '../../../shared/pipe/format-cell/format-cell-pipe';
 
 @Component({
@@ -23,7 +22,6 @@ export class InvoiceDetail extends DetailDialog<InvoiceModel> {
   ticketColumns: TableColumnModel<TicketModel>[] = [
     { key: 'name', label: 'Name', type: 'string' },
     { key: 'movie', label: 'Movie', type: 'id-name' },
+    { key: 'price', label: 'Price', type: 'number' },
   ]
-
-  ticketRoleConfig = getRoleConfig('ticket');
 }

@@ -1,15 +1,15 @@
 <app-detail [title]="data.title" [roleConfig]="data.roleConfig" (openUpdate)="openUpdate()" (openDelete)="openDelete()" (closeDialog)="close()">
   <div class="w-full flex-1 gap-8 grid grid-cols-1 sm:grid-cols-2">
     <app-detail-text label="Total Money">
-      {{ model?.totalMoney| formatCell }}
+      {{ model?.totalMoney | formatCell }}
     </app-detail-text>
 
     <app-detail-text label="Discount">
-      {{ model?.discount| formatCell }}
+      {{ model?.discount | formatCell }}
     </app-detail-text>
 
     <app-detail-text label="Score Added">
-      {{ model?.addScore| formatCell }}
+      {{ model?.addScore | formatCell }}
     </app-detail-text>
 
     <app-detail-text label="Score Used">
@@ -23,7 +23,6 @@
         <app-table
           [columns]="ticketColumns"
           [data]="model?.tickets ?? []"
-          [roleConfig]="ticketRoleConfig"
           [tableConfig]="{ checkbox: false }">
         </app-table>
       </div>
