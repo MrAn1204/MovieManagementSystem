@@ -65,6 +65,7 @@ public class InvoiceCreateHandler extends InvoiceBaseHandler<InvoiceCreateComman
         user.setScore(request.getUseScore(), request.getAddScore());
 
         invoice.setUser(user);
+        invoice.setTotalMoney(tickets, request.getDiscount(), request.getUseScore());
 
         Invoice savedInvoice = invoiceRepository.save(invoice);
 

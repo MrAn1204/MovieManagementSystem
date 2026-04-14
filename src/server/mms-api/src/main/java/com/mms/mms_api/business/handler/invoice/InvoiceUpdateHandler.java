@@ -66,6 +66,7 @@ public class InvoiceUpdateHandler extends InvoiceBaseHandler<InvoiceUpdateComman
         int addScoreDifference = request.getAddScore() - invoice.getAddScore();
 
         user.setScore(useScoreDifference, addScoreDifference);
+        invoice.setTotalMoney(tickets, request.getDiscount(), request.getUseScore());
 
         Invoice updatedInvoice = invoiceRepository.save(invoice);
 
