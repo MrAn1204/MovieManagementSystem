@@ -8,7 +8,6 @@ import org.springframework.lang.Nullable;
 import org.springframework.util.StringUtils;
 
 import com.mms.mms_api.business.query.ticket.TicketSearchQuery;
-import com.mms.mms_api.model.Invoice;
 import com.mms.mms_api.model.Movie;
 import com.mms.mms_api.model.Promotion;
 import com.mms.mms_api.model.Room;
@@ -49,7 +48,7 @@ public class TicketSpecification extends BaseSpecification<Ticket, TicketSearchQ
         List<Predicate> predicates = new ArrayList<>();
         
         if (StringUtils.hasText(criteria.getKeyword())) {
-            buildKeywordPredicate(root, criteriaBuilder);
+            predicates.add(buildKeywordPredicate(root, criteriaBuilder));
         }
 
         if (criteria.getShowTime() != null) {
@@ -84,8 +83,7 @@ public class TicketSpecification extends BaseSpecification<Ticket, TicketSearchQ
     protected Predicate buildKeywordPredicate(Root<Ticket> root, CriteriaBuilder criteriaBuilder) {
         String pattern = "%" + criteria.getKeyword().toLowerCase() + "%";
 
-        Join<Ticket, Invoice> invoiceJoin = root.join("invoice");
-        Join<Invoice, User> userJoin = invoiceJoin.join("user");
+        Join<Ticket, User> userJoin = root.join("user");
 
         Predicate usernamePredicate = criteriaBuilder.like(userJoin.get("username"), pattern);
         Predicate phonePredicate = criteriaBuilder.like(userJoin.get("phoneNumber"), pattern);
