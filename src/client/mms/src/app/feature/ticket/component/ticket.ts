@@ -87,8 +87,6 @@ export class Ticket extends SearchableFeature<TicketModel> {
     const dialogRef = this.dialogService.openDialog(InvoiceCreateEdit, invoiceDialogData)
 
     dialogRef.componentInstance?.dialogService.saveForm$.subscribe((form) => {
-      console.log(form.value);
-
       this.showSpinner();
 
       this.invoiceService.create(form.value)

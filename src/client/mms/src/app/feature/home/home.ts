@@ -57,9 +57,6 @@ export class Home implements OnInit {
 
       const date = new Date(ticket.createdAt);
 
-      console.log(ticket);
-
-
       if (date.getFullYear() !== new Date().getFullYear()) {
         return;
       }

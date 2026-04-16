@@ -41,8 +41,6 @@ export class Login {
 
             this.form.setErrors({ loginFailed: error });
             this.form.markAllAsTouched();
-
-            console.log(this.form.errors);
           }
         });
     }
