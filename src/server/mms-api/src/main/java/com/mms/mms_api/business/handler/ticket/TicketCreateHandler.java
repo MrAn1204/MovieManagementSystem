@@ -19,12 +19,23 @@ import com.mms.mms_api.model.Seat;
 import com.mms.mms_api.model.Ticket;
 import com.mms.mms_api.model.User;
 
+/**
+ * Handles ticket creation commands.
+ */
 @Component
 public class TicketCreateHandler extends TicketBaseHandler<TicketCreateCommand, List<TicketDetailDto>> {
     private final TicketDependencies ticketDependencies;
 
     private final ScheduleSeatRepository scheduleSeatRepository;
 
+    /**
+     * Creates a TicketCreateHandler.
+     *
+     * @param ticketMapper ticket mapper
+     * @param ticketRepository ticket repository
+     * @param ticketDependencies helper service for resolving ticket associations
+     * @param scheduleSeatRepository schedule-seat repository
+     */
     public TicketCreateHandler(TicketMapper ticketMapper,
             TicketRepository ticketRepository, TicketDependencies ticketDependencies,
             ScheduleSeatRepository scheduleSeatRepository) {
@@ -33,6 +44,12 @@ public class TicketCreateHandler extends TicketBaseHandler<TicketCreateCommand, 
         this.scheduleSeatRepository = scheduleSeatRepository;
     }
 
+    /**
+     * Creates a ticket for each selected schedule seat and marks those seats as reserved.
+     *
+     * @param request ticket create command
+     * @return list of created ticket detail DTOs
+     */
     @Override
     public List<TicketDetailDto> execute(TicketCreateCommand request) {
         Ticket ticket = ticketMapper.toEntity(request);

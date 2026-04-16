@@ -10,12 +10,27 @@ import com.mms.mms_api.dto.room.RoomDto;
 import com.mms.mms_api.model.Room;
 import com.mms.mms_api.util.mapper.RoomMapper;
 
+/**
+ * Handles requests to retrieve all rooms.
+ */
 @Component
 public class RoomGetAllHandler extends RoomBaseHandler<RoomGetAllQuery, List<RoomDto>> {
+    /**
+     * Creates a RoomGetAllHandler.
+     *
+     * @param roomMapper room mapper
+     * @param roomRepository room repository
+     */
     public RoomGetAllHandler(RoomMapper roomMapper, RoomRepository roomRepository) {
         super(roomMapper, roomRepository);
     }
 
+    /**
+     * Retrieves all rooms.
+     *
+     * @param request query object
+     * @return list of room DTOs
+     */
     @Override
     public List<RoomDto> execute(RoomGetAllQuery request) {
         List<Room> rooms = roomRepository.findAll();

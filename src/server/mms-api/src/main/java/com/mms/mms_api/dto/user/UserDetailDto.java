@@ -10,6 +10,16 @@ import com.mms.mms_api.model.Gender;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 
+/**
+ * DTO representing detailed user data.
+ *
+ * Maps from {@link com.mms.mms_api.model.User User}.
+ * Includes roles and invoices.
+ *
+ * @see com.mms.mms_api.model.User User
+ * @see RoleDto RoleDto
+ * @see com.mms.mms_api.dto.invoice.InvoiceDto InvoiceDto
+ */
 @Data
 @EqualsAndHashCode(callSuper = true)
 public class UserDetailDto extends BaseDto {

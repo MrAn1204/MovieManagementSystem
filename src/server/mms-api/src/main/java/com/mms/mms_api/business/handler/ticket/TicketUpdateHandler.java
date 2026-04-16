@@ -20,6 +20,9 @@ import com.mms.mms_api.model.ScheduleSeatId;
 import com.mms.mms_api.model.Seat;
 import com.mms.mms_api.model.Ticket;
 
+/**
+ * Handles ticket update commands.
+ */
 @Component
 public class TicketUpdateHandler extends TicketBaseHandler<TicketUpdateCommand, TicketDetailDto> {
     private final TicketDependencies ticketDependencies;
@@ -28,6 +31,15 @@ public class TicketUpdateHandler extends TicketBaseHandler<TicketUpdateCommand, 
 
     private final ScheduleSeatRepository scheduleSeatRepository;
 
+    /**
+     * Creates a TicketUpdateHandler.
+     *
+     * @param ticketMapper ticket mapper
+     * @param ticketRepository ticket repository
+     * @param ticketDependencies helper service for resolving ticket associations
+     * @param invoiceRepository invoice repository
+     * @param scheduleSeatRepository schedule-seat repository
+     */
     public TicketUpdateHandler(TicketMapper ticketMapper,
             TicketRepository ticketRepository, TicketDependencies ticketDependencies,
             InvoiceRepository invoiceRepository, ScheduleSeatRepository scheduleSeatRepository) {
@@ -37,6 +49,13 @@ public class TicketUpdateHandler extends TicketBaseHandler<TicketUpdateCommand, 
         this.scheduleSeatRepository = scheduleSeatRepository;
     }
 
+    /**
+     * Updates a ticket's seat, schedule, and promotion; adjusts schedule-seat reservation state accordingly.
+     *
+     * @param request ticket update command
+     * @return updated ticket detail DTO
+     * @throws com.mms.mms_api.exception.ResourceNotFoundException when the ticket or schedule seat does not exist
+     */
     @Override
     public TicketDetailDto execute(TicketUpdateCommand request) {
         Ticket ticket = ticketRepository.findById(request.getId())

@@ -19,26 +19,53 @@ import com.mms.mms_api.util.validator.PromotionValidator;
 
 import lombok.AllArgsConstructor;
 
+/**
+ * Provides CRUD and search operations for promotions.
+ */
 @Service
 @AllArgsConstructor
 public class PromotionService {
     private final RequestMediator mediator;
     private final PromotionValidator promotionValidator;
 
+    /**
+     * Creates a promotion.
+     *
+     * @param request create command
+     * @return created promotion DTO
+     */
     @PreAuthorize("hasAuthority('ADMIN')")
     @Transactional
     public PromotionDto handle(PromotionCreateCommand request) {
         return mediator.execute(request);
     }
 
+    /**
+     * Returns all promotions.
+     *
+     * @param request get-all query
+     * @return list of promotion DTOs
+     */
     public List<PromotionDto> handle(PromotionGetAllQuery request) {
         return mediator.execute(request);
     }
 
+    /**
+     * Returns promotion details by id.
+     *
+     * @param request get-by-id query
+     * @return promotion DTO
+     */
     public PromotionDto handle(PromotionGetByIdQuery request) {
         return mediator.execute(request);
     }
 
+    /**
+     * Updates a promotion.
+     *
+     * @param request update command
+     * @return updated promotion DTO
+     */
     @PreAuthorize("hasAuthority('ADMIN')")
     @Transactional
     public PromotionDto handle(PromotionUpdateCommand request) {
@@ -46,10 +73,21 @@ public class PromotionService {
         return mediator.execute(request);
     }
 
+    /**
+     * Searches promotions with pagination.
+     *
+     * @param request search query
+     * @return paginated promotion result
+     */
     public PaginatedResult<PromotionDto> handle(PromotionSearchQuery request) {
         return mediator.execute(request);
     }
 
+    /**
+     * Deletes a promotion.
+     *
+     * @param request delete command
+     */
     @PreAuthorize("hasAuthority('ADMIN')")
     @Transactional
     public void handle(PromotionDeleteCommand request) {

@@ -12,6 +12,9 @@ import com.mms.mms_api.business.service.GscService;
 import com.mms.mms_api.dto.promotion.PromotionDto;
 import com.mms.mms_api.model.Promotion;
 
+/**
+ * Mapper for promotion commands and DTOs with image URL enrichment.
+ */
 @Mapper(config = DefaultMapperConfig.class)
 public abstract class PromotionMapper {
     protected GscService gscService;

@@ -19,12 +19,21 @@ import com.mms.mms_api.util.validator.SeatValidator;
 
 import lombok.AllArgsConstructor;
 
+/**
+ * Provides CRUD operations for seats and seat-type lookup.
+ */
 @Service
 @AllArgsConstructor
 public class SeatService {
     private final RequestMediator mediator;
     private final SeatValidator seatValidator;
 
+    /**
+     * Creates a seat.
+     *
+     * @param request create command
+     * @return created seat DTO
+     */
     @PreAuthorize("hasAuthority('ADMIN')")
     @Transactional
     public SeatDto handle(SeatCreateCommand request) {
@@ -32,14 +41,32 @@ public class SeatService {
         return mediator.execute(request);
     }
 
+    /**
+     * Returns all seats.
+     *
+     * @param request get-all query
+     * @return list of seat DTOs
+     */
     public List<SeatDto> handle(SeatGetAllQuery request) {
         return mediator.execute(request);
     }
 
+    /**
+     * Returns seat details by id.
+     *
+     * @param request get-by-id query
+     * @return seat DTO
+     */
     public SeatDto handle(SeatGetByIdQuery request) {
         return mediator.execute(request);
     }
 
+    /**
+     * Updates a seat.
+     *
+     * @param request update command
+     * @return updated seat DTO
+     */
     @PreAuthorize("hasAuthority('ADMIN')")
     @Transactional
     public SeatDto handle(SeatUpdateCommand request) {
@@ -47,12 +74,23 @@ public class SeatService {
         return mediator.execute(request);
     }
 
+    /**
+     * Deletes a seat.
+     *
+     * @param request delete command
+     */
     @PreAuthorize("hasAuthority('ADMIN')")
     @Transactional
     public void handle(SeatDeleteCommand request) {
         mediator.execute(request);
     }
 
+    /**
+     * Returns seat type multipliers.
+     *
+     * @param request seat-type query
+     * @return seat type and multiplier mapping
+     */
     public Map<String, Double> handle(SeatTypeGetAllQuery request) {
         return mediator.execute(request);
     }

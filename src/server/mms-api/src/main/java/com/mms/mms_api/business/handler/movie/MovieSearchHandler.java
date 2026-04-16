@@ -15,13 +15,28 @@ import com.mms.mms_api.model.Movie;
 import com.mms.mms_api.util.SearchHelper;
 import com.mms.mms_api.util.mapper.MovieMapper;
 
+/**
+ * Handles movie search queries.
+ */
 @Component
 public class MovieSearchHandler extends MovieBaseHandler<MovieSearchQuery, PaginatedResult<MovieDto>> {
 
+    /**
+     * Creates a MovieSearchHandler.
+     *
+     * @param movieMapper movie mapper
+     * @param movieRepository movie repository
+     */
     public MovieSearchHandler(MovieMapper movieMapper, MovieRepository movieRepository) {
         super(movieMapper, movieRepository);
     }
 
+    /**
+     * Executes a paginated movie search using the supplied filters.
+     *
+     * @param request search query with filters and pagination parameters
+     * @return paginated result of movie DTOs
+     */
     @Override
     public PaginatedResult<MovieDto> execute(MovieSearchQuery request) {
         Pageable pageable = SearchHelper.generatePageable(request.getPageNumber(), request.getPageSize());

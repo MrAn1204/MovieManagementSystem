@@ -10,15 +10,24 @@ import org.springframework.lang.NonNull;
 
 import com.mms.mms_api.common.PaginatedResult;
 
+/**
+ * Utility helpers for pageable requests and paginated responses.
+ */
 public class SearchHelper {
     private SearchHelper() {
     }
 
+    /**
+     * Creates a pageable instance from one-based page input.
+     */
     @NonNull
     public static Pageable generatePageable(int pageNumber, int pageSize) {
         return PageRequest.of(pageNumber - 1, pageSize);
     }
 
+    /**
+     * Maps a page content into a paginated DTO result.
+     */
     public static <T, R> PaginatedResult<R> generatePaginatedResult(Page<T> page, Function<T, R> mapFunction) {
         List<R> mappedContent = page.getContent().stream()
                 .map(mapFunction)

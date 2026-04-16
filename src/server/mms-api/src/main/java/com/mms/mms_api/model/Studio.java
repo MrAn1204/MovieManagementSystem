@@ -8,6 +8,9 @@ import jakarta.persistence.ManyToMany;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 
+/**
+ * Entity representing a movie production studio.
+ */
 @Entity
 @Data
 @EqualsAndHashCode(callSuper = true)

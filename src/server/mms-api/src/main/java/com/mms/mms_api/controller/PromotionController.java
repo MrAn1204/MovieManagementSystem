@@ -30,12 +30,21 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.PutMapping;
 
+/**
+ * Provides CRUD and search endpoints for promotions.
+ */
 @RestController
 @RequestMapping("api/promotions")
 @AllArgsConstructor
 public class PromotionController {
     private final PromotionService promotionService;
 
+    /**
+     * Creates a promotion.
+     *
+     * @param request promotion create payload
+     * @return created promotion
+     */
     @PostMapping(value = "/create", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
     public ResponseEntity<PromotionDto> create(@Valid @ModelAttribute PromotionCreateCommand request) {
         PromotionDto promotion = promotionService.handle(request);
@@ -43,6 +52,11 @@ public class PromotionController {
         return ResponseEntity.status(HttpStatus.CREATED).body(promotion);
     }
 
+    /**
+     * Returns all promotions.
+     *
+     * @return list of promotions
+     */
     @GetMapping
     public ResponseEntity<List<PromotionDto>> getAll() {
         List<PromotionDto> promotions = promotionService.handle(new PromotionGetAllQuery());
@@ -50,6 +64,12 @@ public class PromotionController {
         return ResponseEntity.ok(promotions);
     }
 
+    /**
+     * Returns a promotion by id.
+     *
+     * @param id promotion identifier
+     * @return promotion details
+     */
     @GetMapping("/{id}")
     public ResponseEntity<PromotionDto> getById(@PathVariable UUID id) {
         PromotionDto promotion = promotionService.handle(new PromotionGetByIdQuery(id));
@@ -57,6 +77,13 @@ public class PromotionController {
         return ResponseEntity.ok(promotion);
     }
 
+    /**
+     * Updates a promotion by id.
+     *
+     * @param id promotion identifier
+     * @param request update payload
+     * @return updated promotion
+     */
     @PutMapping(value = "/{id}", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
     public ResponseEntity<PromotionDto> update(@PathVariable UUID id, @Valid @ModelAttribute PromotionUpdateCommand request) {
         request.setId(id);
@@ -66,12 +93,24 @@ public class PromotionController {
         return ResponseEntity.ok(promotion);
     }
 
+    /**
+     * Deletes a promotion by id.
+     *
+     * @param id promotion identifier
+     * @return no-content response
+     */
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> delete(@PathVariable UUID id) {
         promotionService.handle(new PromotionDeleteCommand(id));
         return ResponseEntity.noContent().build();
     }
 
+    /**
+     * Searches promotions with filter and pagination.
+     *
+     * @param request search criteria
+     * @return paginated result of promotions
+     */
     @PostMapping("/search")
     public ResponseEntity<PaginatedResult<PromotionDto>> search(@Valid @RequestBody PromotionSearchQuery request) {
         PaginatedResult<PromotionDto> result = promotionService.handle(request);

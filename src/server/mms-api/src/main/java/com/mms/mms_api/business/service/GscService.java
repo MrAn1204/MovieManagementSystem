@@ -14,10 +14,20 @@ import com.google.cloud.storage.StorageOptions;
 import com.mms.mms_api.common.StoragePath;
 import com.mms.mms_api.exception.InvalidInputException;
 
+/**
+ * Handles file operations against Google Cloud Storage.
+ */
 @Service
 public class GscService {
     private static final String BUCKET_NAME = "bucket-mms-488508";
 
+    /**
+     * Uploads a file to the configured storage bucket.
+     *
+     * @param file multipart file to upload
+     * @param folderPath target logical folder path
+     * @return persisted bucket/object path or null when file is empty
+     */
     public String upload(MultipartFile file, StoragePath folderPath) {
         if (file == null || file.isEmpty()) {
             return null;
@@ -42,6 +52,12 @@ public class GscService {
         return String.format("%s/%s", BUCKET_NAME, filePath);
     }
 
+    /**
+     * Deletes an object from storage by bucket/object path.
+     *
+     * @param filePath full bucket/object path
+     * @return true when the object is deleted
+     */
     public boolean delete(String filePath) {
         if (filePath == null || filePath.isEmpty()) {
             return false;
@@ -58,6 +74,12 @@ public class GscService {
         return storage.delete(blobId);
     }
 
+    /**
+     * Returns a public CDN-style URL for a stored object.
+     *
+     * @param filePath full bucket/object path
+     * @return public URL or null when path is empty
+     */
     public String getPublicUrl(String filePath) {
         if (filePath == null || filePath.isEmpty()) {
             return null;
@@ -66,6 +88,12 @@ public class GscService {
         return String.format("https://storage.googleapis.com/%s", filePath);
     }
 
+    /**
+     * Returns a signed temporary URL for a stored object.
+     *
+     * @param filePath full bucket/object path
+     * @return signed URL or null when path is empty
+     */
     public String getUrl(String filePath) {
         if (filePath == null || filePath.isEmpty()) {
             return null;

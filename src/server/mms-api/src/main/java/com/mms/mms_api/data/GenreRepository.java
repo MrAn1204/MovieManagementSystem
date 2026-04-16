@@ -7,12 +7,18 @@ import org.springframework.stereotype.Repository;
 import java.util.List;
 import java.util.UUID;
 
+/**
+ * Repository for querying and persisting genres.
+ */
 @Repository
 public interface GenreRepository extends JpaRepository<Genre, UUID> {
     List<Genre> findByNameIn(List<String> names);
 
     int countByIdIn(Iterable<UUID> ids);
 
+    /**
+     * Checks whether all provided genre identifiers exist.
+     */
     default boolean existsAllByIdIn(List<UUID> ids) {
         return countByIdIn(ids) == ids.size();
     }

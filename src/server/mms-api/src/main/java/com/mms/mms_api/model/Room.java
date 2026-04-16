@@ -10,6 +10,9 @@ import jakarta.persistence.OneToMany;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 
+/**
+ * Entity representing a cinema room with seat layout constraints.
+ */
 @Entity
 @Data
 @EqualsAndHashCode(callSuper = true)

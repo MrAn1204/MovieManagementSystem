@@ -9,6 +9,9 @@ import org.springframework.stereotype.Repository;
 
 import com.mms.mms_api.model.User;
 
+/**
+ * Repository for user persistence and account lookup queries.
+ */
 @Repository
 public interface UserRepository extends JpaRepository<User, UUID>, JpaSpecificationExecutor<User> {
     @Query("SELECT u FROM User u JOIN FETCH u.roles where u.username = ?1")

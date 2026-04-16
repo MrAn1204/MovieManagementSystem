@@ -8,12 +8,18 @@ import org.springframework.stereotype.Repository;
 
 import com.mms.mms_api.model.Role;
 
+/**
+ * Repository for role lookup and persistence.
+ */
 @Repository
 public interface RoleRepository extends JpaRepository<Role, UUID> {
     Role findByName(String name);
 
     int countByIdIn(Iterable<UUID> ids);
 
+    /**
+     * Checks whether all provided role identifiers exist.
+     */
     default boolean existsAllByIdIn(List<UUID> ids) {
         return countByIdIn(ids) == ids.size();
     }

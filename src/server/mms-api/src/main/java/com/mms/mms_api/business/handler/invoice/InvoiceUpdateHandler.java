@@ -14,16 +14,33 @@ import com.mms.mms_api.util.mapper.InvoiceMapper;
 
 import java.util.List;
 
+/**
+ * Handles invoice update commands.
+ */
 @Component
 public class InvoiceUpdateHandler extends InvoiceBaseHandler<InvoiceUpdateCommand, InvoiceDto> {
     private final TicketRepository ticketRepository;
 
+    /**
+     * Creates an InvoiceUpdateHandler.
+     *
+     * @param invoiceMapper invoice mapper
+     * @param invoiceRepository invoice repository
+     * @param ticketRepository ticket repository
+     */
     public InvoiceUpdateHandler(InvoiceMapper invoiceMapper,
             InvoiceRepository invoiceRepository, TicketRepository ticketRepository) {
         super(invoiceMapper, invoiceRepository);
         this.ticketRepository = ticketRepository;
     }
 
+    /**
+     * Updates an existing invoice, re-links tickets and adjusts the user score accordingly.
+     *
+     * @param request invoice update command
+     * @return updated invoice DTO
+     * @throws com.mms.mms_api.exception.ResourceNotFoundException when the invoice does not exist
+     */
     @Override
     public InvoiceDto execute(InvoiceUpdateCommand request) {
         Invoice invoice = invoiceRepository.findById(request.getId())
@@ -49,6 +66,7 @@ public class InvoiceUpdateHandler extends InvoiceBaseHandler<InvoiceUpdateComman
         int addScoreDifference = request.getAddScore() - invoice.getAddScore();
 
         user.setScore(useScoreDifference, addScoreDifference);
+        invoice.setTotalMoney(tickets, request.getDiscount(), request.getUseScore());
 
         Invoice updatedInvoice = invoiceRepository.save(invoice);
 

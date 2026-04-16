@@ -8,9 +8,17 @@ import org.springframework.stereotype.Service;
 
 import com.mms.mms_api.common.AppConstant;
 
+/**
+ * Provides application-level constraint values for client-side consumption.
+ */
 @Service
 public class AppConstraintService {
 
+    /**
+     * Returns all declared constants in {@link AppConstant}.
+     *
+     * @return map of constant names and values
+     */
     public Map<String, String> getAllConstraints() {
         Field[] fields = AppConstant.class.getFields();
 

@@ -22,6 +22,9 @@ import com.mms.mms_api.util.mapper.MovieMapper;
 import java.util.List;
 import java.util.UUID;
 
+/**
+ * Handles movie update commands.
+ */
 @Component
 public class MovieUpdateHandler extends MovieBaseHandler<MovieUpdateCommand, MovieDto> {
     private GenreRepository genreRepository;
@@ -34,6 +37,17 @@ public class MovieUpdateHandler extends MovieBaseHandler<MovieUpdateCommand, Mov
 
     private GscService gscService;
 
+    /**
+     * Creates a MovieUpdateHandler.
+     *
+     * @param movieMapper movie mapper
+     * @param movieRepository movie repository
+     * @param genreRepository genre repository
+     * @param languageRepository language repository
+     * @param studioRepository studio repository
+     * @param talentRepository talent repository
+     * @param gscService Google Cloud Storage service for thumbnail management
+     */
     public MovieUpdateHandler(
             MovieMapper movieMapper,
             MovieRepository movieRepository,
@@ -50,6 +64,13 @@ public class MovieUpdateHandler extends MovieBaseHandler<MovieUpdateCommand, Mov
         this.gscService = gscService;
     }
 
+    /**
+     * Updates an existing movie, resolves associations and replaces the thumbnail if provided.
+     *
+     * @param request movie update command
+     * @return updated movie DTO
+     * @throws com.mms.mms_api.exception.ResourceNotFoundException when the movie does not exist
+     */
     @Override
     public MovieDto execute(MovieUpdateCommand request) {
         Movie movie = movieRepository.findById(request.getId()).orElseThrow(

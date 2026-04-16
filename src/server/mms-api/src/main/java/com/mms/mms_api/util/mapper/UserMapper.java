@@ -13,6 +13,9 @@ import com.mms.mms_api.dto.user.UserDto;
 import com.mms.mms_api.model.Role;
 import com.mms.mms_api.model.User;
 
+/**
+ * Mapper for user commands and user DTO projections.
+ */
 @Mapper(config = DefaultMapperConfig.class, uses = { InvoiceMapper.class })
 public interface UserMapper {
     @Mapping(target = "roles", ignore = true)

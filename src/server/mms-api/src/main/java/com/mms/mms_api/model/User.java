@@ -17,6 +17,9 @@ import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 
+/**
+ * Entity representing an application user and profile data.
+ */
 @Entity
 @Data
 @EqualsAndHashCode(callSuper = true)

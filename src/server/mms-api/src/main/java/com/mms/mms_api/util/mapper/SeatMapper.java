@@ -10,6 +10,9 @@ import com.mms.mms_api.dto.seat.SeatDto;
 import com.mms.mms_api.model.ScheduleSeat;
 import com.mms.mms_api.model.Seat;
 
+/**
+ * Mapper for seat commands, entities, and DTO representations.
+ */
 @Mapper(config = DefaultMapperConfig.class)
 public interface SeatMapper {
     @Mapping(target = "room", ignore = true)

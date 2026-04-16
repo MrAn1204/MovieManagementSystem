@@ -11,6 +11,9 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 
+/**
+ * Command payload for updating seats.
+ */
 @Data
 @EqualsAndHashCode(callSuper = true)
 @AllArgsConstructor

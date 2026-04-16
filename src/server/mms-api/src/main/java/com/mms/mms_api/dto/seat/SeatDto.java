@@ -7,6 +7,13 @@ import com.mms.mms_api.dto.BaseDto;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 
+/**
+ * DTO representing seat information in a room or schedule.
+ *
+ * Maps from {@link com.mms.mms_api.model.Seat Seat}.
+ *
+ * @see com.mms.mms_api.model.Seat Seat
+ */
 @Data
 @EqualsAndHashCode(callSuper = true)
 public class SeatDto extends BaseDto {

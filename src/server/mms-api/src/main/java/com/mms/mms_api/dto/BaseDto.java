@@ -5,6 +5,11 @@ import java.util.UUID;
 
 import lombok.Data;
 
+/**
+ * Base DTO containing common audit and identifier fields.
+ *
+ * @see com.mms.mms_api.model.BaseEntity BaseEntity
+ */
 @Data
 public abstract class BaseDto {
     private UUID id;

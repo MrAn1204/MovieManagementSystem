@@ -9,6 +9,9 @@ import jakarta.persistence.Id;
 import jakarta.persistence.MappedSuperclass;
 import lombok.Data;
 
+/**
+ * Base JPA entity with shared identifier and audit timestamps.
+ */
 @MappedSuperclass
 @Data
 public abstract class BaseEntity {

@@ -10,6 +10,9 @@ import com.mms.mms_api.business.command.BaseCreateCommand;
 import com.mms.mms_api.business.command.BaseUpdateCommand;
 import com.mms.mms_api.model.BaseEntity;
 
+/**
+ * Shared MapStruct configuration for create and update mappings.
+ */
 @MapperConfig(componentModel = "spring", uses = { AuditMapperConfig.class },
         unmappedTargetPolicy = ReportingPolicy.ERROR,
         mappingInheritanceStrategy = MappingInheritanceStrategy.AUTO_INHERIT_FROM_CONFIG)

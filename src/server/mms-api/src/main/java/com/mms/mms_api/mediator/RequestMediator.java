@@ -9,10 +9,18 @@ import org.springframework.stereotype.Component;
 
 import com.mms.mms_api.business.handler.BaseHandler;
 
+/**
+ * Mediates request execution by routing each request type to its handler.
+ */
 @Component
 public class RequestMediator {
     private final Map<Class<?>, BaseHandler<?, ?>> handlerCache = new HashMap<>();
 
+    /**
+     * Builds a request-type to handler cache from Spring context.
+     *
+     * @param context Spring application context
+     */
     public RequestMediator(ApplicationContext context) {
         @SuppressWarnings("rawtypes")
         Map<String, BaseHandler> handlerBeans = context.getBeansOfType(BaseHandler.class);
@@ -26,6 +34,14 @@ public class RequestMediator {
         });
     }
 
+    /**
+     * Executes a mediator request through its matching handler.
+     *
+     * @param request request instance
+     * @param <T> request type
+     * @param <R> response type
+     * @return handler execution result
+     */
     public <T extends Request, R> R execute(T request) {
         @SuppressWarnings("unchecked")
         BaseHandler<T, R> handler = (BaseHandler<T, R>) handlerCache.get(request.getClass());

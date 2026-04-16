@@ -10,16 +10,32 @@ import com.mms.mms_api.data.PromotionRepository;
 import com.mms.mms_api.dto.promotion.PromotionDto;
 import com.mms.mms_api.util.mapper.PromotionMapper;
 
+/**
+ * Handles promotion creation commands.
+ */
 @Component
 public class PromotionCreateHandler extends PromotionBaseHandler<PromotionCreateCommand, PromotionDto> {
     private final GscService gscService;
 
+    /**
+     * Creates a PromotionCreateHandler.
+     *
+     * @param promotionMapper promotion mapper
+     * @param promotionRepository promotion repository
+     * @param gscService Google Cloud Storage service for image uploads
+     */
     public PromotionCreateHandler(PromotionMapper promotionMapper,
             PromotionRepository promotionRepository, GscService gscService) {
         super(promotionMapper, promotionRepository);
         this.gscService = gscService;
     }
 
+    /**
+     * Creates a new promotion and uploads its image to cloud storage.
+     *
+     * @param request promotion create command
+     * @return created promotion DTO
+     */
     @Override
     public PromotionDto execute(PromotionCreateCommand request) {
         String imageUrl = gscService.upload(request.getImage(), StoragePath.PROMOTION_IMAGE);

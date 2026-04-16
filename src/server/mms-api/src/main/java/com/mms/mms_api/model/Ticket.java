@@ -11,6 +11,9 @@ import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 
+/**
+ * Entity representing a ticket purchase or reservation.
+ */
 @Entity
 @Data
 @EqualsAndHashCode(callSuper = true)

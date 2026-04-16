@@ -8,6 +8,9 @@ import jakarta.validation.constraints.AssertTrue;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 
+/**
+ * Query payload for searching promotions.
+ */
 @Data
 @EqualsAndHashCode(callSuper = true)
 public class PromotionSearchQuery extends BaseSearchQuery{

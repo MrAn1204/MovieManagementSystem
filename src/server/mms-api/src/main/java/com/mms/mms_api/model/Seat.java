@@ -13,6 +13,9 @@ import lombok.EqualsAndHashCode;
 
 import java.util.List;
 
+/**
+ * Entity representing a physical seat in a room.
+ */
 @Entity
 @Data
 @EqualsAndHashCode(callSuper = true)

@@ -1,6 +1,12 @@
 package com.mms.mms_api.common;
 
+/**
+ * Shared validation and domain constants used by the API.
+ */
 public class AppConstant {
+    /**
+     * Prevents instantiation of this constants holder.
+     */
     private AppConstant() {}
 
     public static final int USERNAME_MIN = 5;

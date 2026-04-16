@@ -15,6 +15,9 @@ import com.mms.mms_api.util.mapper.InvoiceMapper;
 
 import java.util.List;
 
+/**
+ * Handles invoice creation commands.
+ */
 @Component
 public class InvoiceCreateHandler extends InvoiceBaseHandler<InvoiceCreateCommand, InvoiceDto> {
 
@@ -22,6 +25,14 @@ public class InvoiceCreateHandler extends InvoiceBaseHandler<InvoiceCreateComman
 
     private final UserRepository userRepository;
 
+    /**
+     * Creates an InvoiceCreateHandler.
+     *
+     * @param invoiceMapper invoice mapper
+     * @param invoiceRepository invoice repository
+     * @param ticketRepository ticket repository
+     * @param userRepository user repository
+     */
     public InvoiceCreateHandler(InvoiceMapper invoiceMapper,
             InvoiceRepository invoiceRepository, TicketRepository ticketRepository, UserRepository userRepository) {
         super(invoiceMapper, invoiceRepository);
@@ -29,6 +40,13 @@ public class InvoiceCreateHandler extends InvoiceBaseHandler<InvoiceCreateComman
         this.userRepository = userRepository;
     }
 
+    /**
+     * Creates a new invoice, links the selected tickets and updates the user score.
+     *
+     * @param request invoice create command
+     * @return created invoice DTO
+     * @throws com.mms.mms_api.exception.ResourceNotFoundException when the user does not exist
+     */
     @Override
     public InvoiceDto execute(InvoiceCreateCommand request) {
         List<Ticket> tickets = ticketRepository.findByIdIn(request.getTicketIds());
@@ -47,6 +65,7 @@ public class InvoiceCreateHandler extends InvoiceBaseHandler<InvoiceCreateComman
         user.setScore(request.getUseScore(), request.getAddScore());
 
         invoice.setUser(user);
+        invoice.setTotalMoney(tickets, request.getDiscount(), request.getUseScore());
 
         Invoice savedInvoice = invoiceRepository.save(invoice);
 

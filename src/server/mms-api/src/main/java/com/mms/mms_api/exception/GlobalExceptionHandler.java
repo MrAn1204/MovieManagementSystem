@@ -19,14 +19,28 @@ import com.mms.mms_api.business.service.AppMessageService;
 
 import io.jsonwebtoken.JwtException;
 
+/**
+ * Centralized REST exception mapping for translating runtime errors into API responses.
+ */
 @RestControllerAdvice
 public class GlobalExceptionHandler {
     private final AppMessageService messageService;
 
+    /**
+     * Creates an exception handler with localized message support.
+     *
+     * @param messageService message lookup service
+     */
     public GlobalExceptionHandler(AppMessageService messageService) {
         this.messageService = messageService;
     }
 
+    /**
+     * Handles bean validation errors raised by request body validation.
+     *
+     * @param exception validation exception
+     * @return bad-request error response with field messages
+     */
     @ExceptionHandler(MethodArgumentNotValidException.class)
     public ResponseEntity<ErrorResponse> handleMethodArgumentNotValidException(
             MethodArgumentNotValidException exception) {
@@ -41,6 +55,12 @@ public class GlobalExceptionHandler {
         return ResponseEntity.badRequest().body(errorResponse);
     }
 
+    /**
+     * Handles custom API exceptions from business logic.
+     *
+     * @param exception API exception
+     * @return mapped error response with status from exception
+     */
     @ExceptionHandler(ApiException.class)
     public ResponseEntity<ErrorResponse> handleApiException(ApiException exception) {
         Map<String, String> messages;
@@ -63,6 +83,12 @@ public class GlobalExceptionHandler {
         return ResponseEntity.status(statusCode).body(errorResponse);
     }
 
+    /**
+     * Handles authentication failures.
+     *
+     * @param exception authentication exception
+     * @return unauthorized response
+     */
     @ExceptionHandler(AuthenticationException.class)
     public ResponseEntity<ErrorResponse> handleAuthenticationException(AuthenticationException exception) {
         ErrorResponse errorResponse = new ErrorResponse(
@@ -73,6 +99,12 @@ public class GlobalExceptionHandler {
         return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(errorResponse);
     }
 
+    /**
+     * Handles authorization failures for authenticated users.
+     *
+     * @param exception access denied exception
+     * @return forbidden response
+     */
     @ExceptionHandler(AccessDeniedException.class)
     public ResponseEntity<ErrorResponse> handleAccessDeniedException(AccessDeniedException exception) {
         ErrorResponse errorResponse = new ErrorResponse(
@@ -84,6 +116,12 @@ public class GlobalExceptionHandler {
     }
 
 
+    /**
+     * Handles JWT parsing and validation errors.
+     *
+     * @param exception JWT exception
+     * @return unauthorized response
+     */
     @ExceptionHandler(JwtException.class)
     public ResponseEntity<ErrorResponse> handleJwtException(JwtException exception) {
         String message = messageService.getByCode("auth.credentials.invalid");
@@ -96,6 +134,12 @@ public class GlobalExceptionHandler {
         return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(errorResponse);
     }
 
+    /**
+     * Handles malformed JSON or request payload values.
+     *
+     * @param exception request body parsing exception
+     * @return bad-request response
+     */
     @ExceptionHandler(HttpMessageNotReadableException.class)
     public ResponseEntity<ErrorResponse> handleHttpMessageNotReadableException(HttpMessageNotReadableException exception) {
         Throwable cause = exception.getMostSpecificCause();
@@ -116,6 +160,12 @@ public class GlobalExceptionHandler {
         return ResponseEntity.badRequest().build();
     }
 
+    /**
+     * Handles invalid URL/query parameter type mismatches.
+     *
+     * @param exception type mismatch exception
+     * @return bad-request response
+     */
     @ExceptionHandler(MethodArgumentTypeMismatchException.class)
     public ResponseEntity<ErrorResponse> handleMethodArgumentTypeMismatchException(MethodArgumentTypeMismatchException exception) {
         String path = exception.getName();
@@ -130,6 +180,12 @@ public class GlobalExceptionHandler {
         return ResponseEntity.badRequest().body(errorResponse);
     }
 
+    /**
+     * Handles all unhandled runtime exceptions.
+     *
+     * @param exception unhandled exception
+     * @return internal-server-error response
+     */
     @ExceptionHandler(Exception.class)
     public ResponseEntity<ErrorResponse> handleException(Exception exception) {
         ErrorResponse errorResponse = new ErrorResponse(

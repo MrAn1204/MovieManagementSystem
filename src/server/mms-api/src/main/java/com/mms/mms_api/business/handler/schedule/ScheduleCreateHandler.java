@@ -21,12 +21,23 @@ import com.mms.mms_api.model.ScheduleSeatId;
 import com.mms.mms_api.model.Seat;
 import com.mms.mms_api.util.mapper.ScheduleMapper;
 
+/**
+ * Handles schedule creation commands.
+ */
 @Component
 public class ScheduleCreateHandler extends ScheduleBaseHandler<ScheduleCreateCommand, ScheduleDetailDto> {
     private final MovieRepository movieRepository;
 
     private final RoomRepository roomRepository;
 
+    /**
+     * Creates a ScheduleCreateHandler.
+     *
+     * @param scheduleMapper schedule mapper
+     * @param scheduleRepository schedule repository
+     * @param movieRepository movie repository
+     * @param roomRepository room repository
+     */
     public ScheduleCreateHandler(ScheduleMapper scheduleMapper,
             ScheduleRepository scheduleRepository, MovieRepository movieRepository, RoomRepository roomRepository) {
         super(scheduleMapper, scheduleRepository);
@@ -34,6 +45,13 @@ public class ScheduleCreateHandler extends ScheduleBaseHandler<ScheduleCreateCom
         this.roomRepository = roomRepository;
     }
 
+    /**
+     * Creates a new schedule, links the movie and room, and generates seat entries for all room seats.
+     *
+     * @param request schedule create command
+     * @return created schedule detail DTO
+     * @throws com.mms.mms_api.exception.ResourceNotFoundException when the movie or room does not exist
+     */
     @Override
     public ScheduleDetailDto execute(ScheduleCreateCommand request) {
         Schedule schedule = scheduleMapper.toEntity(request);

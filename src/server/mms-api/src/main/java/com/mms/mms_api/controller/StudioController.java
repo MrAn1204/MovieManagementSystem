@@ -14,12 +14,20 @@ import java.util.List;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 
+/**
+ * Exposes read endpoints for movie studios.
+ */
 @RestController
 @RequestMapping("/api/studios")
 @AllArgsConstructor
 public class StudioController {
     private final StudioService studioService;
 
+    /**
+     * Returns all available studios.
+     *
+     * @return list of studios
+     */
     @GetMapping
     public ResponseEntity<List<StudioDto>> getAll() {
         StudioGetAllQuery request = new StudioGetAllQuery();

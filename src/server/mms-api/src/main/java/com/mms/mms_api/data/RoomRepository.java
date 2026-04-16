@@ -7,6 +7,9 @@ import org.springframework.data.jpa.repository.JpaSpecificationExecutor;
 
 import com.mms.mms_api.model.Room;
 
+/**
+ * Repository for room persistence and specification queries.
+ */
 public interface RoomRepository extends JpaRepository<Room, UUID>, JpaSpecificationExecutor<Room> {
     boolean existsByName(String name);
 

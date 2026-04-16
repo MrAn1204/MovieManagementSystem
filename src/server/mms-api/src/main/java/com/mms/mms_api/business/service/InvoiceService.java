@@ -17,12 +17,21 @@ import com.mms.mms_api.util.validator.InvoiceValidator;
 
 import lombok.AllArgsConstructor;
 
+/**
+ * Provides CRUD operations for invoices.
+ */
 @Service
 @AllArgsConstructor
 public class InvoiceService {
     private final RequestMediator mediator;
     private final InvoiceValidator invoiceValidator;
 
+    /**
+     * Creates an invoice.
+     *
+     * @param request create command
+     * @return created invoice DTO
+     */
     @PreAuthorize("hasAuthority('ADMIN')")
     @Transactional
     public InvoiceDto handle(InvoiceCreateCommand request) {
@@ -31,16 +40,34 @@ public class InvoiceService {
 
     }
 
+    /**
+     * Returns all invoices.
+     *
+     * @param request get-all query
+     * @return list of invoice DTOs
+     */
     @PreAuthorize("hasAuthority('ADMIN')")
     public List<InvoiceDto> handle(InvoiceGetAllQuery request) {
         return mediator.execute(request);
     }
 
+    /**
+     * Returns invoice details by id.
+     *
+     * @param request get-by-id query
+     * @return invoice DTO
+     */
     @PreAuthorize("hasAuthority('ADMIN') || @invoiceValidationService.isOwnedByUserId(#request.id, authentication.principal.id)")
     public InvoiceDto handle(InvoiceGetByIdQuery request) {
         return mediator.execute(request);
     }
 
+    /**
+     * Updates an invoice.
+     *
+     * @param request update command
+     * @return updated invoice DTO
+     */
     @PreAuthorize("hasAuthority('ADMIN')")
     @Transactional
     public InvoiceDto handle(InvoiceUpdateCommand request) {
@@ -48,6 +75,11 @@ public class InvoiceService {
         return mediator.execute(request);
     }
 
+    /**
+     * Deletes an invoice.
+     *
+     * @param request delete command
+     */
     @PreAuthorize("hasAuthority('ADMIN')")
     @Transactional
     public void handle(InvoiceDeleteCommand request) {

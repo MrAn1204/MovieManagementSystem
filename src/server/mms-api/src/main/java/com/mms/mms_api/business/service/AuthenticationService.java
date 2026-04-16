@@ -11,6 +11,9 @@ import com.mms.mms_api.util.validator.UserValidator;
 
 import lombok.AllArgsConstructor;
 
+/**
+ * Coordinates authentication and registration workflows.
+ */
 @Service
 @AllArgsConstructor
 public class AuthenticationService {
@@ -18,10 +21,22 @@ public class AuthenticationService {
     
     private final UserValidator userValidator;
 
+    /**
+     * Authenticates a user.
+     *
+     * @param request login command
+     * @return login result DTO
+     */
     public LoginResultDto handle(LoginCommand request) {
         return mediator.execute(request);
     }
 
+    /**
+     * Registers a new user.
+     *
+     * @param request register command
+     * @return created user DTO
+     */
     public UserDto handle(RegisterCommand request) {
         userValidator.validate(request);
         return mediator.execute(request);

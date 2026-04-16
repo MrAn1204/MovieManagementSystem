@@ -19,6 +19,9 @@ import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 
 import lombok.AllArgsConstructor;
 
+/**
+ * Central Spring Security configuration for stateless JWT-based authentication.
+ */
 @Configuration
 @AllArgsConstructor
 @EnableMethodSecurity
@@ -29,6 +32,13 @@ public class SecurityConfiguration {
 
     private CustomAccessDeniedHandler accessDeniedHandler;
 
+    /**
+     * Configures HTTP security rules, filter chain, and exception handling.
+     *
+     * @param httpSecurity security builder
+     * @return configured security filter chain
+     * @throws Exception when configuration fails
+     */
     @Bean
     SecurityFilterChain securityFilterChain(HttpSecurity httpSecurity) throws Exception {
         return httpSecurity
@@ -47,6 +57,11 @@ public class SecurityConfiguration {
                 .build();
     }
 
+    /**
+     * Registers CORS rules for frontend communication.
+     *
+     * @return CORS configuration source
+     */
     @Bean
     CorsConfigurationSource corsConfigurationSource() {
         CorsConfiguration config = new CorsConfiguration();
@@ -61,11 +76,23 @@ public class SecurityConfiguration {
         return source;
     }
 
+    /**
+     * Exposes the framework authentication manager.
+     *
+     * @param config authentication configuration
+     * @return authentication manager
+     * @throws Exception when manager lookup fails
+     */
     @Bean
     AuthenticationManager authenticationManager(AuthenticationConfiguration config) throws Exception {
         return config.getAuthenticationManager();
     }
 
+    /**
+     * Provides password encoding for stored credentials.
+     *
+     * @return BCrypt password encoder
+     */
     @Bean
     PasswordEncoder passwordEncoder() {
         return new BCryptPasswordEncoder();

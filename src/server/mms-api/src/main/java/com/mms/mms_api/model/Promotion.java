@@ -11,6 +11,9 @@ import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 
+/**
+ * Entity representing a promotional discount campaign.
+ */
 @Entity
 @Data
 @EqualsAndHashCode(callSuper = true)

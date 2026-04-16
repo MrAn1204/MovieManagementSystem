@@ -21,6 +21,9 @@ import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 
+/**
+ * Request filter that authenticates users from Bearer JWT tokens.
+ */
 @Component
 public class JwtAuthenticationFilter extends OncePerRequestFilter {
     private JwtHelper jwtHelper;
@@ -29,6 +32,13 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
 
     private HandlerExceptionResolver resolver;
 
+    /**
+     * Creates a JWT authentication filter.
+     *
+     * @param jwtHelper JWT helper utility
+     * @param authService user detail service
+     * @param resolver exception resolver for filter-level failures
+     */
     public JwtAuthenticationFilter(JwtHelper jwtHelper, UserInfoService authService,
             @Qualifier("handlerExceptionResolver") HandlerExceptionResolver resolver) {
         this.jwtHelper = jwtHelper;
@@ -36,6 +46,13 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
         this.resolver = resolver;
     }
 
+    /**
+     * Resolves and validates a Bearer token, then populates security context.
+     *
+     * @param request current HTTP request
+     * @param response current HTTP response
+     * @param filterChain remaining filter chain
+     */
     @Override
     protected void doFilterInternal(@NonNull HttpServletRequest request, @NonNull HttpServletResponse response,
             @NonNull FilterChain filterChain) throws ServletException, IOException {
@@ -69,5 +86,4 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
             resolver.resolveException(request, response, null, e);
         }
     }
-
 }

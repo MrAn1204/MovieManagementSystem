@@ -14,6 +14,9 @@ import java.util.UUID;
 
 import org.springframework.web.multipart.MultipartFile;
 
+/**
+ * Command payload for updating movies.
+ */
 @Data
 @EqualsAndHashCode(callSuper = true)
 @AllArgsConstructor

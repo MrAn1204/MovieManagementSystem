@@ -21,11 +21,27 @@ import jakarta.persistence.criteria.Path;
 import jakarta.persistence.criteria.Predicate;
 import jakarta.persistence.criteria.Root;
 
+/**
+ * JPA specification for filtering and sorting schedule search results.
+ */
 public class ScheduleSpecification extends BaseSpecification<Schedule, ScheduleSearchQuery> {
+    /**
+     * Creates a schedule specification from the given search criteria.
+     *
+     * @param criteria the schedule search criteria
+     */
     public ScheduleSpecification(ScheduleSearchQuery criteria) {
         super(criteria);
     }
 
+    /**
+     * Builds the predicate set for schedule searches.
+     *
+     * @param root the root schedule entity
+     * @param query the criteria query being built
+     * @param criteriaBuilder the criteria builder used to create predicates
+     * @return the combined schedule search predicate
+     */
     @Override
     public Predicate toPredicate(@NonNull Root<Schedule> root, @Nullable CriteriaQuery<?> query,
             @NonNull CriteriaBuilder criteriaBuilder) {
@@ -48,6 +64,13 @@ public class ScheduleSpecification extends BaseSpecification<Schedule, ScheduleS
         return criteriaBuilder.and(predicates.toArray(Predicate[]::new));
     }
 
+    /**
+     * Builds a keyword predicate that matches schedule movie names.
+     *
+     * @param root the root schedule entity
+     * @param criteriaBuilder the criteria builder used to create predicates
+     * @return the keyword predicate for schedule search
+     */
     @Override
     protected Predicate buildKeywordPredicate(Root<Schedule> root, CriteriaBuilder criteriaBuilder) {
         String pattern = "%" + criteria.getKeyword().toLowerCase() + "%";
@@ -57,6 +80,13 @@ public class ScheduleSpecification extends BaseSpecification<Schedule, ScheduleS
         return criteriaBuilder.like(movieJoin.get("name"), pattern);
     }
 
+    /**
+     * Builds a predicate that filters schedules by show time on the requested date.
+     *
+     * @param root the root schedule entity
+     * @param criteriaBuilder the criteria builder used to create predicates
+     * @return the show time filter predicate
+     */
     private Predicate buildShowTimePredicate(Root<Schedule> root, CriteriaBuilder criteriaBuilder) {
         Path<LocalDateTime> showTimePath = root.get("showTime");
 
@@ -75,12 +105,26 @@ public class ScheduleSpecification extends BaseSpecification<Schedule, ScheduleS
         }
     }
 
+    /**
+     * Builds a predicate that filters schedules by room id.
+     *
+     * @param root the root schedule entity
+     * @param criteriaBuilder the criteria builder used to create predicates
+     * @return the room filter predicate
+     */
     private Predicate buildRoomPredicate(Root<Schedule> root, CriteriaBuilder criteriaBuilder) {
         Join<Schedule, Room> roomJoin = root.join("room");
         
         return criteriaBuilder.equal(roomJoin.get("id"), criteria.getRoomId());
     }
 
+    /**
+     * Resolves the sort expression for schedule searches, including joined movie and room names.
+     *
+     * @param root the root schedule entity
+     * @param criteriaBuilder the criteria builder used for derived expressions
+     * @return the expression used for sorting schedule results
+     */
     @Override
     protected Expression<?> getSortExpression(Root<Schedule> root, CriteriaBuilder criteriaBuilder) {
         return switch (criteria.getSortBy()) {

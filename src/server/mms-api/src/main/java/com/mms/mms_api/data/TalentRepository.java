@@ -7,12 +7,18 @@ import org.springframework.stereotype.Repository;
 import java.util.List;
 import java.util.UUID;
 
+/**
+ * Repository for querying and persisting talents.
+ */
 @Repository
 public interface TalentRepository extends JpaRepository<Talent, UUID> {
     List<Talent> findByNameIn(List<String> names);
 
     int countByIdIn(Iterable<UUID> ids);
 
+    /**
+     * Checks whether all provided talent identifiers exist.
+     */
     default boolean existsAllByIdIn(List<UUID> ids) {
         return countByIdIn(ids) == ids.size();
     }

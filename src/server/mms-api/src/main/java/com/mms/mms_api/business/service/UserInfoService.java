@@ -11,11 +11,21 @@ import com.mms.mms_api.model.User;
 import com.mms.mms_api.security.UserInfo;
 import lombok.AllArgsConstructor;
 
+/**
+ * Bridges application users to Spring Security's {@link UserDetailsService} contract.
+ */
 @Service
 @AllArgsConstructor
 public class UserInfoService implements UserDetailsService {
     private UserRepository userRepository;
 
+    /**
+     * Loads security user details by username.
+     *
+     * @param username login username
+     * @return Spring Security user details
+     * @throws UsernameNotFoundException when the user cannot be resolved
+     */
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
         User user = userRepository.findByUsername(username);

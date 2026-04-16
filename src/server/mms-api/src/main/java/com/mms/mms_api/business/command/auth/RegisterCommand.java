@@ -14,6 +14,9 @@ import jakarta.validation.constraints.Size;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 
+/**
+ * Command payload for user registration operations.
+ */
 @Data
 @EqualsAndHashCode(callSuper = true)
 @PasswordMatch

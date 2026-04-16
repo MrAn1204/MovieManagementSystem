@@ -10,6 +10,9 @@ import jakarta.validation.constraints.NotNull;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 
+/**
+ * Query payload for searching movies.
+ */
 @Data
 @EqualsAndHashCode(callSuper = true)
 public class MovieSearchQuery extends BaseSearchQuery {

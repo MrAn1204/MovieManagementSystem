@@ -14,12 +14,20 @@ import java.util.List;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 
+/**
+ * Exposes read endpoints for user roles.
+ */
 @RestController
 @RequestMapping("/api/roles")
 @AllArgsConstructor
 public class RoleController {
     private final RoleService roleService;
 
+    /**
+     * Returns all available roles.
+     *
+     * @return list of roles
+     */
     @GetMapping
     public ResponseEntity<List<RoleDto>> getAll() {
         RoleGetAllQuery request = new RoleGetAllQuery();

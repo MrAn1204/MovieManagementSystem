@@ -8,6 +8,9 @@ import lombok.NoArgsConstructor;
 import java.io.Serializable;
 import java.util.UUID;
 
+/**
+ * Composite identifier for a schedule-seat mapping.
+ */
 @Embeddable
 @Data
 @NoArgsConstructor

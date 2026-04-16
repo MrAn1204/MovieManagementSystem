@@ -14,14 +14,29 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.domain.Specification;
 
+/**
+ * Handles promotion search queries.
+ */
 @Component
 public class PromotionSearchHandler extends PromotionBaseHandler<PromotionSearchQuery, PaginatedResult<PromotionDto>> {
 
+    /**
+     * Creates a PromotionSearchHandler.
+     *
+     * @param promotionMapper promotion mapper
+     * @param promotionRepository promotion repository
+     */
     public PromotionSearchHandler(PromotionMapper promotionMapper,
             PromotionRepository promotionRepository) {
         super(promotionMapper, promotionRepository);
     }
 
+    /**
+     * Executes a paginated promotion search using the supplied filters.
+     *
+     * @param request search query with filters and pagination parameters
+     * @return paginated result of promotion DTOs
+     */
     @Override
     public PaginatedResult<PromotionDto> execute(PromotionSearchQuery request) {
         Pageable pageable = SearchHelper.generatePageable(request.getPageNumber(), request.getPageSize());

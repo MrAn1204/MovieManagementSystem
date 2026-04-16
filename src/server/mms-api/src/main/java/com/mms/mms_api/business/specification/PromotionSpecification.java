@@ -15,11 +15,27 @@ import org.springframework.lang.NonNull;
 import org.springframework.lang.Nullable;
 import org.springframework.util.StringUtils;
 
+/**
+ * JPA specification for filtering and sorting promotion search results.
+ */
 public class PromotionSpecification extends BaseSpecification<Promotion, PromotionSearchQuery> {
+    /**
+     * Creates a promotion specification from the given search criteria.
+     *
+     * @param criteria the promotion search criteria
+     */
     public PromotionSpecification(PromotionSearchQuery criteria) {
         super(criteria);
     }
 
+    /**
+     * Builds the predicate set for promotion searches.
+     *
+     * @param root the root promotion entity
+     * @param query the criteria query being built
+     * @param criteriaBuilder the criteria builder used to create predicates
+     * @return the combined promotion search predicate
+     */
     @Override
     public Predicate toPredicate(@NonNull Root<Promotion> root, @Nullable CriteriaQuery<?> query,
             @NonNull CriteriaBuilder criteriaBuilder) {
@@ -38,6 +54,13 @@ public class PromotionSpecification extends BaseSpecification<Promotion, Promoti
         return criteriaBuilder.and(predicates.toArray(Predicate[]::new));
     }
 
+    /**
+     * Builds a keyword predicate that matches promotion titles and descriptions.
+     *
+     * @param root the root promotion entity
+     * @param criteriaBuilder the criteria builder used to create predicates
+     * @return the keyword predicate for promotion search
+     */
     @Override
     protected Predicate buildKeywordPredicate(Root<Promotion> root, CriteriaBuilder criteriaBuilder) {
         String pattern = "%" + criteria.getKeyword().toLowerCase() + "%";
@@ -48,6 +71,13 @@ public class PromotionSpecification extends BaseSpecification<Promotion, Promoti
         return criteriaBuilder.or(titlePredicate, descriptionPredicate);
     }
 
+    /**
+     * Builds a predicate that filters promotions by start and end date bounds.
+     *
+     * @param root the root promotion entity
+     * @param criteriaBuilder the criteria builder used to create predicates
+     * @return the date filter predicate
+     */
     private Predicate buildDatePredicate(Root<Promotion> root, CriteriaBuilder criteriaBuilder) {
         LocalDate searchStart = criteria.getStartDate();
         LocalDate searchEnd = criteria.getEndDate();

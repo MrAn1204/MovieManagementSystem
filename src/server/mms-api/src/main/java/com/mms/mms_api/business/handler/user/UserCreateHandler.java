@@ -15,12 +15,23 @@ import com.mms.mms_api.model.Role;
 import com.mms.mms_api.model.User;
 import com.mms.mms_api.util.mapper.UserMapper;
 
+/**
+ * Handles user creation commands.
+ */
 @Component
 public class UserCreateHandler extends UserBaseHandler<UserCreateCommand, UserDetailDto> {
     private RoleRepository roleRepository;
 
     private PasswordEncoder passwordEncoder;
 
+    /**
+     * Creates a UserCreateHandler.
+     *
+     * @param userMapper user mapper
+     * @param userRepository user repository
+     * @param roleRepository role repository
+     * @param passwordEncoder password encoder
+     */
     public UserCreateHandler(UserMapper userMapper,
             UserRepository userRepository, RoleRepository roleRepository, PasswordEncoder passwordEncoder) {
         super(userMapper, userRepository);
@@ -28,6 +39,12 @@ public class UserCreateHandler extends UserBaseHandler<UserCreateCommand, UserDe
         this.passwordEncoder = passwordEncoder;
     }
 
+    /**
+     * Creates a new user with resolved roles and an encoded password.
+     *
+     * @param request user create command
+     * @return created user detail DTO
+     */
     public UserDetailDto execute(UserCreateCommand request) {
         List<UUID> roleIds = request.getRoleIds();
         List<Role> mappedRoles = roleRepository.findAllById(roleIds);

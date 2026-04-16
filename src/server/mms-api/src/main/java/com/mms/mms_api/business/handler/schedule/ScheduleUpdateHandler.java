@@ -13,12 +13,23 @@ import com.mms.mms_api.model.Schedule;
 import com.mms.mms_api.model.Movie;
 import com.mms.mms_api.model.Room;
 
+/**
+ * Handles schedule update commands.
+ */
 @Component
 public class ScheduleUpdateHandler extends ScheduleBaseHandler<ScheduleUpdateCommand, ScheduleDetailDto> {
     private final MovieRepository movieRepository;
 
     private final RoomRepository roomRepository;
 
+    /**
+     * Creates a ScheduleUpdateHandler.
+     *
+     * @param scheduleMapper schedule mapper
+     * @param scheduleRepository schedule repository
+     * @param movieRepository movie repository
+     * @param roomRepository room repository
+     */
     public ScheduleUpdateHandler(ScheduleMapper scheduleMapper,
             ScheduleRepository scheduleRepository, MovieRepository movieRepository, RoomRepository roomRepository) {
         super(scheduleMapper, scheduleRepository);
@@ -26,6 +37,13 @@ public class ScheduleUpdateHandler extends ScheduleBaseHandler<ScheduleUpdateCom
         this.roomRepository = roomRepository;
     }
 
+    /**
+     * Updates an existing schedule, reassigning the movie and room.
+     *
+     * @param request schedule update command
+     * @return updated schedule detail DTO
+     * @throws com.mms.mms_api.exception.ResourceNotFoundException when the schedule, movie, or room does not exist
+     */
     @Override
     public ScheduleDetailDto execute(ScheduleUpdateCommand request) {
         Schedule schedule = scheduleRepository.findById(request.getId())
