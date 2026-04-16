@@ -13,7 +13,7 @@ import { RoomModel } from '../../model/room/room.model';
 import { TicketModel } from '../../model/ticket/ticket.model';
 import { UserModel } from '../../model/user/user.model';
 import { PromotionModel } from '../../model/promotion/promotion.model';
-import { ChartData } from 'chart.js';
+import { ChartData, ChartOptions } from 'chart.js';
 import { Table } from "../../shared/component/table/table";
 import { TableColumnModel } from '../../shared/model/table-column.model';
 
@@ -74,6 +74,11 @@ export class Home implements OnInit {
       ]
     };
   });
+
+  chartOptions: ChartOptions = {
+    responsive: true,
+    maintainAspectRatio: false,
+  }
 
   constructor(
     private readonly movieService: MovieService,
