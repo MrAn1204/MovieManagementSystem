@@ -21,14 +21,14 @@ export abstract class DetailDialog<T extends BaseEntityModel> extends BaseDialog
   }
 
   openUpdate(): void {
-    this.dialogService.triggerOpen(this.updateDialog);
+    this.dialogService.triggerOpen(this.dialogRef, this.updateDialog);
   }
 
   openDelete(): void {
-    this.dialogService.triggerOpen(PopupModal);
+    this.dialogService.triggerOpen(this.dialogRef, PopupModal);
   }
 
   reload(): void {
-    this.dialogService.triggerReload();
+    this.dialogService.triggerReload(this.dialogRef);
   }
 }

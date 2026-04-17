@@ -47,7 +47,7 @@ export class PopupModal extends BaseDialog {
     },
   }
 
-  confirm = () => this.dialogService.triggerConfirm();
+  confirm = () => this.dialogService.triggerConfirm(this.dialogRef);
 }
 
 interface PopupConfig {

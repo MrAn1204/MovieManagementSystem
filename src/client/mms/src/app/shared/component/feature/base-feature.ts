@@ -2,7 +2,7 @@ import { FormBuilder, FormGroup } from "@angular/forms";
 import { Directive, inject, Type } from "@angular/core";
 import { BaseEntityModel } from "../../model/base-entity.model";
 import { DialogService } from "../../../service/dialog/dialog.service";
-import { finalize, takeUntil } from "rxjs";
+import { filter, finalize, takeUntil } from "rxjs";
 import { PopupModal } from "../dialog/popup-modal/popup-modal";
 import { DialogPopupDataModel } from "../../model/dialog/dialog-popup-data.model";
 import { DialogRef } from "@angular/cdk/dialog";
@@ -113,9 +113,11 @@ export abstract class BaseFeature<T extends BaseEntityModel> {
     const ref = this.dialogService.openDialog(this.contentDetail, dialogData);
 
     ref.componentInstance?.dialogService.openDialog$
-      .pipe(takeUntil(ref.closed))
-      .subscribe((dialog) => {
-        if (dialog === this.contentCreateEdit) {
+      .pipe(
+        filter((event) => event.sourceRef === ref),
+        takeUntil(ref.closed))
+      .subscribe((event) => {
+        if (event.dialog === this.contentCreateEdit) {
           const editRef = this.displayEdit(item);
 
           editRef.closed
@@ -124,7 +126,7 @@ export abstract class BaseFeature<T extends BaseEntityModel> {
               ref.close();
               this.onView(item.id);
             });
-        } else if (dialog === PopupModal) {
+        } else if (event.dialog === PopupModal) {
           const deleteRef = this.displayDelete(item.id);
 
           deleteRef.closed
@@ -134,7 +136,9 @@ export abstract class BaseFeature<T extends BaseEntityModel> {
       });
 
     ref.componentInstance?.dialogService.reload$
-      .pipe(takeUntil(ref.closed))
+      .pipe(
+        filter((event) => event.sourceRef === ref),
+        takeUntil(ref.closed))
       .subscribe(() => {
         this.onView(item.id);
         ref.close();
@@ -186,7 +190,9 @@ export abstract class BaseFeature<T extends BaseEntityModel> {
 
     const dialogRef = this.dialogService.openDialog(PopupModal, dialogData);
 
-    dialogRef.componentInstance?.dialogService.confirmTask$.subscribe(() => {
+    dialogRef.componentInstance?.dialogService.confirmTask$
+      .pipe(filter((event) => event.sourceRef === dialogRef))
+      .subscribe(() => {
       this.confirmDelete(id, undefined, () => dialogRef.close());
     });
 
