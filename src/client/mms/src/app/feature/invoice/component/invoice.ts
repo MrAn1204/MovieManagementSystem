@@ -9,6 +9,8 @@ import { getRoleConfig } from '../../../shared/config/role-config';
 import { Table } from "../../../shared/component/table/table";
 import { TableColumnModel } from '../../../shared/model/table-column.model';
 import { InvoiceService } from '../../../service/invoice/invoice.service';
+import { UserSummaryModel } from '../../../model/user/user-summary.model';
+import { DialogRef } from '@angular/cdk/dialog';
 
 @Component({
   selector: 'app-invoice',
@@ -24,6 +26,8 @@ export class Invoice extends BaseFeature<InvoiceModel> {
 
   data = input.required<InvoiceModel[]>();
 
+  user = input.required<UserSummaryModel>();
+
   columns: TableColumnModel<InvoiceModel>[] = [
     { key: 'name', label: 'Name', type: 'string' },
     { key: 'totalMoney', label: 'Total Money', type: 'number' },
@@ -34,5 +38,9 @@ export class Invoice extends BaseFeature<InvoiceModel> {
 
   constructor(invoiceService: InvoiceService) {
     super(invoiceService);
+  }
+
+  protected override displayEdit(item: InvoiceModel, data?: Record<string, unknown>, dialog?: Type<BaseDialog>): DialogRef<unknown, BaseDialog> {
+    return super.displayEdit(item, { ...data, user: this.user() }, dialog);
   }
 }

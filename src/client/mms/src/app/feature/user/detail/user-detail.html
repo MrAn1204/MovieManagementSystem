@@ -43,7 +43,7 @@
     <div class="sm:col-span-2">
       <app-detail-text label="Invoices"></app-detail-text>
 
-      <app-invoice [data]="model?.invoices ?? []"></app-invoice>
+      <app-invoice [data]="model?.invoices ?? []" [user]="userSummary"></app-invoice>
     </div>
   </div>
 </app-detail>
