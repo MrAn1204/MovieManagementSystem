@@ -13,6 +13,8 @@ export abstract class SearchableFeature<T extends BaseEntityModel> extends BaseF
 
   abstract sortOptions: FormOptionModel[];
 
+  private readonly DEFAULT_SORT_KEY = 'createdAt';
+
   abstract columns: TableColumnModel<T>[];
 
   data = signal<PaginatedResult<T>>(createEmptyPaginatedResult<T>());
@@ -22,12 +24,16 @@ export abstract class SearchableFeature<T extends BaseEntityModel> extends BaseF
   ngOnInit(): void {
     this.searchForm = this.formBuilder.nonNullable.group({
       keyword: [''],
-      sortBy: ['id'],
+      sortBy: [this.DEFAULT_SORT_KEY],
       sortDirection: ['ASC'],
       pageNumber: [1],
       pageSize: [10],
       ...this.getFilterGroup().controls
     });
+
+    this.sortOptions.unshift({ label: 'Default Sort', value: this.DEFAULT_SORT_KEY });
+
+    this.onSearch();
   }
 
   protected abstract getFilterGroup(): FormGroup;
