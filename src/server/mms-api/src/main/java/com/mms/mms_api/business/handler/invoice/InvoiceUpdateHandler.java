@@ -50,6 +50,9 @@ public class InvoiceUpdateHandler extends InvoiceBaseHandler<InvoiceUpdateComman
 
         User user = invoice.getUser();
 
+        int useScoreDifference = request.getUseScore() - invoice.getUseScore();
+        int addScoreDifference = request.getAddScore() - invoice.getAddScore();
+
         invoiceMapper.updateEntity(request, invoice);
 
         for (Ticket oldTicket : invoice.getTickets()) {
@@ -61,9 +64,6 @@ public class InvoiceUpdateHandler extends InvoiceBaseHandler<InvoiceUpdateComman
         }
 
         invoice.setTickets(tickets);
-
-        int useScoreDifference = request.getUseScore() - invoice.getUseScore();
-        int addScoreDifference = request.getAddScore() - invoice.getAddScore();
 
         user.setScore(useScoreDifference, addScoreDifference);
         invoice.setTotalMoney(tickets, request.getDiscount(), request.getUseScore());
