@@ -78,6 +78,11 @@ export class Home implements OnInit {
   chartOptions: ChartOptions = {
     responsive: true,
     maintainAspectRatio: false,
+    plugins: {
+      legend: {
+        display: false,
+      },
+    }
   }
 
   constructor(

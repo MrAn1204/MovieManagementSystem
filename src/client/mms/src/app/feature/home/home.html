@@ -57,11 +57,11 @@
     </a>
   </div>
 
-  <div class="flex md:flex-row flex-col py-2 gap-4 overflow-auto">
+  <div class="flex md:flex-row flex-col py-2 gap-4 overflow-auto h-full">
     <div class="flex flex-col flex-1 min-w-0">
       <h2 class="text-2xl font-bold mb-4">Tickets Sold</h2>
 
-      <c-chart class="w-full" [data]="ticketSold()" [options]="chartOptions" type="bar"></c-chart>
+      <c-chart class="w-full h-80" [data]="ticketSold()" [options]="chartOptions" type="bar" customTooltips="false"></c-chart>
     </div>
 
     <div class="flex flex-col flex-1">
