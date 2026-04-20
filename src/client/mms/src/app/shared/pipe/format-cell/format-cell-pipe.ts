@@ -1,4 +1,5 @@
 import { Pipe, PipeTransform } from '@angular/core';
+import { CellType } from '../../model/table-column.model';
 
 @Pipe({
   name: 'formatCell',
@@ -6,12 +7,14 @@ import { Pipe, PipeTransform } from '@angular/core';
 export class FormatCellPipe implements PipeTransform {
   private readonly EMPTY_TEXT = '---';
 
-  transform(value: any, type?: string): string {
+  transform(value: any, type?: CellType): string {
     if (value === null || value === undefined) return this.EMPTY_TEXT;
 
     switch (type) {
       case 'date':
         return new Date(value).toLocaleDateString();
+      case 'time':
+        return new Date(value).toLocaleTimeString();
       case 'datetime':
         return new Date(value).toLocaleString();
       case 'id-name':
