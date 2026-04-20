@@ -25,7 +25,7 @@ export class Home implements OnInit {
 
   scheduleColumns: TableColumnModel<TodayScheduleStatisticsModel>[] = [
     { key: 'movieName', label: 'Movie Name', type: 'string' },
-    { key: 'showTime', label: 'Show Time', type: 'date' },
+    { key: 'showTime', label: 'Show Time', type: 'time' },
     { key: 'roomName', label: 'Room Name', type: 'string' },
   ];
 

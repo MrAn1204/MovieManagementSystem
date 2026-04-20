@@ -57,15 +57,14 @@
     </a>
   </div>
 
-  <div class="flex md:flex-row flex-col py-2 gap-4 overflow-auto h-full">
-    <div class="flex flex-col flex-1 min-w-0">
+  <div class="grid grid-cols-1 md:grid-cols-2 flex-col py-2 gap-4 overflow-auto h-full">
+    <div class="row-span-2 flex flex-col min-w-0">
       <h2 class="text-2xl font-bold mb-4">Tickets Sold</h2>
 
-      <c-chart class="w-full h-80" [data]="ticketSold()" [options]="chartOptions" type="bar" customTooltips="false"></c-chart>
+      <c-chart class="w-full h-full min-h-60" [data]="ticketSold()" [options]="chartOptions" type="bar" customTooltips="false"></c-chart>
     </div>
 
-    <div class="flex flex-col flex-1">
-      <div class="grow">
+    <div class="grow">
         <h2 class="text-2xl font-bold mb-4">Today's Schedules</h2>
 
         <app-table class="w-full!" [columns]="scheduleColumns" [data]="todaySchedules()" [tableConfig]="{ checkbox: false }">
@@ -80,6 +79,5 @@
 
         </app-table>
       </div>
-    </div>
   </div>
 </div>
