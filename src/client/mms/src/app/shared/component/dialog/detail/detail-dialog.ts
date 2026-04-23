@@ -1,9 +1,8 @@
 import { Component, inject, Type } from '@angular/core';
 import { BaseDialog } from '../base/base-dialog';
-import { DialogDataModel } from '../../../model/dialog/dialog-data.model';
 import { DIALOG_DATA } from '@angular/cdk/dialog';
 import { BaseEntityModel } from '../../../model/base-entity.model';
-import { PopupModal } from '../popup-modal/popup-modal';
+import { DetailDialogDataModel } from '../../../model/dialog/detail-dialog-data.model';
 
 @Component({
   selector: 'app-detail-dialog',
@@ -12,7 +11,7 @@ import { PopupModal } from '../popup-modal/popup-modal';
   styleUrl: './detail-dialog.css',
 })
 export abstract class DetailDialog<T extends BaseEntityModel> extends BaseDialog {
-  data: DialogDataModel<T> = inject(DIALOG_DATA);
+  data: DetailDialogDataModel<T> = inject(DIALOG_DATA);
 
   protected abstract readonly updateDialog: Type<BaseDialog>;
 
@@ -21,11 +20,11 @@ export abstract class DetailDialog<T extends BaseEntityModel> extends BaseDialog
   }
 
   openUpdate(): void {
-    this.dialogService.triggerOpen(this.dialogRef, this.updateDialog);
+    this.data.openEdit?.();
   }
 
   openDelete(): void {
-    this.dialogService.triggerOpen(this.dialogRef, PopupModal);
+    this.data.openDelete?.();
   }
 
   reload(): void {

@@ -2,7 +2,7 @@ import { FormBuilder, FormGroup } from "@angular/forms";
 import { Directive, inject, Type } from "@angular/core";
 import { BaseEntityModel } from "../../model/base-entity.model";
 import { DialogService } from "../../../service/dialog/dialog.service";
-import { filter, finalize, takeUntil } from "rxjs";
+import { finalize } from "rxjs";
 import { PopupModal } from "../dialog/popup-modal/popup-modal";
 import { DialogPopupDataModel } from "../../model/dialog/dialog-popup-data.model";
 import { DialogRef } from "@angular/cdk/dialog";
@@ -12,6 +12,8 @@ import { DialogDataModel } from "../../model/dialog/dialog-data.model";
 import { NgxSpinnerService } from "ngx-spinner";
 import { EntityService } from "../../../service/entity.service";
 import { FormMapper } from "../../util/form-mapper";
+import { EntityDialogService } from "../../../service/dialog/entity/entity-dialog.service";
+import { DetailDialogDataModel } from "../../model/dialog/detail-dialog-data.model";
 
 @Directive()
 export abstract class BaseFeature<T extends BaseEntityModel> {
@@ -23,6 +25,7 @@ export abstract class BaseFeature<T extends BaseEntityModel> {
   abstract roleConfig: RoleConfigModel;
 
   protected readonly dialogService = inject(DialogService);
+  protected readonly entityDialog = inject(EntityDialogService);
   protected readonly formBuilder = inject(FormBuilder);
   protected readonly spinner = inject(NgxSpinnerService);
 
@@ -104,96 +107,62 @@ export abstract class BaseFeature<T extends BaseEntityModel> {
   }
 
   protected displayInfo(item: T): void {
-    const dialogData: DialogDataModel<T> = {
+    const dialogData: DetailDialogDataModel<T> = {
       title: `${this.entityName} Details`,
       model: item,
       roleConfig: this.roleConfig,
+      openEdit: () => this.displayEdit(item, undefined, () => {
+        ref.close();
+        this.onView(item.id);
+      }),
+      openDelete: () => this.displayDelete(item.id, () => ref.close())
     }
 
-    const ref = this.dialogService.openDialog(this.contentDetail, dialogData);
-
-    ref.componentInstance?.dialogService.openDialog$
-      .pipe(
-        filter((event) => event.sourceRef === ref),
-        takeUntil(ref.closed))
-      .subscribe((event) => {
-        if (event.dialog === this.contentCreateEdit) {
-          const editRef = this.displayEdit(item);
-
-          editRef.closed
-            .pipe(takeUntil(ref.closed))
-            .subscribe(() => {
-              ref.close();
-              this.onView(item.id);
-            });
-        } else if (event.dialog === PopupModal) {
-          const deleteRef = this.displayDelete(item.id);
-
-          deleteRef.closed
-            .pipe(takeUntil(ref.closed))
-            .subscribe(() => ref.close());
-        }
-      });
-
-    ref.componentInstance?.dialogService.reload$
-      .pipe(
-        filter((event) => event.sourceRef === ref),
-        takeUntil(ref.closed))
-      .subscribe(() => {
-        this.onView(item.id);
-        ref.close();
-      });
+    const ref = this.entityDialog.openDetail(this.contentDetail, dialogData, () => {
+      this.onView(item.id);
+      ref.close();
+    });
   }
 
-  protected displayAdd(data?: Record<string, unknown>, dialog: Type<BaseDialog> = this.contentCreateEdit): void {
+  protected displayAdd(data?: Record<string, unknown>): void {
     const dialogData: DialogDataModel<T> = {
       title: `Create ${this.entityName}`,
       ...data
     };
 
-    const dialogRef = this.dialogService.openDialog(dialog, dialogData);
-
-    dialogRef.componentInstance?.dialogService.saveForm$
-      .pipe(takeUntil(dialogRef.closed))
-      .subscribe((form) => {
-        if (form.valid) {
-          this.saveNew(form, () => dialogRef.close());
-        }
-      });
+    const dialogRef = this.entityDialog.openForm(this.contentCreateEdit, dialogData, (form) => {
+      this.saveNew(form, () => dialogRef.close());
+    });
   }
 
-  protected displayEdit(item: T, data?: Record<string, unknown>, dialog: Type<BaseDialog> = this.contentCreateEdit): DialogRef<unknown, BaseDialog> {
+  protected displayEdit(item: T, data?: Record<string, unknown>, onClose?: () => void): DialogRef<unknown, BaseDialog> {
     const dialogData: DialogDataModel<T> = {
       title: `Edit ${this.entityName}`,
       model: item,
       ...data
     };
 
-    const dialogRef = this.dialogService.openDialog(dialog, dialogData);
-
-    dialogRef.componentInstance?.dialogService.saveForm$
-      .pipe(takeUntil(dialogRef.closed))
-      .subscribe((form) => {
-        if (form.valid) {
-          this.saveUpdate(item.id, form, () => dialogRef.close());
-        }
+    const dialogRef = this.entityDialog.openForm(this.contentCreateEdit, dialogData, (form) => {
+      this.saveUpdate(item.id, form, () => {
+        dialogRef.close();
+        onClose?.();
       });
+    });
 
     return dialogRef;
   }
 
-  protected displayDelete(id: string): DialogRef<unknown, PopupModal> {
+  protected displayDelete(id: string, onClose?: () => void): DialogRef<unknown, PopupModal> {
     const dialogData: DialogPopupDataModel = {
       type: 'warning',
       message: `Are you sure you want to delete this ${this.entityName.toLowerCase()}? This action cannot be undone.`,
     }
 
-    const dialogRef = this.dialogService.openDialog(PopupModal, dialogData);
-
-    dialogRef.componentInstance?.dialogService.confirmTask$
-      .pipe(filter((event) => event.sourceRef === dialogRef))
-      .subscribe(() => {
-      this.confirmDelete(id, undefined, () => dialogRef.close());
+    const dialogRef = this.entityDialog.openDelete(dialogData, () => {
+      this.confirmDelete(id, undefined, () => {
+        dialogRef.close();
+        onClose?.();
+      });
     });
 
     return dialogRef;

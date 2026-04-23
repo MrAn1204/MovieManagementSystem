@@ -40,7 +40,7 @@ export class Invoice extends BaseFeature<InvoiceModel> {
     super(invoiceService);
   }
 
-  protected override displayEdit(item: InvoiceModel, data?: Record<string, unknown>, dialog?: Type<BaseDialog>): DialogRef<unknown, BaseDialog> {
-    return super.displayEdit(item, { ...data, user: this.user() }, dialog);
+  protected override displayEdit(item: InvoiceModel, data?: Record<string, unknown>, onClose?: () => void): DialogRef<unknown, BaseDialog> {
+    return super.displayEdit(item, { ...data, user: this.user() }, onClose);
   }
 }
