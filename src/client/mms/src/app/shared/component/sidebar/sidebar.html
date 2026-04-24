@@ -20,13 +20,15 @@
 
   <div class="flex flex-col w-full justify-evenly overflow-hidden px-2">
     <hr class="border-platinum-300">
-    <div class="w-full flex items-center p-2">
-      <img src="/images/user-solid-full.svg" alt="user_pfp" class="w-1/6 rounded-full" />
-      <div class="px-2">
-        <p class="font-bold">{{ fullname }}</p>
-        <p class="text-sm">{{ email }}</p>
+    <app-button variant="simple" (clicked)="viewProfile()">
+      <div class="w-full flex items-center ">
+        <img src="/images/user-solid-full.svg" alt="user_pfp" class="w-1/6 rounded-full" />
+        <div class="px-2">
+          <p class="font-bold">{{ fullname }}</p>
+          <p class="text-sm">{{ email }}</p>
+        </div>
       </div>
-    </div>
+    </app-button>
     <button type="button" (click)="onLogout()" class="px-2 text-white rounded-md bg-vermilion-500 hover:bg-vermilion-600">
       <i class="fa-solid fa-right-from-bracket"></i> Log Out
     </button>
