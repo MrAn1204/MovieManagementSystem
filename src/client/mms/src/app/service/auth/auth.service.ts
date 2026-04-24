@@ -46,6 +46,10 @@ export class AuthService {
     return jwtDecode(token);
   }
 
+  getId(): string {
+    return this.currentUser()?.id || '';
+  }
+
   getFullname(): string {
     return this.currentUser()?.fullname || '';
   }
