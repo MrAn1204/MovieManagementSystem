@@ -39,10 +39,10 @@ export abstract class SearchableFeature<T extends BaseEntityModel> extends BaseF
   protected abstract getFilterGroup(): FormGroup;
 
   onSearch(): void {
-    this.showSpinner();
+    this.spinner.show();
 
     this.entityService.search!(this.searchForm.value)
-      .pipe(finalize(() => this.hideSpinner()))
+      .pipe(finalize(() => this.spinner.hide()))
       .subscribe(res => {
         this.data.set(res);
       });

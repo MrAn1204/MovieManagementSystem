@@ -84,13 +84,11 @@ export class Ticket extends SearchableFeature<TicketModel> {
       user: this.selectedItems[0].user,
     }
 
-    const dialogRef = this.dialogService.openDialog(InvoiceCreateEdit, invoiceDialogData)
-
-    dialogRef.componentInstance?.dialogService.saveForm$.subscribe((form) => {
-      this.showSpinner();
+    const dialogRef = this.entityDialog.openForm(InvoiceCreateEdit, invoiceDialogData, (form) => {
+      this.spinner.show();
 
       this.invoiceService.create(form.value)
-        .pipe(finalize(() => this.hideSpinner()))
+        .pipe(finalize(() => this.spinner.hide()))
         .subscribe({
           next: () => dialogRef.close(),
           error: (res) => FormMapper.mapErrorResponse(res, form)

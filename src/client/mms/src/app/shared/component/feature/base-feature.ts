@@ -1,7 +1,6 @@
 import { FormBuilder, FormGroup } from "@angular/forms";
 import { Directive, inject, Type } from "@angular/core";
 import { BaseEntityModel } from "../../model/base-entity.model";
-import { DialogService } from "../../../service/dialog/dialog.service";
 import { finalize } from "rxjs";
 import { PopupModal } from "../dialog/popup-modal/popup-modal";
 import { DialogPopupDataModel } from "../../model/dialog/dialog-popup-data.model";
@@ -9,11 +8,11 @@ import { DialogRef } from "@angular/cdk/dialog";
 import { RoleConfigModel } from "../../model/role-config.model";
 import { BaseDialog } from "../dialog/base/base-dialog";
 import { DialogDataModel } from "../../model/dialog/dialog-data.model";
-import { NgxSpinnerService } from "ngx-spinner";
 import { EntityService } from "../../../service/entity.service";
 import { FormMapper } from "../../util/form-mapper";
 import { EntityDialogService } from "../../../service/dialog/entity/entity-dialog.service";
 import { DetailDialogDataModel } from "../../model/dialog/detail-dialog-data.model";
+import { SpinnerService } from "../../../service/ui/spinner/spinner.service";
 
 @Directive()
 export abstract class BaseFeature<T extends BaseEntityModel> {
@@ -24,10 +23,9 @@ export abstract class BaseFeature<T extends BaseEntityModel> {
 
   abstract roleConfig: RoleConfigModel;
 
-  protected readonly dialogService = inject(DialogService);
   protected readonly entityDialog = inject(EntityDialogService);
   protected readonly formBuilder = inject(FormBuilder);
-  protected readonly spinner = inject(NgxSpinnerService);
+  protected readonly spinner = inject(SpinnerService);
 
   protected readonly entityService!: EntityService<T>;
 
@@ -38,10 +36,10 @@ export abstract class BaseFeature<T extends BaseEntityModel> {
   }
 
   protected saveNew(form: FormGroup, respondHandler?: () => void): void {
-    this.showSpinner();
+    this.spinner.show();
 
     this.entityService.create(form.value)
-      .pipe(finalize(() => this.hideSpinner()))
+      .pipe(finalize(() => this.spinner.hide()))
       .subscribe({
         next: () => respondHandler?.(),
         error: (res) => FormMapper.mapErrorResponse(res, form)
@@ -49,10 +47,10 @@ export abstract class BaseFeature<T extends BaseEntityModel> {
   }
 
   protected saveUpdate(id: string, form: FormGroup, respondHandler?: () => void): void {
-    this.showSpinner();
+    this.spinner.show();
 
     this.entityService.update(id, form.value)
-      .pipe(finalize(() => this.hideSpinner()))
+      .pipe(finalize(() => this.spinner.hide()))
       .subscribe({
         next: () => respondHandler?.(),
         error: (res) => FormMapper.mapErrorResponse(res, form)
@@ -60,10 +58,10 @@ export abstract class BaseFeature<T extends BaseEntityModel> {
   }
 
   protected confirmDelete(id: string, form?: FormGroup, respondHandler?: () => void): void {
-    this.showSpinner();
+    this.spinner.show();
 
     this.entityService.delete(id)
-      .pipe(finalize(() => this.hideSpinner()))
+      .pipe(finalize(() => this.spinner.hide()))
       .subscribe({
         next: () => respondHandler?.(),
         error: (res) => {
@@ -79,10 +77,10 @@ export abstract class BaseFeature<T extends BaseEntityModel> {
   }
 
   onEdit(id: string): void {
-    this.showSpinner();
+    this.spinner.show();
 
     this.entityService.getById(id)
-      .pipe(finalize(() => this.hideSpinner()))
+      .pipe(finalize(() => this.spinner.hide()))
       .subscribe(res => {
         this.displayEdit(res);
       });
@@ -90,10 +88,10 @@ export abstract class BaseFeature<T extends BaseEntityModel> {
 
   onView(param: string | T): void {
     if (typeof param === 'string') {
-      this.showSpinner();
+      this.spinner.show();
 
       this.entityService.getById(param)
-        .pipe(finalize(() => this.hideSpinner()))
+        .pipe(finalize(() => this.spinner.hide()))
         .subscribe(res => {
           this.displayInfo(res);
         });
@@ -166,14 +164,6 @@ export abstract class BaseFeature<T extends BaseEntityModel> {
     });
 
     return dialogRef;
-  }
-
-  protected showSpinner(): void {
-    this.spinner.show();
-  }
-
-  protected hideSpinner(timeout: number = 500): void {
-    setTimeout(() => this.spinner.hide(), timeout);
   }
 
   select(item: T): void {
