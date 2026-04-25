@@ -131,19 +131,15 @@ export class TicketCreateEdit extends CreateEditDialog<TicketDetailModel> implem
       this.schedules.set(schedules.map((schedule) => ({
         label: schedule.name,
         value: schedule.id,
-        selected: schedule.id === this.data.model?.schedule.id,
       })));
     });
   }
 
   private loadPromotions(): void {
-    const modelPromotionId = this.data.model?.promotion?.id ?? '';
-
     this.promotionService.getAll().subscribe((promotions) => {
       const promotionOptions: FormOptionModel[] = promotions.map((promotion) => ({
         label: promotion.title,
         value: promotion.id,
-        selected: modelPromotionId === promotion.id,
       }));
 
       this.promotions.set(promotionOptions);

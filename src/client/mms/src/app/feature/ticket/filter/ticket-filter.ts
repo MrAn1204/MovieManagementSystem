@@ -43,13 +43,11 @@ export class TicketFilter implements OnInit {
       const movieOptions: FormOptionModel[] = movies.map((movie) => ({
         label: movie.name,
         value: movie.id,
-        selected: false,
       }));
 
       movieOptions.unshift({
         label: 'Any Movie',
         value: '',
-        selected: true,
       });
 
       this.movies.set(movieOptions);
@@ -61,13 +59,11 @@ export class TicketFilter implements OnInit {
       const roomOptions: FormOptionModel[] = rooms.map((room) => ({
         label: room.name,
         value: room.id,
-        selected: false,
       }));
 
       roomOptions.unshift({
         label: 'Any Room',
         value: '',
-        selected: true,
       });
 
       this.rooms.set(roomOptions);
@@ -79,13 +75,11 @@ export class TicketFilter implements OnInit {
       const promotionOptions: FormOptionModel[] = promotions.map((promotion) => ({
         label: promotion.title,
         value: promotion.id,
-        selected: false,
       }));
 
       promotionOptions.unshift({
         label: 'Any Promotion',
         value: '',
-        selected: true,
       });
 
       this.promotions.set(promotionOptions);

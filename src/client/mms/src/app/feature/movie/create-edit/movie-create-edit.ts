@@ -74,18 +74,10 @@ export class MovieCreateEdit extends CreateEditDialog<MovieModel> implements OnI
   }
 
   private loadOptions(): void {
-    const model = this.data.model;
-
-    const modelGenres = model?.genres?.map((genre) => genre.id) ?? [];
-    const modelStudios = model?.studios?.map((studio) => studio.id) ?? [];
-    const modelTalents = model?.talents?.map((talent) => talent.id) ?? [];
-    const modelLanguage = model?.language?.id ?? null;
-
     this.genreService.getAll().subscribe((genres) => {
       this.genres.set(genres.map((genre) => ({
         label: genre.name,
         value: genre.id,
-        selected: modelGenres.includes(genre.id) || false
       })));
     });
 
@@ -93,7 +85,6 @@ export class MovieCreateEdit extends CreateEditDialog<MovieModel> implements OnI
       this.studios.set(studios.map((studio) => ({
         label: studio.name,
         value: studio.id,
-        selected: modelStudios.includes(studio.id) || false
       })));
     });
 
@@ -101,7 +92,6 @@ export class MovieCreateEdit extends CreateEditDialog<MovieModel> implements OnI
       this.talents.set(talents.map((talent) => ({
         label: talent.name,
         value: talent.id,
-        selected: modelTalents.includes(talent.id) || false
       })));
     });
 
@@ -109,7 +99,6 @@ export class MovieCreateEdit extends CreateEditDialog<MovieModel> implements OnI
       this.languages.set(languages.map((language) => ({
         label: language.name,
         value: language.id,
-        selected: modelLanguage === language.id || false
       })));
     });
   }

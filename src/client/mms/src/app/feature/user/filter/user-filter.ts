@@ -29,13 +29,11 @@ export class UserFilter implements OnInit {
       const roleOptions: FormOptionModel[] = roles.map((role) => ({
         label: role.name,
         value: role.id,
-        selected: false,
       }));
 
       roleOptions.unshift({
         label: 'Any Role',
         value: '',
-        selected: true,
       });
 
       this.roles.set(roleOptions);

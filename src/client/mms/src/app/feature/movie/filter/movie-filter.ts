@@ -37,7 +37,6 @@ export class MovieFilter implements OnInit {
       this.genres.set(genres.map((genre) => ({
         label: genre.name,
         value: genre.id,
-        selected: false
       })));
     });
 
@@ -45,7 +44,6 @@ export class MovieFilter implements OnInit {
       this.studios.set(studios.map((studio) => ({
         label: studio.name,
         value: studio.id,
-        selected: false
       })));
     });
 
@@ -53,13 +51,11 @@ export class MovieFilter implements OnInit {
       const languageOptions: FormOptionModel[] = languages.map((language) => ({
           label: language.name,
           value: language.id,
-          selected: false
         }));
 
       languageOptions.unshift({
         label: 'Any Language',
         value: '',
-        selected: true
       });
 
       this.languages.set(languageOptions);

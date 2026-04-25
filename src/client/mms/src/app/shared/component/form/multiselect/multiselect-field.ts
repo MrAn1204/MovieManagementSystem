@@ -25,7 +25,7 @@ export class MultiselectField extends BaseField<string[]> {
     super();
 
     effect(() => {
-      this.selected = this.options().filter(option => option.selected).map(option => option.label);
+      this.selected = this.options().filter(option => this.value?.includes(option.value)).map(option => option.label);
     });
   }
 
@@ -34,20 +34,18 @@ export class MultiselectField extends BaseField<string[]> {
 
     if (!value || value.length === 0) {
       this.selected = [];
-      this.options()?.forEach(item => item.selected = false);
     }
   }
 
   updateSelected(option: FormOptionModel): void {
     let newValue = this.value ? [...this.value] : [];
-    option.selected = !option.selected;
 
-    if (option.selected) {
-      newValue.push(option.value);
-      this.selected.push(option.label);
-    } else {
+    if (newValue.includes(option.value)) {
       newValue = newValue.filter(item => item !== option.value);
       this.selected = this.selected.filter(item => item !== option.label);
+    } else {
+      newValue.push(option.value);
+      this.selected.push(option.label);
     }
 
     this.updateValue(newValue);

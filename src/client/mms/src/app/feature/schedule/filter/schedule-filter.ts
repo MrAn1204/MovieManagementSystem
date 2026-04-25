@@ -30,13 +30,11 @@ export class ScheduleFilter implements OnInit {
       const roomOptions: FormOptionModel[] = rooms.map((room) => ({
           label: room.name,
           value: room.id,
-          selected: false
         }));
 
       roomOptions.unshift({
         label: 'Any Room',
         value: '',
-        selected: true
       });
 
       this.rooms.set(roomOptions);

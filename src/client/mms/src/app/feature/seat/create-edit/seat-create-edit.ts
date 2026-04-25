@@ -65,7 +65,6 @@ export class SeatCreateEdit extends CreateEditDialog<SeatModel> implements OnIni
       this.seatTypes.set(Object.keys(res).map(key => ({
         label: key,
         value: key,
-        selected: this.data.model?.seatType === key,
       })));
     });
   }

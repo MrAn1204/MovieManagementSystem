@@ -118,14 +118,11 @@ export class UserCreateEdit extends CreateEditDialog<UserDetailModel> implements
   }
 
   private loadRoleOptions(): void {
-    const selectedRoleIds = this.data.model?.roles?.map((role) => role.id) ?? [];
-
     this.roleService.getAll().subscribe((roles) => {
       this.roles.set(
         roles.map((role) => ({
           label: role.name,
           value: role.id,
-          selected: selectedRoleIds.includes(role.id),
         }))
       );
     });

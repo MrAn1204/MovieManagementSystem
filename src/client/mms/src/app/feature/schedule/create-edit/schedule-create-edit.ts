@@ -58,16 +58,10 @@ export class ScheduleCreateEdit extends CreateEditDialog<ScheduleDetailModel> im
   }
 
   private loadOptions(): void {
-    const model = this.data.model;
-
-    const modelMovie = model?.movie.id;
-    const modelRoom = model?.room.id;
-
     this.movieService.getAll().subscribe((movies) => {
       this.movies.set(movies.map((movie) => ({
         label: movie.name,
         value: movie.id,
-        selected: modelMovie === movie.id || false
       })));
     });
 
@@ -75,7 +69,6 @@ export class ScheduleCreateEdit extends CreateEditDialog<ScheduleDetailModel> im
       this.rooms.set(rooms.map((room) => ({
         label: room.name,
         value: room.id,
-        selected: modelRoom === room.id || false
       })));
     });
   }
