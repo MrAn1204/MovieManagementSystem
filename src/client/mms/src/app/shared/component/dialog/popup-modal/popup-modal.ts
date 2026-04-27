@@ -47,7 +47,13 @@ export class PopupModal extends BaseDialog {
     },
   }
 
-  confirm = () => this.dialogService.triggerConfirm(this.dialogRef);
+  confirm(): void {
+    if (this.data.type === 'success') {
+      this.close();
+    } else {
+      this.dialogService.triggerConfirm(this.dialogRef)
+    }
+  }
 }
 
 interface PopupConfig {
