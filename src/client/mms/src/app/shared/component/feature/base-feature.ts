@@ -38,10 +38,19 @@ export abstract class BaseFeature<T extends BaseEntityModel> {
   protected saveNew(form: FormGroup, respondHandler?: () => void): void {
     this.spinner.show();
 
+    const lowercaseName = this.entityName.toLowerCase();
+    const successDialogData: DialogPopupDataModel = {
+      type: 'success',
+      message: `The ${lowercaseName} has been successfully created.`,
+    }
+
     this.entityService.create(form.value)
       .pipe(finalize(() => this.spinner.hide()))
       .subscribe({
-        next: () => respondHandler?.(),
+        next: () => {
+          respondHandler?.();
+          this.entityDialog.openPopup(successDialogData);
+        },
         error: (res) => FormMapper.mapErrorResponse(res, form)
       });
   }
@@ -49,10 +58,19 @@ export abstract class BaseFeature<T extends BaseEntityModel> {
   protected saveUpdate(id: string, form: FormGroup, respondHandler?: () => void): void {
     this.spinner.show();
 
+    const lowercaseName = this.entityName.toLowerCase();
+    const successDialogData: DialogPopupDataModel = {
+      type: 'success',
+      message: `The ${lowercaseName} has been successfully updated.`,
+    }
+
     this.entityService.update(id, form.value)
       .pipe(finalize(() => this.spinner.hide()))
       .subscribe({
-        next: () => respondHandler?.(),
+        next: () => {
+          respondHandler?.();
+          this.entityDialog.openPopup(successDialogData);
+        },
         error: (res) => FormMapper.mapErrorResponse(res, form)
       });
   }
@@ -60,10 +78,19 @@ export abstract class BaseFeature<T extends BaseEntityModel> {
   protected confirmDelete(id: string, form?: FormGroup, respondHandler?: () => void): void {
     this.spinner.show();
 
+    const lowercaseName = this.entityName.toLowerCase();
+    const successDialogData: DialogPopupDataModel = {
+      type: 'success',
+      message: `The ${lowercaseName} has been successfully deleted.`,
+    }
+
     this.entityService.delete(id)
       .pipe(finalize(() => this.spinner.hide()))
       .subscribe({
-        next: () => respondHandler?.(),
+        next: () => {
+          respondHandler?.();
+          this.entityDialog.openPopup(successDialogData);
+        },
         error: (res) => {
           if (form) {
             FormMapper.mapErrorResponse(res, form);
@@ -128,8 +155,17 @@ export abstract class BaseFeature<T extends BaseEntityModel> {
       ...data
     };
 
+    const confirmDialogData: DialogPopupDataModel = {
+      type: 'info',
+      message: `Do you want to create new ${this.entityName.toLowerCase()} with provided information?`,
+    }
+
     const dialogRef = this.entityDialog.openForm(this.contentCreateEdit, dialogData, (form) => {
-      this.saveNew(form, () => dialogRef.close());
+       const confirmDialogRef = this.entityDialog.openPopup(confirmDialogData, () => {
+        confirmDialogRef.close();
+
+        this.saveNew(form, () => dialogRef.close());
+      });
     });
   }
 
@@ -140,10 +176,19 @@ export abstract class BaseFeature<T extends BaseEntityModel> {
       ...data
     };
 
+    const confirmDialogData: DialogPopupDataModel = {
+      type: 'info',
+      message: `Do you want to update this ${this.entityName.toLowerCase()} with provided information?`,
+    }
+
     const dialogRef = this.entityDialog.openForm(this.contentCreateEdit, dialogData, (form) => {
-      this.saveUpdate(item.id, form, () => {
-        dialogRef.close();
-        onClose?.();
+      const confirmDialogRef = this.entityDialog.openPopup(confirmDialogData, () => {
+        confirmDialogRef.close();
+
+        this.saveUpdate(item.id, form, () => {
+          dialogRef.close();
+          onClose?.();
+        });
       });
     });
 
@@ -151,12 +196,14 @@ export abstract class BaseFeature<T extends BaseEntityModel> {
   }
 
   protected displayDelete(id: string, onClose?: () => void): DialogRef<unknown, PopupModal> {
+    const lowercaseName = this.entityName.toLowerCase();
+
     const dialogData: DialogPopupDataModel = {
       type: 'warning',
-      message: `Are you sure you want to delete this ${this.entityName.toLowerCase()}? This action cannot be undone.`,
+      message: `Are you sure you want to delete this ${lowercaseName}? This action cannot be undone.`,
     }
 
-    const dialogRef = this.entityDialog.openDelete(dialogData, () => {
+    const dialogRef = this.entityDialog.openPopup(dialogData, () => {
       this.confirmDelete(id, undefined, () => {
         dialogRef.close();
         onClose?.();
