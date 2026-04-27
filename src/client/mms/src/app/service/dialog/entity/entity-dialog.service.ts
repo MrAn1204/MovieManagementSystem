@@ -44,13 +44,13 @@ export class EntityDialogService {
     return dialogRef;
   }
 
-  openDelete(dialogData: DialogPopupDataModel, confirmHandler: () => void) {
+  openPopup(dialogData: DialogPopupDataModel, confirmHandler?: () => void) {
     const dialogRef = this.dialogService.openDialog(PopupModal, dialogData);
 
     dialogRef.componentInstance?.dialogService.confirmTask$
       .pipe(filter((event) => event.sourceRef === dialogRef))
       .subscribe(() => {
-        confirmHandler();
+        confirmHandler?.();
       });
 
     return dialogRef;
