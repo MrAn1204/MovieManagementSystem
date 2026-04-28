@@ -20,7 +20,6 @@ public class StatisticsService {
     /**
      * Returns dashboard statistics summary.
      */
-    @PreAuthorize("hasAuthority('ADMIN')")
     public StatisticsSummaryDto handle(StatisticsSummaryQuery request) {
         return mediator.execute(request);
     }
