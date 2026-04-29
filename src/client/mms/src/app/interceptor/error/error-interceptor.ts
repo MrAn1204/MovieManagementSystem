@@ -2,24 +2,28 @@ import { HttpErrorResponse, HttpInterceptorFn } from '@angular/common/http';
 import { inject } from '@angular/core';
 import { Router } from '@angular/router';
 import { catchError, throwError } from 'rxjs';
+import { ErrorRespondModel } from '../../shared/model/error-respond.model';
 
 export const errorInterceptor: HttpInterceptorFn = (req, next) => {
   const router = inject(Router);
 
   return next(req).pipe(catchError((error: HttpErrorResponse) => {
-    switch (error.status) {
-      case 403:
-        console.error("Authentication credentials are invalid or expired. Redirecting to login.");
+    const res = error.error as ErrorRespondModel;
+    const message = Object.values(res.messages).join(' ') || error.message || 'Unknown error.';
+
+    switch (res.status) {
+      case 401:
         router.navigate(['/login']);
         break;
+      case 403:
       case 404:
-        console.error("Resource not found - The requested resource could not be found.");
+        router.navigate(['/not-found']);
         break;
       default:
-        console.error("An unexpected error occurred:", error.message);
+        router.navigate(['/error']);
         break;
     }
 
-    return throwError(() => error);
+    return throwError(() => message);
   }));
 };

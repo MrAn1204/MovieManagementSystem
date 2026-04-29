@@ -22,14 +22,14 @@ import { SpinnerService } from '../../../service/ui/spinner/spinner.service';
   styleUrl: './sidebar.css',
 })
 export class Sidebar {
-  readonly routes = [
+  readonly routes: SidebarRoute[] = [
     { path: '/', label: 'Home', icon: 'fa-house' },
     { path: '/movie', label: 'Movie', icon: 'fa-film' },
     { path: '/schedule', label: 'Schedule', icon: 'fa-calendar' },
     { path: '/room', label: 'Room', icon: 'fa-door-closed' },
-    { path: '/ticket', label: 'Ticket', icon: 'fa-ticket' },
+    { path: '/ticket', label: 'Ticket', icon: 'fa-ticket', roles: ['ADMIN'] },
     { path: '/promotion', label: 'Promotion', icon: 'fa-percent' },
-    { path: '/user', label: 'User', icon: 'fa-users' }
+    { path: '/user', label: 'User', icon: 'fa-users', roles: ['ADMIN'] }
   ]
   visible = input<boolean>();
 
@@ -96,4 +96,19 @@ export class Sidebar {
       this.viewProfile();
     });
   }
+
+  canShowRoute(roles: string[] | undefined): boolean {
+    if (!roles) {
+      return true;
+    }
+
+    return this.authService.includeRoles(roles);
+  }
+}
+
+interface SidebarRoute {
+  path: string;
+  label: string;
+  icon: string;
+  roles?: string[];
 }

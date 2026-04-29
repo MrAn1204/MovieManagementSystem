@@ -7,13 +7,15 @@
   <nav class="flex-1 w-full overflow-auto">
     <ul class="p-4 space-y-4 text-2xl">
       @for (route of routes; track $index) {
-      <li [class]="isActive(route.path) ? 'bg-platinum-200' : 'hover:bg-platinum-100'"
-        class="flex rounded-md overflow-hidden hover:cursor-pointer">
-        <a class="px-4 py-1 w-full space-x-4" [routerLink]="[route.path]">
-          <i class="fa-solid" [class]="route.icon"></i>
-          <span>{{ route.label }}</span>
-        </a>
-      </li>
+        @if (canShowRoute(route.roles)) {
+          <li [class]="isActive(route.path) ? 'bg-platinum-200' : 'hover:bg-platinum-100'"
+            class="flex rounded-md overflow-hidden hover:cursor-pointer">
+            <a class="px-4 py-1 w-full space-x-4" [routerLink]="[route.path]">
+              <i class="fa-solid" [class]="route.icon"></i>
+              <span>{{ route.label }}</span>
+            </a>
+          </li>
+        }
       }
     </ul>
   </nav>
@@ -29,7 +31,8 @@
         </div>
       </div>
     </app-button>
-    <button type="button" (click)="onLogout()" class="px-2 text-white rounded-md bg-vermilion-500 hover:bg-vermilion-600">
+    <button type="button" (click)="onLogout()"
+      class="px-2 text-white rounded-md bg-vermilion-500 hover:bg-vermilion-600">
       <i class="fa-solid fa-right-from-bracket"></i> Log Out
     </button>
   </div>

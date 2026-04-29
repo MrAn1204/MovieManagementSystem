@@ -10,6 +10,8 @@ import { Room } from './feature/room/component/room';
 import { User } from './feature/user/component/user';
 import { Promotion } from './feature/promotion/component/promotion';
 import { Ticket } from './feature/ticket/component/ticket';
+import { NotFoundPage } from './feature/error/not-found-page/not-found-page';
+import { ServerErrorPage } from './feature/error/server-error-page/server-error-page';
 
 export const routes: Routes = [
   {
@@ -64,4 +66,18 @@ export const routes: Routes = [
       },
     ]
   },
+  {
+    path: 'not-found',
+    component: NotFoundPage,
+    title: 'Not Found',
+  },
+  {
+    path: 'error',
+    component: ServerErrorPage,
+    title: 'Error',
+  },
+  {
+    path: '**',
+    redirectTo: 'not-found',
+  }
 ];
