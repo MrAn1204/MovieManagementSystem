@@ -8,6 +8,7 @@ import { UpcomingMovieStatisticsModel } from '../../model/statistics/upcoming-mo
 import { StatisticsService } from '../../service/statistics/statistics.service';
 import { TableColumnModel } from '../../shared/model/table-column.model';
 import { RouterLink } from "@angular/router";
+import { AuthService } from '../../service/auth/auth.service';
 
 @Component({
   selector: 'app-dashboard',
@@ -57,6 +58,7 @@ export class Dashboard implements OnInit {
   }
 
   constructor(
+    private readonly authService: AuthService,
     private readonly statisticsService: StatisticsService,
   ) {
 
@@ -66,5 +68,9 @@ export class Dashboard implements OnInit {
     this.statisticsService.getSummary().subscribe(summary => {
       this.summary.set(summary);
     });
+  }
+
+  isVisible(roles: string[] = ['ADMIN']): boolean {
+    return this.authService.includeRoles(roles);
   }
 }
