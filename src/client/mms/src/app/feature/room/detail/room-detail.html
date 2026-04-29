@@ -13,11 +13,11 @@
     </app-detail-text>
 
     <app-detail-text label="Maximum Capacity">
-      {{ calculateMaxCapacity() | formatCell }}
+      {{ model?.maxCapacity | formatCell }}
     </app-detail-text>
 
     <app-detail-text label="Current Capacity">
-      {{ model?.seats?.length | formatCell }}
+      {{ model?.currentCapacity | formatCell }}
     </app-detail-text>
 
   </div>
@@ -34,8 +34,10 @@
   ></app-seat-map>
 
   <div custom-buttons>
-    <app-button (clicked)="openAddSeat()">
-      Add Seat
-    </app-button>
+    @if (canAddSeat()) {
+      <app-button (clicked)="openAddSeat()">
+        Add Seat
+      </app-button>
+    }
   </div>
 </app-detail>

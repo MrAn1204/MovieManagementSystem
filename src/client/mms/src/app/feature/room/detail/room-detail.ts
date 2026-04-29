@@ -1,4 +1,4 @@
-import { Component, viewChild } from '@angular/core';
+import { Component, inject, viewChild } from '@angular/core';
 import { DetailText } from "../../../shared/component/detail/detail-text/detail-text";
 import { FormatCellPipe } from '../../../shared/pipe/format-cell/format-cell-pipe';
 import { SeatMap } from "../../seat/seat-map/seat-map";
@@ -7,6 +7,7 @@ import { Detail } from "../../../shared/component/detail/detail-component/detail
 import { DetailDialog } from '../../../shared/component/dialog/detail/detail-dialog';
 import { RoomDetailModel } from '../../../model/room/room-detail.model';
 import { Button } from "../../../shared/component/button/button";
+import { AuthService } from '../../../service/auth/auth.service';
 
 @Component({
   selector: 'app-room-detail',
@@ -19,13 +20,13 @@ export class RoomDetail extends DetailDialog<RoomDetailModel> {
 
   seatMap = viewChild<SeatMap>('seatMap');
 
-  calculateMaxCapacity() {
-    const maxRow = this.model?.rowLength || 0;
-    const maxColumn = this.model?.columnLength || 0;
-    return maxRow * maxColumn;
-  }
+  private readonly authService = inject(AuthService);
 
   openAddSeat(): void {
     this.seatMap()?.onAdd();
+  }
+
+  canAddSeat(): boolean {
+    return this.authService.includeRoles(['ADMIN']) && this.model!.currentCapacity < this.model!.maxCapacity;
   }
 }
