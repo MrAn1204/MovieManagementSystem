@@ -11,6 +11,7 @@ import com.mms.mms_api.business.command.schedule.ScheduleCreateCommand;
 import com.mms.mms_api.business.command.schedule.ScheduleUpdateCommand;
 import com.mms.mms_api.dto.schedule.ScheduleDetailDto;
 import com.mms.mms_api.dto.schedule.ScheduleDto;
+import com.mms.mms_api.dto.schedule.ScheduleSummaryDto;
 import com.mms.mms_api.model.Schedule;
 
 /**
@@ -32,6 +33,9 @@ public interface ScheduleMapper {
     @Mapping(target = "rowLength", source = "schedule.room.rowLength")
     @Mapping(target = "columnLength", source = "schedule.room.columnLength")
     ScheduleDetailDto toDetailDto(Schedule schedule);
+
+    @Mapping(target = "roomName", source = "schedule.room.name")
+    ScheduleSummaryDto toSummaryDto(Schedule schedule);
 
     @Mapping(target = "movie", ignore = true)
     @Mapping(target = "room", ignore = true)
