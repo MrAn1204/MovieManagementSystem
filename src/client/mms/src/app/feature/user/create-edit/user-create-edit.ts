@@ -12,6 +12,7 @@ import { RoleService } from '../../../service/role/role.service';
 import { Textarea } from "../../../shared/component/form/textarea/textarea-field";
 import { CustomValidators } from '../../../shared/util/custom-validators';
 import { ConstraintService } from '../../../service/constraint.service';
+import { AuthService } from '../../../service/auth/auth.service';
 
 @Component({
   selector: 'app-user-create-edit',
@@ -22,6 +23,7 @@ import { ConstraintService } from '../../../service/constraint.service';
 export class UserCreateEdit extends CreateEditDialog<UserDetailModel> implements OnInit {
   private readonly roleService = inject(RoleService);
   private readonly constraintService = inject(ConstraintService);
+  private readonly authService = inject(AuthService);
   override form = this.createForm();
 
   readonly genders: FormOptionModel[] = [
@@ -82,6 +84,10 @@ export class UserCreateEdit extends CreateEditDialog<UserDetailModel> implements
 
   get isEditMode(): boolean {
     return !!this.data.model;
+  }
+
+  get isAdmin(): boolean {
+    return this.authService.includeRoles(['ADMIN']);
   }
 
   ngOnInit(): void {

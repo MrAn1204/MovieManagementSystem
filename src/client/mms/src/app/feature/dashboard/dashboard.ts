@@ -9,6 +9,7 @@ import { StatisticsService } from '../../service/statistics/statistics.service';
 import { TableColumnModel } from '../../shared/model/table-column.model';
 import { RouterLink } from "@angular/router";
 import { AuthService } from '../../service/auth/auth.service';
+import { RoleName } from '../../shared/model/role-config.model';
 
 @Component({
   selector: 'app-dashboard',
@@ -70,7 +71,7 @@ export class Dashboard implements OnInit {
     });
   }
 
-  isVisible(roles: string[] = ['ADMIN']): boolean {
+  isVisible(roles: RoleName[] = ['ADMIN']): boolean {
     return this.authService.includeRoles(roles);
   }
 }

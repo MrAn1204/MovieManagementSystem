@@ -8,6 +8,7 @@ import { UserInfo } from '../../model/auth/user-info';
 import { Router } from '@angular/router';
 import { Observable, tap } from 'rxjs';
 import { RegisterRequest } from '../../model/auth/register-request';
+import { RoleName } from '../../shared/model/role-config.model';
 
 @Injectable({
   providedIn: 'root',
@@ -58,7 +59,7 @@ export class AuthService {
     return this.currentUser()?.email || '';
   }
 
-  includeRoles(roles: string[]): boolean {
+  includeRoles(roles: RoleName[]): boolean {
     if (roles.length == 0) {
       return false;
     }

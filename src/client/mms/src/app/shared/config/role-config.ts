@@ -58,7 +58,7 @@ const ROLE_CONFIG: Record<string, RoleConfigModel> = {
   },
   user: {
     create: ['ADMIN'],
-    edit: ['ADMIN'],
+    edit: ['ADMIN', 'USER'],
     delete: ['ADMIN'],
     getAll: ['ADMIN'],
     getById: ['ADMIN'],

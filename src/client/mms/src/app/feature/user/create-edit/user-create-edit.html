@@ -50,7 +50,7 @@
         <app-validation-error [control]="form.get('citizenIdNumber')!"></app-validation-error>
       </div>
 
-      @if (isEditMode) {
+      @if (isEditMode && isAdmin) {
         <div>
           <app-input-field formControlName="score" inputType="number" idName="score" labelText="Score">
           </app-input-field>
@@ -64,11 +64,13 @@
         <app-validation-error [control]="form.get('address')!"></app-validation-error>
       </div>
 
-      <div class="sm:col-span-2">
-        <app-multiselect-field formControlName="roleIds" idName="roleIds" labelText="Roles" [options]="roles()">
-        </app-multiselect-field>
-        <app-validation-error [control]="form.get('roleIds')!"></app-validation-error>
-      </div>
+      @if (isAdmin) {
+        <div class="sm:col-span-2">
+          <app-multiselect-field formControlName="roleIds" idName="roleIds" labelText="Roles" [options]="roles()">
+          </app-multiselect-field>
+          <app-validation-error [control]="form.get('roleIds')!"></app-validation-error>
+        </div>
+      }
 
       @if (isEditMode && !changingPassword()) {
         <div class="sm:col-span-2">

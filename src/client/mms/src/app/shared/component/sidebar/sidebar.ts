@@ -14,6 +14,7 @@ import { DialogRef } from '@angular/cdk/dialog';
 import { BaseDialog } from '../dialog/base/base-dialog';
 import { finalize } from 'rxjs';
 import { SpinnerService } from '../../../service/ui/spinner/spinner.service';
+import { RoleName } from '../../model/role-config.model';
 
 @Component({
   selector: 'app-sidebar',
@@ -97,7 +98,7 @@ export class Sidebar {
     });
   }
 
-  canShowRoute(roles: string[] | undefined): boolean {
+  canShowRoute(roles: RoleName[] | undefined): boolean {
     if (!roles) {
       return true;
     }
@@ -110,5 +111,5 @@ interface SidebarRoute {
   path: string;
   label: string;
   icon: string;
-  roles?: string[];
+  roles?: RoleName[];
 }

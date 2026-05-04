@@ -1,8 +1,10 @@
 export interface RoleConfigModel {
-  create: string[];
-  edit: string[];
-  delete: string[];
-  getAll: string[];
-  getById: string[];
-  search?: string[];
+  create: RoleName[];
+  edit: RoleName[];
+  delete: RoleName[];
+  getAll: RoleName[];
+  getById: RoleName[];
+  search?: RoleName[];
 }
+
+export type RoleName = 'ADMIN' | 'USER';
