@@ -4,7 +4,6 @@ import { ImageField } from "../../../shared/component/form/image/image-field";
 import { SelectField } from "../../../shared/component/form/select/select-field";
 import { MultiselectField } from "../../../shared/component/form/multiselect/multiselect-field";
 import { Textarea } from "../../../shared/component/form/textarea/textarea-field";
-import { MovieModel } from '../../../model/movie/movie.model';
 import { ReactiveFormsModule } from '@angular/forms';
 import { GenreService } from '../../../service/genre/genre.service';
 import { StudioService } from '../../../service/studio/studio.service';
@@ -15,6 +14,7 @@ import { CreateEdit } from "../../../shared/component/create-edit/create-edit";
 import { CreateEditDialog } from '../../../shared/component/dialog/create-edit/create-edit-dialog';
 import { ValidationError } from "../../../shared/component/form/error/validation-error";
 import { CustomValidators } from '../../../shared/util/custom-validators';
+import { MovieDetailModel } from '../../../model/movie/movie-detail.model';
 
 @Component({
   selector: 'app-movie-create-edit',
@@ -22,7 +22,7 @@ import { CustomValidators } from '../../../shared/util/custom-validators';
   templateUrl: './movie-create-edit.html',
   styleUrl: './movie-create-edit.css',
 })
-export class MovieCreateEdit extends CreateEditDialog<MovieModel> implements OnInit {
+export class MovieCreateEdit extends CreateEditDialog<MovieDetailModel> implements OnInit {
   override form = this.createForm();
 
   genres = signal<FormOptionModel[]>([]);
