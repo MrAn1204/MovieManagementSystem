@@ -31,10 +31,6 @@ public class MovieDto extends BaseDto {
 
     private int duration;
 
-    private String content;
-
-    private String thumbnail;
-
     private double rating;
 
     private List<IdNameDto> genres;

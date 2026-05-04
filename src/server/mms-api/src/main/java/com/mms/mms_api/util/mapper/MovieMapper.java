@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import com.mms.mms_api.business.command.movie.MovieCreateCommand;
 import com.mms.mms_api.business.command.movie.MovieUpdateCommand;
 import com.mms.mms_api.business.service.GscService;
+import com.mms.mms_api.dto.movie.MovieDetailDto;
 import com.mms.mms_api.dto.movie.MovieDto;
 import com.mms.mms_api.model.Movie;
 
@@ -16,7 +17,7 @@ import com.mms.mms_api.model.Movie;
  * Mapper for movie commands and DTOs with thumbnail URL enrichment.
  */
 @Mapper(config = DefaultMapperConfig.class, uses = { GenreMapper.class, LanguageMapper.class, StudioMapper.class,
-        TalentMapper.class })
+        TalentMapper.class, ScheduleMapper.class })
 public abstract class MovieMapper {
     protected GscService gscService;
 
@@ -34,8 +35,10 @@ public abstract class MovieMapper {
     @Mapping(target = "thumbnail", ignore = true)
     public abstract Movie toEntity(MovieCreateCommand command);
 
-    @Mapping(target = "thumbnail", qualifiedByName = "getThumbnailUrl")
     public abstract MovieDto toDto(Movie movie);
+    
+    @Mapping(target = "thumbnail", qualifiedByName = "getThumbnailUrl")
+    public abstract MovieDetailDto toDetailDto(Movie movie);
 
     @Mapping(target = "rating", ignore = true)
     @Mapping(target = "genres", ignore = true)
