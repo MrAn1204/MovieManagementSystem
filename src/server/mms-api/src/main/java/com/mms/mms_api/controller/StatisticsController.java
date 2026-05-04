@@ -5,7 +5,6 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.mms.mms_api.business.query.statistics.StatisticsSummaryQuery;
 import com.mms.mms_api.business.service.StatisticsService;
 import com.mms.mms_api.dto.statistics.StatisticsSummaryDto;
 
@@ -25,7 +24,7 @@ public class StatisticsController {
      */
     @GetMapping("/summary")
     public ResponseEntity<StatisticsSummaryDto> getSummary() {
-        StatisticsSummaryDto summary = statisticsService.handle(new StatisticsSummaryQuery());
+        StatisticsSummaryDto summary = statisticsService.getSummary();
 
         return ResponseEntity.ok(summary);
     }
