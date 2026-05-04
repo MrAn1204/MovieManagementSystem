@@ -10,7 +10,7 @@ import com.mms.mms_api.data.LanguageRepository;
 import com.mms.mms_api.data.MovieRepository;
 import com.mms.mms_api.data.StudioRepository;
 import com.mms.mms_api.data.TalentRepository;
-import com.mms.mms_api.dto.movie.MovieDto;
+import com.mms.mms_api.dto.movie.MovieDetailDto;
 import com.mms.mms_api.exception.ResourceNotFoundException;
 import com.mms.mms_api.model.Genre;
 import com.mms.mms_api.model.Language;
@@ -26,7 +26,7 @@ import java.util.UUID;
  * Handles movie update commands.
  */
 @Component
-public class MovieUpdateHandler extends MovieBaseHandler<MovieUpdateCommand, MovieDto> {
+public class MovieUpdateHandler extends MovieBaseHandler<MovieUpdateCommand, MovieDetailDto> {
     private GenreRepository genreRepository;
 
     private LanguageRepository languageRepository;
@@ -72,7 +72,7 @@ public class MovieUpdateHandler extends MovieBaseHandler<MovieUpdateCommand, Mov
      * @throws com.mms.mms_api.exception.ResourceNotFoundException when the movie does not exist
      */
     @Override
-    public MovieDto execute(MovieUpdateCommand request) {
+    public MovieDetailDto execute(MovieUpdateCommand request) {
         Movie movie = movieRepository.findById(request.getId()).orElseThrow(
                 () -> new ResourceNotFoundException("movie.notFound"));
 
@@ -121,6 +121,6 @@ public class MovieUpdateHandler extends MovieBaseHandler<MovieUpdateCommand, Mov
             gscService.delete(oldThumbnailUrl);
         }
 
-        return movieMapper.toDto(updatedMovie);
+        return movieMapper.toDetailDto(updatedMovie);
     }
 }

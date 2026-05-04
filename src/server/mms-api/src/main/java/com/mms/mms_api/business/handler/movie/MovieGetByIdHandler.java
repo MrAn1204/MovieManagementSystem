@@ -4,7 +4,7 @@ import org.springframework.stereotype.Component;
 
 import com.mms.mms_api.business.query.movie.MovieGetByIdQuery;
 import com.mms.mms_api.data.MovieRepository;
-import com.mms.mms_api.dto.movie.MovieDto;
+import com.mms.mms_api.dto.movie.MovieDetailDto;
 import com.mms.mms_api.exception.ResourceNotFoundException;
 import com.mms.mms_api.model.Movie;
 import com.mms.mms_api.util.mapper.MovieMapper;
@@ -13,7 +13,7 @@ import com.mms.mms_api.util.mapper.MovieMapper;
  * Handles requests to retrieve movie by id.
  */
 @Component
-public class MovieGetByIdHandler extends MovieBaseHandler<MovieGetByIdQuery, MovieDto> {
+public class MovieGetByIdHandler extends MovieBaseHandler<MovieGetByIdQuery, MovieDetailDto> {
     /**
      * Creates a MovieGetByIdHandler.
      *
@@ -32,11 +32,11 @@ public class MovieGetByIdHandler extends MovieBaseHandler<MovieGetByIdQuery, Mov
      * @throws com.mms.mms_api.exception.ResourceNotFoundException when the movie does not exist
      */
     @Override
-    public MovieDto execute(MovieGetByIdQuery request) {
+    public MovieDetailDto execute(MovieGetByIdQuery request) {
         Movie movie = movieRepository.findById(request.getId()).orElseThrow(
                 () -> new ResourceNotFoundException("movie.notFound"));
 
-        return movieMapper.toDto(movie);
+        return movieMapper.toDetailDto(movie);
     }
 
 }

@@ -13,7 +13,7 @@ import com.mms.mms_api.data.LanguageRepository;
 import com.mms.mms_api.data.MovieRepository;
 import com.mms.mms_api.data.StudioRepository;
 import com.mms.mms_api.data.TalentRepository;
-import com.mms.mms_api.dto.movie.MovieDto;
+import com.mms.mms_api.dto.movie.MovieDetailDto;
 import com.mms.mms_api.model.Genre;
 import com.mms.mms_api.model.Language;
 import com.mms.mms_api.model.Movie;
@@ -25,7 +25,7 @@ import com.mms.mms_api.util.mapper.MovieMapper;
  * Handles movie creation commands.
  */
 @Component
-public class MovieCreateHandler extends MovieBaseHandler<MovieCreateCommand, MovieDto> {
+public class MovieCreateHandler extends MovieBaseHandler<MovieCreateCommand, MovieDetailDto> {
     private final GenreRepository genreRepository;
 
     private final LanguageRepository languageRepository;
@@ -70,7 +70,7 @@ public class MovieCreateHandler extends MovieBaseHandler<MovieCreateCommand, Mov
      * @param request movie create command
      * @return created movie DTO
      */
-    public MovieDto execute(MovieCreateCommand request) {
+    public MovieDetailDto execute(MovieCreateCommand request) {
         List<UUID> genreIds = request.getGenreIds();
         List<UUID> studioIds = request.getStudioIds();
         List<UUID> talentIds = request.getTalentIds();
@@ -111,6 +111,6 @@ public class MovieCreateHandler extends MovieBaseHandler<MovieCreateCommand, Mov
 
         Movie savedMovie = movieRepository.save(movie);
 
-        return movieMapper.toDto(savedMovie);
+        return movieMapper.toDetailDto(savedMovie);
     }
 }

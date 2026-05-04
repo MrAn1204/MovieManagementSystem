@@ -9,6 +9,7 @@ import com.mms.mms_api.business.query.movie.MovieGetAllQuery;
 import com.mms.mms_api.business.query.movie.MovieGetByIdQuery;
 import com.mms.mms_api.business.query.movie.MovieSearchQuery;
 import com.mms.mms_api.common.PaginatedResult;
+import com.mms.mms_api.dto.movie.MovieDetailDto;
 import com.mms.mms_api.dto.movie.MovieDto;
 import com.mms.mms_api.mediator.RequestMediator;
 import com.mms.mms_api.util.validator.MovieValidator;
@@ -33,7 +34,7 @@ public class MovieService {
      * @return created movie DTO
      */
     @PreAuthorize("hasAuthority('ADMIN')")
-    public MovieDto handle(MovieCreateCommand request) {
+    public MovieDetailDto handle(MovieCreateCommand request) {
         movieValidator.validate(request);
         return mediator.execute(request);
     }
@@ -54,7 +55,7 @@ public class MovieService {
      * @param request get-by-id query
      * @return movie DTO
      */
-    public MovieDto handle(MovieGetByIdQuery request) {
+    public MovieDetailDto handle(MovieGetByIdQuery request) {
         return mediator.execute(request);
     }
 
@@ -65,7 +66,7 @@ public class MovieService {
      * @return updated movie DTO
      */
     @PreAuthorize("hasAuthority('ADMIN')")
-    public MovieDto handle(MovieUpdateCommand request) {
+    public MovieDetailDto handle(MovieUpdateCommand request) {
         movieValidator.validate(request);
         return mediator.execute(request);
     }

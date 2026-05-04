@@ -8,6 +8,7 @@ import com.mms.mms_api.business.query.movie.MovieGetByIdQuery;
 import com.mms.mms_api.business.query.movie.MovieSearchQuery;
 import com.mms.mms_api.business.service.MovieService;
 import com.mms.mms_api.common.PaginatedResult;
+import com.mms.mms_api.dto.movie.MovieDetailDto;
 import com.mms.mms_api.dto.movie.MovieDto;
 
 import jakarta.validation.Valid;
@@ -48,9 +49,9 @@ public class MovieController {
      * @return movie details when found
      */
     @GetMapping("/{id}")
-    public ResponseEntity<MovieDto> getById(@PathVariable UUID id) {
+    public ResponseEntity<MovieDetailDto> getById(@PathVariable UUID id) {
         MovieGetByIdQuery query = new MovieGetByIdQuery(id);
-        MovieDto movie = movieService.handle(query);
+        MovieDetailDto movie = movieService.handle(query);
 
         return movie != null
                 ? ResponseEntity.ok(movie)
@@ -64,8 +65,8 @@ public class MovieController {
      * @return created movie
      */
     @PostMapping(value = "/create", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
-    public ResponseEntity<MovieDto> create(@Valid @ModelAttribute MovieCreateCommand command) {
-        MovieDto result = movieService.handle(command);
+    public ResponseEntity<MovieDetailDto> create(@Valid @ModelAttribute MovieCreateCommand command) {
+        MovieDetailDto result = movieService.handle(command);
 
         return result != null
                 ? ResponseEntity.status(HttpStatus.CREATED).body(result)
@@ -80,10 +81,10 @@ public class MovieController {
      * @return updated movie when found
      */
     @PutMapping(value = "/{id}", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
-    public ResponseEntity<MovieDto> update(@PathVariable UUID id, @Valid @ModelAttribute MovieUpdateCommand command) {
+    public ResponseEntity<MovieDetailDto> update(@PathVariable UUID id, @Valid @ModelAttribute MovieUpdateCommand command) {
         command.setId(id);
 
-        MovieDto updatedMovie = movieService.handle(command);
+        MovieDetailDto updatedMovie = movieService.handle(command);
 
         return updatedMovie != null
                 ? ResponseEntity.ok(updatedMovie)
