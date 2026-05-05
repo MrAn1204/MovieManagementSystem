@@ -1,4 +1,4 @@
-import { Component, input, OnChanges, output, SimpleChanges } from '@angular/core';
+import { Component, contentChild, input, OnChanges, output, SimpleChanges, TemplateRef } from '@angular/core';
 import { FormatCellPipe } from '../../pipe/format-cell/format-cell-pipe';
 import { TableColumnModel } from '../../model/table-column.model';
 import { BaseEntityModel } from '../../model/base-entity.model';
@@ -7,10 +7,11 @@ import { AuthService } from '../../../service/auth/auth.service';
 import { RowActions } from '../menu/row-actions/row-actions';
 import { TableActions } from '../menu/table-actions/table-actions';
 import { Button } from "../button/button";
+import { NgTemplateOutlet } from '@angular/common';
 
 @Component({
   selector: 'app-table',
-  imports: [FormatCellPipe, RowActions, TableActions, Button],
+  imports: [FormatCellPipe, RowActions, TableActions, Button, NgTemplateOutlet],
   templateUrl: './table.html',
   styleUrl: './table.css',
 })
@@ -26,6 +27,9 @@ export class Table<T extends BaseEntityModel> implements OnChanges {
     edit: true,
     delete: true,
   });
+
+  rowButtonsTemplate = contentChild<TemplateRef<any>>('rowButtons');
+  rowActionsTemplate = contentChild<TemplateRef<any>>('rowActions');
 
   saveCreate = output<void>();
   saveEdit = output<void>();

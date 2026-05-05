@@ -10,16 +10,17 @@
       <tr class="bg-platinum-200 *:border-b *:border-platinum-300">
         <th [hidden]="!hasCheckbox()" class="min-w-8 w-8 border-r sticky left-0 bg-platinum-200">
           <div class="flex items-center justify-center">
-            <input class="w-4 h-4 text-steel-blue-500 bg-platinum-50 border border-platinum-300 rounded-sm focus:ring-steel-blue-500 focus:ring-2"
+            <input
+              class="w-4 h-4 text-steel-blue-500 bg-platinum-50 border border-platinum-300 rounded-sm focus:ring-steel-blue-500 focus:ring-2"
               type="checkbox" (change)="selectAll()" [checked]="isAllSelected()">
           </div>
         </th>
 
         @for (column of columns(); track $index) {
-          <th class="min-w-40 px-4 py-2">{{ column.label }}</th>
+        <th class="min-w-40 px-4 py-2">{{ column.label }}</th>
         }
 
-        <th [hidden]="!roleConfig()" class="border-l sticky right-0 bg-platinum-200 w-0">
+        <th class="border-l sticky right-0 bg-platinum-200 w-0">
           <app-table-actions>
             <app-button [hidden]="!canCreate()" variant="success" [rounded]="false" (clicked)="addItem()">
               <div class="flex items-center gap-2">
@@ -37,21 +38,54 @@
       <tr class="hover:bg-platinum-100 *:border-b *:border-platinum-300 last:*:border-b-0">
         <td [hidden]="!hasCheckbox()" class="border-r sticky left-0 bg-platinum-50">
           <div class="flex items-center justify-center">
-            <input type="checkbox" class="w-4 h-4 text-steel-blue-500 bg-platinum-50 border border-platinum-300 rounded-sm focus:ring-steel-blue-500 focus:ring-2"
+            <input type="checkbox"
+              class="w-4 h-4 text-steel-blue-500 bg-platinum-50 border border-platinum-300 rounded-sm focus:ring-steel-blue-500 focus:ring-2"
               (change)="select(item, $index)" [checked]="selectedItems.get($index)">
           </div>
         </td>
 
         @for (column of columns(); track $index) {
-          <td class="px-4 py-2">{{ getColumnValue(item, column) | formatCell: column.type }}</td>
+        <td class="px-4 py-2">{{ getColumnValue(item, column) | formatCell: column.type }}</td>
         }
 
-        <td [hidden]="!roleConfig()" class="sticky right-0 bg-platinum-50 border-platinum-300 border-l">
-          <app-row-actions
-            [canView]="canView()" (viewDetail)="viewDetail(item.id)"
-            [canEdit]="canEdit()" (updateItem)="updateItem(item.id)"
-            [canDelete]="canDelete()" (deleteItem)="deleteItem(item.id)">
+        <td class="sticky right-0 bg-platinum-50 border-platinum-300 border-l">
+          <app-row-actions [hidden]="!roleConfig()">
+            <div class="flex flex-col *:min-w-full">
+              <app-button [hidden]="!canView()" variant="simple" (clicked)="viewDetail(item.id)">
+                <div class="flex items-center gap-2">
+                  <i class="fa-solid fa-circle-info text-steel-blue"></i> View
+                </div>
+              </app-button>
+
+              <app-button [hidden]="!canEdit()" variant="simple" (clicked)="updateItem(item.id)">
+                <div class="flex items-center gap-2">
+                  <i class="fa-solid fa-pen-to-square text-carrot-orange"></i> Edit
+                </div>
+              </app-button>
+            </div>
+
+            <div class="flex flex-col *:min-w-full">
+              <ng-container
+                [ngTemplateOutlet]="rowActionsTemplate()"
+                [ngTemplateOutletContext]="{ $implicit: item, item: item }">
+              </ng-container>
+            </div>
+
+            <div class="flex flex-col *:min-w-full" [hidden]="!canDelete()">
+              <hr class="border-platinum-300" />
+
+              <app-button variant="simple" (clicked)="deleteItem(item.id)">
+                <div class="flex items-center gap-2">
+                  <i class="fa-solid fa-trash text-vermilion"></i> Delete
+                </div>
+              </app-button>
+            </div>
           </app-row-actions>
+
+          <ng-container
+            [ngTemplateOutlet]="rowButtonsTemplate()"
+            [ngTemplateOutletContext]="{ $implicit: item, item: item }">
+          </ng-container>
         </td>
       </tr>
       }
