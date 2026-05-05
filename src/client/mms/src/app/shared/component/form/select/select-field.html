@@ -2,8 +2,8 @@
   @if (labelText()) {
   <label [htmlFor]="idName()" class="block font-medium">{{ labelText() }}</label>
   }
-  <button [id]="`${idName()}-button`" [attr.data-dropdown-toggle]="`${idName()}-dropdown`"
-    data-dropdown-placement="bottom" class="relative bg-white flex flex-col form-field" type="button">
+  <button [disabled]="disabled" [id]="`${idName()}-button`" [attr.data-dropdown-toggle]="`${idName()}-dropdown`"
+    data-dropdown-placement="bottom" class="relative bg-white flex flex-col form-field disabled:pointer-events-none disabled:cursor-not-allowed" type="button">
     <input hidden [value]="value" [name]="idName()" [id]="idName()">
     <div [id]="`${idName()}-display`" class="overflow-auto min-h-6 flex flex-wrap gap-2 *:bg-platinum-200 *:px-1 *:rounded-md">
       {{ displayValue }}
