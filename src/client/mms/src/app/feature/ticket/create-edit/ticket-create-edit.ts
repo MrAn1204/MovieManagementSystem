@@ -15,8 +15,10 @@ import { ConstraintService } from '../../../service/constraint.service';
 import { SeatMap } from "../../seat/seat-map/seat-map";
 import { MultiselectField } from "../../../shared/component/form/multiselect/multiselect-field";
 import { ScheduleDetailModel } from '../../../model/schedule/schedule-detail.model';
-import { filter, switchMap } from 'rxjs';
+import { filter } from 'rxjs';
 import { CustomValidators } from '../../../shared/util/custom-validators';
+import { DialogDataModel } from '../../../shared/model/dialog/dialog-data.model';
+import { TicketModel } from '../../../model/ticket/ticket.model';
 
 @Component({
   selector: 'app-ticket-create-edit',
@@ -25,6 +27,8 @@ import { CustomValidators } from '../../../shared/util/custom-validators';
   styleUrl: './ticket-create-edit.css',
 })
 export class TicketCreateEdit extends CreateEditDialog<TicketDetailModel> implements OnInit {
+  private readonly ticketData = this.data as TicketDialogDataModel;
+
   private readonly scheduleService = inject(ScheduleService);
   private readonly seatService = inject(SeatService);
   private readonly promotionService = inject(PromotionService);
@@ -67,33 +71,29 @@ export class TicketCreateEdit extends CreateEditDialog<TicketDetailModel> implem
   ngOnInit(): void {
     this.patchForm();
     this.setupUserField();
+    this.setupScheduleField();
     this.loadSchedules();
     this.loadSeatTypes();
     this.loadPromotions();
 
-    if (this.isEditMode) {
-      const scheduleId = this.data.model!.schedule.id;
-
-      this.scheduleService.getById(scheduleId).subscribe((schedule) => {
-        this.selectedSchedule.set(schedule);
-      });
-    } else {
+    if (!this.isEditMode) {
       this.loadUsers();
     }
 
+    this.loadMap();
+
     this.form.get('scheduleId')?.valueChanges
       .pipe(
-        filter(scheduleId => !!scheduleId),
-        switchMap(scheduleId => this.scheduleService.getById(scheduleId)))
-      .subscribe(schedule => this.selectedSchedule.set(schedule));
+        filter(scheduleId => !!scheduleId))
+      .subscribe(scheduleId => this.loadMap(scheduleId));
   }
 
   override createForm() {
     return this.formBuilder.nonNullable.group({
-      scheduleId: ['', [CustomValidators.required('ticket.schedule.required')]],
+      scheduleId: [this.ticketData.scheduleId ?? '', [CustomValidators.required('ticket.schedule.required')]],
       seatIds: [[] as string[], [CustomValidators.required('ticket.seat.required')]],
       promotionId: [''],
-      userId: ['', [CustomValidators.required('user.required')]],
+      userId: [this.ticketData.userId ?? '', [CustomValidators.required('user.required')]],
     });
   }
 
@@ -117,13 +117,27 @@ export class TicketCreateEdit extends CreateEditDialog<TicketDetailModel> implem
       return;
     }
 
-    if (this.isEditMode) {
+    if (this.isEditMode || this.ticketData.userId) {
       userControl.disable();
     } else {
       userControl.enable();
     }
 
     userControl.updateValueAndValidity();
+  }
+
+  private setupScheduleField(): void {
+    const scheduleControl = this.form.get('scheduleId');
+
+    if (!scheduleControl) {
+      return;
+    }
+
+    if (this.ticketData.scheduleId) {
+      scheduleControl.disable();
+    }
+
+    scheduleControl.updateValueAndValidity();
   }
 
   private loadSchedules(): void {
@@ -161,7 +175,20 @@ export class TicketCreateEdit extends CreateEditDialog<TicketDetailModel> implem
     });
   }
 
+  private loadMap(scheduleId = this.ticketData.scheduleId ?? this.data.model?.schedule.id): void {
+    if (scheduleId) {
+      this.scheduleService.getById(scheduleId).subscribe((schedule) => {
+        this.selectedSchedule.set(schedule);
+      });
+    }
+  }
+
   private calculatePrice(seatType: string): number {
     return this.basePrice * this.seatTypes()[seatType];
   }
+}
+
+interface TicketDialogDataModel extends DialogDataModel<TicketModel> {
+  scheduleId?: string;
+  userId?: string;
 }

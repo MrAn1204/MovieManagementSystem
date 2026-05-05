@@ -37,6 +37,8 @@
         <div class="w-full">
           <app-multiselect-field formControlName="seatIds" idName="seats" labelText="Seats" [options]="seats()">
           </app-multiselect-field>
+
+          <app-validation-error [control]="form.get('seatIds')!"></app-validation-error>
         </div>
       </div>
     </div>
