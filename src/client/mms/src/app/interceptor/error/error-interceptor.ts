@@ -9,9 +9,10 @@ export const errorInterceptor: HttpInterceptorFn = (req, next) => {
 
   return next(req).pipe(catchError((error: HttpErrorResponse) => {
     const res = error.error as ErrorRespondModel;
-    const message = Object.values(res.messages).join(' ') || error.message || 'Unknown error.';
 
     switch (res.status) {
+      case 400:
+        break;
       case 401:
         router.navigate(['/login']);
         break;
@@ -24,6 +25,6 @@ export const errorInterceptor: HttpInterceptorFn = (req, next) => {
         break;
     }
 
-    return throwError(() => message);
+    return throwError(() => res);
   }));
 };

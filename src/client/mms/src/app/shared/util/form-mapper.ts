@@ -1,4 +1,3 @@
-import { HttpErrorResponse } from "@angular/common/http";
 import { ErrorRespondModel } from "../model/error-respond.model";
 import { FormGroup } from "@angular/forms";
 
@@ -23,12 +22,12 @@ export abstract class FormMapper {
     return formData;
   }
 
-  static mapErrorResponse(res: HttpErrorResponse, form: FormGroup): void {
+  static mapErrorResponse(res: ErrorRespondModel, form: FormGroup): void {
     if (!res || !form) {
       return;
     }
 
-    const messages = (res.error as ErrorRespondModel).messages;
+    const messages = res.messages;
 
     for (const field in messages) {
       const control = form.get(field);
