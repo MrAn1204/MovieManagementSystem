@@ -68,14 +68,13 @@ export abstract class BaseFeature<T extends BaseEntityModel> {
       .pipe(finalize(() => this.spinner.hide()))
       .subscribe({
         next: () => {
-          respondHandler?.();
-          this.entityDialog.openPopup(successDialogData);
+          this.entityDialog.openPopup(successDialogData, respondHandler);
         },
         error: (res) => FormMapper.mapErrorResponse(res, form)
       });
   }
 
-  protected confirmDelete(id: string, form?: FormGroup, respondHandler?: () => void): void {
+  protected confirmDelete(id: string, respondHandler?: () => void): void {
     this.spinner.show();
 
     const lowercaseName = this.entityName.toLowerCase();
@@ -88,13 +87,14 @@ export abstract class BaseFeature<T extends BaseEntityModel> {
       .pipe(finalize(() => this.spinner.hide()))
       .subscribe({
         next: () => {
-          respondHandler?.();
-          this.entityDialog.openPopup(successDialogData);
+          this.entityDialog.openPopup(successDialogData, respondHandler);
         },
-        error: (res) => {
-          if (form) {
-            FormMapper.mapErrorResponse(res, form);
+        error: () => {
+          const errorDialogData: DialogPopupDataModel = {
+            type: "error",
+            message: `An error occurred while deleting the ${lowercaseName}.`,
           }
+          this.entityDialog.openPopup(errorDialogData);
         }
       });
   }
@@ -161,9 +161,7 @@ export abstract class BaseFeature<T extends BaseEntityModel> {
     }
 
     const dialogRef = this.entityDialog.openForm(this.contentCreateEdit, dialogData, (form) => {
-       const confirmDialogRef = this.entityDialog.openPopup(confirmDialogData, () => {
-        confirmDialogRef.close();
-
+       this.entityDialog.openPopup(confirmDialogData, () => {
         this.saveNew(form, () => dialogRef.close());
       });
     });
@@ -182,9 +180,7 @@ export abstract class BaseFeature<T extends BaseEntityModel> {
     }
 
     const dialogRef = this.entityDialog.openForm(this.contentCreateEdit, dialogData, (form) => {
-      const confirmDialogRef = this.entityDialog.openPopup(confirmDialogData, () => {
-        confirmDialogRef.close();
-
+      this.entityDialog.openPopup(confirmDialogData, () => {
         this.saveUpdate(item.id, form, () => {
           dialogRef.close();
           onClose?.();
@@ -204,7 +200,7 @@ export abstract class BaseFeature<T extends BaseEntityModel> {
     }
 
     const dialogRef = this.entityDialog.openPopup(dialogData, () => {
-      this.confirmDelete(id, undefined, () => {
+      this.confirmDelete(id, () => {
         dialogRef.close();
         onClose?.();
       });

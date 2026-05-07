@@ -72,8 +72,8 @@ export abstract class SearchableFeature<T extends BaseEntityModel> extends BaseF
     });
   }
 
-  protected override confirmDelete(id: string, form?: FormGroup, respondHandler?: () => void): void {
-    super.confirmDelete(id, form, () => {
+  protected override confirmDelete(id: string, respondHandler?: () => void): void {
+    super.confirmDelete(id, () => {
       respondHandler?.();
       this.onSearch();
     });
