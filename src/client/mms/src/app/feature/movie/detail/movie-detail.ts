@@ -20,6 +20,9 @@ import { SpinnerService } from '../../../service/ui/spinner/spinner.service';
 import { finalize } from 'rxjs';
 import { DialogPopupDataModel } from '../../../shared/model/dialog/dialog-popup-data.model';
 import { FormMapper } from '../../../shared/util/form-mapper';
+import { FormGroup } from '@angular/forms';
+import { DialogRef } from '@angular/cdk/dialog';
+import { BaseDialog } from '../../../shared/component/dialog/base/base-dialog';
 
 @Component({
   selector: 'app-movie-detail',
@@ -47,24 +50,25 @@ export class MovieDetail extends DetailDialog<MovieDetailModel> {
       userId: this.authService.getId(),
     };
 
-    const dialogRef = this.entityDialog.openForm(TicketCreateEdit, dialogData, (form) => {
-      this.spinner.show();
+    const dialogRef = this.entityDialog.openForm(TicketCreateEdit, dialogData, (form) => this.handleBooking(form, dialogRef));
+  }
 
-      this.ticketService.create(form.getRawValue())
-        .pipe(finalize(() => this.spinner.hide()))
-        .subscribe({
-          next: () => {
-            dialogRef.close()
+  private handleBooking(form: FormGroup, dialogRef: DialogRef<unknown, BaseDialog>): void {
+    const successDialogData: DialogPopupDataModel = {
+      type: 'success',
+      message: 'Ticket booked successfully',
+    };
 
-            const successDialogData: DialogPopupDataModel = {
-              type: 'success',
-              message: 'Ticket booked successfully',
-            };
+    this.spinner.show();
 
-            this.entityDialog.openPopup(successDialogData);
-          },
-          error: (error) => FormMapper.mapErrorResponse(error, form)
-        });
-    });
+    this.ticketService.create(form.getRawValue())
+      .pipe(finalize(() => this.spinner.hide()))
+      .subscribe({
+        next: () => {
+          dialogRef.close()
+          this.entityDialog.openPopup(successDialogData);
+        },
+        error: (error) => FormMapper.mapErrorResponse(error, form)
+      });
   }
 }
