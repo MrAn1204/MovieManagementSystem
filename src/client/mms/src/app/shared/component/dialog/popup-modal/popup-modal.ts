@@ -47,12 +47,13 @@ export class PopupModal extends BaseDialog {
     },
   }
 
+  get hasSecondButton(): boolean {
+    return this.data.type !== 'success' && this.data.type !== 'error';
+  }
+
   confirm(): void {
-    if (this.data.type === 'success') {
-      this.close();
-    } else {
-      this.dialogService.triggerConfirm(this.dialogRef)
-    }
+    this.dialogService.triggerConfirm(this.dialogRef)
+    this.close();
   }
 }
 
