@@ -5,14 +5,14 @@ import { BaseDialog } from '../../../shared/component/dialog/base/base-dialog';
 import { InvoiceCreateEdit } from '../create-edit/invoice-create-edit';
 import { Detail } from "../../../shared/component/detail/detail-component/detail";
 import { DetailText } from "../../../shared/component/detail/detail-text/detail-text";
-import { Table } from "../../../shared/component/table/table";
 import { TableColumnModel } from '../../../shared/model/table-column.model';
 import { TicketModel } from '../../../model/ticket/ticket.model';
 import { FormatCellPipe } from '../../../shared/pipe/format-cell/format-cell-pipe';
+import { TicketTable } from "../../ticket/table/ticket-table";
 
 @Component({
   selector: 'app-invoice-detail',
-  imports: [Detail, DetailText, Table, FormatCellPipe],
+  imports: [Detail, DetailText, FormatCellPipe, TicketTable],
   templateUrl: './invoice-detail.html',
   styleUrl: './invoice-detail.css',
 })

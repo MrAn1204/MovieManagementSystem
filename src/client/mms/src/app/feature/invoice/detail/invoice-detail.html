@@ -19,14 +19,8 @@
     <div class="sm:col-span-2">
       <app-detail-text label="Tickets"></app-detail-text>
 
-      <div class="flex">
-        <app-table
-          [columns]="ticketColumns"
-          [data]="model?.tickets ?? []"
-          [checkbox]="false"
-          [menuColumn]="false">
-        </app-table>
-      </div>
+      <app-ticket-table [data]="model?.tickets ?? []">
+      </app-ticket-table>
     </div>
   </div>
 </app-detail>
