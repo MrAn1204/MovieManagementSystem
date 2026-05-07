@@ -1,7 +1,7 @@
 <div class="flex max-h-48">
   <app-table [columns]="columns" [data]="data()" [roleConfig]="roleConfig" (openCreateForm)="onAdd()"
     (openEditForm)="onEdit($event)" (openDetailForm)="onView($event)" (openDeleteModal)="onDelete($event)"
-    [tableConfig]="{ checkbox: false, add: false }">
+    [checkbox]="false" [tableMenu]="false">
   </app-table>
 
 </div>

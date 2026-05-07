@@ -20,8 +20,8 @@
         <th class="min-w-40 px-4 py-2">{{ column.label }}</th>
         }
 
-        <th class="border-l sticky right-0 bg-platinum-200 w-0">
-          <app-table-actions>
+        <th [hidden]="!menuColumn()" class="border-l sticky right-0 bg-platinum-200 w-0">
+          <app-table-actions [hidden]="!tableMenu()">
             <app-button [hidden]="!canCreate()" variant="success" [rounded]="false" (clicked)="addItem()">
               <div class="flex items-center gap-2">
                 <i class="fa-solid fa-plus"></i> Add
@@ -48,8 +48,8 @@
         <td class="px-4 py-2">{{ getColumnValue(item, column) | formatCell: column.type }}</td>
         }
 
-        <td class="sticky right-0 bg-platinum-50 border-platinum-300 border-l">
-          <app-row-actions [hidden]="!roleConfig()">
+        <td [hidden]="!menuColumn()" class="sticky right-0 bg-platinum-50 border-platinum-300 border-l">
+          <app-row-actions [hidden]="!rowMenu()">
             <div class="flex flex-col *:min-w-full">
               <app-button [hidden]="!canView()" variant="simple" (clicked)="viewDetail(item.id)">
                 <div class="flex items-center gap-2">

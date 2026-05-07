@@ -21,12 +21,13 @@ export class Table<T extends BaseEntityModel> implements OnChanges {
 
   roleConfig = input<RoleConfigModel>();
 
-  tableConfig = input<TableConfig>({
-    checkbox: true,
-    add: true,
-    edit: true,
-    delete: true,
-  });
+  checkbox = input<boolean>(true);
+  add = input<boolean>(true);
+  edit = input<boolean>(true)
+  delete = input<boolean>(true);
+  menuColumn = input<boolean>(true);
+  tableMenu = input<boolean>(true);
+  rowMenu = input<boolean>(true);
 
   rowButtonsTemplate = contentChild<TemplateRef<any>>('rowButtons');
   rowActionsTemplate = contentChild<TemplateRef<any>>('rowActions');
@@ -73,15 +74,15 @@ export class Table<T extends BaseEntityModel> implements OnChanges {
   }
 
   canCreate(): boolean {
-    return this.tableConfig().add !== false && this.authService.includeRoles(this.roleConfig()?.create ?? []);
+    return this.add() !== false && this.authService.includeRoles(this.roleConfig()?.create ?? []);
   }
 
   canEdit(): boolean {
-    return this.tableConfig().edit !== false && this.authService.includeRoles(this.roleConfig()?.edit ?? []);
+    return this.edit() !== false && this.authService.includeRoles(this.roleConfig()?.edit ?? []);
   }
 
   canDelete(): boolean {
-    return this.tableConfig().delete !== false && this.authService.includeRoles(this.roleConfig()?.delete ?? []);
+    return this.delete() !== false && this.authService.includeRoles(this.roleConfig()?.delete ?? []);
   }
 
   canView(): boolean {
@@ -89,7 +90,7 @@ export class Table<T extends BaseEntityModel> implements OnChanges {
   }
 
   hasCheckbox(): boolean {
-    return this.tableConfig().checkbox !== false;
+    return this.checkbox() !== false;
   }
 
   select(item: T, index: number): void {
@@ -117,11 +118,4 @@ export class Table<T extends BaseEntityModel> implements OnChanges {
     }
     return item[column.key];
   }
-}
-
-interface TableConfig {
-  checkbox?: boolean;
-  add?: boolean;
-  edit?: boolean;
-  delete?: boolean;
 }

@@ -23,7 +23,8 @@
         <app-table
           [columns]="ticketColumns"
           [data]="model?.tickets ?? []"
-          [tableConfig]="{ checkbox: false }">
+          [checkbox]="false"
+          [menuColumn]="false">
         </app-table>
       </div>
     </div>

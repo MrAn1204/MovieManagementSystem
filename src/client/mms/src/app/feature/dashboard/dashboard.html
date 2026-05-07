@@ -70,7 +70,7 @@
     <h2 class="text-2xl font-bold mb-4">Today's Schedules</h2>
 
     <app-table class="w-full!" [columns]="scheduleColumns" [data]="todaySchedules()"
-      [tableConfig]="{ checkbox: false }">
+      [checkbox]="false">
 
     </app-table>
   </div>
@@ -78,7 +78,7 @@
   <div>
     <h2 class="text-2xl font-bold mb-4">Upcoming Movies</h2>
 
-    <app-table class="w-full!" [columns]="movieColumns" [data]="upcomingMovies()" [tableConfig]="{ checkbox: false }">
+    <app-table class="w-full!" [columns]="movieColumns" [data]="upcomingMovies()" [checkbox]="false">
 
     </app-table>
   </div>
