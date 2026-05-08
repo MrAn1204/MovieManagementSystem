@@ -13,16 +13,21 @@ import com.mms.mms_api.model.BaseEntity;
 /**
  * Shared MapStruct configuration for create and update mappings.
  */
-@MapperConfig(componentModel = "spring", uses = { AuditMapperConfig.class },
+@MapperConfig(componentModel = "spring",
         unmappedTargetPolicy = ReportingPolicy.ERROR,
         mappingInheritanceStrategy = MappingInheritanceStrategy.AUTO_INHERIT_FROM_CONFIG)
 public interface DefaultMapperConfig {
     @Mapping(target = "id", ignore = true)
     @Mapping(target = "createdAt", ignore = true)
     @Mapping(target = "updatedAt", ignore = true)
+    @Mapping(target = "createdBy", ignore = true)
+    @Mapping(target = "updatedBy", ignore = true)
     BaseEntity toEntity(BaseCreateCommand command);
 
+    @Mapping(target = "id", ignore = true)
     @Mapping(target = "createdAt", ignore = true)
     @Mapping(target = "updatedAt", ignore = true)
+    @Mapping(target = "createdBy", ignore = true)
+    @Mapping(target = "updatedBy", ignore = true)
     void updateEntity(BaseUpdateCommand command, @MappingTarget BaseEntity entity);
 }
