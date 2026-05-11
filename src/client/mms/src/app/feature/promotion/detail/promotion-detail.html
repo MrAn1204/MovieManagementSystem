@@ -1,4 +1,4 @@
-<app-detail [title]="data.title" [roleConfig]="data.roleConfig" (openUpdate)="openUpdate()" (openDelete)="openDelete()" (closeDialog)="close()">
+<app-detail [title]="data.title" [roleConfig]="data.roleConfig" [auditInfo]="auditInfo" (openUpdate)="openUpdate()" (openDelete)="openDelete()" (closeDialog)="close()">
   <div class="w-full flex flex-col md:flex-row items-center gap-8">
     <app-detail-image [src]="model?.image"></app-detail-image>
 

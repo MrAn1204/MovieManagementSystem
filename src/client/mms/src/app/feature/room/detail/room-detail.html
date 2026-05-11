@@ -1,4 +1,4 @@
-<app-detail [title]="data.title" [roleConfig]="data.roleConfig" (openUpdate)="openUpdate()" (openDelete)="openDelete()" (closeDialog)="close()">
+<app-detail [title]="data.title" [roleConfig]="data.roleConfig" [auditInfo]="auditInfo" (openUpdate)="openUpdate()" (openDelete)="openDelete()" (closeDialog)="close()">
   <div class="w-full flex-1 gap-8 grid grid-cols-1 sm:grid-cols-2">
     <app-detail-text label="Name" class="sm:col-span-2">
       {{ model?.name | formatCell }}

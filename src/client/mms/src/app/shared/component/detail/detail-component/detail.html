@@ -1,7 +1,22 @@
 <div
   class="w-screen max-h-screen overflow-auto max-w-4xl bg-ghost-white p-4 md:p-8 rounded-lg shadow-md flex flex-col items-center">
   <div class="mb-8 w-full flex flex-wrap-reverse items-center justify-between relative">
+    @if (canSeeAuditInfo()) {
+      <div class="md:absolute w-full flex flex-col text-xs text-platinum-500">
+        <span>
+          Created At: {{ auditInfo()?.createdAt | formatCell: 'datetime' }}
+        </span>
+        <span>
+          Updated At: {{ auditInfo()?.updatedAt | formatCell: 'datetime' }}
+        </span>
+      </div>
+    }
+    <div>
+
+    </div>
+
     <h2 class="grow text-2xl font-semibold sm:text-center overflow-hidden">{{ title() }}</h2>
+
     <div class="sm:absolute sm:right-0 flex flex-1 justify-end">
       <app-button type="button" variant="icon" (clicked)="closeDialog.emit()">
         <i class="fa-solid fa-xmark"></i>
