@@ -1,7 +1,7 @@
 import { IdNameModel } from '../../shared/model/id-name.model';
-import { BaseEntityModel } from '../../shared/model/base-entity.model';
+import { AuditableEntityModel } from '../../shared/model/auditable-entity.model';
 
-export interface MovieModel extends BaseEntityModel {
+export interface MovieModel extends AuditableEntityModel {
   name: string;
   releaseDate: string;
   duration: number;

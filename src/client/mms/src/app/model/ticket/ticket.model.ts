@@ -1,8 +1,8 @@
 import { IdNameModel } from '../../shared/model/id-name.model';
-import { BaseEntityModel } from '../../shared/model/base-entity.model';
 import { UserSummaryModel } from '../user/user-summary.model';
+import { AuditableEntityModel } from '../../shared/model/auditable-entity.model';
 
-export interface TicketModel extends BaseEntityModel {
+export interface TicketModel extends AuditableEntityModel {
   name: string;
   movie: IdNameModel;
   user: UserSummaryModel;

@@ -1,7 +1,7 @@
-import { BaseEntityModel } from '../../shared/model/base-entity.model';
+import { AuditableEntityModel } from '../../shared/model/auditable-entity.model';
 import { TicketModel } from '../ticket/ticket.model';
 
-export interface InvoiceModel extends BaseEntityModel {
+export interface InvoiceModel extends AuditableEntityModel {
   name: string;
   totalMoney: number;
   addScore: number;

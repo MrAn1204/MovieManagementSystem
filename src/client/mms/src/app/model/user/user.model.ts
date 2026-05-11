@@ -1,7 +1,7 @@
 import { RoleModel } from './role.model';
-import { BaseEntityModel } from '../../shared/model/base-entity.model';
+import { AuditableEntityModel } from '../../shared/model/auditable-entity.model';
 
-export interface UserModel extends BaseEntityModel {
+export interface UserModel extends AuditableEntityModel {
   username: string;
   fullname: string;
   dateOfBirth: string;

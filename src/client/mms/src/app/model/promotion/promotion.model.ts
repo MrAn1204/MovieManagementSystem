@@ -1,6 +1,6 @@
-import { BaseEntityModel } from '../../shared/model/base-entity.model';
+import { AuditableEntityModel } from '../../shared/model/auditable-entity.model';
 
-export interface PromotionModel extends BaseEntityModel {
+export interface PromotionModel extends AuditableEntityModel {
   title: string;
   startDate: string;
   endDate: string;

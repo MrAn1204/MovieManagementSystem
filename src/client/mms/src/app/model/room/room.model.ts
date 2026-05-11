@@ -1,6 +1,6 @@
-import { BaseEntityModel } from '../../shared/model/base-entity.model';
+import { AuditableEntityModel } from '../../shared/model/auditable-entity.model';
 
-export interface RoomModel extends BaseEntityModel {
+export interface RoomModel extends AuditableEntityModel {
   rowLength: number;
   columnLength: number;
   maxCapacity: number;
