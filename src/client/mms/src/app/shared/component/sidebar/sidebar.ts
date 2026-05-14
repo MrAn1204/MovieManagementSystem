@@ -1,4 +1,4 @@
-import { Component, input } from '@angular/core';
+import { Component, input, output } from '@angular/core';
 import { Router, RouterLink } from "@angular/router";
 import { AuthService } from '../../../service/auth/auth.service';
 import { UserModel } from '../../../model/user/user.model';
@@ -33,6 +33,8 @@ export class Sidebar {
     { path: '/user', label: 'User', icon: 'fa-users', roles: ['ADMIN'] }
   ]
   visible = input<boolean>();
+
+  toggleVisibility = output<boolean | void>();
 
   fullname: string = '';
   email: string = '';

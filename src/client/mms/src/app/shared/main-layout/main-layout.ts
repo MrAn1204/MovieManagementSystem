@@ -10,10 +10,12 @@ import { AuthService } from '../../service/auth/auth.service';
   imports: [Header, Sidebar, RouterOutlet],
   templateUrl: './main-layout.html',
   styleUrl: './main-layout.css',
+  host: {
+    '(window:resize)': 'resetSidebar()'
+  }
 })
 export class MainLayout implements OnInit {
   sidebarVisible: boolean = false;
-  filterVisible: boolean = false;
   hasUser: boolean = false;
 
   constructor(private readonly flowbiteService: FlowbiteService, private readonly authService: AuthService) { }
@@ -26,7 +28,16 @@ export class MainLayout implements OnInit {
     this.hasUser = this.authService.isAuthenticated();
   }
 
+  resetSidebar(): void {
+    if (window.innerWidth >= 1024) {
+      this.sidebarVisible = false;
+    }
+  }
+
   toggleSidebar(): void {
+    if (window.innerWidth >= 1024) {
+      return;
+    }
     this.sidebarVisible = !this.sidebarVisible;
   }
 }
