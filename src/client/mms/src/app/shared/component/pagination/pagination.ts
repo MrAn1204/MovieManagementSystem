@@ -52,6 +52,11 @@ export class Pagination {
     this.changePageSize.emit(size);
   }
 
+  goToPage(event: Event): void {
+    const page = Number.parseInt((event.target as HTMLSelectElement).value);
+    this.updatePageNumber(page);
+  }
+
   updatePageNumber(page: number): void {
     if (page < 1 || page > this.pageCount()) {
       return;

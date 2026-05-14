@@ -1,5 +1,5 @@
 <div class="flex md:flex-row flex-col justify-between items-center pt-2 gap-2">
-  <div class="w-full flex md:flex-col md:items-baseline items-center flex-row gap-2 md:gap-0 flex-wrap">
+  <div class="flex w-full md:w-fit md:flex-col md:items-baseline items-center flex-row gap-2 md:gap-0 flex-wrap">
     <p class="flex-1 min-w-fit">{{ pageSummary() }}</p>
 
     <div class="flex-1 min-w-fit flex flex-wrap items-center justify-end md:justify-start sm:order-3 order-2">
@@ -12,8 +12,17 @@
     </div>
   </div>
 
-  <div class="flex gap-2 justify-center">
-    <button [disabled]="pageNumber() === 1" type="button" class="page-button" (click)="updatePageNumber(pageNumber() - 1)">
+  <div class="flex flex-1 gap-2 justify-center md:justify-end">
+    <div class="hidden md:flex items-end">
+      <div class="flex justify-center gap-2 flex-wrap">
+        Go to page:
+        <input type="number" min="1" [max]="pageCount()" [value]="pageNumber()"
+            (blur)="goToPage($event)" (keyup.enter)="goToPage($event)"
+            class="min-w-10 field-sizing-content border border-platinum-300 rounded-md font-bold text-center">
+      </div>
+    </div>
+
+    <button [disabled]="pageNumber() === 1" type="button" class="page-button self-center" (click)="updatePageNumber(pageNumber() - 1)">
       Prev
     </button>
 
@@ -38,11 +47,15 @@
 
     <div class="flex items-center md:hidden">
       <p class="text-center">
-        Page <strong>{{ pageNumber() }}</strong> of <strong>{{ pageCount() }}</strong>
+        Page
+        <input type="number" min="1" [max]="pageCount()" [value]="pageNumber()"
+          (blur)="goToPage($event)" (keyup.enter)="goToPage($event)"
+          class="min-w-10 field-sizing-content border border-platinum-300 rounded-md font-bold text-center">
+        of <strong>{{ pageCount() }}</strong>
       </p>
     </div>
 
-    <button [disabled]="pageNumber() === pageCount()" type="button" class="page-button" (click)="updatePageNumber(pageNumber() + 1)">
+    <button [disabled]="pageNumber() === pageCount()" type="button" class="page-button self-center" (click)="updatePageNumber(pageNumber() + 1)">
       Next
     </button>
   </div>
