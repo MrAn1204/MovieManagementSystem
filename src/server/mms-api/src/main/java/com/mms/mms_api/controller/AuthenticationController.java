@@ -3,7 +3,9 @@ package com.mms.mms_api.controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.mms.mms_api.business.command.auth.ForgotPasswordCommand;
 import com.mms.mms_api.business.command.auth.LoginCommand;
+import com.mms.mms_api.business.command.auth.PasswordResetCommand;
 import com.mms.mms_api.business.command.auth.RegisterCommand;
 import com.mms.mms_api.business.service.AuthenticationService;
 import com.mms.mms_api.dto.auth.LoginResultDto;
@@ -15,7 +17,6 @@ import lombok.AllArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
-
 
 /**
  * Handles authentication and account registration endpoints.
@@ -47,5 +48,17 @@ public class AuthenticationController {
     public ResponseEntity<UserDto> register(@Valid @RequestBody RegisterCommand request) {
         UserDto userDto = authenticationService.handle(request);
         return ResponseEntity.ok(userDto);
+    }
+
+    @PostMapping("/forgot-password")
+    public ResponseEntity<Void> forgotPassword(@RequestBody ForgotPasswordCommand request) {
+        authenticationService.handle(request);
+        return ResponseEntity.ok().build();
+    }
+
+    @PostMapping("/reset-password")
+    public ResponseEntity<Void> resetPassword(@RequestBody PasswordResetCommand request) {
+        authenticationService.handle(request);
+        return ResponseEntity.ok().build();
     }
 }
