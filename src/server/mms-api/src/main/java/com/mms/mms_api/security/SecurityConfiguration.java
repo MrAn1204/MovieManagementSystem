@@ -101,6 +101,11 @@ public class SecurityConfiguration {
         return new BCryptPasswordEncoder();
     }
 
+    /**
+     * Provides the auditor aware implementation for JPA auditing.
+     *
+     * @return auditor aware for tracking entity modifications
+     */
     @Bean
     AuditorAware<String> auditorProvider() {
         return new SecurityAuditorAware();
