@@ -19,7 +19,7 @@ import lombok.NoArgsConstructor;
 @EqualsAndHashCode(callSuper = true)
 @AllArgsConstructor
 @NoArgsConstructor
-public class Promotion extends BaseEntity {
+public class Promotion extends AuditableEntity {
     @Column(nullable = false)
     private String title;
 

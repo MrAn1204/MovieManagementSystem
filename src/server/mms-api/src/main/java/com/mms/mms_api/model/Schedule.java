@@ -17,7 +17,7 @@ import lombok.EqualsAndHashCode;
 @Entity
 @Data
 @EqualsAndHashCode(callSuper = true)
-public class Schedule extends BaseEntity {
+public class Schedule extends AuditableEntity {
     private LocalDateTime showTime;
 
     @ManyToOne

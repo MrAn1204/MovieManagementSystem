@@ -14,7 +14,7 @@ import lombok.EqualsAndHashCode;
 @Entity
 @Data
 @EqualsAndHashCode(callSuper = true)
-public class Studio extends BaseEntity {
+public class Studio extends AuditableEntity {
     @Column(nullable = false)
     private String name;
 

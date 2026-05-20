@@ -19,7 +19,7 @@ import lombok.EqualsAndHashCode;
 @Entity
 @Data
 @EqualsAndHashCode(callSuper = true)
-public class Movie extends BaseEntity {
+public class Movie extends AuditableEntity {
     @Column(nullable = false)
     private String name;
     

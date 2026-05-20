@@ -19,7 +19,7 @@ import java.util.List;
 @Entity
 @Data
 @EqualsAndHashCode(callSuper = true)
-public class Seat extends BaseEntity {
+public class Seat extends AuditableEntity {
     @Column(nullable = false)
     private int seatColumn;
 

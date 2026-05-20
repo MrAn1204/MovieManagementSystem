@@ -16,7 +16,7 @@ import lombok.EqualsAndHashCode;
 @Entity
 @Data
 @EqualsAndHashCode(callSuper = true)
-public class Room extends BaseEntity {
+public class Room extends AuditableEntity {
     @Column(nullable = false)
     private int rowLength;
 
