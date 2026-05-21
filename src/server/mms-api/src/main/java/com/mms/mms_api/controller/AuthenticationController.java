@@ -7,6 +7,7 @@ import com.mms.mms_api.business.command.auth.ForgotPasswordCommand;
 import com.mms.mms_api.business.command.auth.LoginCommand;
 import com.mms.mms_api.business.command.auth.PasswordResetCommand;
 import com.mms.mms_api.business.command.auth.RegisterCommand;
+import com.mms.mms_api.business.command.auth.ValidateResetTokenCommand;
 import com.mms.mms_api.business.service.AuthenticationService;
 import com.mms.mms_api.dto.auth.LoginResultDto;
 import com.mms.mms_api.dto.user.UserDto;
@@ -15,6 +16,7 @@ import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
 
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 
@@ -51,13 +53,19 @@ public class AuthenticationController {
     }
 
     @PostMapping("/forgot-password")
-    public ResponseEntity<Void> forgotPassword(@RequestBody ForgotPasswordCommand request) {
+    public ResponseEntity<Void> forgotPassword(@Valid @RequestBody ForgotPasswordCommand request) {
         authenticationService.handle(request);
         return ResponseEntity.ok().build();
     }
 
+    @GetMapping("/reset-password")
+    public ResponseEntity<Boolean> validateResetToken(@Valid ValidateResetTokenCommand request) {
+        boolean isValid = authenticationService.handle(request);
+        return ResponseEntity.ok(isValid);
+    }
+
     @PostMapping("/reset-password")
-    public ResponseEntity<Void> resetPassword(@RequestBody PasswordResetCommand request) {
+    public ResponseEntity<Void> resetPassword(@Valid @RequestBody PasswordResetCommand request) {
         authenticationService.handle(request);
         return ResponseEntity.ok().build();
     }
