@@ -8,9 +8,10 @@ import org.thymeleaf.context.Context;
 import com.mms.mms_api.business.command.auth.ForgotPasswordCommand;
 import com.mms.mms_api.business.handler.BaseHandler;
 import com.mms.mms_api.business.service.EmailService;
+import com.mms.mms_api.data.PasswordResetTokenRepository;
 import com.mms.mms_api.data.UserRepository;
+import com.mms.mms_api.model.PasswordResetToken;
 import com.mms.mms_api.model.User;
-import com.mms.mms_api.util.RandomTokenHelper;
 
 @Component
 public class ForgotPasswordHandler extends BaseHandler<ForgotPasswordCommand, Void> {
@@ -20,13 +21,17 @@ public class ForgotPasswordHandler extends BaseHandler<ForgotPasswordCommand, Vo
 
     private final UserRepository userRepository;
 
+    private final PasswordResetTokenRepository tokenRepository;
+
     @Value("${app.frontend.url}")
     private String frontendUrl;
 
-    public ForgotPasswordHandler(EmailService emailService, TemplateEngine templateEngine, UserRepository userRepository) {
+    public ForgotPasswordHandler(EmailService emailService, TemplateEngine templateEngine,
+            UserRepository userRepository, PasswordResetTokenRepository tokenRepository) {
         this.emailService = emailService;
         this.templateEngine = templateEngine;
         this.userRepository = userRepository;
+        this.tokenRepository = tokenRepository;
     }
 
     @Override
@@ -36,9 +41,9 @@ public class ForgotPasswordHandler extends BaseHandler<ForgotPasswordCommand, Vo
             return null;
         }
 
-        String token = RandomTokenHelper.generateToken();
+        PasswordResetToken resetToken = new PasswordResetToken(user.getId());
 
-        String url = frontendUrl + "/reset-password?token=" + token;
+        String url = frontendUrl + "/reset-password?token=" + resetToken.getToken();
 
         Context templateContext = new Context();
         templateContext.setVariable("name", user.getUsername());
@@ -46,7 +51,9 @@ public class ForgotPasswordHandler extends BaseHandler<ForgotPasswordCommand, Vo
         String template = templateEngine.process("reset-password-email", templateContext);
 
         emailService.send(request.getEmail(), "[MMS] Password Reset Request", template);
-        
+
+        tokenRepository.save(resetToken);
+
         return null;
     }
 }
