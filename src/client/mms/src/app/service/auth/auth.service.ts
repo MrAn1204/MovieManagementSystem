@@ -9,6 +9,7 @@ import { Router } from '@angular/router';
 import { Observable, tap } from 'rxjs';
 import { RegisterRequest } from '../../model/auth/register-request';
 import { RoleName } from '../../shared/model/role-config.model';
+import { PasswordResetFormModel } from '../../model/form/password-reset-form.model';
 
 @Injectable({
   providedIn: 'root',
@@ -86,5 +87,21 @@ export class AuthService {
     return this.http.post<void>(`${this.baseUrl}/register`, request).pipe(tap(() => {
       this.router.navigate(['/login']);
     }));
+  }
+
+  forgotPassword(email: string): Observable<void> {
+    return this.http.post<void>(`${this.baseUrl}/forgot-password`, { email: email });
+  }
+
+  validateResetToken(token: string): Observable<boolean> {
+    return this.http.get<boolean>(`${this.baseUrl}/validate-reset-token`, {
+      params: {
+        token: token
+      }
+    });
+  }
+
+  resetPassword(request: PasswordResetFormModel): Observable<void> {
+    return this.http.post<void>(`${this.baseUrl}/reset-password`, request);
   }
 }
