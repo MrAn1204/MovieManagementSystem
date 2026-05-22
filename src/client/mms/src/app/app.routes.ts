@@ -12,6 +12,7 @@ import { Promotion } from './feature/promotion/component/promotion';
 import { Ticket } from './feature/ticket/component/ticket';
 import { NotFoundPage } from './feature/error/not-found-page/not-found-page';
 import { ServerErrorPage } from './feature/error/server-error-page/server-error-page';
+import { ForgotPassword } from './feature/auth/forgot-password/forgot-password';
 
 export const routes: Routes = [
   {
@@ -23,6 +24,11 @@ export const routes: Routes = [
     path: 'register',
     component: Register,
     title: 'Register',
+  },
+  {
+    path: 'forgot-password',
+    component: ForgotPassword,
+    title: 'Forgot Password',
   },
   {
     path: '',

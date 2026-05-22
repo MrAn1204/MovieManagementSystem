@@ -3,7 +3,7 @@ import { FormBuilder, FormGroup, ReactiveFormsModule } from '@angular/forms';
 import { InputField } from "../../../shared/component/form/input/input-field";
 import { AuthService } from '../../../service/auth/auth.service';
 import { HttpErrorResponse } from '@angular/common/http';
-import { Router } from '@angular/router';
+import { Router, RouterLink } from '@angular/router';
 import { CustomValidators } from '../../../shared/util/custom-validators';
 import { ValidationError } from "../../../shared/component/form/error/validation-error";
 import { NgxSpinnerService } from 'ngx-spinner';
@@ -11,7 +11,7 @@ import { finalize } from 'rxjs';
 
 @Component({
   selector: 'app-login',
-  imports: [InputField, ReactiveFormsModule, ValidationError],
+  imports: [InputField, ReactiveFormsModule, ValidationError, RouterLink],
   templateUrl: './login.html',
   styleUrl: './login.css',
 })
