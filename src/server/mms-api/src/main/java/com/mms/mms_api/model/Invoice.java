@@ -20,7 +20,7 @@ import lombok.NoArgsConstructor;
 @EqualsAndHashCode(callSuper = true)
 @AllArgsConstructor
 @NoArgsConstructor
-public class Invoice extends BaseEntity {
+public class Invoice extends AuditableEntity {
     @Column(nullable = false)
     private int totalMoney;
 

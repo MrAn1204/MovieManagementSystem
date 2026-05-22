@@ -19,7 +19,7 @@ import lombok.NoArgsConstructor;
 @EqualsAndHashCode(callSuper = true)
 @AllArgsConstructor
 @NoArgsConstructor
-public class Ticket extends BaseEntity {
+public class Ticket extends AuditableEntity {
     public Ticket(Ticket ticket) {
         this.price = ticket.price;
         this.schedule = ticket.schedule;

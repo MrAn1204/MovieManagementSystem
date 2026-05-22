@@ -2,8 +2,11 @@ package com.mms.mms_api.business.service;
 
 import org.springframework.stereotype.Service;
 
+import com.mms.mms_api.business.command.auth.ForgotPasswordCommand;
 import com.mms.mms_api.business.command.auth.LoginCommand;
+import com.mms.mms_api.business.command.auth.PasswordResetCommand;
 import com.mms.mms_api.business.command.auth.RegisterCommand;
+import com.mms.mms_api.business.command.auth.ValidateResetTokenCommand;
 import com.mms.mms_api.dto.auth.LoginResultDto;
 import com.mms.mms_api.dto.user.UserDto;
 import com.mms.mms_api.mediator.RequestMediator;
@@ -18,7 +21,7 @@ import lombok.AllArgsConstructor;
 @AllArgsConstructor
 public class AuthenticationService {
     private final RequestMediator mediator;
-    
+
     private final UserValidator userValidator;
 
     /**
@@ -40,5 +43,17 @@ public class AuthenticationService {
     public UserDto handle(RegisterCommand request) {
         userValidator.validate(request);
         return mediator.execute(request);
+    }
+
+    public void handle(ForgotPasswordCommand request) {
+        mediator.execute(request);
+    }
+
+    public boolean handle(ValidateResetTokenCommand request) {
+        return mediator.execute(request);
+    }
+
+    public void handle(PasswordResetCommand request) {
+        mediator.execute(request);
     }
 }
