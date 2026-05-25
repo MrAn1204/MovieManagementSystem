@@ -6,7 +6,7 @@ export const passwordResetGuard: CanActivateFn = (route, state) => {
   const router = inject(Router);
   const authService = inject(AuthService);
 
-  const token = route.paramMap.get('token');
+  const token = route.queryParamMap.get('token');
 
   if (token) {
     authService.validateResetToken(token).subscribe((res) => {

@@ -94,7 +94,7 @@ export class AuthService {
   }
 
   validateResetToken(token: string): Observable<boolean> {
-    return this.http.get<boolean>(`${this.baseUrl}/validate-reset-token`, {
+    return this.http.get<boolean>(`${this.baseUrl}/reset-password`, {
       params: {
         token: token
       }
