@@ -14,6 +14,7 @@ import { DialogService } from '../../../service/dialog/dialog.service';
 import { DialogPopupDataModel } from '../../../shared/model/dialog/dialog-popup-data.model';
 import { PopupModal } from '../../../shared/component/dialog/popup-modal/popup-modal';
 import { InputField } from "../../../shared/component/form/input/input-field";
+import { PasswordResetFormModel } from '../../../model/form/password-reset-form.model';
 
 @Component({
   selector: 'app-reset-password',
@@ -35,12 +36,9 @@ export class ResetPassword implements OnInit {
   ) { }
 
   ngOnInit(): void {
-    const token = this.route.snapshot.paramMap.get('token');
-
     const passwordMin = this.constraintService.getConstraint('PASSWORD_MIN');
 
     this.form = this.formBuilder.group({
-      token: [token],
       password: ['', [
         CustomValidators.required("user.password.required"),
         CustomValidators.passwordValid(passwordMin, "user.password.invalid")
@@ -57,14 +55,23 @@ export class ResetPassword implements OnInit {
       return;
     }
 
+    const data: PasswordResetFormModel = {
+      token: this.route.snapshot.queryParamMap.get('token') || '',
+      password: this.form.get('password')!.value,
+      confirmPassword: this.form.get('confirmPassword')!.value,
+    }
+
     this.spinner.show();
 
-    this.authService.resetPassword(this.form.value)
+    this.authService.resetPassword(data)
       .pipe(finalize(() => this.spinner.hide()))
       .subscribe({
         next: () => this.displaySuccessDialog(),
         error: (res: ErrorRespondModel) => {
-            FormMapper.mapErrorResponse(res, this.form);
+          console.log(res);
+          FormMapper.mapErrorResponse(res, this.form);
+            console.log(this.form.errors);
+
             this.form.markAllAsTouched();
           }
       });
