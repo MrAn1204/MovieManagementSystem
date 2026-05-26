@@ -10,10 +10,21 @@ import { TableColumnModel } from '../../shared/model/table-column.model';
 import { RouterLink } from "@angular/router";
 import { AuthService } from '../../service/auth/auth.service';
 import { RoleName } from '../../shared/model/role-config.model';
+import { Button } from "../../shared/component/button/button";
+import { MovieDetail } from '../movie/detail/movie-detail';
+import { DialogDataModel } from '../../shared/model/dialog/dialog-data.model';
+import { DialogService } from '../../service/dialog/dialog.service';
+import { MovieDetailModel } from '../../model/movie/movie-detail.model';
+import { MovieService } from '../../service/movie/movie.service';
+import { ScheduleService } from '../../service/schedule/schedule.service';
+import { SpinnerService } from '../../service/ui/spinner/spinner.service';
+import { finalize } from 'rxjs';
+import { ScheduleDetailModel } from '../../model/schedule/schedule-detail.model';
+import { ScheduleDetail } from '../schedule/detail/schedule-detail';
 
 @Component({
   selector: 'app-dashboard',
-  imports: [ChartjsComponent, Table, RouterLink],
+  imports: [ChartjsComponent, Table, RouterLink, Button],
   templateUrl: './dashboard.html',
   styleUrl: './dashboard.css',
 })
@@ -61,6 +72,10 @@ export class Dashboard implements OnInit {
   constructor(
     private readonly authService: AuthService,
     private readonly statisticsService: StatisticsService,
+    private readonly dialogService: DialogService,
+    private readonly spinner: SpinnerService,
+    private readonly movieService: MovieService,
+    private readonly scheduleService: ScheduleService,
   ) {
 
   }
@@ -73,5 +88,35 @@ export class Dashboard implements OnInit {
 
   isVisible(roles: RoleName[] = ['ADMIN']): boolean {
     return this.authService.includeRoles(roles);
+  }
+
+  viewMovie(id: string): void {
+    this.spinner.show();
+
+    this.movieService.getById(id)
+      .pipe(finalize(() => this.spinner.hide()))
+      .subscribe(movie => {
+        const dialogData: DialogDataModel<MovieDetailModel> = {
+          title: 'Movie Details',
+          model: movie,
+        }
+
+        this.dialogService.openDialog(MovieDetail, dialogData);
+      });
+  }
+
+  viewSchedule(id: string): void {
+    this.spinner.show();
+
+    this.scheduleService.getById(id)
+      .pipe(finalize(() => this.spinner.hide()))
+      .subscribe(schedule => {
+        const dialogData: DialogDataModel<ScheduleDetailModel> = {
+          title: 'Schedule Details',
+          model: schedule,
+        }
+
+        this.dialogService.openDialog(ScheduleDetail, dialogData);
+      });
   }
 }
