@@ -59,7 +59,7 @@ export class ResetPassword implements OnInit {
       token: this.route.snapshot.queryParamMap.get('token') || '',
       password: this.form.get('password')!.value,
       confirmPassword: this.form.get('confirmPassword')!.value,
-    }
+    };
 
     this.spinner.show();
 
@@ -68,12 +68,9 @@ export class ResetPassword implements OnInit {
       .subscribe({
         next: () => this.displaySuccessDialog(),
         error: (res: ErrorRespondModel) => {
-          console.log(res);
           FormMapper.mapErrorResponse(res, this.form);
-            console.log(this.form.errors);
-
-            this.form.markAllAsTouched();
-          }
+          this.form.markAllAsTouched();
+        }
       });
   }
 

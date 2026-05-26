@@ -1,5 +1,5 @@
 @import 'tailwindcss';
 
 :host {
-  @apply flex flex-col flex-1 min-h-0 w-full md:w-11/12;
+  @apply flex flex-col flex-1 min-h-0 w-full h-full;
 }

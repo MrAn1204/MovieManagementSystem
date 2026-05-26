@@ -8,10 +8,11 @@ import { CustomValidators } from '../../../shared/util/custom-validators';
 import { ValidationError } from "../../../shared/component/form/error/validation-error";
 import { NgxSpinnerService } from 'ngx-spinner';
 import { finalize } from 'rxjs';
+import { Button } from "../../../shared/component/button/button";
 
 @Component({
   selector: 'app-login',
-  imports: [InputField, ReactiveFormsModule, ValidationError, RouterLink],
+  imports: [InputField, ReactiveFormsModule, ValidationError, RouterLink, Button],
   templateUrl: './login.html',
   styleUrl: './login.css',
 })

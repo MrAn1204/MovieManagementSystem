@@ -11,10 +11,11 @@ import { ValidationError } from "../../../shared/component/form/error/validation
 import { ConstraintService } from '../../../service/constraint.service';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { finalize } from 'rxjs';
+import { Button } from "../../../shared/component/button/button";
 
 @Component({
   selector: 'app-register',
-  imports: [ReactiveFormsModule, InputField, SelectField, ValidationError],
+  imports: [ReactiveFormsModule, InputField, SelectField, ValidationError, Button],
   templateUrl: './register.html',
   styleUrl: './register.css',
 })

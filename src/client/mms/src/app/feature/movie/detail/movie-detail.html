@@ -38,7 +38,7 @@
   </div>
 
   <div class="w-full mt-8">
-    <app-table class="w-full!" [columns]="schedulesColumns" [data]="model?.schedules ?? []" [checkbox]="false" [tableMenu]="false" [rowMenu]="false">
+    <app-table [columns]="schedulesColumns" [data]="model?.schedules ?? []" [checkbox]="false" [tableMenu]="false" [rowMenu]="false">
       <ng-template #rowButtons let-item>
         <app-button variant="icon" (clicked)="openBooking(item.id)">
           <i class="fa-solid fa-ticket text-bright-fern"></i>

@@ -1,4 +1,4 @@
-<app-table class="w-full!" [columns]="columns" [data]="data()" [roleConfig]="roleConfig" (openCreateForm)="onAdd()"
+<app-table [columns]="columns" [data]="data()" [roleConfig]="roleConfig" (openCreateForm)="onAdd()"
   (openEditForm)="onEdit($event)" (openDetailForm)="onView($event)" (openDeleteModal)="onDelete($event)"
   (selectItem)="select($event)" (selectAllItems)="selectAll($event)" [checkbox]="false" [tableMenu]="false">
 </app-table>
