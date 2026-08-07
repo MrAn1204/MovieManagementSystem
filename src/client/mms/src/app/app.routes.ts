@@ -15,6 +15,8 @@ import { ServerErrorPage } from './feature/error/server-error-page/server-error-
 import { ForgotPassword } from './feature/auth/forgot-password/forgot-password';
 import { ResetPassword } from './feature/auth/reset-password/reset-password';
 import { passwordResetGuard } from './guard/password/password-reset-guard';
+import { MainLayoutV2 } from './shared/main-layout-v2/main-layout-v2';
+import { MovieV2 } from './feature/movie-v2/component/movie';
 
 export const routes: Routes = [
   {
@@ -77,6 +79,18 @@ export const routes: Routes = [
         path: 'user',
         component: User,
         title: 'User',
+      },
+    ]
+  },
+  {
+    path: 'v2',
+    component: MainLayoutV2,
+    canActivate: [authGuard],
+    children: [
+      {
+        path: 'movie',
+        component: MovieV2,
+        title: 'Movie',
       },
     ]
   },

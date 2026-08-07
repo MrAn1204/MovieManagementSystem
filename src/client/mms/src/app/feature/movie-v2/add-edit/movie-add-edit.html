@@ -1,0 +1,51 @@
+<app-add-edit-container [title]="title" (submitForm)="onSubmit()" (resetForm)="onReset()" (closeDialog)="onClose()">
+  <div dialog-content class="add-edit-layout">
+    <app-image-field idName="thumbnail"
+      formControlName="thumbnail" labelText="Image">
+    </app-image-field>
+
+    <div class="w-full flex-1 gap-4 grid grid-cols-1 sm:grid-cols-2">
+      <app-form-input idName="name"
+        type="text" label="Title"
+        [control]="form.controls.name"
+        [required]="true">
+      </app-form-input>
+
+      <app-form-select idName="language"
+        label="Language" [options]="languages()"
+        [control]="form.controls.languageId">
+      </app-form-select>
+
+      <app-form-select idName="genres"
+        label="Genre" [options]="genres()" [isMultiple]="true"
+        [control]="form.controls.genreIds">
+      </app-form-select>
+
+      <app-form-select idName="studios"
+        label="Studio" [options]="studios()" [isMultiple]="true"
+        [control]="form.controls.studioIds">
+      </app-form-select>
+
+      <app-form-select idName="talents"
+        label="Talent" [options]="talents()" [isMultiple]="true"
+        [control]="form.controls.talentIds" >
+      </app-form-select>
+
+      <app-form-input idName="duration"
+        type="number" label="Duration"
+        [control]="form.controls.duration"
+        [required]="true">
+      </app-form-input>
+
+      <app-form-input class="sm:col-span-2" idName="releaseData"
+        type="date" label="Release Date"
+        [control]="form.controls.releaseDate">
+      </app-form-input>
+
+      <app-form-textarea class="sm:col-span-2" idName="content"
+        label="Content"
+        [control]="form.controls.content">
+      </app-form-textarea>
+    </div>
+  </div>
+</app-add-edit-container>

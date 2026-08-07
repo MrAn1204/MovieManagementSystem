@@ -1,0 +1,17 @@
+<div [formGroup]="form()" class="filter-layout">
+  <div class="filter-common">
+    <app-form-select [control]="form().controls.languageId" idName="filter-language" label="Language" [options]="languages()"></app-form-select>
+  </div>
+
+  <div class="filter-multiselect">
+    <app-form-select [control]="form().controls.genreIds" idName="filter-genre" label="Genre" [options]="genres()" [isMultiple]="true"></app-form-select>
+
+    <app-form-select [control]="form().controls.studioIds" idName="filter-studio" label="Studio" [options]="studios()" [isMultiple]="true"></app-form-select>
+  </div>
+
+  <div class="filter-range">
+    <app-form-input type="date" [control]="form().controls.releaseAfter" idName="release-after" label="Release After"></app-form-input>
+
+    <app-form-input type="date" [control]="form().controls.releaseBefore" idName="release-before" label="Release Before"></app-form-input>
+  </div>
+</div>

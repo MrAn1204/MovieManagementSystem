@@ -1,0 +1,49 @@
+<app-detail-container [title]="data.title" (editItem)="openUpdate()" (deleteItem)="openDelete()" (closeDialog)="onClose()">
+  <div dialog-content class="w-full flex flex-col md:flex-row items-center gap-8">
+    <app-detail-image [src]="model?.thumbnail"></app-detail-image>
+
+    <div class="w-full flex-1 gap-8 grid grid-cols-1 sm:grid-cols-2">
+      <app-detail-text label="Name">
+        {{ model?.name | formatCell }}
+      </app-detail-text>
+
+      <app-detail-text label="Language">
+        {{ model?.language | formatCell: 'id-name' }}
+      </app-detail-text>
+
+      <app-detail-text label="Genre">
+        {{ model?.genres | formatCell: 'id-name-array' }}
+      </app-detail-text>
+
+      <app-detail-text label="Studio">
+        {{ model?.studios | formatCell: 'id-name-array' }}
+      </app-detail-text>
+
+      <app-detail-text label="Release Date">
+        {{ model?.releaseDate | formatCell: 'date' }}
+      </app-detail-text>
+
+      <app-detail-text label="Duration">
+        {{ model?.duration | formatCell }}
+      </app-detail-text>
+
+      <app-detail-text class="sm:col-span-2" label="Talent">
+        {{ model?.talents | formatCell: 'id-name-array' }}
+      </app-detail-text>
+
+      <app-detail-text class="sm:col-span-2" label="Content">
+        {{ model?.content | formatCell }}
+      </app-detail-text>
+    </div>
+  </div>
+
+  <div class="w-full mt-8">
+    <app-table [columns]="schedulesColumns" [data]="model?.schedules ?? []" [checkbox]="false" [tableMenu]="false" [rowMenu]="false">
+      <ng-template #rowButtons let-item>
+        <app-button variant="icon" (clicked)="openBooking(item.id)">
+          <i class="fa-solid fa-ticket text-bright-fern"></i>
+        </app-button>
+      </ng-template>
+    </app-table>
+  </div>
+</app-detail-container>
