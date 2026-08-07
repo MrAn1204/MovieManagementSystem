@@ -1,0 +1,9 @@
+<app-dialog-container [title]="title()" actionAlign="center" (closeDialog)="closeDialog.emit()">
+  <ng-content dialog-content select="[dialog-content]"></ng-content>
+
+  <ng-content dialog-action select="[dialog-action]"></ng-content>
+
+  <app-button-v2 dialog-action variant="primary" (clicked)="submitForm.emit()">Save</app-button-v2>
+
+  <app-button-v2 dialog-action variant="secondary" (clicked)="resetForm.emit()">Reset</app-button-v2>
+</app-dialog-container>

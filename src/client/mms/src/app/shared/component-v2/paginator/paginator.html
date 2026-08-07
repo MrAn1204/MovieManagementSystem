@@ -1,0 +1,18 @@
+@if (pageCount() > 0) {
+  <div class="sm:flex hidden flex-1 items-center gap-2 flex-wrap">
+    <label for="page-number" class="text-[12px]">Page</label>
+    <input
+      id="page-number" type="number" min="1" [max]="pageCount()" [value]="pageNumber()"
+      (blur)="goToPage($event)" (keyup.enter)="goToPage($event)"
+      class="min-w-12 field-sizing-content border border-platinum-300 rounded-md font-bold text-center">
+      <span>of {{ pageCount() }}</span>
+  </div>
+
+  <mat-paginator class="overflow-hidden"
+    [length]="itemCount()"
+    [pageSize]="pageSize()"
+    [pageSizeOptions]="pageSizeOptions"
+    [showFirstLastButtons]="showFirstLast()"
+    (page)="updatePage.emit($event)">
+  </mat-paginator>
+}

@@ -1,0 +1,21 @@
+@import "../../../../styles.css";
+
+button.primary {
+  @apply bg-steel-blue-500 hover:bg-steel-blue-600 focus:ring-steel-blue;
+}
+
+button.secondary {
+  @apply border-steel-blue text-steel-blue hover:bg-platinum-100 focus:ring-steel-blue;
+}
+
+button.danger {
+  @apply bg-vermilion-500 hover:bg-vermilion-600 focus:ring-vermilion;
+}
+
+button.success {
+  @apply bg-bright-fern-500 hover:bg-bright-fern-600 focus:ring-bright-fern;
+}
+
+button.warning {
+  @apply bg-carrot-orange-500 hover:bg-carrot-orange-600 focus:ring-carrot-orange;
+}

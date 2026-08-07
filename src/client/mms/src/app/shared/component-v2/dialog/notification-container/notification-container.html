@@ -1,0 +1,9 @@
+<app-dialog-container [title]="title()" [showCloseButton]="false" [actionAlign]="actionAlign()">
+  <p dialog-content>
+    {{ message() }}
+  </p>
+
+  <app-button-v2 dialog-action variant="secondary" (clicked)="closeDialog.emit()">Cancel</app-button-v2>
+
+  <app-button-v2 dialog-action variant="primary" (clicked)="confirm.emit()">Confirm</app-button-v2>
+</app-dialog-container>

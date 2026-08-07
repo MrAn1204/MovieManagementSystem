@@ -1,0 +1,13 @@
+<mat-toolbar class="flex justify-between">
+  <app-button-icon (clicked)="toggleSidebar.emit()">
+    <mat-icon>menu</mat-icon>
+  </app-button-icon>
+
+  <button type="button" (click)="showUserInfo()" class="flex items-center gap-x-2">
+    <img src="/images/user-solid-full.svg" alt="user_pfp" class="h-10 border rounded-full" />
+    <div class="text-left">
+      <p class="font-bold">{{ fullname }}</p>
+      <p class="text-sm">{{ email }}</p>
+    </div>
+  </button>
+</mat-toolbar>

@@ -1,0 +1,13 @@
+<app-dialog-container [title]="title()" actionAlign="center" (closeDialog)="closeDialog.emit()">
+  <ng-content dialog-content select="[dialog-content]"></ng-content>
+
+  <ng-content dialog-action select="[dialog-action]"></ng-content>
+
+  @if (canEdit()) {
+    <app-button-v2 dialog-action variant="primary" (clicked)="editItem.emit()">Edit</app-button-v2>
+  }
+
+  @if (canDelete()) {
+    <app-button-v2 dialog-action variant="danger" (clicked)="deleteItem.emit()">Delete</app-button-v2>
+  }
+</app-dialog-container>

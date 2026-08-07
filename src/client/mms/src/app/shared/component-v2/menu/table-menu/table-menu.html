@@ -1,0 +1,10 @@
+<app-menu>
+  @if (canAdd()) {
+    <button mat-menu-item (click)="add.emit()">
+      <mat-icon>add</mat-icon>
+      <span>Add</span>
+    </button>
+  }
+
+  <ng-content></ng-content>
+</app-menu>

@@ -1,0 +1,47 @@
+<table mat-table [dataSource]="data()">
+  <!-- Checkbox column -->
+  <ng-container matColumnDef="select" sticky>
+    <th mat-header-cell *matHeaderCellDef>
+      <mat-checkbox
+        (change)="selectAll()"
+        [checked]="selectedItems.hasValue() && isAllSelected()"
+        [indeterminate]="selectedItems.hasValue() && !isAllSelected()">
+      </mat-checkbox>
+    </th>
+
+    <td mat-cell *matCellDef="let row">
+      <mat-checkbox
+        (change)="selectedItems.toggle(row)"
+        [checked]="selectedItems.isSelected(row)">
+      </mat-checkbox>
+    </td>
+  </ng-container>
+
+  <!-- Data columns -->
+  @for (col of columns(); track col) {
+    <ng-container [matColumnDef]="getColumnKey(col)">
+      <th mat-header-cell *matHeaderCellDef> {{col.label}} </th>
+      <td mat-cell *matCellDef="let item"> {{getColumnValue(item, col) | formatCell: col.type}} </td>
+    </ng-container>
+  }
+
+  <ng-container matColumnDef="menu" stickyEnd>
+    <th mat-header-cell *matHeaderCellDef>
+      <app-table-menu [canAdd]="canAdd" (add)="addItem.emit()">
+        <ng-content select="table-menu-extra"></ng-content>
+      </app-table-menu>
+    </th>
+    <td mat-cell *matCellDef="let item">
+      <app-row-menu
+        [canEdit]="canEdit"
+        [canDelete]="canDelete"
+        (view)="viewItem.emit(item.id)"
+        (edit)="editItem.emit(item.id)"
+        (delete)="deleteItem.emit(item.id)">
+      </app-row-menu>
+    </td>
+  </ng-container>
+
+  <tr mat-header-row *matHeaderRowDef="columnsToDisplay(); sticky: true"></tr>
+  <tr mat-row *matRowDef="let myRowData; columns: columnsToDisplay()"></tr>
+</table>

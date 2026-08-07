@@ -1,0 +1,9 @@
+@import "tailwindcss";
+
+:host {
+  @apply max-h-full overflow-auto;
+}
+
+.mat-mdc-row:hover {
+  @apply bg-(--color-platinum-100);
+}

@@ -1,0 +1,9 @@
+@import 'tailwindcss';
+
+.option-search {
+  @apply sticky top-0 z-1 bg-(--mat-sys-surface-container) border-b w-full outline-0 px-4 py-2;
+}
+
+.clear-button {
+  @apply sticky bottom-0 z-1 bg-(--color-vermilion) flex w-full justify-center items-center text-white gap-x-2;
+}
