@@ -1,4 +1,4 @@
-<form [formGroup]="form()" class="flex flex-col max-h-screen overflow-auto pt-2">
+<form [formGroup]="form()" class="flex flex-col max-h-screen overflow-y-auto overflow-x-hidden pt-2">
   <div class="flex justify-center flex-wrap gap-4">
     <mat-form-field class="grow-8" appearance="outline" subscriptSizing="dynamic">
       <input [formControl]="form().controls.keyword" aria-label="searchbar" matInput id="search-bar"
@@ -32,7 +32,7 @@
       </mat-button-toggle-group>
     </div>
 
-    <div class="flex items-center overflow-hidden">
+    <div class="flex items-center">
       <button type="button" mat-icon-button [class.active]="filterVisible" (click)="toggleFilters()" matTooltip="Toggle Filters">
         <mat-icon>filter_list</mat-icon>
       </button>
