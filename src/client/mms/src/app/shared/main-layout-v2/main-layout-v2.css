@@ -1,0 +1,9 @@
+@import "tailwindcss";
+
+:host {
+  @apply flex flex-col h-screen;
+}
+
+mat-sidenav {
+  @apply w-60;
+}
