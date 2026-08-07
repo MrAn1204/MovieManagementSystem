@@ -29,9 +29,9 @@
 }
 
 .icon {
-  @apply hover:bg-platinum-100 p-0 size-10 rounded-0;
+  @apply hover:bg-platinum-100 p-0 size-10 rounded-none;
 }
 
 .simple {
-  @apply hover:bg-platinum-100 rounded-0;
+  @apply hover:bg-platinum-100 rounded-none;
 }
