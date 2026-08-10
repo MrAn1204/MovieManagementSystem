@@ -5,7 +5,7 @@ import org.springframework.stereotype.Component;
 import com.mms.mms_api.business.command.invoice.InvoiceUpdateCommand;
 import com.mms.mms_api.data.InvoiceRepository;
 import com.mms.mms_api.data.TicketRepository;
-import com.mms.mms_api.dto.invoice.InvoiceDto;
+import com.mms.mms_api.dto.invoice.InvoiceDetailDto;
 import com.mms.mms_api.exception.ResourceNotFoundException;
 import com.mms.mms_api.model.Invoice;
 import com.mms.mms_api.model.Ticket;
@@ -18,7 +18,7 @@ import java.util.List;
  * Handles invoice update commands.
  */
 @Component
-public class InvoiceUpdateHandler extends InvoiceBaseHandler<InvoiceUpdateCommand, InvoiceDto> {
+public class InvoiceUpdateHandler extends InvoiceBaseHandler<InvoiceUpdateCommand, InvoiceDetailDto> {
     private final TicketRepository ticketRepository;
 
     /**
@@ -42,7 +42,7 @@ public class InvoiceUpdateHandler extends InvoiceBaseHandler<InvoiceUpdateComman
      * @throws com.mms.mms_api.exception.ResourceNotFoundException when the invoice does not exist
      */
     @Override
-    public InvoiceDto execute(InvoiceUpdateCommand request) {
+    public InvoiceDetailDto execute(InvoiceUpdateCommand request) {
         Invoice invoice = invoiceRepository.findById(request.getId())
                 .orElseThrow(() -> new ResourceNotFoundException("invoice.notFound"));
 
@@ -70,6 +70,6 @@ public class InvoiceUpdateHandler extends InvoiceBaseHandler<InvoiceUpdateComman
 
         Invoice updatedInvoice = invoiceRepository.save(invoice);
 
-        return invoiceMapper.toDto(updatedInvoice);
+        return invoiceMapper.toDetailDto(updatedInvoice);
     }
 }

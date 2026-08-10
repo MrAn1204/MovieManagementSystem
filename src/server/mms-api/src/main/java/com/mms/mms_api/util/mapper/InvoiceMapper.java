@@ -11,6 +11,7 @@ import org.mapstruct.MappingTarget;
 
 import com.mms.mms_api.business.command.invoice.InvoiceCreateCommand;
 import com.mms.mms_api.business.command.invoice.InvoiceUpdateCommand;
+import com.mms.mms_api.dto.invoice.InvoiceDetailDto;
 import com.mms.mms_api.dto.invoice.InvoiceDto;
 import com.mms.mms_api.model.Invoice;
 import com.mms.mms_api.model.Ticket;
@@ -29,6 +30,9 @@ public interface InvoiceMapper {
     @Mapping(target = "name", ignore = true)
     InvoiceDto toDto(Invoice invoice);
 
+    @Mapping(target = "name", ignore = true)
+    InvoiceDetailDto toDetailDto(Invoice invoice);
+
     @Mapping(target = "tickets", ignore = true)
     @Mapping(target = "user", ignore = true)
     @Mapping(target = "totalMoney", ignore = true)
@@ -36,7 +40,11 @@ public interface InvoiceMapper {
     void updateEntity(InvoiceUpdateCommand command, @MappingTarget Invoice invoice);
 
     default List<UUID> mapTickets(List<Ticket> tickets) {
-        return tickets.stream().map(Ticket::getId).toList();
+        if (tickets == null || tickets.isEmpty()) {
+            return List.of();
+        }
+
+        return tickets.stream().map(ticket -> ticket == null ? null : ticket.getId()).toList();
     }
 
     @AfterMapping
@@ -46,7 +54,7 @@ public interface InvoiceMapper {
         LocalDateTime createdDate = invoice.getCreatedAt();
 
         String name = "INV-" + code;
-        
+
         if (createdDate != null) {
             String date = createdDate.toLocalDate().toString().replace("-", "");
 

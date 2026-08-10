@@ -7,7 +7,7 @@ import com.mms.mms_api.exception.ResourceNotFoundException;
 import com.mms.mms_api.data.InvoiceRepository;
 import com.mms.mms_api.data.TicketRepository;
 import com.mms.mms_api.data.UserRepository;
-import com.mms.mms_api.dto.invoice.InvoiceDto;
+import com.mms.mms_api.dto.invoice.InvoiceDetailDto;
 import com.mms.mms_api.model.Invoice;
 import com.mms.mms_api.model.Ticket;
 import com.mms.mms_api.model.User;
@@ -19,7 +19,7 @@ import java.util.List;
  * Handles invoice creation commands.
  */
 @Component
-public class InvoiceCreateHandler extends InvoiceBaseHandler<InvoiceCreateCommand, InvoiceDto> {
+public class InvoiceCreateHandler extends InvoiceBaseHandler<InvoiceCreateCommand, InvoiceDetailDto> {
 
     private final TicketRepository ticketRepository;
 
@@ -48,7 +48,7 @@ public class InvoiceCreateHandler extends InvoiceBaseHandler<InvoiceCreateComman
      * @throws com.mms.mms_api.exception.ResourceNotFoundException when the user does not exist
      */
     @Override
-    public InvoiceDto execute(InvoiceCreateCommand request) {
+    public InvoiceDetailDto execute(InvoiceCreateCommand request) {
         List<Ticket> tickets = ticketRepository.findByIdIn(request.getTicketIds());
 
         Invoice invoice = invoiceMapper.toEntity(request);
@@ -69,6 +69,6 @@ public class InvoiceCreateHandler extends InvoiceBaseHandler<InvoiceCreateComman
 
         Invoice savedInvoice = invoiceRepository.save(invoice);
 
-        return invoiceMapper.toDto(savedInvoice);
+        return invoiceMapper.toDetailDto(savedInvoice);
     }
 }
