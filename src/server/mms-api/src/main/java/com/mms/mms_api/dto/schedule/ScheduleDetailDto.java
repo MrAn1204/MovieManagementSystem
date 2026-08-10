@@ -2,6 +2,8 @@ package com.mms.mms_api.dto.schedule;
 
 import java.util.List;
 
+import com.fasterxml.jackson.annotation.JsonInclude;
+import com.mms.mms_api.dto.AuditDto;
 import com.mms.mms_api.dto.seat.SeatDto;
 
 import lombok.Data;
@@ -25,4 +27,7 @@ public class ScheduleDetailDto extends ScheduleDto {
     private int rowLength;
 
     private int columnLength;
+
+    @JsonInclude(JsonInclude.Include.NON_NULL)
+    private AuditDto audit;
 }

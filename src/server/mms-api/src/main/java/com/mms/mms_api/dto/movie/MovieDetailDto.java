@@ -2,6 +2,8 @@ package com.mms.mms_api.dto.movie;
 
 import java.util.List;
 
+import com.fasterxml.jackson.annotation.JsonInclude;
+import com.mms.mms_api.dto.AuditDto;
 import com.mms.mms_api.dto.schedule.ScheduleSummaryDto;
 
 import lombok.Data;
@@ -15,4 +17,7 @@ public class MovieDetailDto extends MovieDto {
     private String content;
 
     private List<ScheduleSummaryDto> schedules;
+
+    @JsonInclude(JsonInclude.Include.NON_NULL)
+    private AuditDto audit;
 }

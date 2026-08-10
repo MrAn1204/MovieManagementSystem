@@ -3,6 +3,8 @@ package com.mms.mms_api.dto.user;
 import java.time.LocalDate;
 import java.util.List;
 
+import com.fasterxml.jackson.annotation.JsonInclude;
+import com.mms.mms_api.dto.AuditDto;
 import com.mms.mms_api.dto.BaseDto;
 import com.mms.mms_api.dto.invoice.InvoiceDto;
 import com.mms.mms_api.model.Gender;
@@ -44,4 +46,7 @@ public class UserDetailDto extends BaseDto {
     private List<RoleDto> roles;
 
     private List<InvoiceDto> invoices;
+
+    @JsonInclude(JsonInclude.Include.NON_NULL)
+    private AuditDto audit;
 }

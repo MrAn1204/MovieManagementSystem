@@ -24,6 +24,7 @@ public interface RoomMapper {
     RoomDto toDto(Room room);
 
     @InheritConfiguration(name = "toDto")
+    @Mapping(target = "audit", ignore = true)
     RoomDetailDto toDetailDto(Room room);
 
     @Mapping(target = "seats", ignore = true)

@@ -4,9 +4,11 @@ import org.springframework.stereotype.Component;
 
 import com.mms.mms_api.business.query.user.UserGetByIdQuery;
 import com.mms.mms_api.data.UserRepository;
+import com.mms.mms_api.dto.AuditDto;
 import com.mms.mms_api.dto.user.UserDetailDto;
 import com.mms.mms_api.exception.ResourceNotFoundException;
 import com.mms.mms_api.model.User;
+import com.mms.mms_api.util.CurrentUserHelper;
 import com.mms.mms_api.util.mapper.UserMapper;
 
 /**
@@ -14,14 +16,18 @@ import com.mms.mms_api.util.mapper.UserMapper;
  */
 @Component
 public class UserGetByIdHandler extends UserBaseHandler<UserGetByIdQuery, UserDetailDto> {
+    private final CurrentUserHelper currentUser;
+
     /**
      * Creates a UserGetByIdHandler.
      *
      * @param userMapper user mapper
      * @param userRepository user repository
+     * @param currentUserHelper current user helper
      */
-    public UserGetByIdHandler(UserMapper userMapper, UserRepository userRepository) {
+    public UserGetByIdHandler(UserMapper userMapper, UserRepository userRepository, CurrentUserHelper currentUserHelper) {
         super(userMapper, userRepository);
+        this.currentUser = currentUserHelper;
     }
 
     /**
@@ -36,7 +42,13 @@ public class UserGetByIdHandler extends UserBaseHandler<UserGetByIdQuery, UserDe
         User user = userRepository.findById(request.getId()).orElseThrow(
                 () -> new ResourceNotFoundException("user.notFound"));
 
-        return userMapper.toDetailDto(user);
+        UserDetailDto dto = userMapper.toDetailDto(user);
+
+        if (currentUser.isAdmin()) {
+            dto.setAudit(new AuditDto(user));
+        }
+
+        return dto;
     }
 
 }

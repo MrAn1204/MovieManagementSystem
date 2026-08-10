@@ -31,6 +31,7 @@ public interface InvoiceMapper {
     InvoiceDto toDto(Invoice invoice);
 
     @Mapping(target = "name", ignore = true)
+    @Mapping(target = "audit", ignore = true)
     InvoiceDetailDto toDetailDto(Invoice invoice);
 
     @Mapping(target = "tickets", ignore = true)
