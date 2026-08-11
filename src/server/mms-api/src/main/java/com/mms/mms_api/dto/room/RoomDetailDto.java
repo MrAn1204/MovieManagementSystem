@@ -2,6 +2,8 @@ package com.mms.mms_api.dto.room;
 
 import java.util.List;
 
+import com.fasterxml.jackson.annotation.JsonInclude;
+import com.mms.mms_api.dto.AuditDto;
 import com.mms.mms_api.dto.seat.SeatDto;
 
 import lombok.Data;
@@ -21,4 +23,7 @@ import lombok.EqualsAndHashCode;
 @EqualsAndHashCode(callSuper = true)
 public class RoomDetailDto extends RoomDto {
     private List<SeatDto> seats;
+
+    @JsonInclude(JsonInclude.Include.NON_NULL)
+    private AuditDto audit;
 }

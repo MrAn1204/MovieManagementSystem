@@ -11,6 +11,7 @@ import com.mms.mms_api.business.command.invoice.InvoiceDeleteCommand;
 import com.mms.mms_api.business.command.invoice.InvoiceUpdateCommand;
 import com.mms.mms_api.business.query.invoice.InvoiceGetAllQuery;
 import com.mms.mms_api.business.query.invoice.InvoiceGetByIdQuery;
+import com.mms.mms_api.dto.invoice.InvoiceDetailDto;
 import com.mms.mms_api.dto.invoice.InvoiceDto;
 import com.mms.mms_api.mediator.RequestMediator;
 import com.mms.mms_api.util.validator.InvoiceValidator;
@@ -34,7 +35,7 @@ public class InvoiceService {
      */
     @PreAuthorize("hasAuthority('ADMIN')")
     @Transactional
-    public InvoiceDto handle(InvoiceCreateCommand request) {
+    public InvoiceDetailDto handle(InvoiceCreateCommand request) {
         invoiceValidator.validate(request);
         return mediator.execute(request);
 
@@ -58,7 +59,7 @@ public class InvoiceService {
      * @return invoice DTO
      */
     @PreAuthorize("hasAuthority('ADMIN') || @invoiceValidationService.isOwnedByUserId(#request.id, authentication.principal.id)")
-    public InvoiceDto handle(InvoiceGetByIdQuery request) {
+    public InvoiceDetailDto handle(InvoiceGetByIdQuery request) {
         return mediator.execute(request);
     }
 
@@ -70,7 +71,7 @@ public class InvoiceService {
      */
     @PreAuthorize("hasAuthority('ADMIN')")
     @Transactional
-    public InvoiceDto handle(InvoiceUpdateCommand request) {
+    public InvoiceDetailDto handle(InvoiceUpdateCommand request) {
         invoiceValidator.validate(request);
         return mediator.execute(request);
     }

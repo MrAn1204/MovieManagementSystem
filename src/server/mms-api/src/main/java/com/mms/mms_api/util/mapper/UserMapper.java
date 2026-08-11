@@ -35,6 +35,7 @@ public interface UserMapper {
 
     UserDto toDto(User user);
 
+    @Mapping(target = "audit", ignore = true)
     UserDetailDto toDetailDto(User user);
 
     @Mapping(target = "username", ignore = true)

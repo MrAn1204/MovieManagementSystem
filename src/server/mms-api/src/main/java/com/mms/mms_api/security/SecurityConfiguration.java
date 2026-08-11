@@ -35,6 +35,8 @@ public class SecurityConfiguration {
 
     private CustomAccessDeniedHandler accessDeniedHandler;
 
+    private RateLimitFilter rateLimitFilter;
+
     /**
      * Configures HTTP security rules, filter chain, and exception handling.
      *
@@ -53,6 +55,7 @@ public class SecurityConfiguration {
                         .requestMatchers("/api/app-constraints/**").permitAll()
                         .anyRequest().authenticated())
                 .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
+                .addFilterBefore(rateLimitFilter, UsernamePasswordAuthenticationFilter.class)
                 .addFilterBefore(jwtAuthFilter, UsernamePasswordAuthenticationFilter.class)
                 .exceptionHandling(exception -> exception
                         .authenticationEntryPoint(authEntryPoint)

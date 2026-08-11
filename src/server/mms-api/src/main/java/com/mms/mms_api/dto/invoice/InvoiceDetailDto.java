@@ -1,22 +1,21 @@
-package com.mms.mms_api.dto.movie;
+package com.mms.mms_api.dto.invoice;
 
 import java.util.List;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.mms.mms_api.dto.AuditDto;
-import com.mms.mms_api.dto.schedule.ScheduleSummaryDto;
+import com.mms.mms_api.dto.ticket.TicketDto;
+import com.mms.mms_api.dto.user.UserSummaryDto;
 
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 
 @Data
 @EqualsAndHashCode(callSuper = true)
-public class MovieDetailDto extends MovieDto {
-    private String thumbnail;
+public class InvoiceDetailDto extends InvoiceDto {
+    private List<TicketDto> tickets;
 
-    private String content;
-
-    private List<ScheduleSummaryDto> schedules;
+    private UserSummaryDto user;
 
     @JsonInclude(JsonInclude.Include.NON_NULL)
     private AuditDto audit;

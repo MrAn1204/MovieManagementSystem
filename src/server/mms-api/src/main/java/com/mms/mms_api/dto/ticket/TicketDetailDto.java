@@ -1,6 +1,8 @@
 package com.mms.mms_api.dto.ticket;
 
+import com.fasterxml.jackson.annotation.JsonInclude;
 import com.mms.mms_api.common.IdNameDto;
+import com.mms.mms_api.dto.AuditDto;
 import com.mms.mms_api.dto.schedule.ScheduleDto;
 
 import lombok.Data;
@@ -24,4 +26,7 @@ public class TicketDetailDto extends TicketDto {
     private IdNameDto seat;
 
     private IdNameDto promotion;
+
+    @JsonInclude(JsonInclude.Include.NON_NULL)
+    private AuditDto audit;
 }

@@ -1,9 +1,11 @@
 package com.mms.mms_api.business.handler.room;
 
+import com.mms.mms_api.util.CurrentUserHelper;
 import org.springframework.stereotype.Component;
 
 import com.mms.mms_api.business.query.room.RoomGetByIdQuery;
 import com.mms.mms_api.data.RoomRepository;
+import com.mms.mms_api.dto.AuditDto;
 import com.mms.mms_api.dto.room.RoomDetailDto;
 import com.mms.mms_api.exception.ResourceNotFoundException;
 import com.mms.mms_api.model.Room;
@@ -14,14 +16,18 @@ import com.mms.mms_api.util.mapper.RoomMapper;
  */
 @Component
 public class RoomGetByIdHandler extends RoomBaseHandler<RoomGetByIdQuery, RoomDetailDto> {
+    private final CurrentUserHelper currentUser;
+
     /**
      * Creates a RoomGetByIdHandler.
      *
      * @param roomMapper room mapper
      * @param roomRepository room repository
+     * @param currentUserHelper current user helper
      */
-    public RoomGetByIdHandler(RoomMapper roomMapper, RoomRepository roomRepository) {
+    public RoomGetByIdHandler(RoomMapper roomMapper, RoomRepository roomRepository, CurrentUserHelper currentUserHelper) {
         super(roomMapper, roomRepository);
+        this.currentUser = currentUserHelper;
     }
 
     /**
@@ -36,7 +42,13 @@ public class RoomGetByIdHandler extends RoomBaseHandler<RoomGetByIdQuery, RoomDe
         Room room = roomRepository.findById(request.getId())
                 .orElseThrow(() -> new ResourceNotFoundException("room.notFound"));
 
-        return roomMapper.toDetailDto(room);
+        RoomDetailDto dto = roomMapper.toDetailDto(room);
+
+        if (currentUser.isAdmin()) {
+            dto.setAudit(new AuditDto(room));
+        }
+
+        return dto;
     }
 
 }
