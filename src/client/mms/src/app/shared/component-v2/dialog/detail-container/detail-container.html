@@ -1,4 +1,15 @@
 <app-dialog-container [title]="title()" actionAlign="center" (closeDialog)="closeDialog.emit()">
+  @if (audit()) {
+    <div dialog-title class="flex flex-col text-xs text-platinum-500">
+      <span>
+        Created At: {{ audit()?.createdAt | formatCell: 'datetime' }}
+      </span>
+      <span>
+        Updated At: {{ audit()?.updatedAt | formatCell: 'datetime' }}
+      </span>
+    </div>
+  }
+
   <ng-content dialog-content select="[dialog-content]"></ng-content>
 
   <ng-content dialog-action select="[dialog-action]"></ng-content>

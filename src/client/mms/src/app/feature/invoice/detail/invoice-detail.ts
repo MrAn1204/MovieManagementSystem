@@ -1,6 +1,5 @@
 import { Component, Type } from '@angular/core';
 import { DetailDialog } from '../../../shared/component/dialog/detail/detail-dialog';
-import { InvoiceModel } from '../../../model/invoice/invoice.model';
 import { BaseDialog } from '../../../shared/component/dialog/base/base-dialog';
 import { InvoiceCreateEdit } from '../create-edit/invoice-create-edit';
 import { Detail } from "../../../shared/component/detail/detail-component/detail";
@@ -9,6 +8,7 @@ import { TableColumnModel } from '../../../shared/model/table-column.model';
 import { TicketModel } from '../../../model/ticket/ticket.model';
 import { FormatCellPipe } from '../../../shared/pipe/format-cell/format-cell-pipe';
 import { TicketTable } from "../../ticket/table/ticket-table";
+import { InvoiceDetailModel } from '../../../model/invoice/invoice-detail.model';
 
 @Component({
   selector: 'app-invoice-detail',
@@ -16,7 +16,7 @@ import { TicketTable } from "../../ticket/table/ticket-table";
   templateUrl: './invoice-detail.html',
   styleUrl: './invoice-detail.css',
 })
-export class InvoiceDetail extends DetailDialog<InvoiceModel> {
+export class InvoiceDetail extends DetailDialog<InvoiceDetailModel> {
   protected override updateDialog: Type<BaseDialog> = InvoiceCreateEdit;
 
   ticketColumns: TableColumnModel<TicketModel>[] = [

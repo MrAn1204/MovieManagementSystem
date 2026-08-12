@@ -1,3 +1,4 @@
+import { AuditModel } from '../../shared/model/audit.model';
 import { IdNameModel } from '../../shared/model/id-name.model';
 import { ScheduleModel } from '../schedule/schedule.model';
 import { TicketModel } from './ticket.model';
@@ -7,4 +8,5 @@ export interface TicketDetailModel extends TicketModel {
   room: IdNameModel;
   seat: IdNameModel;
   promotion: IdNameModel | null;
+  audit?: AuditModel;
 }

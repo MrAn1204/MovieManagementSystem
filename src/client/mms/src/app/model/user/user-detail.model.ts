@@ -1,3 +1,4 @@
+import { AuditModel } from '../../shared/model/audit.model';
 import { InvoiceModel } from '../invoice/invoice.model';
 import { UserModel } from './user.model';
 
@@ -7,4 +8,5 @@ export interface UserDetailModel extends UserModel {
   address: string;
   score: number;
   invoices: InvoiceModel[];
+  audit?: AuditModel;
 }

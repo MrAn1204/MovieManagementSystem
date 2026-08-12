@@ -1,6 +1,6 @@
-import { AuditableEntityModel } from '../../shared/model/auditable-entity.model';
+import { BaseEntityModel } from '../../shared/model/base-entity.model';
 
-export interface SeatModel extends AuditableEntityModel {
+export interface SeatModel extends BaseEntityModel {
   seatColumn: number;
   seatRow: number;
   seatType: string;
