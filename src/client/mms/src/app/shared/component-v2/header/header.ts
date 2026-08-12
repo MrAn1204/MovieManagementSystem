@@ -22,7 +22,6 @@ export class HeaderV2 {
   constructor(
     private readonly authService: AuthService,
     private readonly userService: UserService,
-    private readonly dialogService: DialogServiceV2
   ) {
     this.fullname = this.authService.getFullname();
     this.email = this.authService.getEmail();

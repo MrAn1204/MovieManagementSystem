@@ -5,7 +5,7 @@ import { FormOptionModel } from "../../model/form-option.model";
 import { TableColumnModel } from "../../model/table-column.model";
 import { createEmptyPaginatedResult, PaginatedResult } from "../../model/paginated-result.model";
 import { FormGroup } from "@angular/forms";
-import { finalize, Observable } from "rxjs";
+import { finalize } from "rxjs";
 import { PageEvent } from "@angular/material/paginator";
 import { SearchForm } from "../search/search";
 
@@ -38,8 +38,6 @@ export abstract class SearchableFeatureV2<T extends BaseEntityModel> extends Bas
   onSearch(): void {
     this.spinner.show();
 
-    this.searchForm.controls.pageNumber.setValue(1);
-
     const formValue = {
       ...this.searchForm.value,
       ...this.filterForm.value,
@@ -47,9 +45,7 @@ export abstract class SearchableFeatureV2<T extends BaseEntityModel> extends Bas
 
     this.entityService.search!(formValue)
       .pipe(finalize(() => this.spinner.hide()))
-      .subscribe(res => {
-        this.data.set(res);
-      });
+      .subscribe(res => this.data.set(res));
   }
 
   onReset(): void {
@@ -58,36 +54,33 @@ export abstract class SearchableFeatureV2<T extends BaseEntityModel> extends Bas
   }
 
   onPageChange(event: PageEvent): void {
-    this.searchForm.controls['pageNumber'].setValue(event.pageIndex + 1);
-    this.searchForm.controls['pageSize'].setValue(event.pageSize);
+    this.searchForm.controls.pageNumber.setValue(event.pageIndex + 1);
+    this.searchForm.controls.pageSize.setValue(event.pageSize);
 
-    this.spinner.show();
-
-    this.entityService.search!(this.searchForm.value)
-      .pipe(finalize(() => this.spinner.hide()))
-      .subscribe(res => {
-        this.data.set(res);
-      });
+    this.onSearch();
   }
 
-  protected override saveNew(form: FormGroup, onClose?: () => void): Observable<T> {
-    return super.saveNew(form, () => {
-      this.onSearch();
-      onClose?.();
+  override onAdd(): void {
+    this.dialogService.showAddEditDialog().subscribe(res => {
+      if (res) {
+        this.onSearch();
+      }
     });
   }
 
-  protected override saveUpdate(id: string, form: FormGroup, onClose?: () => void): Observable<T> {
-    return super.saveUpdate(id, form, () => {
-      this.onSearch();
-      onClose?.();
+  override onEdit(id: string): void {
+    this.dialogService.showAddEditDialog(id).subscribe(res => {
+      if (res) {
+        this.onSearch();
+      }
     });
   }
 
-  protected override confirmDelete(id: string, onClose?: () => void): Observable<null> {
-    return super.confirmDelete(id, () => {
-      this.onSearch();
-      onClose?.();
+  override onDelete(id: string): void {
+    this.dialogService.showDeleteDialog(id).subscribe(res => {
+      if (res) {
+        this.onSearch();
+      }
     });
   }
 }

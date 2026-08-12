@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { MovieFilterV2 } from "../filter/movie-filter";
 import { MovieModel } from '../../../model/movie/movie.model';
 import { MovieService } from '../../../service/movie/movie.service';
@@ -11,6 +11,9 @@ import { MovieAddEdit } from '../add-edit/movie-add-edit';
 import { MovieDetailV2 } from '../detail/movie-detail';
 import { SearchV2 } from "../../../shared/component-v2/search/search";
 import { SearchableFeatureV2 } from '../../../shared/component-v2/feature/searchable-feature';
+import { DialogServiceV2 } from '../../../service/dialog-v2/dialog.service';
+import { EntityService } from '../../../service/entity.service';
+import { MovieDialogService } from '../../../service/dialog-v2/movie/movie-dialog.service';
 
 @Component({
   selector: 'app-movie',
@@ -49,7 +52,7 @@ export class MovieV2 extends SearchableFeatureV2<MovieModel> {
 
   override roleConfig = getRoleConfig(this.entityName);
 
-  constructor(movieService: MovieService) {
-    super(movieService);
-  }
+  protected override entityService: EntityService<MovieModel> = inject(MovieService);
+  protected override dialogService: DialogServiceV2<MovieModel> = inject(MovieDialogService);
+
 }

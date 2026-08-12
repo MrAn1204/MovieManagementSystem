@@ -1,4 +1,4 @@
-import { Injectable, Type } from '@angular/core';
+import { inject, Type } from '@angular/core';
 import { BaseEntityModel } from '../../shared/model/base-entity.model';
 import { BaseDialogV2 } from '../../shared/component-v2/dialog/base-dialog/base-dialog';
 import { DetailDialogDataModel } from '../../shared/model/dialog/detail-dialog-data.model';
@@ -6,15 +6,25 @@ import { DialogFormDataModel } from '../../shared/model/dialog/dialog-form-data.
 import { NotificationDialogDataModel } from '../../shared/model/dialog/notification-dialog-data.model';
 import { NotificationDialog } from '../../shared/component-v2/dialog/notification-dialog/notification-dialog';
 import { MatDialog } from '@angular/material/dialog';
+import { SpinnerService } from '../ui/spinner/spinner.service';
+import { EntityService } from '../entity.service';
+import { finalize, switchMap, tap } from 'rxjs';
+import { MatSnackBar } from '@angular/material/snack-bar';
+import { FormGroup } from '@angular/forms';
 
-@Injectable({
-  providedIn: 'root',
-})
-export class DialogServiceV2 {
-  constructor(private readonly dialog: MatDialog) { }
+export abstract class DialogServiceV2<T extends BaseEntityModel> {
+  private readonly dialog = inject(MatDialog);
+  private readonly spinner = inject(SpinnerService);
+  private readonly snackbar = inject(MatSnackBar);
 
-  openDetail<T extends BaseEntityModel>(dialogComponent: Type<BaseDialogV2>, dialogData: DetailDialogDataModel<T>) {
-    const dialogRef = this.dialog.open(dialogComponent, {
+  protected abstract entityName: string;
+  protected abstract entityService: EntityService<T>;
+
+  protected abstract detailDialog: Type<BaseDialogV2>;
+  protected abstract formDialog: Type<BaseDialogV2>;
+
+  private openDetail(dialogData: DetailDialogDataModel<T>) {
+    const dialogRef = this.dialog.open(this.detailDialog, {
       data: dialogData,
       width: '800px',
       maxWidth: '90vw',
@@ -24,8 +34,8 @@ export class DialogServiceV2 {
     return dialogRef;
   }
 
-  openForm<T extends BaseEntityModel>(dialogComponent: Type<BaseDialogV2>, dialogData: DialogFormDataModel<T>) {
-    const dialogRef = this.dialog.open(dialogComponent, {
+  private openForm(dialogData: DialogFormDataModel<T>) {
+    const dialogRef = this.dialog.open(this.formDialog, {
       data: dialogData,
       width: '1000px',
       maxWidth: '90vw',
@@ -35,12 +45,131 @@ export class DialogServiceV2 {
     return dialogRef;
   }
 
-  openNotification(dialogData: NotificationDialogDataModel) {
+  private openNotification(dialogData: NotificationDialogDataModel) {
     const dialogRef = this.dialog.open(NotificationDialog, {
       data: dialogData,
       maxWidth: '90vw',
       minWidth: '0',
     });
     return dialogRef;
+  }
+
+  showDetailDialog(id: string) {
+    this.spinner.show();
+
+    return this.entityService.getById(id).pipe(
+      finalize(() => this.spinner.hide()),
+      switchMap(res => this.displayInfo(res))
+    );
+  }
+
+  showAddEditDialog(id?: string) {
+    if (id) {
+      this.spinner.show();
+
+      return this.entityService.getById(id)
+        .pipe(
+          finalize(() => this.spinner.hide()),
+          switchMap(res => this.displayEdit(res))
+        );
+    } else {
+      return this.displayAdd();
+    }
+  }
+
+  showDeleteDialog(id: string) {
+    return this.displayDelete(id);
+  }
+
+  protected displayInfo(item: T) {
+    const dialogData: DetailDialogDataModel<T> = {
+      title: `${this.entityName} Details`,
+      model: item,
+    };
+
+    const dialogRef = this.openDetail(dialogData);
+
+    return dialogRef.afterClosed();
+  }
+
+  protected displayAdd(data?: Record<string, unknown>) {
+    const dialogData: DialogFormDataModel<T> = {
+      title: `Create ${this.entityName}`,
+      onSubmit: (form) => this.saveNew(form),
+      ...data
+    };
+
+    const dialogRef = this.openForm(dialogData);
+
+    return dialogRef.afterClosed();
+  }
+
+  protected displayEdit(item: T, data?: Record<string, unknown>) {
+    const dialogData: DialogFormDataModel<T> = {
+      title: `Edit ${this.entityName}`,
+      model: item,
+      onSubmit: (form) => this.saveUpdate(item.id, form),
+      ...data
+    };
+
+    const dialogRef = this.openForm(dialogData);
+
+    return dialogRef.afterClosed();
+  }
+
+  protected displayDelete(id: string) {
+    const lowercaseName = this.entityName.toLowerCase();
+
+    const dialogData: NotificationDialogDataModel = {
+      type: 'warning',
+      message: `Are you sure you want to delete this ${lowercaseName}? This action cannot be undone.`,
+      onConfirm: () => this.confirmDelete(id)
+    };
+
+    const dialogRef = this.openNotification(dialogData);
+
+    return dialogRef.afterClosed();
+  }
+
+  protected saveNew(form: FormGroup, onClose?: () => void) {
+    return this.entityService.create(form.value).pipe(
+      tap(() => this.createSuccess()),
+      finalize(() => onClose?.())
+    );
+  }
+
+  protected createSuccess() {
+    this.snackbar.open(
+      `The ${this.entityName.toLowerCase()} has been successfully created.`,
+      'Close',
+      { duration: 5000 });
+  }
+
+  protected saveUpdate(id: string, form: FormGroup, onClose?: () => void) {
+    return this.entityService.update(id, form.value).pipe(
+      tap(() => this.updateSuccess()),
+      finalize(() => onClose?.())
+    );
+  }
+
+  protected updateSuccess() {
+    this.snackbar.open(
+      `The ${this.entityName.toLowerCase()} has been successfully updated.`,
+      'Close',
+      { duration: 5000 });
+  }
+
+  protected confirmDelete(id: string, onClose?: () => void) {
+    return this.entityService.delete(id).pipe(
+      tap(() => this.deleteSuccess()),
+      finalize(() => onClose?.())
+    );
+  }
+
+  protected deleteSuccess() {
+    this.snackbar.open(
+      `The ${this.entityName.toLowerCase()} has been successfully deleted.`,
+      'Close',
+      { duration: 5000 });
   }
 }

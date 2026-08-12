@@ -1,13 +1,13 @@
 import { TestBed } from '@angular/core/testing';
 
-import { DialogServiceV2 } from './dialog.service';
+import { MovieDialogService } from './movie-dialog.service';
 
-describe('DialogServiceV2', () => {
-  let service: DialogServiceV2;
+describe('MovieDialogService', () => {
+  let service: MovieDialogService;
 
   beforeEach(() => {
     TestBed.configureTestingModule({});
-    service = TestBed.inject(DialogServiceV2);
+    service = TestBed.inject(MovieDialogService);
   });
 
   it('should be created', () => {
