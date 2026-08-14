@@ -9,10 +9,11 @@ import { RoleConfigModel } from '../../model/role-config.model';
 import { MenuItem, Menu } from '../menu/menu';
 import { MatMenuModule } from "@angular/material/menu";
 import { MatIcon } from "@angular/material/icon";
+import { MatButtonModule } from "@angular/material/button";
 
 @Component({
   selector: 'app-table-v2',
-  imports: [MatTableModule, FormatCellPipe, MatCheckboxModule, Menu, MatMenuModule, MatIcon],
+  imports: [MatTableModule, FormatCellPipe, MatCheckboxModule, Menu, MatMenuModule, MatIcon, MatButtonModule],
   templateUrl: './table.html',
   styleUrl: './table.css',
 })
