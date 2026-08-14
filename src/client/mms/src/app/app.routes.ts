@@ -17,6 +17,11 @@ import { ResetPassword } from './feature/auth/reset-password/reset-password';
 import { passwordResetGuard } from './guard/password/password-reset-guard';
 import { MainLayoutV2 } from './shared/main-layout-v2/main-layout-v2';
 import { MovieV2 } from './feature/movie-v2/component/movie';
+import { ScheduleV2 } from './feature/schedule-v2/component/schedule-v2';
+import { RoomV2 } from './feature/room-v2/component/room-v2';
+import { PromotionV2 } from './feature/promotion-v2/component/promotion-v2';
+import { TicketV2 } from './feature/ticket-v2/component/ticket-v2';
+import { UserV2 } from './feature/user-v2/component/user-v2';
 
 export const routes: Routes = [
   {
@@ -91,6 +96,31 @@ export const routes: Routes = [
         path: 'movie',
         component: MovieV2,
         title: 'Movie',
+      },
+      {
+        path: 'schedule',
+        component: ScheduleV2,
+        title: 'Schedule',
+      },
+      {
+        path: 'room',
+        component: RoomV2,
+        title: 'Room',
+      },
+      {
+        path: 'promotion',
+        component: PromotionV2,
+        title: 'Promotion',
+      },
+      {
+        path: 'ticket',
+        component: TicketV2,
+        title: 'Ticket',
+      },
+      {
+        path: 'user',
+        component: UserV2,
+        title: 'User',
       },
     ]
   },
