@@ -1,0 +1,28 @@
+<app-add-edit-container [title]="title" (submitForm)="onSubmit()" (resetForm)="onReset()" (closeDialog)="onClose()">
+  <div dialog-content class="add-edit-layout">
+    <div class="w-full flex-1 gap-4 grid grid-cols-1 sm:grid-cols-2">
+      <app-detail-text label="Total Money">
+        {{ totalMoney }}
+      </app-detail-text>
+
+      <app-detail-text label="User">
+        {{ userDisplay }}
+      </app-detail-text>
+
+      <app-form-input idName="discount"
+        type="number" label="Discount"
+        [control]="form.controls.discount">
+      </app-form-input>
+
+      <app-form-input idName="addScore"
+        type="number" label="Add Score"
+        [control]="form.controls.addScore">
+      </app-form-input>
+
+      <app-form-input idName="useScore"
+        type="number" label="Use Score"
+        [control]="form.controls.useScore">
+      </app-form-input>
+    </div>
+  </div>
+</app-add-edit-container>

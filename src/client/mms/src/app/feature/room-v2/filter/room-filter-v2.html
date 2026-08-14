@@ -1,0 +1,7 @@
+<div [formGroup]="form()" class="filter-layout">
+  <div class="filter-range">
+    <app-form-input type="number" [control]="form().controls.minCapacity" idName="filter-min-capacity" label="Min Capacity"></app-form-input>
+
+    <app-form-input type="number" [control]="form().controls.maxCapacity" idName="filter-max-capacity" label="Max Capacity"></app-form-input>
+  </div>
+</div>

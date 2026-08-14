@@ -1,0 +1,20 @@
+<div class="feature-page-container">
+  <app-search-v2
+    [form]="searchForm"
+    [sortOptions]="sortOptions"
+    (submitForm)="onSearch()"
+    (resetForm)="onReset()">
+    <app-room-filter-v2 [form]="filterForm"></app-room-filter-v2>
+  </app-search-v2>
+
+  <app-table-v2
+    [columns]="columns"
+    [data]="data().items"
+    (menuAction)="onMenuAction($event)"
+    [roleConfig]="roleConfig">
+  </app-table-v2>
+
+  <app-paginator [pageNumber]="data().pageNumber" [pageSize]="data().pageSize" [pageCount]="data().pageCount" [itemCount]="data().itemCount"
+    (updatePage)="onPageChange($event)">
+  </app-paginator>
+</div>

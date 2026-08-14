@@ -1,0 +1,13 @@
+<div [formGroup]="form()" class="filter-layout">
+  <div class="filter-common">
+    <app-form-input type="datetime-local" [control]="form().controls.showTime" idName="filter-show-time" label="Show Time"></app-form-input>
+  </div>
+
+  <div class="filter-common">
+    <app-form-select [control]="form().controls.movieId" idName="filter-movie" label="Movie" [options]="movies()"></app-form-select>
+
+    <app-form-select [control]="form().controls.roomId" idName="filter-room" label="Room" [options]="rooms()"></app-form-select>
+
+    <app-form-select [control]="form().controls.promotionId" idName="filter-promotion" label="Promotion" [options]="promotions()"></app-form-select>
+  </div>
+</div>

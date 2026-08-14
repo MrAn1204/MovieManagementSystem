@@ -1,0 +1,20 @@
+<app-add-edit-container [title]="title" (submitForm)="onSubmit()" (resetForm)="onReset()" (closeDialog)="onClose()">
+  <div dialog-content class="add-edit-layout">
+    <div class="w-full flex-1 gap-4 grid grid-cols-1 sm:grid-cols-2">
+      <app-form-input idName="showTime"
+        type="datetime-local" label="Show Time"
+        [control]="form.controls.showTime">
+      </app-form-input>
+
+      <app-form-select idName="movieId"
+        label="Movie" [options]="movies()"
+        [control]="form.controls.movieId">
+      </app-form-select>
+
+      <app-form-select idName="roomId"
+        label="Room" [options]="rooms()"
+        [control]="form.controls.roomId">
+      </app-form-select>
+    </div>
+  </div>
+</app-add-edit-container>

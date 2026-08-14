@@ -1,0 +1,102 @@
+<app-add-edit-container [title]="title" (submitForm)="onSubmit()" (resetForm)="onReset()" (closeDialog)="onClose()">
+  <div dialog-content class="add-edit-layout">
+    <div class="w-full flex-1 gap-4 grid grid-cols-1 sm:grid-cols-2">
+      @if (!isEditMode) {
+        <app-form-input idName="username"
+          type="text" label="Username"
+          [control]="form.controls.username"
+          [required]="true">
+        </app-form-input>
+      } @else {
+        <div>
+          <label class="block font-medium">Username</label>
+          <p class="form-field bg-platinum-100">{{ model?.username }}</p>
+        </div>
+      }
+
+      <app-form-input idName="fullname"
+        type="text" label="Full Name"
+        [control]="form.controls.fullname"
+        [required]="true">
+      </app-form-input>
+
+      <app-form-select idName="gender"
+        label="Gender" [options]="genders"
+        [control]="form.controls.gender">
+      </app-form-select>
+
+      <app-form-input idName="dateOfBirth"
+        type="date" label="Date of Birth"
+        [control]="form.controls.dateOfBirth"
+        [required]="true">
+      </app-form-input>
+
+      <app-form-input idName="email"
+        type="email" label="Email"
+        [control]="form.controls.email">
+      </app-form-input>
+
+      <app-form-input idName="phoneNumber"
+        type="text" label="Phone Number"
+        [control]="form.controls.phoneNumber"
+        [required]="true">
+      </app-form-input>
+
+      <app-form-input idName="citizenIdNumber"
+        type="text" label="Citizen ID Number"
+        [control]="form.controls.citizenIdNumber">
+      </app-form-input>
+
+      @if (isEditMode && isAdmin) {
+        <app-form-input idName="score"
+          type="number" label="Score"
+          [control]="form.controls.score">
+        </app-form-input>
+      }
+
+      <app-form-textarea class="sm:col-span-2" idName="address"
+        label="Address"
+        [control]="form.controls.address">
+      </app-form-textarea>
+
+      @if (isAdmin) {
+        <app-form-select class="sm:col-span-2" idName="roleIds"
+          label="Roles" [options]="roles()" [isMultiple]="true"
+          [control]="form.controls.roleIds">
+        </app-form-select>
+      }
+
+      @if (isEditMode && !changingPassword()) {
+        <div class="sm:col-span-2">
+          <button type="button" (click)="togglePasswordChange(true)"
+            class="px-4 py-2 text-white rounded-md bg-steel-blue-500 hover:bg-steel-blue-600 focus:outline-none focus:ring-2 focus:ring-steel-blue">
+            Change Password
+          </button>
+        </div>
+      }
+
+      @if (!isEditMode || changingPassword()) {
+        <app-form-input idName="password"
+          type="password" label="Password"
+          [control]="form.controls.password"
+          [required]="true">
+        </app-form-input>
+
+        <app-form-input idName="confirmPassword"
+          type="password" label="Confirm Password"
+          [control]="form.controls.confirmPassword"
+          [required]="true">
+        </app-form-input>
+
+        @if (isEditMode) {
+          <div class="sm:col-span-2">
+            <button type="button" (click)="togglePasswordChange(false)"
+              class="px-4 py-2 border border-steel-blue rounded-md hover:bg-platinum-100 text-steel-blue focus:outline-none">
+              Cancel Password Change
+            </button>
+          </div>
+        }
+      }
+    </div>
+  </div>
+</app-add-edit-container>

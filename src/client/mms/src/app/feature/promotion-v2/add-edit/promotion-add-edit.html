@@ -1,0 +1,38 @@
+<app-add-edit-container [title]="title" (submitForm)="onSubmit()" (resetForm)="onReset()" (closeDialog)="onClose()">
+  <div dialog-content class="add-edit-layout">
+    <app-image-field idName="image"
+      formControlName="image" labelText="Image">
+    </app-image-field>
+
+    <div class="w-full flex-1 gap-4 grid grid-cols-1 sm:grid-cols-2">
+      <app-form-input idName="title"
+        type="text" label="Title"
+        [control]="form.controls.title"
+        [required]="true">
+      </app-form-input>
+
+      <app-form-input idName="discount"
+        type="number" label="Discount (%)"
+        [control]="form.controls.discount"
+        [required]="true">
+      </app-form-input>
+
+      <app-form-input idName="startDate"
+        type="date" label="Start Date"
+        [control]="form.controls.startDate"
+        [required]="true">
+      </app-form-input>
+
+      <app-form-input idName="endDate"
+        type="date" label="End Date"
+        [control]="form.controls.endDate"
+        [required]="true">
+      </app-form-input>
+
+      <app-form-textarea class="sm:col-span-2" idName="description"
+        label="Description"
+        [control]="form.controls.description">
+      </app-form-textarea>
+    </div>
+  </div>
+</app-add-edit-container>

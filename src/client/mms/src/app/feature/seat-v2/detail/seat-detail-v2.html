@@ -1,0 +1,27 @@
+<app-detail-container [title]="'Seat ' + model?.name" (editItem)="openUpdate()" (deleteItem)="openDelete()" (closeDialog)="onClose()">
+  <div dialog-content class="w-full flex flex-col md:flex-row items-center gap-8">
+    <div class="w-full flex-1 gap-8 grid grid-cols-1 sm:grid-cols-2">
+      <app-detail-text label="Name">
+        {{ model?.name | formatCell }}
+      </app-detail-text>
+
+      <app-detail-text label="Seat Type">
+        {{ model?.seatType | formatCell }}
+      </app-detail-text>
+
+      <app-detail-text label="Row">
+        {{ model?.seatRow | formatCell }}
+      </app-detail-text>
+
+      <app-detail-text label="Column">
+        {{ model?.seatColumn | formatCell }}
+      </app-detail-text>
+
+      @if (model?.reserved !== null) {
+        <app-detail-text label="Status">
+          {{ model?.reserved ? 'Reserved' : 'Available' }}
+        </app-detail-text>
+      }
+    </div>
+  </div>
+</app-detail-container>

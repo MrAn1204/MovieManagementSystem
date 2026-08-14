@@ -1,0 +1,7 @@
+<div [formGroup]="form()" class="filter-layout">
+  <div class="filter-range">
+    <app-form-input type="date" [control]="form().controls.startDate" idName="filter-start-date" label="Start Date"></app-form-input>
+
+    <app-form-input type="date" [control]="form().controls.endDate" idName="filter-end-date" label="End Date"></app-form-input>
+  </div>
+</div>
