@@ -3,15 +3,16 @@ import { BaseEntityModel } from '../../model/base-entity.model';
 import { MatTableModule } from '@angular/material/table';
 import { TableColumnModel } from '../../model/table-column.model';
 import { FormatCellPipe } from '../../pipe/format-cell/format-cell-pipe';
-import {MatCheckboxModule} from '@angular/material/checkbox';
+import { MatCheckboxModule } from '@angular/material/checkbox';
 import { SelectionModel } from '@angular/cdk/collections';
-import { RowMenu } from "../menu/row-menu/row-menu";
 import { RoleConfigModel } from '../../model/role-config.model';
-import { TableMenu } from "../menu/table-menu/table-menu";
+import { MenuItem, Menu } from '../menu/menu';
+import { MatMenuModule } from "@angular/material/menu";
+import { MatIcon } from "@angular/material/icon";
 
 @Component({
   selector: 'app-table-v2',
-  imports: [MatTableModule, FormatCellPipe, MatCheckboxModule, RowMenu, TableMenu],
+  imports: [MatTableModule, FormatCellPipe, MatCheckboxModule, Menu, MatMenuModule, MatIcon],
   templateUrl: './table.html',
   styleUrl: './table.css',
 })
@@ -20,12 +21,19 @@ export class TableV2<T extends BaseEntityModel> {
   columns = input.required<TableColumnModel<T>[]>();
   roleConfig = input<RoleConfigModel>();
 
-  addItem = output<void>();
-  viewItem = output<string>();
-  editItem = output<string>();
-  deleteItem = output<string>();
+  menuAction = output<TableMenuOutput>();
 
   columnsToDisplay = computed(() => ['select', ...this.columns().map(col => col.key as string), 'menu']);
+
+  tableMenuItems = input<MenuItem[]>([
+    { label: 'Add', icon: 'add', action: 'add' },
+  ]);
+
+  rowMenuItems = input<MenuItem[]>([
+    { label: 'View', icon: 'visibility', action: 'view' },
+    { label: 'Edit', icon: 'edit', action: 'edit' },
+    { label: 'Delete', icon: 'delete', action: 'delete' },
+  ]);
 
   protected selectedItems: SelectionModel<T> = new SelectionModel<T>(true, []);
 
@@ -66,4 +74,13 @@ export class TableV2<T extends BaseEntityModel> {
 
     this.selectedItems.select(...this.data());
   }
+
+  onMenuAction(action: string, item?: T): void {
+    this.menuAction.emit({ action, item });
+  }
+}
+
+export type TableMenuOutput = {
+  action: string;
+  item?: BaseEntityModel;
 }
