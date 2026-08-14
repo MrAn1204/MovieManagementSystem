@@ -1,10 +1,6 @@
-<app-menu>
-  @if (canAdd()) {
-    <button mat-menu-item (click)="add.emit()">
-      <mat-icon>add</mat-icon>
-      <span>Add</span>
-    </button>
-  }
+<button matIconButton [matMenuTriggerFor]="rowMenu.menu()!">
+  <mat-icon>more_vert</mat-icon>
+</button>
 
-  <ng-content></ng-content>
+<app-menu #rowMenu [items]="items" (action)="onAction($event)">
 </app-menu>
