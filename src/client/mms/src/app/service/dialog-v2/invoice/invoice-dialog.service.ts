@@ -1,0 +1,18 @@
+import { inject, Injectable, Type } from '@angular/core';
+import { InvoiceModel } from '../../../model/invoice/invoice.model';
+import { BaseDialogV2 } from '../../../shared/component-v2/dialog/base-dialog/base-dialog';
+import { EntityService } from '../../entity.service';
+import { InvoiceService } from '../../invoice/invoice.service';
+import { InvoiceDetailV2 } from '../../../feature/invoice-v2/detail/invoice-detail-v2';
+import { InvoiceAddEdit } from '../../../feature/invoice-v2/add-edit/invoice-add-edit';
+import { EntityDialogServiceV2 } from '../entity-dialog.service';
+
+@Injectable({
+  providedIn: 'root',
+})
+export class InvoiceDialogService extends EntityDialogServiceV2<InvoiceModel> {
+  protected override entityName: string = 'Invoice';
+  protected override entityService: EntityService<InvoiceModel> = inject(InvoiceService);
+  protected override detailDialog: Type<BaseDialogV2> = InvoiceDetailV2;
+  protected override formDialog: Type<BaseDialogV2> = InvoiceAddEdit;
+}
