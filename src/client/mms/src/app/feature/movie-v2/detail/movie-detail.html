@@ -41,7 +41,9 @@
     <app-table-v2
       [columns]="schedulesColumns"
       [data]="model?.schedules ?? []"
-    >
+      [tableMenuItems]="[]"
+      [rowMenuItems]="scheduleRowMenu"
+      (menuAction)="handleMenuAction($event)">
     </app-table-v2>
   </div>
 
