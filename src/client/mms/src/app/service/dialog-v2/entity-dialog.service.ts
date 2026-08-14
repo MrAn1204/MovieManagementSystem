@@ -121,7 +121,7 @@ export abstract class EntityDialogServiceV2<T extends BaseEntityModel> extends D
   protected saveNew(form: FormGroup, onClose?: () => void) {
     this.spinner.show();
 
-    return this.entityService.create(form.value).pipe(
+    return this.entityService.create(form.getRawValue()).pipe(
       tap(() => this.createSuccess()),
       finalize(() => {
         this.spinner.hide();
@@ -140,7 +140,7 @@ export abstract class EntityDialogServiceV2<T extends BaseEntityModel> extends D
   protected saveUpdate(id: string, form: FormGroup, onClose?: () => void) {
     this.spinner.show();
 
-    return this.entityService.update(id, form.value).pipe(
+    return this.entityService.update(id, form.getRawValue()).pipe(
       tap(() => this.updateSuccess()),
       finalize(() => {
         this.spinner.hide();
