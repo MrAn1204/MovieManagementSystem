@@ -10,10 +10,7 @@
   <app-table-v2
     [columns]="columns"
     [data]="data().items"
-    (addItem)="onAdd()"
-    (viewItem)="onView($event)"
-    (editItem)="onEdit($event)"
-    (deleteItem)="onDelete($event)"
+    (menuAction)="onMenuAction($event)"
     [roleConfig]="roleConfig">
   </app-table-v2>
 
