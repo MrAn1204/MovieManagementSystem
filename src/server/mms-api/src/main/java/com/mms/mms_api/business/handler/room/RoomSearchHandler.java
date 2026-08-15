@@ -3,7 +3,6 @@ package com.mms.mms_api.business.handler.room;
 import org.springframework.stereotype.Component;
 
 import org.springframework.data.domain.Page;
-import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.domain.Specification;
 
 import com.mms.mms_api.business.query.room.RoomSearchQuery;
@@ -39,13 +38,12 @@ public class RoomSearchHandler extends RoomBaseHandler<RoomSearchQuery, Paginate
      */
     @Override
     public PaginatedResult<RoomDto> execute(RoomSearchQuery request) {
-        Pageable pageable = SearchHelper.generatePageable(request.getPageNumber(), request.getPageSize());
-
         Specification<Room> spec = new RoomSpecification(request);
 
-        Page<Room> rooms = roomRepository.findAll(spec, pageable);
+        Page<Room> rooms = SearchHelper.getPage(request.getPageNumber(), request.getPageSize(),
+                pageable -> roomRepository.findAll(spec, pageable));
 
-        return SearchHelper.generatePaginatedResult(rooms, roomMapper::toDto);
+        return SearchHelper.getResult(rooms, roomMapper::toDto);
     }
 
 }

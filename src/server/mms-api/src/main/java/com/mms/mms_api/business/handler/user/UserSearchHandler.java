@@ -11,7 +11,6 @@ import com.mms.mms_api.business.specification.UserSpecification;
 import com.mms.mms_api.util.SearchHelper;
 import com.mms.mms_api.util.mapper.UserMapper;
 import org.springframework.data.domain.Page;
-import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.domain.Specification;
 
 /**
@@ -37,12 +36,11 @@ public class UserSearchHandler extends UserBaseHandler<UserSearchQuery, Paginate
      */
     @Override
     public PaginatedResult<UserDto> execute(UserSearchQuery request) {
-        Pageable pageable = SearchHelper.generatePageable(request.getPageNumber(), request.getPageSize());
-
         Specification<User> spec = new UserSpecification(request);
 
-        Page<User> userPage = userRepository.findAll(spec, pageable);
+        Page<User> userPage = SearchHelper.getPage(request.getPageNumber(), request.getPageSize(),
+                pageable -> userRepository.findAll(spec, pageable));
 
-        return SearchHelper.generatePaginatedResult(userPage, userMapper::toDto);
+        return SearchHelper.getResult(userPage, userMapper::toDto);
     }
 }
