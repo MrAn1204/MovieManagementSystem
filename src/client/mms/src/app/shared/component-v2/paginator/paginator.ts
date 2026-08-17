@@ -1,4 +1,4 @@
-import { BreakpointObserver, Breakpoints } from '@angular/cdk/layout';
+import { BreakpointObserver } from '@angular/cdk/layout';
 import { Component, inject, input, output, signal } from '@angular/core';
 import { MatPaginatorModule, PageEvent } from '@angular/material/paginator';
 
@@ -31,10 +31,8 @@ export class Paginator {
   goToPage(event: Event) {
     let page = Number.parseInt((event.target as HTMLInputElement).value);
 
-    if (Number.isNaN(page) || page < 1) {
-      page = 1;
-    } else if (page > this.pageCount()) {
-      page = this.pageCount();
+    if (Number.isNaN(page) || page < 1 || page > this.pageCount()) {
+      return;
     }
 
     const pageEvent: PageEvent = {

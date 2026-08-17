@@ -10,6 +10,7 @@
 
   <mat-paginator class="overflow-hidden"
     [length]="itemCount()"
+    [pageIndex]="pageNumber() - 1"
     [pageSize]="pageSize()"
     [pageSizeOptions]="pageSizeOptions"
     [showFirstLastButtons]="showFirstLast()"
