@@ -1,11 +1,13 @@
 package com.mms.mms_api.util.mapper;
 
+import org.mapstruct.InheritConfiguration;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 import org.mapstruct.MappingTarget;
 
 import com.mms.mms_api.business.command.seat.SeatCreateCommand;
 import com.mms.mms_api.business.command.seat.SeatUpdateCommand;
+import com.mms.mms_api.dto.seat.SeatDetailDto;
 import com.mms.mms_api.dto.seat.SeatDto;
 import com.mms.mms_api.model.ScheduleSeat;
 import com.mms.mms_api.model.Seat;
@@ -25,6 +27,9 @@ public interface SeatMapper {
     @Mapping(target = "reserved", ignore = true)
     SeatDto toDto(Seat seat);
 
+    @InheritConfiguration(name = "toDto")
+    @Mapping(target = "audit", ignore = true)
+    SeatDetailDto toDetailDto(Seat seat);
 
     default SeatDto toDto(ScheduleSeat scheduleSeat) {
         SeatDto seatDto = toDto(scheduleSeat.getSeat());

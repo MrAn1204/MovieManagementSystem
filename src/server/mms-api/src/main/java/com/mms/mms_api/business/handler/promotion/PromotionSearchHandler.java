@@ -11,7 +11,6 @@ import com.mms.mms_api.model.Promotion;
 import com.mms.mms_api.util.SearchHelper;
 import com.mms.mms_api.util.mapper.PromotionMapper;
 import org.springframework.data.domain.Page;
-import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.domain.Specification;
 
 /**
@@ -39,12 +38,11 @@ public class PromotionSearchHandler extends PromotionBaseHandler<PromotionSearch
      */
     @Override
     public PaginatedResult<PromotionDto> execute(PromotionSearchQuery request) {
-        Pageable pageable = SearchHelper.generatePageable(request.getPageNumber(), request.getPageSize());
-
         Specification<Promotion> spec = new PromotionSpecification(request);
 
-        Page<Promotion> promotions = promotionRepository.findAll(spec, pageable);
+        Page<Promotion> promotions = SearchHelper.getPage(request.getPageNumber(), request.getPageSize(),
+                pageable -> promotionRepository.findAll(spec, pageable));
 
-        return SearchHelper.generatePaginatedResult(promotions, promotionMapper::toDto);
+        return SearchHelper.getResult(promotions, promotionMapper::toDto);
     }
 }

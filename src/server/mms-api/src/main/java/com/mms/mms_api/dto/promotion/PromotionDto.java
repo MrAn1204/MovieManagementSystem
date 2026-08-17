@@ -23,9 +23,5 @@ public class PromotionDto extends BaseDto {
 
     private LocalDate endDate;
 
-    private String description;
-
-    private String image;
-
     private double discount;
 }

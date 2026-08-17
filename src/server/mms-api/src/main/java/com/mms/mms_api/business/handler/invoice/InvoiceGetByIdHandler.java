@@ -24,6 +24,7 @@ public class InvoiceGetByIdHandler extends InvoiceBaseHandler<InvoiceGetByIdQuer
      *
      * @param invoiceMapper invoice mapper
      * @param invoiceRepository invoice repository
+     * @param currentUserHelper current user helper
      */
     public InvoiceGetByIdHandler(InvoiceMapper invoiceMapper, InvoiceRepository invoiceRepository, CurrentUserHelper currentUserHelper) {
         super(invoiceMapper, invoiceRepository);
@@ -34,7 +35,7 @@ public class InvoiceGetByIdHandler extends InvoiceBaseHandler<InvoiceGetByIdQuer
      * Retrieves an invoice by its identifier.
      *
      * @param request query containing the target invoice id
-     * @return invoice DTO
+     * @return invoice detail DTO
      * @throws com.mms.mms_api.exception.InvalidInputException when the invoice does not exist
      */
     @Override

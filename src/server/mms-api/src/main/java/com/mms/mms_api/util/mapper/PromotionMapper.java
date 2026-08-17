@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import com.mms.mms_api.business.command.promotion.PromotionCreateCommand;
 import com.mms.mms_api.business.command.promotion.PromotionUpdateCommand;
 import com.mms.mms_api.business.service.GscService;
+import com.mms.mms_api.dto.promotion.PromotionDetailDto;
 import com.mms.mms_api.dto.promotion.PromotionDto;
 import com.mms.mms_api.model.Promotion;
 
@@ -29,8 +30,11 @@ public abstract class PromotionMapper {
     @Mapping(target = "discount", expression = "java(command.getDiscount() / 100.0)")
     public abstract Promotion toEntity(PromotionCreateCommand command);
 
-    @Mapping(target = "image", qualifiedByName = "getImageUrl")
     public abstract PromotionDto toDto(Promotion promotion);
+
+    @Mapping(target = "image", qualifiedByName = "getImageUrl")
+    @Mapping(target = "audit", ignore = true)
+    public abstract PromotionDetailDto toDetailDto(Promotion promotion);
 
     @Mapping(target = "tickets", ignore = true)
     @Mapping(target = "image", ignore = true)
