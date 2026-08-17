@@ -1,4 +1,4 @@
-<app-detail-container [title]="data.title" (editItem)="openUpdate()" (deleteItem)="openDelete()" (closeDialog)="onClose()">
+<app-detail-container [title]="data.title" [audit]="audit"  (editItem)="openUpdate()" (deleteItem)="openDelete()" (closeDialog)="onClose()">
   <div dialog-content class="w-full flex-1 gap-8 grid grid-cols-1 sm:grid-cols-2">
     <app-detail-text label="Name" class="sm:col-span-2">
       {{ model?.name | formatCell }}
