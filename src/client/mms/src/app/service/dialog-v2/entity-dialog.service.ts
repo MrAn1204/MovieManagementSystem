@@ -50,17 +50,17 @@ export abstract class EntityDialogServiceV2<T extends BaseEntityModel> extends D
     );
   }
 
-  showAddEditDialog(id?: string) {
+  showAddEditDialog(id?: string, data?: Record<string, unknown>) {
     if (id) {
       this.spinner.show();
 
       return this.entityService.getById(id)
         .pipe(
           finalize(() => this.spinner.hide()),
-          switchMap(res => this.displayEdit(res))
+          switchMap(res => this.displayEdit(res, data))
         );
     } else {
-      return this.displayAdd();
+      return this.displayAdd(data);
     }
   }
 

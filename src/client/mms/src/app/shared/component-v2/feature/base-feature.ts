@@ -41,11 +41,11 @@ export abstract class BaseFeatureV2<T extends BaseEntityModel> {
   }
 
   onAdd(): void {
-    this.dialogService.showAddEditDialog();
+    this.dialogService.showAddEditDialog().subscribe();
   }
 
   onEdit(id: string): void {
-    this.dialogService.showAddEditDialog(id);
+    this.dialogService.showAddEditDialog(id).subscribe();
   }
 
   onView(id: string): void {
