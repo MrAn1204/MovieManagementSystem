@@ -28,7 +28,8 @@ export class CustomValidators {
           (Array.isArray(value) && value.length === 0) ||
           (typeof value === 'object' && Object.keys(value).length === 0)
       ) {
-        return this.buildError('required', message);
+        // use key 'mandatory' since Angular Material already uses 'required'
+        return this.buildError('mandatory', message);
       }
 
       return null;
