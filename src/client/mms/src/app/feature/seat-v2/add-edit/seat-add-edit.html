@@ -17,17 +17,20 @@
 
       <app-form-select idName="seatType"
         label="Seat Type" [options]="seatTypes()"
-        [control]="form.controls.seatType">
+        [control]="form.controls.seatType"
+        [required]="true">
       </app-form-select>
 
       <app-form-input idName="seatRow"
         type="number" label="Row"
-        [control]="form.controls.seatRow">
+        [control]="form.controls.seatRow"
+        [required]="true">
       </app-form-input>
 
       <app-form-input idName="seatColumn"
         type="number" label="Column"
-        [control]="form.controls.seatColumn">
+        [control]="form.controls.seatColumn"
+        [required]="true">
       </app-form-input>
     </div>
   </div>

@@ -10,6 +10,7 @@ import { MapDescription } from "../../seat/map-description/map-description";
 import { EntityService } from '../../../service/entity.service';
 import { SeatDialogService } from '../../../service/dialog-v2/seat/seat-dialog.service';
 import { EntityDialogServiceV2 } from '../../../service/dialog-v2/entity-dialog.service';
+import { finalize } from 'rxjs';
 
 @Component({
   selector: 'app-seat-map-v2',
@@ -33,7 +34,10 @@ export class SeatMapV2 extends BaseFeatureV2<SeatModel> implements OnChanges, On
   rows: number[] = [];
   columns: number[] = [];
 
-  reloadDialog = output<void>();
+  viewSeat = output<boolean>();
+
+  protected override entityService: EntityService<SeatModel> = inject(SeatService);
+  protected override dialogService: EntityDialogServiceV2<SeatModel> = inject(SeatDialogService);
 
   ngOnChanges(changes: SimpleChanges): void {
     this.loadMap();
@@ -64,14 +68,45 @@ export class SeatMapV2 extends BaseFeatureV2<SeatModel> implements OnChanges, On
     if (!this.showType()) {
       return seat.reserved ? 'occupied' : 'seat';
     }
-    if (seat.seatType === 'STANDARD') return 'seat';
-    if (seat.seatType === 'PREMIUM') return 'premium';
-    if (seat.seatType === 'COUPLE') return 'couple';
-    if (seat.seatType === 'ACCESSIBLE') return 'accessible';
-    return '';
+
+    switch (seat.seatType) {
+      case 'STANDARD':
+        return 'seat';
+      case 'PREMIUM':
+        return 'premium';
+      case 'COUPLE':
+        return 'couple';
+      case 'ACCESSIBLE':
+        return 'accessible';
+      default:
+        return '';
+    }
   }
 
-  protected override entityService: EntityService<SeatModel> = inject(SeatService);
-  protected override dialogService: EntityDialogServiceV2<SeatModel> = inject(SeatDialogService);
+  override onView(id: string): void {
+    this.viewSeat.emit(true);
 
+    this.dialogService.showDetailDialog(id)
+      .subscribe(result => {
+        if (result === 'edit') {
+          this.onEdit(id);
+        } else if (result === 'delete') {
+          this.onDelete(id);
+        } else {
+          this.viewSeat.emit(false);
+        }
+      });
+  }
+
+  override onEdit(id: string): void {
+    this.dialogService.showAddEditDialog(id)
+      .pipe(finalize(() => this.viewSeat.emit(false)))
+      .subscribe();
+  }
+
+  override onDelete(id: string): void {
+    this.dialogService.showDeleteDialog(id)
+      .pipe(finalize(() => this.viewSeat.emit(false)))
+      .subscribe();
+  }
 }

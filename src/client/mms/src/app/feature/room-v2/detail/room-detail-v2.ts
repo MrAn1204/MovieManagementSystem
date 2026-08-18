@@ -7,6 +7,9 @@ import { FormatCellPipe } from '../../../shared/pipe/format-cell/format-cell-pip
 import { AuthService } from '../../../service/auth/auth.service';
 import { ButtonV2 } from "../../../shared/component-v2/button/button";
 import { SeatMapV2 } from "../../seat-v2/seat-map-v2/seat-map-v2";
+import { SeatDialogService } from '../../../service/dialog-v2/seat/seat-dialog.service';
+import { SeatDetailModel } from '../../../model/seat/seat-detail.model';
+import { finalize } from 'rxjs';
 
 @Component({
   selector: 'app-room-detail-v2',
@@ -18,8 +21,23 @@ export class RoomDetailV2 extends DetailDialogV2<RoomDetailModel> {
   seatMap = viewChild<SeatMapV2>('seatMap');
 
   private readonly authService = inject(AuthService);
+  private readonly seatDialogService = inject(SeatDialogService);
 
   openAddSeat(): void {
+    const seatData: Partial<SeatDetailModel> = {
+      room: {
+        id: this.model!.id,
+        rowLength: this.model!.rowLength,
+        columnLength: this.model!.columnLength,
+        name: this.model!.name,
+      },
+    }
+
+    this.hideSelf();
+
+    this.seatDialogService.showAddEditDialog(undefined, { model: seatData })
+      .pipe(finalize(() => this.showSelf()))
+      .subscribe();
   }
 
   canAddSeat(): boolean {

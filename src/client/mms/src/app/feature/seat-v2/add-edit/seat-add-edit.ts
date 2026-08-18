@@ -1,22 +1,14 @@
-import { Component, inject, OnInit, signal } from '@angular/core';
+import { Component, OnInit, signal } from '@angular/core';
 import { AddEditDialog } from '../../../shared/component-v2/dialog/add-edit-dialog/add-edit-dialog';
-import { SeatModel } from '../../../model/seat/seat.model';
 import { FormOptionModel } from '../../../shared/model/form-option.model';
 import { merge } from 'rxjs';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
-import { DialogFormDataModel } from '../../../shared/model/dialog/dialog-form-data.model';
 import { CustomValidators } from '../../../shared/util/custom-validators';
 import { SeatService } from '../../../service/seat/seat.service';
 import { AddEditContainer } from "../../../shared/component-v2/dialog/add-edit-container/add-edit-container";
 import { FormInput } from "../../../shared/component-v2/form/form-input/form-input";
 import { FormSelect } from "../../../shared/component-v2/form/form-select/form-select";
-import { MAT_DIALOG_DATA } from '@angular/material/dialog';
-
-interface SeatDialogDataModel extends DialogFormDataModel<SeatModel> {
-  roomId?: string;
-  rowLength?: number;
-  columnLength?: number;
-}
+import { SeatDetailModel } from '../../../model/seat/seat-detail.model';
 
 @Component({
   selector: 'app-seat-add-edit',
@@ -24,27 +16,36 @@ interface SeatDialogDataModel extends DialogFormDataModel<SeatModel> {
   templateUrl: './seat-add-edit.html',
   styleUrl: './seat-add-edit.css',
 })
-export class SeatAddEdit extends AddEditDialog<SeatModel> implements OnInit {
-  private readonly seatData = inject<SeatDialogDataModel>(MAT_DIALOG_DATA);
-
+export class SeatAddEdit extends AddEditDialog<SeatDetailModel> implements OnInit {
   override form = this.formBuilder.nonNullable.group({
     name: ['', [CustomValidators.required('seat.name.required')]],
-    seatType: ['STANDARD'],
-    seatRow: [1, [CustomValidators.range(1, 1, 'seat.row.invalid')]],
-    seatColumn: [1, [CustomValidators.range(1, 1, 'seat.column.invalid')]],
-    roomId: [''],
+    seatType: ['STANDARD', [CustomValidators.required('seat.type.required')]],
+    seatRow: [1, [
+      CustomValidators.required('seat.row.required'),
+      CustomValidators.range(1, this.model?.room.rowLength ?? 1, 'seat.row.invalid'),
+    ]],
+    seatColumn: [1, [
+      CustomValidators.required('seat.column.required'),
+      CustomValidators.range(1, this.model?.room.columnLength ?? 1, 'seat.column.invalid')
+    ]],
+    roomId: [this.model?.room.id ?? ''],
   });
 
   enableNameAutofill = false;
   seatTypes = signal<FormOptionModel[]>([]);
 
-  private get rowControl() { return this.form.get('seatRow'); }
-  private get columnControl() { return this.form.get('seatColumn'); }
+  private get rowControl() {
+    return this.form.controls.seatRow;
+  }
+
+  private get columnControl() {
+    return this.form.controls.seatColumn;
+  }
 
   constructor(private readonly seatService: SeatService) {
     super();
 
-    merge(this.rowControl!.valueChanges, this.columnControl!.valueChanges)
+    merge(this.rowControl.valueChanges, this.columnControl.valueChanges)
       .pipe(takeUntilDestroyed())
       .subscribe(() => {
         if (this.enableNameAutofill) {
@@ -54,16 +55,6 @@ export class SeatAddEdit extends AddEditDialog<SeatModel> implements OnInit {
   }
 
   ngOnInit(): void {
-    // Set row/column validators using dialog data
-    const rowLength = this.seatData.rowLength ?? 1;
-    const columnLength = this.seatData.columnLength ?? 1;
-
-    this.form.get('seatRow')?.setValidators([CustomValidators.range(1, rowLength, 'seat.row.invalid')]);
-    this.form.get('seatColumn')?.setValidators([CustomValidators.range(1, columnLength, 'seat.column.invalid')]);
-    this.form.patchValue({ roomId: this.seatData.roomId ?? '' });
-
-    this.patchForm();
-
     this.seatService.getSeatTypes().subscribe(res => {
       this.seatTypes.set(Object.keys(res).map(key => ({
         label: key,
@@ -87,15 +78,19 @@ export class SeatAddEdit extends AddEditDialog<SeatModel> implements OnInit {
   onAutoFillNameChange(event: Event): void {
     this.enableNameAutofill = (event.target as HTMLInputElement).checked;
     if (this.enableNameAutofill) {
+      this.form.controls.name.disable();
       this.updateSeatName();
+    } else {
+      this.form.controls.name.enable();
     }
   }
 
   private updateSeatName(): void {
-    const row = Number(this.rowControl?.value);
-    const column = Number(this.columnControl?.value);
+    const row = Number(this.rowControl.value);
+    const column = Number(this.columnControl.value);
     const name = this.buildSeatName(row, column);
-    this.form.get('name')?.setValue(name);
+    this.form.controls.name.setValue(name);
+
   }
 
   private buildSeatName(row: number, column: number): string {
