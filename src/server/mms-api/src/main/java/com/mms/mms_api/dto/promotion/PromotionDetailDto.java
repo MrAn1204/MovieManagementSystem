@@ -1,5 +1,6 @@
 package com.mms.mms_api.dto.promotion;
 
+import com.fasterxml.jackson.annotation.JsonInclude;
 import com.mms.mms_api.dto.AuditDto;
 
 import lombok.Data;
@@ -12,5 +13,6 @@ public class PromotionDetailDto extends PromotionDto {
 
     private String image;
 
+    @JsonInclude(JsonInclude.Include.NON_NULL)
     private AuditDto audit;
 }
