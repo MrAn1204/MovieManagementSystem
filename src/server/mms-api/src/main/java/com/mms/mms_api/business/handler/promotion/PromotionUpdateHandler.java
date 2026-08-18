@@ -9,14 +9,14 @@ import com.mms.mms_api.exception.ResourceNotFoundException;
 import com.mms.mms_api.model.Promotion;
 import com.mms.mms_api.model.Ticket;
 import com.mms.mms_api.data.PromotionRepository;
-import com.mms.mms_api.dto.promotion.PromotionDto;
+import com.mms.mms_api.dto.promotion.PromotionDetailDto;
 import com.mms.mms_api.util.mapper.PromotionMapper;
 
 /**
  * Handles promotion update commands.
  */
 @Component
-public class PromotionUpdateHandler extends PromotionBaseHandler<PromotionUpdateCommand, PromotionDto> {
+public class PromotionUpdateHandler extends PromotionBaseHandler<PromotionUpdateCommand, PromotionDetailDto> {
     private final GscService gscService;
 
     /**
@@ -40,7 +40,7 @@ public class PromotionUpdateHandler extends PromotionBaseHandler<PromotionUpdate
      * @throws com.mms.mms_api.exception.ResourceNotFoundException when the promotion does not exist
      */
     @Override
-    public PromotionDto execute(PromotionUpdateCommand request) {
+    public PromotionDetailDto execute(PromotionUpdateCommand request) {
         Promotion promotion = promotionRepository.findById(request.getId())
                 .orElseThrow(() -> new ResourceNotFoundException("promotion.notFound"));
 
@@ -63,6 +63,6 @@ public class PromotionUpdateHandler extends PromotionBaseHandler<PromotionUpdate
             gscService.delete(oldImageUrl);
         }
 
-        return promotionMapper.toDto(updatedPromotion);
+        return promotionMapper.toDetailDto(updatedPromotion);
     }
 }

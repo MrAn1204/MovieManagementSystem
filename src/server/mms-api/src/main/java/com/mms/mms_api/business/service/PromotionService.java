@@ -13,6 +13,7 @@ import com.mms.mms_api.business.query.promotion.PromotionGetAllQuery;
 import com.mms.mms_api.business.query.promotion.PromotionGetByIdQuery;
 import com.mms.mms_api.business.query.promotion.PromotionSearchQuery;
 import com.mms.mms_api.common.PaginatedResult;
+import com.mms.mms_api.dto.promotion.PromotionDetailDto;
 import com.mms.mms_api.dto.promotion.PromotionDto;
 import com.mms.mms_api.mediator.RequestMediator;
 import com.mms.mms_api.util.validator.PromotionValidator;
@@ -36,7 +37,7 @@ public class PromotionService {
      */
     @PreAuthorize("hasAuthority('ADMIN')")
     @Transactional
-    public PromotionDto handle(PromotionCreateCommand request) {
+    public PromotionDetailDto handle(PromotionCreateCommand request) {
         return mediator.execute(request);
     }
 
@@ -56,7 +57,7 @@ public class PromotionService {
      * @param request get-by-id query
      * @return promotion DTO
      */
-    public PromotionDto handle(PromotionGetByIdQuery request) {
+    public PromotionDetailDto handle(PromotionGetByIdQuery request) {
         return mediator.execute(request);
     }
 
@@ -68,7 +69,7 @@ public class PromotionService {
      */
     @PreAuthorize("hasAuthority('ADMIN')")
     @Transactional
-    public PromotionDto handle(PromotionUpdateCommand request) {
+    public PromotionDetailDto handle(PromotionUpdateCommand request) {
         promotionValidator.validate(request);
         return mediator.execute(request);
     }

@@ -11,6 +11,7 @@ import com.mms.mms_api.business.query.promotion.PromotionGetByIdQuery;
 import com.mms.mms_api.business.query.promotion.PromotionSearchQuery;
 import com.mms.mms_api.business.service.PromotionService;
 import com.mms.mms_api.common.PaginatedResult;
+import com.mms.mms_api.dto.promotion.PromotionDetailDto;
 import com.mms.mms_api.dto.promotion.PromotionDto;
 
 import jakarta.validation.Valid;
@@ -46,8 +47,8 @@ public class PromotionController {
      * @return created promotion
      */
     @PostMapping(value = "/create", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
-    public ResponseEntity<PromotionDto> create(@Valid @ModelAttribute PromotionCreateCommand request) {
-        PromotionDto promotion = promotionService.handle(request);
+    public ResponseEntity<PromotionDetailDto> create(@Valid @ModelAttribute PromotionCreateCommand request) {
+        PromotionDetailDto promotion = promotionService.handle(request);
 
         return ResponseEntity.status(HttpStatus.CREATED).body(promotion);
     }
@@ -71,8 +72,8 @@ public class PromotionController {
      * @return promotion details
      */
     @GetMapping("/{id}")
-    public ResponseEntity<PromotionDto> getById(@PathVariable UUID id) {
-        PromotionDto promotion = promotionService.handle(new PromotionGetByIdQuery(id));
+    public ResponseEntity<PromotionDetailDto> getById(@PathVariable UUID id) {
+        PromotionDetailDto promotion = promotionService.handle(new PromotionGetByIdQuery(id));
 
         return ResponseEntity.ok(promotion);
     }
@@ -85,10 +86,10 @@ public class PromotionController {
      * @return updated promotion
      */
     @PutMapping(value = "/{id}", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
-    public ResponseEntity<PromotionDto> update(@PathVariable UUID id, @Valid @ModelAttribute PromotionUpdateCommand request) {
+    public ResponseEntity<PromotionDetailDto> update(@PathVariable UUID id, @Valid @ModelAttribute PromotionUpdateCommand request) {
         request.setId(id);
 
-        PromotionDto promotion = promotionService.handle(request);
+        PromotionDetailDto promotion = promotionService.handle(request);
 
         return ResponseEntity.ok(promotion);
     }

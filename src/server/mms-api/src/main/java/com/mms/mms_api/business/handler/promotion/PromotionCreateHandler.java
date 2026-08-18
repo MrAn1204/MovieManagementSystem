@@ -7,14 +7,14 @@ import com.mms.mms_api.business.service.GscService;
 import com.mms.mms_api.common.StoragePath;
 import com.mms.mms_api.model.Promotion;
 import com.mms.mms_api.data.PromotionRepository;
-import com.mms.mms_api.dto.promotion.PromotionDto;
+import com.mms.mms_api.dto.promotion.PromotionDetailDto;
 import com.mms.mms_api.util.mapper.PromotionMapper;
 
 /**
  * Handles promotion creation commands.
  */
 @Component
-public class PromotionCreateHandler extends PromotionBaseHandler<PromotionCreateCommand, PromotionDto> {
+public class PromotionCreateHandler extends PromotionBaseHandler<PromotionCreateCommand, PromotionDetailDto> {
     private final GscService gscService;
 
     /**
@@ -37,7 +37,7 @@ public class PromotionCreateHandler extends PromotionBaseHandler<PromotionCreate
      * @return created promotion DTO
      */
     @Override
-    public PromotionDto execute(PromotionCreateCommand request) {
+    public PromotionDetailDto execute(PromotionCreateCommand request) {
         String imageUrl = gscService.upload(request.getImage(), StoragePath.PROMOTION_IMAGE);
 
         Promotion promotion = promotionMapper.toEntity(request);
@@ -45,6 +45,6 @@ public class PromotionCreateHandler extends PromotionBaseHandler<PromotionCreate
 
         Promotion savedPromotion = promotionRepository.save(promotion);
 
-        return promotionMapper.toDto(savedPromotion);
+        return promotionMapper.toDetailDto(savedPromotion);
     }
 }

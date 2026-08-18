@@ -5,7 +5,7 @@ import org.springframework.stereotype.Component;
 import com.mms.mms_api.business.command.seat.SeatCreateCommand;
 import com.mms.mms_api.data.RoomRepository;
 import com.mms.mms_api.data.SeatRepository;
-import com.mms.mms_api.dto.seat.SeatDto;
+import com.mms.mms_api.dto.seat.SeatDetailDto;
 import com.mms.mms_api.exception.ResourceNotFoundException;
 import com.mms.mms_api.model.Room;
 import com.mms.mms_api.model.Seat;
@@ -16,7 +16,7 @@ import com.mms.mms_api.util.mapper.SeatMapper;
  * Handles seat creation commands.
  */
 @Component
-public class SeatCreateHandler extends SeatBaseHandler<SeatCreateCommand, SeatDto> {
+public class SeatCreateHandler extends SeatBaseHandler<SeatCreateCommand, SeatDetailDto> {
     private final RoomRepository roomRepository;
 
     /**
@@ -40,7 +40,7 @@ public class SeatCreateHandler extends SeatBaseHandler<SeatCreateCommand, SeatDt
      * @throws com.mms.mms_api.exception.ResourceNotFoundException when the room does not exist
      */
     @Override
-    public SeatDto execute(SeatCreateCommand request) {
+    public SeatDetailDto execute(SeatCreateCommand request) {
         Seat seat = seatMapper.toEntity(request);
 
         Room room = roomRepository.findById(request.getRoomId())
@@ -61,7 +61,7 @@ public class SeatCreateHandler extends SeatBaseHandler<SeatCreateCommand, SeatDt
             seatRepository.save(secondSeat);
         }
 
-        return seatMapper.toDto(savedSeat);
+        return seatMapper.toDetailDto(savedSeat);
     }
 
 }

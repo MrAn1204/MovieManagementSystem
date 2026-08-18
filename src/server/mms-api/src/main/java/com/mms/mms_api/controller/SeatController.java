@@ -17,6 +17,7 @@ import com.mms.mms_api.business.query.seat.SeatGetAllQuery;
 import com.mms.mms_api.business.query.seat.SeatGetByIdQuery;
 import com.mms.mms_api.business.query.seat.SeatTypeGetAllQuery;
 import com.mms.mms_api.business.service.SeatService;
+import com.mms.mms_api.dto.seat.SeatDetailDto;
 import com.mms.mms_api.dto.seat.SeatDto;
 
 import jakarta.validation.Valid;
@@ -43,7 +44,7 @@ public class SeatController {
      * @return created seat
      */
     @PostMapping("/create")
-    public ResponseEntity<SeatDto> create(@Valid @RequestBody SeatCreateCommand request) {
+    public ResponseEntity<SeatDetailDto> create(@Valid @RequestBody SeatCreateCommand request) {
         return ResponseEntity.ok(seatService.handle(request));
     }
 
@@ -65,8 +66,8 @@ public class SeatController {
      * @return seat details
      */
     @GetMapping("/{id}")
-    public ResponseEntity<SeatDto> getById(@PathVariable UUID id) {
-        SeatDto seat = seatService.handle(new SeatGetByIdQuery(id));
+    public ResponseEntity<SeatDetailDto> getById(@PathVariable UUID id) {
+        SeatDetailDto seat = seatService.handle(new SeatGetByIdQuery(id));
         return ResponseEntity.ok(seat);
     }
 
@@ -78,10 +79,10 @@ public class SeatController {
      * @return updated seat
      */
     @PutMapping("/{id}")
-    public ResponseEntity<SeatDto> update(@PathVariable UUID id, @Valid @RequestBody SeatUpdateCommand request) {
+    public ResponseEntity<SeatDetailDto> update(@PathVariable UUID id, @Valid @RequestBody SeatUpdateCommand request) {
         request.setId(id);
 
-        SeatDto updatedSeat = seatService.handle(request);
+        SeatDetailDto updatedSeat = seatService.handle(request);
         if (updatedSeat == null) {
             return ResponseEntity.notFound().build();
         }

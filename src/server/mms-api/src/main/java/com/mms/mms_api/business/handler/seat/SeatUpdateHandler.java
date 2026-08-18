@@ -4,7 +4,7 @@ import org.springframework.stereotype.Component;
 
 import com.mms.mms_api.business.command.seat.SeatUpdateCommand;
 import com.mms.mms_api.data.SeatRepository;
-import com.mms.mms_api.dto.seat.SeatDto;
+import com.mms.mms_api.dto.seat.SeatDetailDto;
 import com.mms.mms_api.exception.ResourceNotFoundException;
 import com.mms.mms_api.model.Room;
 import com.mms.mms_api.model.Seat;
@@ -15,7 +15,7 @@ import com.mms.mms_api.util.mapper.SeatMapper;
  * Handles seat update commands.
  */
 @Component
-public class SeatUpdateHandler extends SeatBaseHandler<SeatUpdateCommand, SeatDto> {
+public class SeatUpdateHandler extends SeatBaseHandler<SeatUpdateCommand, SeatDetailDto> {
     /**
      * Creates a SeatUpdateHandler.
      *
@@ -34,7 +34,7 @@ public class SeatUpdateHandler extends SeatBaseHandler<SeatUpdateCommand, SeatDt
      * @throws com.mms.mms_api.exception.ResourceNotFoundException when the seat does not exist
      */
     @Override
-    public SeatDto execute(SeatUpdateCommand request) {
+    public SeatDetailDto execute(SeatUpdateCommand request) {
         Seat seat = seatRepository.findById(request.getId())
                 .orElseThrow(() -> new ResourceNotFoundException("seat.notFound"));
 
@@ -60,6 +60,6 @@ public class SeatUpdateHandler extends SeatBaseHandler<SeatUpdateCommand, SeatDt
             seatRepository.save(secondSeat);
         }
 
-        return seatMapper.toDto(savedSeat);
+        return seatMapper.toDetailDto(savedSeat);
     }
 }
