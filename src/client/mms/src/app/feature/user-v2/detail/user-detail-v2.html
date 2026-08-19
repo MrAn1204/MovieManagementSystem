@@ -42,7 +42,11 @@
 
     <div class="sm:col-span-2">
       <app-detail-text label="Invoices"></app-detail-text>
-      <app-invoice-v2 [data]="model?.invoices ?? []" [user]="userSummary"></app-invoice-v2>
+      <app-invoice-v2
+        [data]="model?.invoices ?? []"
+        [user]="userSummary"
+        (viewInvoice)="$event ? hideSelf() : onRefresh()">
+      </app-invoice-v2>
     </div>
   </div>
 </app-detail-container>
