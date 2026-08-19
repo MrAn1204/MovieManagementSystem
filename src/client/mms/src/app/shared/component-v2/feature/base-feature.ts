@@ -7,7 +7,6 @@ import { SpinnerService } from "../../../service/ui/spinner/spinner.service";
 import { MatSnackBar } from "@angular/material/snack-bar";
 import { EntityService } from "../../../service/entity.service";
 import { EntityDialogServiceV2 } from "../../../service/dialog-v2/entity-dialog.service";
-import { TableMenuOutput } from "../table/table";
 
 @Directive()
 export abstract class BaseFeatureV2<T extends BaseEntityModel> {
@@ -25,21 +24,6 @@ export abstract class BaseFeatureV2<T extends BaseEntityModel> {
   protected abstract readonly entityService: EntityService<T>;
   protected abstract readonly dialogService: EntityDialogServiceV2<T>;
 
-  onMenuAction(event: TableMenuOutput): void {
-    const action = event.action;
-    const item = event.item;
-
-    if (action === 'add') {
-      this.onAdd();
-    } else if (action === 'edit' && item) {
-      this.onEdit(item.id);
-    } else if (action === 'view' && item) {
-      this.onView(item.id);
-    } else if (action === 'delete' && item) {
-      this.onDelete(item.id);
-    }
-  }
-
   onAdd(): void {
     this.dialogService.showAddEditDialog().subscribe();
   }
@@ -49,16 +33,20 @@ export abstract class BaseFeatureV2<T extends BaseEntityModel> {
   }
 
   onView(id: string): void {
-    this.dialogService.showDetailDialog(id).subscribe(result => {
-      if (result === 'edit') {
-        this.onEdit(id);
-      } else if (result === 'delete') {
-        this.onDelete(id);
-      }
-    });
+    this.dialogService.showDetailDialog(id).subscribe(result => this.handleViewResult(result, id));
   }
 
   onDelete(id: string): void {
     this.dialogService.showDeleteDialog(id);
+  }
+
+  protected handleViewResult(result: any, id: string): void {
+    if (result === 'edit') {
+      this.onEdit(id);
+    } else if (result === 'delete') {
+      this.onDelete(id);
+    } else if (result === 'refresh') {
+      this.onView(id);
+    }
   }
 }

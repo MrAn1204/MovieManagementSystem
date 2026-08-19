@@ -8,6 +8,7 @@ import { FormGroup } from "@angular/forms";
 import { finalize } from "rxjs";
 import { PageEvent } from "@angular/material/paginator";
 import { SearchForm } from "../search/search";
+import { TableMenuOutput } from "../table/table";
 
 @Directive()
 export abstract class SearchableFeatureV2<T extends BaseEntityModel> extends BaseFeatureV2<T> implements OnInit {
@@ -58,6 +59,21 @@ export abstract class SearchableFeatureV2<T extends BaseEntityModel> extends Bas
     this.searchForm.controls.pageSize.setValue(event.pageSize);
 
     this.onSearch();
+  }
+
+  onMenuAction(event: TableMenuOutput): void {
+    const action = event.action;
+    const item = event.item;
+
+    if (action === 'add') {
+      this.onAdd();
+    } else if (action === 'edit' && item) {
+      this.onEdit(item.id);
+    } else if (action === 'view' && item) {
+      this.onView(item.id);
+    } else if (action === 'delete' && item) {
+      this.onDelete(item.id);
+    }
   }
 
   override onAdd(): void {

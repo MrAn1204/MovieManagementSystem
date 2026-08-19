@@ -32,4 +32,8 @@ export abstract class DetailDialogV2<T extends BaseEntityModel> extends BaseDial
   openDelete(): void {
     this.onClose('delete');
   }
+
+  onRefresh(): void {
+    this.onClose('refresh');
+  }
 }
