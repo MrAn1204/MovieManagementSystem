@@ -86,16 +86,15 @@ export class SeatMapV2 extends BaseFeatureV2<SeatModel> implements OnChanges, On
   override onView(id: string): void {
     this.viewSeat.emit(true);
 
-    this.dialogService.showDetailDialog(id)
-      .subscribe(result => {
-        if (result === 'edit') {
-          this.onEdit(id);
-        } else if (result === 'delete') {
-          this.onDelete(id);
-        } else {
-          this.viewSeat.emit(false);
-        }
-      });
+    this.dialogService.showDetailDialog(id).subscribe(result => this.handleViewResult(result, id));
+  }
+
+  protected override handleViewResult(result: string, id: string): void {
+    if (!result) {
+      this.viewSeat.emit(false);
+    } else {
+      super.handleViewResult(result, id);
+    }
   }
 
   override onEdit(id: string): void {

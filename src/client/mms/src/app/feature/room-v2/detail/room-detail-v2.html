@@ -27,7 +27,7 @@
         [columnLength]="model?.columnLength ?? 0"
         [roomId]="model?.id ?? ''"
         [seats]="model?.seats ?? []"
-        (viewSeat)="$event ? hideSelf() : showSelf()"
+        (viewSeat)="$event ? hideSelf() : onRefresh()"
       ></app-seat-map-v2>
     </div>
   </div>

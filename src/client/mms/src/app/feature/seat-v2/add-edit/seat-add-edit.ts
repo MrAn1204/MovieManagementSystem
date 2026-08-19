@@ -18,15 +18,15 @@ import { SeatDetailModel } from '../../../model/seat/seat-detail.model';
 })
 export class SeatAddEdit extends AddEditDialog<SeatDetailModel> implements OnInit {
   override form = this.formBuilder.nonNullable.group({
-    name: ['', [CustomValidators.required('seat.name.required')]],
-    seatType: ['STANDARD', [CustomValidators.required('seat.type.required')]],
-    seatRow: [1, [
+    name: [this.model?.name ?? '', [CustomValidators.required('seat.name.required')]],
+    seatType: [this.model?.seatType ?? 'STANDARD', [CustomValidators.required('seat.type.required')]],
+    seatRow: [this.model?.seatRow ?? 1, [
       CustomValidators.required('seat.row.required'),
-      CustomValidators.range(1, this.model?.room.rowLength ?? 1, 'seat.row.invalid'),
+      CustomValidators.range(1, this.model?.room.columnLength ?? 1, 'seat.row.invalid'),
     ]],
-    seatColumn: [1, [
+    seatColumn: [this.model?.seatColumn ?? 1, [
       CustomValidators.required('seat.column.required'),
-      CustomValidators.range(1, this.model?.room.columnLength ?? 1, 'seat.column.invalid')
+      CustomValidators.range(1, this.model?.room.rowLength ?? 1, 'seat.column.invalid')
     ]],
     roomId: [this.model?.room.id ?? ''],
   });

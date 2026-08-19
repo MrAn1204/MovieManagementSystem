@@ -36,7 +36,7 @@ export class RoomDetailV2 extends DetailDialogV2<RoomDetailModel> {
     this.hideSelf();
 
     this.seatDialogService.showAddEditDialog(undefined, { model: seatData })
-      .pipe(finalize(() => this.showSelf()))
+      .pipe(finalize(() => this.onRefresh()))
       .subscribe();
   }
 
