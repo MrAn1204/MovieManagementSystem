@@ -1,38 +1,36 @@
 <app-add-edit-container [title]="title" (submitForm)="onSubmit()" (resetForm)="onReset()" (closeDialog)="onClose()">
-  <div dialog-content class="add-edit-layout">
-    <div class="w-full flex-1 gap-4 grid grid-cols-1 sm:grid-cols-2">
-      <app-form-select [class.sm:col-span-2]="!isEditMode" idName="scheduleId"
-        label="Schedule" [options]="schedules()"
-        [control]="form.controls.scheduleId">
-      </app-form-select>
+  <div dialog-content class="form-grid">
+    <app-form-select [class.sm:col-span-2]="!isEditMode" idName="scheduleId"
+      label="Schedule" [options]="schedules()"
+      [control]="form.controls.scheduleId">
+    </app-form-select>
 
-      @if (!isEditMode) {
-        <app-form-select idName="userId"
-          label="User" [options]="users()"
-          [control]="form.controls.userId">
+    @if (!isEditMode) {
+      <app-form-select idName="userId"
+        label="User" [options]="users()"
+        [control]="form.controls.userId">
+      </app-form-select>
+    }
+
+    <app-form-select idName="promotionId"
+      label="Promotion" [options]="promotions()"
+      [control]="form.controls.promotionId">
+    </app-form-select>
+
+    @if (selectedSchedule()) {
+      <div class="sm:col-span-2 gap-4 flex flex-col">
+        <hr class="border-platinum-300 w-full">
+
+        <app-seat-map class="w-full" [rowLength]="selectedSchedule()!.rowLength"
+          [columnLength]="selectedSchedule()!.columnLength" [seats]="selectedSchedule()!.seats"
+          [roomId]="selectedSchedule()!.room.id">
+        </app-seat-map>
+
+        <app-form-select idName="seatIds"
+          label="Seats" [options]="seats()" [isMultiple]="true"
+          [control]="form.controls.seatIds">
         </app-form-select>
-      }
-
-      <app-form-select idName="promotionId"
-        label="Promotion" [options]="promotions()"
-        [control]="form.controls.promotionId">
-      </app-form-select>
-
-      @if (selectedSchedule()) {
-        <div class="sm:col-span-2 gap-4 flex flex-col">
-          <hr class="border-platinum-300 w-full">
-
-          <app-seat-map class="w-full" [rowLength]="selectedSchedule()!.rowLength"
-            [columnLength]="selectedSchedule()!.columnLength" [seats]="selectedSchedule()!.seats"
-            [roomId]="selectedSchedule()!.room.id">
-          </app-seat-map>
-
-          <app-form-select idName="seatIds"
-            label="Seats" [options]="seats()" [isMultiple]="true"
-            [control]="form.controls.seatIds">
-          </app-form-select>
-        </div>
-      }
-    </div>
+      </div>
+    }
   </div>
 </app-add-edit-container>

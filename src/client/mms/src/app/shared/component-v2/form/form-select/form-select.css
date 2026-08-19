@@ -1,5 +1,9 @@
 @import 'tailwindcss';
 
+:host {
+  @apply pt-2;
+}
+
 .option-search {
   @apply sticky top-0 z-1 bg-(--mat-sys-surface-container) border-b w-full outline-0 px-4 py-2;
 }
