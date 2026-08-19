@@ -1,4 +1,4 @@
-import { Component, inject } from '@angular/core';
+import { Component, inject, OnInit } from '@angular/core';
 import { BaseDialogV2 } from '../base-dialog/base-dialog';
 import { BaseEntityModel } from '../../../model/base-entity.model';
 import { FormBuilder, FormGroup } from '@angular/forms';
@@ -12,7 +12,7 @@ import { FormMapper } from '../../../util/form-mapper';
   templateUrl: './add-edit-dialog.html',
   styleUrl: './add-edit-dialog.css',
 })
-export abstract class AddEditDialog<T extends BaseEntityModel> extends BaseDialogV2 {
+export abstract class AddEditDialog<T extends BaseEntityModel> extends BaseDialogV2 implements OnInit {
   abstract form: FormGroup;
 
   private readonly data = inject<DialogFormDataModel<T>>(MAT_DIALOG_DATA);
@@ -25,6 +25,10 @@ export abstract class AddEditDialog<T extends BaseEntityModel> extends BaseDialo
 
   get title(): string | undefined {
     return this.data.title;
+  }
+
+  ngOnInit(): void {
+    this.loadOptions?.();
   }
 
   onSubmit(): void {
@@ -46,5 +50,5 @@ export abstract class AddEditDialog<T extends BaseEntityModel> extends BaseDialo
     this.form.reset();
   }
 
-  protected abstract patchForm(): void;
+  loadOptions?(): void;
 }

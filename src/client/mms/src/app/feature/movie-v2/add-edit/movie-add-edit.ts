@@ -1,4 +1,4 @@
-import { Component, OnInit, signal } from '@angular/core';
+import { Component, signal } from '@angular/core';
 import { AddEditDialog } from '../../../shared/component-v2/dialog/add-edit-dialog/add-edit-dialog';
 import { MovieDetailModel } from '../../../model/movie/movie-detail.model';
 import { CustomValidators } from '../../../shared/util/custom-validators';
@@ -19,33 +19,18 @@ import { FormTextArea } from "../../../shared/component-v2/form/form-textarea/fo
   templateUrl: './movie-add-edit.html',
   styleUrl: './movie-add-edit.css',
 })
-export class MovieAddEdit extends AddEditDialog<MovieDetailModel> implements OnInit {
+export class MovieAddEdit extends AddEditDialog<MovieDetailModel> {
   override form = this.formBuilder.nonNullable.group({
-      name: ['', [CustomValidators.required('movie.name.required')]],
-      releaseDate: [''],
-      duration: [0, [CustomValidators.min(1, 'movie.duration.invalid')]],
-      content: [''],
-      thumbnail: [''],
-      genreIds: [[] as string[]],
-      studioIds: [[] as string[]],
-      talentIds: [[] as string[]],
-      languageId: [''],
-    });
-
-  protected override patchForm(): void {
-    const model = this.model;
-    if (!model) {
-      return;
-    }
-
-    this.form.patchValue({
-      ...model,
-      genreIds: model.genres?.map(genre => genre.id) ?? [],
-      studioIds: model.studios?.map(studio => studio.id) ?? [],
-      talentIds: model.talents?.map(talent => talent.id) ?? [],
-      languageId: model.language?.id ?? null,
-    });
-  }
+    name: [this.model?.name ?? '', [CustomValidators.required('movie.name.required')]],
+    releaseDate: [this.model?.releaseDate ?? ''],
+    duration: [this.model?.duration ?? 0, [CustomValidators.min(1, 'movie.duration.invalid')]],
+    content: [this.model?.content ?? ''],
+    thumbnail: [this.model?.thumbnail ?? ''],
+    genreIds: [this.model?.genres?.map(genre => genre.id) ?? []],
+    studioIds: [this.model?.studios?.map(studio => studio.id) ?? []],
+    talentIds: [this.model?.talents?.map(talent => talent.id) ?? []],
+    languageId: [this.model?.language?.id ?? null],
+  });
 
   genres = signal<FormOptionModel[]>([]);
   studios = signal<FormOptionModel[]>([]);
@@ -61,12 +46,7 @@ export class MovieAddEdit extends AddEditDialog<MovieDetailModel> implements OnI
     super();
   }
 
-  ngOnInit(): void {
-    this.loadOptions();
-    this.patchForm();
-  }
-
-  private loadOptions(): void {
+  override loadOptions(): void {
     this.genreService.getAll().subscribe((genres) => {
       this.genres.set(genres.map((genre) => ({
         label: genre.name,

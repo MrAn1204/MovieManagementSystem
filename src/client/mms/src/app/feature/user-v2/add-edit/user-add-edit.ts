@@ -1,4 +1,4 @@
-import { Component, inject, OnInit, signal } from '@angular/core';
+import { Component, inject, signal } from '@angular/core';
 import { AddEditDialog } from '../../../shared/component-v2/dialog/add-edit-dialog/add-edit-dialog';
 import { UserDetailModel } from '../../../model/user/user-detail.model';
 import { CustomValidators } from '../../../shared/util/custom-validators';
@@ -17,7 +17,7 @@ import { FormTextArea } from "../../../shared/component-v2/form/form-textarea/fo
   templateUrl: './user-add-edit.html',
   styleUrl: './user-add-edit.css',
 })
-export class UserAddEdit extends AddEditDialog<UserDetailModel> implements OnInit {
+export class UserAddEdit extends AddEditDialog<UserDetailModel> {
   private readonly roleService = inject(RoleService);
   private readonly constraintService = inject(ConstraintService);
   private readonly authService = inject(AuthService);
@@ -41,11 +41,11 @@ export class UserAddEdit extends AddEditDialog<UserDetailModel> implements OnIni
 
     return this.formBuilder.nonNullable.group(
       {
-        username: ['', [
+        username: [this.model?.username ?? '', [
           CustomValidators.required('user.username.required'),
           CustomValidators.length(constraints['USERNAME_MIN'], constraints['USERNAME_MAX'], 'user.username.size'),
         ]],
-        fullname: ['', [
+        fullname: [this.model?.fullname ?? '', [
           CustomValidators.required('user.fullname.required'),
           CustomValidators.length(constraints['FULLNAME_MIN'], constraints['FULLNAME_MAX'], 'user.fullname.size'),
         ]],
@@ -54,24 +54,24 @@ export class UserAddEdit extends AddEditDialog<UserDetailModel> implements OnIni
           CustomValidators.passwordValid(constraints['PASSWORD_MIN'], 'user.password.invalid')
         ]],
         confirmPassword: ['', [CustomValidators.required('user.confirmPassword.required')]],
-        gender: ['', [CustomValidators.required('user.gender.required')]],
-        dateOfBirth: ['', [
+        gender: [this.model?.gender ?? '', [CustomValidators.required('user.gender.required')]],
+        dateOfBirth: [this.model?.dateOfBirth ?? '', [
           CustomValidators.required('user.dob.required'),
           CustomValidators.pastDate('user.dob.past'),
         ]],
-        email: this.formBuilder.control<string | null>(null, [CustomValidators.email('user.email.invalid')]),
-        citizenIdNumber: this.formBuilder.control<string | null>(null, [
+        email: [this.model?.email ?? null, [CustomValidators.email('user.email.invalid')]],
+        citizenIdNumber: [this.model?.citizenIdNumber ?? null, [
           CustomValidators.minLength(constraints['CITIZEN_ID_MIN'], 'user.citizenId.size')
-        ]),
-        phoneNumber: this.formBuilder.control<string | null>(null, [
+        ]],
+        phoneNumber: [this.model?.phoneNumber ?? null, [
           CustomValidators.required('user.phone.required'),
           CustomValidators.length(constraints['PHONE_MIN'], constraints['PHONE_MAX'], 'user.phone.size'),
-        ]),
-        address: this.formBuilder.control<string | null>(null, [
+        ]],
+        address: [this.model?.address ?? null, [
           CustomValidators.length(constraints['ADDRESS_MIN'], constraints['ADDRESS_MAX'], 'user.address.size')
-        ]),
-        score: [0],
-        roleIds: [[] as string[], [
+        ]],
+        score: [this.model?.score ?? 0],
+        roleIds: [this.model?.roles?.map((role) => role.id) ?? [] as string[], [
           CustomValidators.required('user.roles.required'),
           CustomValidators.arrayContainNoNull('user.roles.invalid'),
         ]],
@@ -88,33 +88,13 @@ export class UserAddEdit extends AddEditDialog<UserDetailModel> implements OnIni
     return this.authService.includeRoles(['ADMIN']);
   }
 
-  protected override patchForm(): void {
-    const model = this.model;
-    if (!model) return;
-
-    this.form.patchValue({
-      username: model.username,
-      fullname: model.fullname,
-      password: '',
-      confirmPassword: '',
-      gender: model.gender,
-      dateOfBirth: model.dateOfBirth,
-      email: model.email,
-      citizenIdNumber: model.citizenIdNumber,
-      phoneNumber: model.phoneNumber,
-      address: model.address,
-      score: model.score ?? 0,
-      roleIds: model.roles?.map((role) => role.id) ?? [],
-    });
-  }
-
   togglePasswordChange(status: boolean): void {
     this.changingPassword.set(status);
     this.applyPasswordMode(status);
   }
 
-  ngOnInit(): void {
-    this.patchForm();
+  override ngOnInit(): void {
+    super.ngOnInit();
     this.applyPasswordMode(!this.isEditMode);
     this.loadRoleOptions();
   }

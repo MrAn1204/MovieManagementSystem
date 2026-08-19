@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 import { AddEditDialog } from '../../../shared/component-v2/dialog/add-edit-dialog/add-edit-dialog';
 import { AddEditContainer } from "../../../shared/component-v2/dialog/add-edit-container/add-edit-container";
 import { FormInput } from "../../../shared/component-v2/form/form-input/form-input";
@@ -12,37 +12,14 @@ import { InvoiceDetailModel } from '../../../model/invoice/invoice-detail.model'
   templateUrl: './invoice-add-edit.html',
   styleUrl: './invoice-add-edit.css',
 })
-export class InvoiceAddEdit extends AddEditDialog<InvoiceDetailModel> implements OnInit {
+export class InvoiceAddEdit extends AddEditDialog<InvoiceDetailModel> {
   override form = this.formBuilder.nonNullable.group({
-    addScore: [0, [CustomValidators.min(0, 'invoice.addScore.invalid')]],
-    useScore: [0, [CustomValidators.min(0, 'invoice.useScore.invalid')]],
-    discount: [0, [CustomValidators.min(0, 'invoice.discount.invalid')]],
-    ticketIds: [[] as string[], [CustomValidators.required('invoice.tickets.required')]],
-    userId: ['', [CustomValidators.required('user.required')]],
+    addScore: [this.model?.addScore ?? 0, [CustomValidators.min(0, 'invoice.addScore.invalid')]],
+    useScore: [this.model?.useScore ?? 0, [CustomValidators.min(0, 'invoice.useScore.invalid')]],
+    discount: [this.model?.discount ?? 0, [CustomValidators.min(0, 'invoice.discount.invalid')]],
+    ticketIds: [this.model?.tickets?.map(ticket => ticket.id) ?? [], [CustomValidators.required('invoice.tickets.required')]],
+    userId: [this.model?.user?.id ?? '', [CustomValidators.required('user.required')]],
   });
-
-  ngOnInit(): void {
-    this.form.patchValue({
-      ticketIds: this.model!.tickets.map(ticket => ticket.id),
-      userId: this.model!.user.id,
-    });
-    this.patchForm();
-  }
-
-  protected override patchForm(): void {
-    const model = this.model;
-    if (!model) {
-      return;
-    }
-
-    this.form.patchValue({
-      addScore: model.addScore,
-      useScore: model.useScore,
-      discount: model.discount,
-      ticketIds: model.tickets.map(ticket => ticket.id),
-      userId: model.user.id,
-    });
-  }
 
   get totalMoney(): number {
     const tickets = this.model!.tickets;

@@ -1,4 +1,4 @@
-import { Component, OnInit, signal } from '@angular/core';
+import { Component, signal } from '@angular/core';
 import { AddEditDialog } from '../../../shared/component-v2/dialog/add-edit-dialog/add-edit-dialog';
 import { ScheduleDetailModel } from '../../../model/schedule/schedule-detail.model';
 import { CustomValidators } from '../../../shared/util/custom-validators';
@@ -15,11 +15,11 @@ import { FormSelect } from "../../../shared/component-v2/form/form-select/form-s
   templateUrl: './schedule-add-edit.html',
   styleUrl: './schedule-add-edit.css',
 })
-export class ScheduleAddEdit extends AddEditDialog<ScheduleDetailModel> implements OnInit {
+export class ScheduleAddEdit extends AddEditDialog<ScheduleDetailModel> {
   override form = this.formBuilder.nonNullable.group({
-      showTime: [''],
-      movieId: ['', [CustomValidators.required('schedule.movie.required')]],
-      roomId: ['', [CustomValidators.required('schedule.room.required')]],
+      showTime: [this.model?.showTime ?? ''],
+      movieId: [this.model?.movie?.id ?? null, [CustomValidators.required('schedule.movie.required')]],
+      roomId: [this.model?.room?.id ?? null, [CustomValidators.required('schedule.room.required')]],
     });
 
   movies = signal<FormOptionModel[]>([]);
@@ -32,25 +32,7 @@ export class ScheduleAddEdit extends AddEditDialog<ScheduleDetailModel> implemen
     super();
   }
 
-  ngOnInit(): void {
-    this.patchForm();
-    this.loadOptions();
-  }
-
-  protected override patchForm(): void {
-    const model = this.model;
-    if (!model) {
-      return;
-    }
-
-    this.form.patchValue({
-      ...model,
-      movieId: model.movie?.id ?? null,
-      roomId: model.room?.id ?? null,
-    });
-  }
-
-  private loadOptions(): void {
+  override loadOptions(): void {
     this.movieService.getAll().subscribe((movies) => {
       this.movies.set(movies.map((movie) => ({
         label: movie.name,

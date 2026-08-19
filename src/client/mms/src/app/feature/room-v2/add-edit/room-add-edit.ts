@@ -1,4 +1,4 @@
-import { Component, OnInit, inject } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { AddEditDialog } from '../../../shared/component-v2/dialog/add-edit-dialog/add-edit-dialog';
 import { RoomDetailModel } from '../../../model/room/room-detail.model';
 import { CustomValidators } from '../../../shared/util/custom-validators';
@@ -12,7 +12,7 @@ import { ConstraintService } from '../../../service/constraint.service';
   templateUrl: './room-add-edit.html',
   styleUrl: './room-add-edit.css',
 })
-export class RoomAddEdit extends AddEditDialog<RoomDetailModel> implements OnInit {
+export class RoomAddEdit extends AddEditDialog<RoomDetailModel> {
   private readonly constraintService = inject(ConstraintService);
 
   private get constraints() {
@@ -20,35 +20,24 @@ export class RoomAddEdit extends AddEditDialog<RoomDetailModel> implements OnIni
   }
 
   override form = this.formBuilder.nonNullable.group({
-      name: ['', [CustomValidators.required('room.name.required')]],
-      rowLength: [1, [
+      name: [this.model?.name ?? '', [CustomValidators.required('room.name.required')]],
+      rowLength: [this.model?.rowLength ?? 1, [
         CustomValidators.required('room.rowLength.required'),
         CustomValidators.min(1, 'room.rowLength.invalid'),
       ]],
-      columnLength: [1, [
+      columnLength: [this.model?.columnLength ?? 1, [
         CustomValidators.required('room.columnLength.required'),
         CustomValidators.min(1, 'room.columnLength.invalid'),
       ]],
     });
 
-  protected override patchForm(): void {
-    const model = this.model;
-    if (!model) {
-      return;
-    }
-
-    this.form.patchValue({
-      name: model.name,
-      rowLength: model.rowLength,
-      columnLength: model.columnLength,
-    });
-  }
-
   constructor() {
     super();
   }
 
-  ngOnInit(): void {
+  override ngOnInit(): void {
+    super.ngOnInit();
+
     const constraints = this.constraints;
 
     this.form.get('rowLength')?.addValidators([
@@ -58,7 +47,5 @@ export class RoomAddEdit extends AddEditDialog<RoomDetailModel> implements OnIni
     this.form.get('columnLength')?.addValidators([
       CustomValidators.max(constraints['COLUMN_MAX'], 'room.columnLength.max')
     ]);
-
-    this.patchForm();
   }
 }

@@ -1,4 +1,4 @@
-import { Component, computed, inject, OnInit, signal } from '@angular/core';
+import { Component, computed, inject, signal } from '@angular/core';
 import { AddEditDialog } from '../../../shared/component-v2/dialog/add-edit-dialog/add-edit-dialog';
 import { TicketDetailModel } from '../../../model/ticket/ticket-detail.model';
 import { FormOptionModel } from '../../../shared/model/form-option.model';
@@ -28,7 +28,7 @@ interface TicketDialogDataModel extends DialogFormDataModel<TicketDetailModel> {
   templateUrl: './ticket-add-edit.html',
   styleUrl: './ticket-add-edit.css',
 })
-export class TicketAddEdit extends AddEditDialog<TicketDetailModel> implements OnInit {
+export class TicketAddEdit extends AddEditDialog<TicketDetailModel> {
   private readonly ticketData = inject<TicketDialogDataModel>(MAT_DIALOG_DATA);
 
   private readonly scheduleService = inject(ScheduleService);
@@ -38,10 +38,10 @@ export class TicketAddEdit extends AddEditDialog<TicketDetailModel> implements O
   private readonly constraintService = inject(ConstraintService);
 
   override form = this.formBuilder.nonNullable.group({
-    scheduleId: ['', [CustomValidators.required('ticket.schedule.required')]],
-    seatIds: [[] as string[], [CustomValidators.required('ticket.seat.required')]],
-    promotionId: [''],
-    userId: ['', [CustomValidators.required('user.required')]],
+    scheduleId: [this.model?.schedule.id ?? '', [CustomValidators.required('ticket.schedule.required')]],
+    seatIds: [this.model?.seat ? [this.model.seat.id] : [], [CustomValidators.required('ticket.seat.required')]],
+    promotionId: [this.model?.promotion?.id ?? ''],
+    userId: [this.model?.user?.id ?? '', [CustomValidators.required('user.required')]],
   });
 
   schedules = signal<FormOptionModel[]>([]);
@@ -76,10 +76,21 @@ export class TicketAddEdit extends AddEditDialog<TicketDetailModel> implements O
     return !!this.model;
   }
 
-  ngOnInit(): void {
-    this.patchForm();
+  override ngOnInit(): void {
+    super.ngOnInit();
+
     this.setupUserField();
     this.setupScheduleField();
+
+    this.loadOptions();
+
+    this.loadMap();
+    this.form.get('scheduleId')?.valueChanges
+      .pipe(filter(scheduleId => !!scheduleId))
+      .subscribe(scheduleId => this.loadMap(scheduleId));
+  }
+
+  override loadOptions(): void {
     this.loadSchedules();
     this.loadSeatTypes();
     this.loadPromotions();
@@ -87,27 +98,6 @@ export class TicketAddEdit extends AddEditDialog<TicketDetailModel> implements O
     if (!this.isEditMode) {
       this.loadUsers();
     }
-
-    this.loadMap();
-
-    this.form.get('scheduleId')?.valueChanges
-      .pipe(filter(scheduleId => !!scheduleId))
-      .subscribe(scheduleId => this.loadMap(scheduleId));
-  }
-
-  protected override patchForm(): void {
-    const model = this.model;
-    console.log(model);
-
-    if (!model) {
-      return;
-    }
-
-    this.form.patchValue({
-      scheduleId: model.schedule.id,
-      seatIds: [model.seat.id],
-      promotionId: model.promotion?.id ?? '',
-    });
   }
 
   private setupUserField(): void {

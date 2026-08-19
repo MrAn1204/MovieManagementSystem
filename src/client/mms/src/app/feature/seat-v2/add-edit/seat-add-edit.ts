@@ -1,4 +1,4 @@
-import { Component, OnInit, signal } from '@angular/core';
+import { Component, signal } from '@angular/core';
 import { AddEditDialog } from '../../../shared/component-v2/dialog/add-edit-dialog/add-edit-dialog';
 import { FormOptionModel } from '../../../shared/model/form-option.model';
 import { merge } from 'rxjs';
@@ -16,7 +16,7 @@ import { SeatDetailModel } from '../../../model/seat/seat-detail.model';
   templateUrl: './seat-add-edit.html',
   styleUrl: './seat-add-edit.css',
 })
-export class SeatAddEdit extends AddEditDialog<SeatDetailModel> implements OnInit {
+export class SeatAddEdit extends AddEditDialog<SeatDetailModel> {
   override form = this.formBuilder.nonNullable.group({
     name: [this.model?.name ?? '', [CustomValidators.required('seat.name.required')]],
     seatType: [this.model?.seatType ?? 'STANDARD', [CustomValidators.required('seat.type.required')]],
@@ -54,24 +54,12 @@ export class SeatAddEdit extends AddEditDialog<SeatDetailModel> implements OnIni
       });
   }
 
-  ngOnInit(): void {
+  override loadOptions(): void {
     this.seatService.getSeatTypes().subscribe(res => {
       this.seatTypes.set(Object.keys(res).map(key => ({
         label: key,
         value: key,
       })));
-    });
-  }
-
-  protected override patchForm(): void {
-    const model = this.model;
-    if (!model) return;
-
-    this.form.patchValue({
-      name: model.name,
-      seatType: model.seatType,
-      seatRow: model.seatRow,
-      seatColumn: model.seatColumn,
     });
   }
 
