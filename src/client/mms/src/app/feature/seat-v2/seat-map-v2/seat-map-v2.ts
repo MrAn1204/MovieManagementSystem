@@ -31,8 +31,8 @@ export class SeatMapV2 extends BaseFeatureV2<SeatModel> implements OnChanges, On
   seats = input.required<SeatModel[]>();
 
   seatMap = signal(new Map<string, SeatModel>());
-  rows: number[] = [];
-  columns: number[] = [];
+  mapRows: number[] = [];
+  mapColumns: number[] = [];
 
   viewSeat = output<boolean>();
 
@@ -48,8 +48,8 @@ export class SeatMapV2 extends BaseFeatureV2<SeatModel> implements OnChanges, On
   }
 
   private loadMap(): void {
-    this.rows = Array.from({ length: this.columnLength() }, (_, i) => i + 1);
-    this.columns = Array.from({ length: this.rowLength() }, (_, i) => i + 1);
+    this.mapRows = Array.from({ length: this.columnLength() }, (_, i) => i + 1);
+    this.mapColumns = Array.from({ length: this.rowLength() }, (_, i) => i + 1);
 
     const seatMap = new Map<string, SeatModel>();
     this.seats().forEach(seat => {

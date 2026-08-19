@@ -1,5 +1,4 @@
 import { Component, inject, input, Type } from '@angular/core';
-import { BaseFeatureV2 } from '../../../shared/component-v2/feature/base-feature';
 import { InvoiceModel } from '../../../model/invoice/invoice.model';
 import { BaseDialogV2 } from '../../../shared/component-v2/dialog/base-dialog/base-dialog';
 import { RoleConfigModel } from '../../../shared/model/role-config.model';
@@ -13,6 +12,7 @@ import { UserSummaryModel } from '../../../model/user/user-summary.model';
 import { EntityService } from '../../../service/entity.service';
 import { InvoiceDialogService } from '../../../service/dialog-v2/invoice/invoice-dialog.service';
 import { EntityDialogServiceV2 } from '../../../service/dialog-v2/entity-dialog.service';
+import { TableFeature } from '../../../shared/component-v2/feature/table-feature';
 
 @Component({
   selector: 'app-invoice-v2',
@@ -20,7 +20,7 @@ import { EntityDialogServiceV2 } from '../../../service/dialog-v2/entity-dialog.
   templateUrl: './invoice-v2.html',
   styleUrl: './invoice-v2.css',
 })
-export class InvoiceV2 extends BaseFeatureV2<InvoiceModel> {
+export class InvoiceV2 extends TableFeature<InvoiceModel> {
   override entityName: string = "Invoice";
   override contentAddEdit: Type<BaseDialogV2> = InvoiceAddEdit;
   override contentDetail: Type<BaseDialogV2> = InvoiceDetailV2;
@@ -29,7 +29,7 @@ export class InvoiceV2 extends BaseFeatureV2<InvoiceModel> {
   data = input.required<InvoiceModel[]>();
   user = input.required<UserSummaryModel>();
 
-  columns: TableColumnModel<InvoiceModel>[] = [
+  override columns: TableColumnModel<InvoiceModel>[] = [
     { key: 'name', label: 'Name', type: 'string' },
     { key: 'totalMoney', label: 'Total Money', type: 'number' },
     { key: 'addScore', label: 'Score Added', type: 'number' },

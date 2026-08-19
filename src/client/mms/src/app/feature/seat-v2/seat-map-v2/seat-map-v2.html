@@ -4,10 +4,10 @@
   </div>
 
   <div class="flex overflow-x-auto">
-    <div [style.grid-template-columns]="'repeat(' + columns.length + ', minmax(0, 1fr))'"
+    <div [style.grid-template-columns]="'repeat(' + mapColumns.length + ', minmax(0, 1fr))'"
       class="shrink-0 grid gap-2 *:border *:border-platinum-300 *:size-10 *:rounded-md">
-      @for (r of rows; track $index) {
-        @for (c of columns; track $index) {
+      @for (r of mapRows; track $index) {
+        @for (c of mapColumns; track $index) {
           @let seat = getSeat(r, c);
           @if (seat) {
             <button type="button" [ngClass]="getType(seat)" (click)="onView(seat.id)">
