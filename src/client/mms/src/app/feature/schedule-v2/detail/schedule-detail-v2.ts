@@ -5,10 +5,11 @@ import { ScheduleDetailModel } from '../../../model/schedule/schedule-detail.mod
 import { DetailDialogV2 } from '../../../shared/component-v2/dialog/detail-dialog/detail-dialog';
 import { FormatCellPipe } from '../../../shared/pipe/format-cell/format-cell-pipe';
 import { SeatMapV2 } from "../../seat-v2/seat-map-v2/seat-map-v2";
+import { MatDivider } from "@angular/material/divider";
 
 @Component({
   selector: 'app-schedule-detail-v2',
-  imports: [DetailContainer, DetailText, FormatCellPipe, SeatMapV2],
+  imports: [DetailContainer, DetailText, FormatCellPipe, SeatMapV2, MatDivider],
   templateUrl: './schedule-detail-v2.html',
   styleUrl: './schedule-detail-v2.css',
 })

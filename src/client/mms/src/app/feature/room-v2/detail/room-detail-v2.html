@@ -20,16 +20,19 @@
       {{ model?.currentCapacity | formatCell }}
     </app-detail-text>
 
-    <div class="col-span-2">
-      <app-seat-map-v2 #seatMap
-        [showType]="true"
-        [rowLength]="model?.rowLength ?? 0"
-        [columnLength]="model?.columnLength ?? 0"
-        [roomId]="model?.id ?? ''"
-        [seats]="model?.seats ?? []"
-        (viewSeat)="$event ? hideSelf() : onRefresh()"
-      ></app-seat-map-v2>
-    </div>
+  </div>
+
+  <div dialog-content>
+    <mat-divider class="my-4!"></mat-divider>
+
+    <app-seat-map-v2 #seatMap
+      [showType]="true"
+      [rowLength]="model?.rowLength ?? 0"
+      [columnLength]="model?.columnLength ?? 0"
+      [roomId]="model?.id ?? ''"
+      [seats]="model?.seats ?? []"
+      (viewSeat)="$event ? hideSelf() : onRefresh()"
+    ></app-seat-map-v2>
   </div>
 
   @if (canAddSeat()) {

@@ -1,21 +1,34 @@
 <app-add-edit-container [title]="title" (submitForm)="onSubmit()" (resetForm)="onReset()" (closeDialog)="onClose()">
   <div dialog-content class="form-grid">
-    @if (!isEditMode) {
-      <app-form-input idName="username"
-        type="text" label="Username"
-        [control]="form.controls.username"
-        [required]="true">
-      </app-form-input>
-    } @else {
-      <div>
-        <p class="block font-medium">Username</p>
-        <p class="form-field bg-platinum-100">{{ model?.username }}</p>
-      </div>
-    }
+    <app-form-input idName="username"
+      type="text" label="Username"
+      [control]="form.controls.username"
+      [required]="true">
+    </app-form-input>
 
     <app-form-input idName="fullname"
       type="text" label="Full Name"
       [control]="form.controls.fullname"
+      [required]="true">
+    </app-form-input>
+
+    @if (isEditMode) {
+      <label for="passwordChange" class="sm:col-span-2 flex items-center gap-2 text-sm">
+        <input id="passwordChange" type="checkbox" [checked]="changingPassword()" (change)="togglePasswordChange($event.target.checked)"
+          class="w-4 h-4 rounded-sm" />
+        Change Password
+      </label>
+    }
+
+    <app-form-input idName="password"
+      type="password" label="Password"
+      [control]="form.controls.password"
+      [required]="true">
+    </app-form-input>
+
+    <app-form-input idName="confirmPassword"
+      type="password" label="Confirm Password"
+      [control]="form.controls.confirmPassword"
       [required]="true">
     </app-form-input>
 
@@ -63,38 +76,6 @@
         label="Roles" [options]="roles()" [isMultiple]="true"
         [control]="form.controls.roleIds">
       </app-form-select>
-    }
-
-    @if (isEditMode && !changingPassword()) {
-      <div class="sm:col-span-2">
-        <button type="button" (click)="togglePasswordChange(true)"
-          class="px-4 py-2 text-white rounded-md bg-steel-blue-500 hover:bg-steel-blue-600 focus:outline-none focus:ring-2 focus:ring-steel-blue">
-          Change Password
-        </button>
-      </div>
-    }
-
-    @if (!isEditMode || changingPassword()) {
-      <app-form-input idName="password"
-        type="password" label="Password"
-        [control]="form.controls.password"
-        [required]="true">
-      </app-form-input>
-
-      <app-form-input idName="confirmPassword"
-        type="password" label="Confirm Password"
-        [control]="form.controls.confirmPassword"
-        [required]="true">
-      </app-form-input>
-
-      @if (isEditMode) {
-        <div class="sm:col-span-2">
-          <button type="button" (click)="togglePasswordChange(false)"
-            class="px-4 py-2 border border-steel-blue rounded-md hover:bg-platinum-100 text-steel-blue focus:outline-none">
-            Cancel Password Change
-          </button>
-        </div>
-      }
     }
   </div>
 </app-add-edit-container>

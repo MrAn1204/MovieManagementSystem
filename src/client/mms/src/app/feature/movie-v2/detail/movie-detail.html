@@ -37,7 +37,8 @@
     </div>
   </div>
 
-  <div dialog-content>
+  <div class="mt-4" dialog-content>
+    <app-detail-text label="Schedules"></app-detail-text>
     <app-table-v2
       [columns]="schedulesColumns"
       [data]="model?.schedules ?? []"

@@ -10,10 +10,11 @@ import { SeatMapV2 } from "../../seat-v2/seat-map-v2/seat-map-v2";
 import { SeatDialogService } from '../../../service/dialog-v2/seat/seat-dialog.service';
 import { SeatDetailModel } from '../../../model/seat/seat-detail.model';
 import { finalize } from 'rxjs';
+import { MatDivider } from "@angular/material/divider";
 
 @Component({
   selector: 'app-room-detail-v2',
-  imports: [DetailContainer, DetailText, FormatCellPipe, ButtonV2, SeatMapV2],
+  imports: [DetailContainer, DetailText, FormatCellPipe, ButtonV2, SeatMapV2, MatDivider],
   templateUrl: './room-detail-v2.html',
   styleUrl: './room-detail-v2.css',
 })

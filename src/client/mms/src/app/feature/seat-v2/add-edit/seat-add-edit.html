@@ -1,24 +1,24 @@
 <app-add-edit-container [title]="title" (submitForm)="onSubmit()" (resetForm)="onReset()" (closeDialog)="onClose()">
   <div dialog-content class="form-grid">
-    <div>
-      <app-form-input idName="name"
+    <div class="form-grid sm:col-span-2">
+      <app-form-input idName="name" class="order-1"
         type="text" label="Name"
         [control]="form.controls.name"
         [required]="true">
       </app-form-input>
 
-      <label for="autofillName" class="mt-2 flex items-center gap-2 text-sm">
+      <app-form-select idName="seatType" class="order-3 sm:order-2"
+        label="Seat Type" [options]="seatTypes()"
+        [control]="form.controls.seatType"
+        [required]="true">
+      </app-form-select>
+
+      <label for="autofillName" class="sm:col-span-2 flex items-center gap-2 text-sm order-2 sm:order-3">
         <input id="autofillName" type="checkbox" [checked]="enableNameAutofill" (change)="onAutoFillNameChange($event)"
           class="w-4 h-4 rounded-sm" />
         Auto fill from row and column
       </label>
     </div>
-
-    <app-form-select idName="seatType"
-      label="Seat Type" [options]="seatTypes()"
-      [control]="form.controls.seatType"
-      [required]="true">
-    </app-form-select>
 
     <app-form-input idName="seatRow"
       type="number" label="Row"
