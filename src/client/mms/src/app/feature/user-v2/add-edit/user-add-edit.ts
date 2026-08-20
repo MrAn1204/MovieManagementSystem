@@ -41,7 +41,7 @@ export class UserAddEdit extends AddEditDialog<UserDetailModel> {
 
     return this.formBuilder.nonNullable.group(
       {
-        username: [this.model?.username ?? '', [
+        username: [{ value: this.model?.username ?? '', disabled: this.isEditMode }, [
           CustomValidators.required('user.username.required'),
           CustomValidators.length(constraints['USERNAME_MIN'], constraints['USERNAME_MAX'], 'user.username.size'),
         ]],
@@ -115,6 +115,9 @@ export class UserAddEdit extends AddEditDialog<UserDetailModel> {
       passwordControl.enable();
       confirmPasswordControl.enable();
     } else {
+      passwordControl.setValue('');
+      confirmPasswordControl.setValue('');
+
       passwordControl.disable();
       confirmPasswordControl.disable();
     }
