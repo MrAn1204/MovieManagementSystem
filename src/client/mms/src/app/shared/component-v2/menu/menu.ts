@@ -19,6 +19,15 @@ export class Menu {
   triggerAction(action: string): void {
     this.action.emit(action);
   }
+
+  isDisabled(item: MenuItem): boolean {
+    if (typeof item.isDisabled === 'boolean') {
+      return item.isDisabled;
+    } else if (typeof item.isDisabled === 'function') {
+      return item.isDisabled();
+    }
+    return false;
+  }
 }
 
 export type MenuItem = {
@@ -26,4 +35,12 @@ export type MenuItem = {
   icon?: string;
   action: string;
   children?: MenuItem[];
+  isDisabled?: boolean | (() => boolean);
 }
+
+export const COMMON_MENU_ITEMS = {
+  ADD: { label: 'Add', icon: 'add', action: 'add' },
+  VIEW: { label: 'View', icon: 'visibility', action: 'view' },
+  EDIT: { label: 'Edit', icon: 'edit', action: 'edit' },
+  DELETE: { label: 'Delete', icon: 'delete', action: 'delete' },
+};

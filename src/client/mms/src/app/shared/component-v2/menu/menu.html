@@ -1,7 +1,7 @@
 <mat-menu #menu="matMenu">
   @for (item of items(); track $index) {
     @if (item.children) {
-      <button mat-menu-item [matMenuTriggerFor]="subMenu.menu()!">
+      <button mat-menu-item [matMenuTriggerFor]="subMenu.menu()!" [disabled]="isDisabled(item)">
         @if (item.icon) {
           <mat-icon>{{item.icon}}</mat-icon>
         }
@@ -13,7 +13,7 @@
         (action)="triggerAction($event)">
       </app-menu>
     } @else {
-      <button mat-menu-item (click)="triggerAction(item.action)">
+      <button mat-menu-item (click)="triggerAction(item.action)" [disabled]="isDisabled(item)">
         @if (item.icon) {
           <mat-icon>{{item.icon}}</mat-icon>
         }
