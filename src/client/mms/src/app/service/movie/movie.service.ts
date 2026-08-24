@@ -11,7 +11,7 @@ import { MovieDetailModel } from '../../model/movie/movie-detail.model';
 @Injectable({
   providedIn: 'root',
 })
-export class MovieService extends EntityService<MovieModel> {
+export class MovieService extends EntityService<MovieModel, MovieDetailModel> {
   protected override baseUrl: string = 'http://localhost:8080/api/movies';
 
   getAll(): Observable<MovieModel[]> {

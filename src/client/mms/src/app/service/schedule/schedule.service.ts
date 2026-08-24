@@ -10,7 +10,7 @@ import { EntityService } from '../entity.service';
 @Injectable({
   providedIn: 'root',
 })
-export class ScheduleService extends EntityService<ScheduleModel> {
+export class ScheduleService extends EntityService<ScheduleModel, ScheduleDetailModel> {
   protected override baseUrl = 'http://localhost:8080/api/schedules';
 
   getAll(): Observable<ScheduleModel[]> {

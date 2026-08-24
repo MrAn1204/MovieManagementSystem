@@ -1,5 +1,6 @@
 import { Component, inject } from '@angular/core';
 import { MatDialogRef } from '@angular/material/dialog'
+import { SpinnerService } from '../../../../service/ui/spinner/spinner.service';
 
 @Component({
   selector: 'app-base-dialog',
@@ -9,6 +10,7 @@ import { MatDialogRef } from '@angular/material/dialog'
 })
 export abstract class BaseDialogV2 {
   protected readonly dialogRef = inject(MatDialogRef<BaseDialogV2>);
+  protected readonly spinner = inject(SpinnerService);
 
   onClose(result?: any): void {
     this.dialogRef.close(result);

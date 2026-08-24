@@ -22,9 +22,6 @@ export class NotificationDialog extends BaseDialogV2 {
   }
 
   onConfirm() {
-    this.data.onConfirm?.().subscribe({
-      next: () => this.onClose(true),
-      error: () => this.onClose(),
-    });
+    this.onClose(true);
   }
 }

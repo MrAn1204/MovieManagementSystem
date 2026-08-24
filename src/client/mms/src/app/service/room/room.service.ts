@@ -10,7 +10,7 @@ import { EntityService } from '../entity.service';
 @Injectable({
   providedIn: 'root',
 })
-export class RoomService extends EntityService<RoomModel> {
+export class RoomService extends EntityService<RoomModel, RoomDetailModel> {
   protected override baseUrl = 'http://localhost:8080/api/rooms';
 
   getAll(): Observable<RoomModel[]> {

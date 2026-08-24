@@ -6,11 +6,12 @@ import { PaginatedResult } from '../../shared/model/paginated-result.model';
 import { PromotionFormModel } from '../../model/form/promotion-form.model';
 import { EntityService } from '../entity.service';
 import { FormMapper } from '../../shared/util/form-mapper';
+import { PromotionDetailModel } from '../../model/promotion/promotion-detail.model';
 
 @Injectable({
   providedIn: 'root',
 })
-export class PromotionService extends EntityService<PromotionModel> {
+export class PromotionService extends EntityService<PromotionModel, PromotionDetailModel> {
   protected override baseUrl = 'http://localhost:8080/api/promotions';
 
   getAll(): Observable<PromotionModel[]> {
