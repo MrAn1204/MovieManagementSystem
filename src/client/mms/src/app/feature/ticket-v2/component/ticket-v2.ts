@@ -5,7 +5,7 @@ import { TicketService } from '../../../service/ticket/ticket.service';
 import { FormGroup, ReactiveFormsModule } from '@angular/forms';
 import { TableColumnModel } from '../../../shared/model/table-column.model';
 import { getRoleConfig } from '../../../shared/config/role-config';
-import { TableV2 } from "../../../shared/component-v2/table/table";
+import { TableMenuOutput, TableV2 } from "../../../shared/component-v2/table/table";
 import { Paginator } from "../../../shared/component-v2/paginator/paginator";
 import { TicketAddEdit } from '../add-edit/ticket-add-edit';
 import { TicketDetailV2 } from '../detail/ticket-detail-v2';
@@ -14,6 +14,8 @@ import { SearchableFeatureV2 } from '../../../shared/component-v2/feature/search
 import { EntityService } from '../../../service/entity.service';
 import { TicketDialogService } from '../../../service/dialog-v2/ticket/ticket-dialog.service';
 import { EntityDialogServiceV2 } from '../../../service/dialog-v2/entity-dialog.service';
+import { COMMON_MENU_ITEMS, MenuItem } from '../../../shared/component-v2/menu/menu';
+import { InvoiceDialogService } from '../../../service/dialog-v2/invoice/invoice-dialog.service';
 
 @Component({
   selector: 'app-ticket-v2',
@@ -48,20 +50,17 @@ export class TicketV2 extends SearchableFeatureV2<TicketModel> {
 
   override roleConfig = getRoleConfig(this.entityName);
 
+  private readonly invoiceDialog = inject(InvoiceDialogService);
+
   selectedItems = signal<TicketModel[]>([]);
 
-  onSelect(item: TicketModel): void {
-    const current = this.selectedItems();
-    const exists = current.some(t => t.id === item.id);
-    if (exists) {
-      this.selectedItems.set(current.filter(t => t.id !== item.id));
-    } else {
-      this.selectedItems.set([...current, item]);
-    }
-  }
+  tableMenuItems: MenuItem[] = [
+    COMMON_MENU_ITEMS.ADD,
+    { label: 'Create Invoice', icon: 'receipt', action: 'create-invoice', isDisabled: () => !this.validateSelected() },
+  ]
 
-  onSelectAll(items: TicketModel[]): void {
-    this.selectedItems.set(items);
+  onSelect(item: TicketModel[]): void {
+    this.selectedItems.set(item);
   }
 
   validateSelected(): boolean {
@@ -72,6 +71,16 @@ export class TicketV2 extends SearchableFeatureV2<TicketModel> {
 
     const firstUserId = items[0].user.id;
     return items.every(selected => selected.user.id === firstUserId && !selected.paid);
+  }
+
+  override onMenuAction(event: TableMenuOutput): void {
+    if (event.action === 'create-invoice' && this.validateSelected()) {
+      this.invoiceDialog.displayAdd({
+        tickets: this.selectedItems(),
+      });
+    } else {
+      super.onMenuAction(event);
+    }
   }
 
   protected override entityService: EntityService<TicketModel> = inject(TicketService);

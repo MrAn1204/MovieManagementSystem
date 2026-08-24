@@ -11,7 +11,9 @@
     [columns]="columns"
     [data]="data().items"
     (menuAction)="onMenuAction($event)"
-    [roleConfig]="roleConfig">
+    [roleConfig]="roleConfig"
+    [tableMenuItems]="tableMenuItems"
+    (selectItem)="onSelect($event)">
   </app-table-v2>
 
   <app-paginator [pageNumber]="data().pageNumber" [pageSize]="data().pageSize" [pageCount]="data().pageCount" [itemCount]="data().itemCount"

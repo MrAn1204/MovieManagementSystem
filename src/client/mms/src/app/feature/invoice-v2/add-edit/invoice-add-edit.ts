@@ -7,6 +7,12 @@ import { CustomValidators } from '../../../shared/util/custom-validators';
 import { InvoiceDetailModel } from '../../../model/invoice/invoice-detail.model';
 import { DetailEntityService } from '../../../service/detail-entity.service';
 import { InvoiceService } from '../../../service/invoice/invoice.service';
+import { DialogFormDataModel } from '../../../shared/model/dialog/dialog-form-data.model';
+import { TicketModel } from '../../../model/ticket/ticket.model';
+
+export interface InvoiceDialogDataModel extends DialogFormDataModel<InvoiceDetailModel> {
+  tickets?: TicketModel[];
+}
 
 @Component({
   selector: 'app-invoice-add-edit',
@@ -17,6 +23,8 @@ import { InvoiceService } from '../../../service/invoice/invoice.service';
 export class InvoiceAddEdit extends AddEditDialog<InvoiceDetailModel> {
   protected override entityService: DetailEntityService<InvoiceDetailModel> = inject(InvoiceService);
 
+  private readonly invoiceData = this.data as InvoiceDialogDataModel;
+
   override form = this.formBuilder.nonNullable.group({
     addScore: [this.model?.addScore ?? 0, [CustomValidators.min(0, 'invoice.addScore.invalid')]],
     useScore: [this.model?.useScore ?? 0, [CustomValidators.min(0, 'invoice.useScore.invalid')]],
@@ -26,11 +34,25 @@ export class InvoiceAddEdit extends AddEditDialog<InvoiceDetailModel> {
   });
 
   get totalMoney(): number {
-    const tickets = this.model!.tickets;
+    const tickets = this.model?.tickets ?? this.invoiceData.tickets ?? [];
+
     return tickets.reduce((total, ticket) => total + ticket.price, 0);
   }
 
   get userDisplay(): string {
-    return `${this.model!.user.username} - ${this.model!.user.phoneNumber}`;
+    const user = this.model?.user ?? this.invoiceData.tickets?.[0].user;
+
+    if (!user) {
+      return '';
+    }
+
+    return `${user.username} - ${user!.phoneNumber}`;
+  }
+
+  override ngOnInit(): void {
+    if (this.invoiceData.tickets) {
+      this.form.controls.userId.setValue(this.invoiceData.tickets[0].user.id);
+      this.form.controls.ticketIds.setValue(this.invoiceData.tickets.map(ticket => ticket.id));
+    }
   }
 }
