@@ -38,9 +38,9 @@ export abstract class AddEditDialog<T extends BaseEntityModel> extends BaseDialo
   }
 
   protected loadItem(): void {
-    this.spinner.show();
-
     if (this.data.id) {
+      this.spinner.show();
+
       this.entityService.getById(this.data.id)
         .pipe(finalize(() => this.spinner.hide()))
         .subscribe((res) => this.item.set(res));

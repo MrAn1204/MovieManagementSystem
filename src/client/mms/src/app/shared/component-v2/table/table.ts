@@ -1,4 +1,4 @@
-import { Component, computed, input, OnInit, output } from '@angular/core';
+import { Component, computed, input, OnChanges, OnInit, output, SimpleChanges } from '@angular/core';
 import { BaseEntityModel } from '../../model/base-entity.model';
 import { MatTableModule } from '@angular/material/table';
 import { TableColumnModel } from '../../model/table-column.model';
@@ -17,7 +17,7 @@ import { MatButtonModule } from "@angular/material/button";
   templateUrl: './table.html',
   styleUrl: './table.css',
 })
-export class TableV2<T extends BaseEntityModel> implements OnInit {
+export class TableV2<T extends BaseEntityModel> implements OnInit, OnChanges {
   data = input.required<T[]>();
   columns = input.required<TableColumnModel<T>[]>();
   roleConfig = input<RoleConfigModel>();
@@ -56,6 +56,12 @@ export class TableV2<T extends BaseEntityModel> implements OnInit {
     this.selectedItems.changed.subscribe(() => {
       this.selectItem.emit(this.selectedItems.selected);
     });
+  }
+
+  ngOnChanges(changes: SimpleChanges): void {
+    if (changes['data']) {
+      this.selectedItems.clear();
+    }
   }
 
   getColumnValue(item: T, column: TableColumnModel<T>): any {
