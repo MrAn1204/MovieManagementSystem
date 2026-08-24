@@ -13,7 +13,7 @@
       placeholder="Search..."
       (input)="onSearch($event.target.value)"
     />
-    @for (option of options(); track option) {
+    @for (option of options(); track $index) {
       <mat-option [value]="option.value" [hidden]="!isMatched(option.label)">{{option.label}}</mat-option>
     }
     @if (isMultiple()) {
