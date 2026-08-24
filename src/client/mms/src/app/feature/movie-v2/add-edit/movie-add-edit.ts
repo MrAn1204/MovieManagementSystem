@@ -1,4 +1,4 @@
-import { Component, signal } from '@angular/core';
+import { Component, inject, signal } from '@angular/core';
 import { AddEditDialog } from '../../../shared/component-v2/dialog/add-edit-dialog/add-edit-dialog';
 import { MovieDetailModel } from '../../../model/movie/movie-detail.model';
 import { CustomValidators } from '../../../shared/util/custom-validators';
@@ -12,6 +12,8 @@ import { ImageField } from "../../../shared/component/form/image/image-field";
 import { FormInput } from "../../../shared/component-v2/form/form-input/form-input";
 import { FormSelect } from "../../../shared/component-v2/form/form-select/form-select";
 import { FormTextArea } from "../../../shared/component-v2/form/form-textarea/form-textarea";
+import { DetailEntityService } from '../../../service/detail-entity.service';
+import { MovieService } from '../../../service/movie/movie.service';
 
 @Component({
   selector: 'app-movie-add-edit',
@@ -20,6 +22,8 @@ import { FormTextArea } from "../../../shared/component-v2/form/form-textarea/fo
   styleUrl: './movie-add-edit.css',
 })
 export class MovieAddEdit extends AddEditDialog<MovieDetailModel> {
+  protected override entityService: DetailEntityService<MovieDetailModel> = inject(MovieService);
+
   override form = this.formBuilder.nonNullable.group({
     name: [this.model?.name ?? '', [CustomValidators.required('movie.name.required')]],
     releaseDate: [this.model?.releaseDate ?? ''],

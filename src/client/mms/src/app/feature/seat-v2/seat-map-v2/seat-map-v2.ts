@@ -10,7 +10,6 @@ import { MapDescription } from "../../seat/map-description/map-description";
 import { EntityService } from '../../../service/entity.service';
 import { SeatDialogService } from '../../../service/dialog-v2/seat/seat-dialog.service';
 import { EntityDialogServiceV2 } from '../../../service/dialog-v2/entity-dialog.service';
-import { finalize } from 'rxjs';
 
 @Component({
   selector: 'app-seat-map-v2',
@@ -83,29 +82,24 @@ export class SeatMapV2 extends BaseFeatureV2<SeatModel> implements OnChanges, On
     }
   }
 
-  override onView(id: string): void {
-    this.viewSeat.emit(true);
-
-    this.dialogService.showDetailDialog(id).subscribe(result => this.handleViewResult(result, id));
-  }
-
   protected override handleViewResult(result: string, id: string): void {
     if (!result) {
       this.viewSeat.emit(false);
-    } else {
-      super.handleViewResult(result, id);
     }
+    super.handleViewResult(result, id);
   }
 
-  override onEdit(id: string): void {
-    this.dialogService.showAddEditDialog(id)
-      .pipe(finalize(() => this.viewSeat.emit(false)))
-      .subscribe();
+  protected override handleEditResult(result: any): void {
+    this.viewSeat.emit(false);
+    super.handleEditResult(result);
   }
 
-  override onDelete(id: string): void {
-    this.dialogService.showDeleteDialog(id)
-      .pipe(finalize(() => this.viewSeat.emit(false)))
-      .subscribe();
+  protected override handleDeleteResult(result: any, id: string): void {
+    this.viewSeat.emit(false);
+    super.handleDeleteResult(result, id);
+  }
+
+  protected override onDialogOpen(): void {
+    this.viewSeat.emit(true);
   }
 }

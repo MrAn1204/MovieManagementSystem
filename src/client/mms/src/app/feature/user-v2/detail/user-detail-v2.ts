@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { DetailContainer } from "../../../shared/component-v2/dialog/detail-container/detail-container";
 import { DetailText } from "../../../shared/component/detail/detail-text/detail-text";
 import { UserDetailModel } from '../../../model/user/user-detail.model';
@@ -6,6 +6,8 @@ import { DetailDialogV2 } from '../../../shared/component-v2/dialog/detail-dialo
 import { FormatCellPipe } from '../../../shared/pipe/format-cell/format-cell-pipe';
 import { UserSummaryModel } from '../../../model/user/user-summary.model';
 import { InvoiceV2 } from '../../invoice-v2/component/invoice-v2';
+import { UserService } from '../../../service/user/user.service';
+import { DetailEntityService } from '../../../service/detail-entity.service';
 
 @Component({
   selector: 'app-user-detail-v2',
@@ -14,6 +16,8 @@ import { InvoiceV2 } from '../../invoice-v2/component/invoice-v2';
   styleUrl: './user-detail-v2.css',
 })
 export class UserDetailV2 extends DetailDialogV2<UserDetailModel> {
+  protected override entityService: DetailEntityService<UserDetailModel> = inject(UserService);
+
   get userSummary(): UserSummaryModel {
     return {
       id: this.model?.id ?? '',

@@ -9,9 +9,11 @@ import { TableColumnModel } from '../../../shared/model/table-column.model';
 import { ScheduleSummaryModel } from '../../../model/schedule/schedule-summary.model';
 import { TableMenuOutput, TableV2 } from "../../../shared/component-v2/table/table";
 import { ScheduleDialogService } from '../../../service/dialog-v2/schedule/schedule-dialog.service';
-import { finalize } from 'rxjs';
+import { finalize, switchMap } from 'rxjs';
 import { MenuItem } from '../../../shared/component-v2/menu/menu';
 import { TicketDialogService } from '../../../service/dialog-v2/ticket/ticket-dialog.service';
+import { DetailEntityService } from '../../../service/detail-entity.service';
+import { MovieService } from '../../../service/movie/movie.service';
 
 @Component({
   selector: 'app-movie-detail',
@@ -20,6 +22,8 @@ import { TicketDialogService } from '../../../service/dialog-v2/ticket/ticket-di
   styleUrl: './movie-detail.css',
 })
 export class MovieDetailV2 extends DetailDialogV2<MovieDetailModel> {
+  protected override entityService: DetailEntityService<MovieDetailModel> = inject(MovieService);
+
   schedulesColumns: TableColumnModel<ScheduleSummaryModel>[] = [
     { key: 'showTime', label: 'Show Time', type: 'datetime' },
     { key: 'roomName', label: 'Room' },
@@ -36,9 +40,17 @@ export class MovieDetailV2 extends DetailDialogV2<MovieDetailModel> {
   viewSchedule(scheduleId: string): void {
     this.hideSelf();
 
-    this.scheduleDialog.showDetailDialog(scheduleId)
-      .pipe(finalize(() => this.showSelf()))
-      .subscribe();
+    this.scheduleDialog.displayInfo(scheduleId)
+      .pipe(switchMap((res) => {
+        if (!res) {
+          this.onRefresh();
+        } else if (res === 'edit') {
+          return this.scheduleDialog.displayEdit(scheduleId);
+        } else if (res === 'delete') {
+          return this.scheduleDialog.displayDelete();
+        }
+        return res;
+      })).subscribe(() => this.onRefresh());
   }
 
   handleMenuAction(event: TableMenuOutput): void {
@@ -55,8 +67,8 @@ export class MovieDetailV2 extends DetailDialogV2<MovieDetailModel> {
   handleBooking(scheduleId: string): void {
     this.hideSelf();
 
-    this.ticketDialog.showBookTicketDialog(scheduleId)
-      .pipe(finalize(() => this.showSelf()))
+    this.ticketDialog.displayAdd({ scheduleId: scheduleId })
+      .pipe(finalize(() => this.onRefresh()))
       .subscribe();
   }
 }

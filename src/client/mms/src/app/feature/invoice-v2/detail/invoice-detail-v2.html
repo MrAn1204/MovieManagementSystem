@@ -18,8 +18,12 @@
 
     <div class="sm:col-span-2">
       <app-detail-text label="Tickets"></app-detail-text>
-      <app-ticket-table [data]="model?.tickets ?? []">
-      </app-ticket-table>
+      <app-table-v2
+        [columns]="ticketColumns"
+        [data]="model?.tickets ?? []"
+        [tableMenuItems]="[]"
+        (menuAction)="handleTicketAction($event)">
+      </app-table-v2>
     </div>
   </div>
 </app-detail-container>

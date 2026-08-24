@@ -1,4 +1,4 @@
-import { Component, inject, viewChild } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { DetailContainer } from "../../../shared/component-v2/dialog/detail-container/detail-container";
 import { DetailText } from "../../../shared/component/detail/detail-text/detail-text";
 import { RoomDetailModel } from '../../../model/room/room-detail.model';
@@ -8,9 +8,10 @@ import { AuthService } from '../../../service/auth/auth.service';
 import { ButtonV2 } from "../../../shared/component-v2/button/button";
 import { SeatMapV2 } from "../../seat-v2/seat-map-v2/seat-map-v2";
 import { SeatDialogService } from '../../../service/dialog-v2/seat/seat-dialog.service';
-import { SeatDetailModel } from '../../../model/seat/seat-detail.model';
 import { finalize } from 'rxjs';
 import { MatDivider } from "@angular/material/divider";
+import { DetailEntityService } from '../../../service/detail-entity.service';
+import { RoomService } from '../../../service/room/room.service';
 
 @Component({
   selector: 'app-room-detail-v2',
@@ -19,25 +20,19 @@ import { MatDivider } from "@angular/material/divider";
   styleUrl: './room-detail-v2.css',
 })
 export class RoomDetailV2 extends DetailDialogV2<RoomDetailModel> {
-  seatMap = viewChild<SeatMapV2>('seatMap');
+  protected override entityService: DetailEntityService<RoomDetailModel> = inject(RoomService);
 
   private readonly authService = inject(AuthService);
-  private readonly seatDialogService = inject(SeatDialogService);
+  private readonly seatDialog = inject(SeatDialogService);
 
   openAddSeat(): void {
-    const seatData: Partial<SeatDetailModel> = {
-      room: {
-        id: this.model!.id,
-        rowLength: this.model!.rowLength,
-        columnLength: this.model!.columnLength,
-        name: this.model!.name,
-      },
-    }
-
     this.hideSelf();
 
-    this.seatDialogService.showAddEditDialog(undefined, { model: seatData })
-      .pipe(finalize(() => this.onRefresh()))
+    this.seatDialog.displayAdd({
+      roomId: this.model!.id,
+      rowMax: this.model!.rowLength,
+      columnMax: this.model!.columnLength,
+    }).pipe(finalize(() => this.onRefresh()))
       .subscribe();
   }
 

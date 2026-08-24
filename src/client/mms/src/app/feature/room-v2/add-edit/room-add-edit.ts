@@ -5,6 +5,8 @@ import { CustomValidators } from '../../../shared/util/custom-validators';
 import { AddEditContainer } from "../../../shared/component-v2/dialog/add-edit-container/add-edit-container";
 import { FormInput } from "../../../shared/component-v2/form/form-input/form-input";
 import { ConstraintService } from '../../../service/constraint.service';
+import { DetailEntityService } from '../../../service/detail-entity.service';
+import { RoomService } from '../../../service/room/room.service';
 
 @Component({
   selector: 'app-room-add-edit',
@@ -13,6 +15,8 @@ import { ConstraintService } from '../../../service/constraint.service';
   styleUrl: './room-add-edit.css',
 })
 export class RoomAddEdit extends AddEditDialog<RoomDetailModel> {
+  protected override entityService: DetailEntityService<RoomDetailModel> = inject(RoomService);
+
   private readonly constraintService = inject(ConstraintService);
 
   private get constraints() {

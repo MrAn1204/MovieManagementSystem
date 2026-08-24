@@ -16,8 +16,10 @@ import { DialogFormDataModel } from '../../../shared/model/dialog/dialog-form-da
 import { AddEditContainer } from "../../../shared/component-v2/dialog/add-edit-container/add-edit-container";
 import { FormSelect } from "../../../shared/component-v2/form/form-select/form-select";
 import { MAT_DIALOG_DATA } from '@angular/material/dialog';
+import { DetailEntityService } from '../../../service/detail-entity.service';
+import { TicketService } from '../../../service/ticket/ticket.service';
 
-interface TicketDialogDataModel extends DialogFormDataModel<TicketDetailModel> {
+export interface TicketDialogDataModel extends DialogFormDataModel<TicketDetailModel> {
   scheduleId?: string;
   userId?: string;
 }
@@ -29,6 +31,8 @@ interface TicketDialogDataModel extends DialogFormDataModel<TicketDetailModel> {
   styleUrl: './ticket-add-edit.css',
 })
 export class TicketAddEdit extends AddEditDialog<TicketDetailModel> {
+  protected override entityService: DetailEntityService<TicketDetailModel> = inject(TicketService);
+
   private readonly ticketData = inject<TicketDialogDataModel>(MAT_DIALOG_DATA);
 
   private readonly scheduleService = inject(ScheduleService);

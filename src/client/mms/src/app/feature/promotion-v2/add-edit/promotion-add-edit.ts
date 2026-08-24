@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { AddEditDialog } from '../../../shared/component-v2/dialog/add-edit-dialog/add-edit-dialog';
 import { PromotionModel } from '../../../model/promotion/promotion.model';
 import { CustomValidators } from '../../../shared/util/custom-validators';
@@ -6,6 +6,8 @@ import { AddEditContainer } from "../../../shared/component-v2/dialog/add-edit-c
 import { ImageField } from "../../../shared/component/form/image/image-field";
 import { FormInput } from "../../../shared/component-v2/form/form-input/form-input";
 import { FormTextArea } from "../../../shared/component-v2/form/form-textarea/form-textarea";
+import { DetailEntityService } from '../../../service/detail-entity.service';
+import { PromotionService } from '../../../service/promotion/promotion.service';
 
 @Component({
   selector: 'app-promotion-add-edit',
@@ -14,6 +16,8 @@ import { FormTextArea } from "../../../shared/component-v2/form/form-textarea/fo
   styleUrl: './promotion-add-edit.css',
 })
 export class PromotionAddEdit extends AddEditDialog<PromotionModel> {
+  protected override entityService: DetailEntityService<PromotionModel> = inject(PromotionService);
+
   override form = this.formBuilder.nonNullable.group({
     title: [this.model?.title ?? '', [CustomValidators.required('promotion.title.required')]],
     startDate: [this.model?.startDate ?? '', [CustomValidators.required('promotion.startDate.required')]],

@@ -1,4 +1,4 @@
-import { Component, signal } from '@angular/core';
+import { Component, inject, signal } from '@angular/core';
 import { AddEditDialog } from '../../../shared/component-v2/dialog/add-edit-dialog/add-edit-dialog';
 import { ScheduleDetailModel } from '../../../model/schedule/schedule-detail.model';
 import { CustomValidators } from '../../../shared/util/custom-validators';
@@ -8,6 +8,8 @@ import { RoomService } from '../../../service/room/room.service';
 import { AddEditContainer } from "../../../shared/component-v2/dialog/add-edit-container/add-edit-container";
 import { FormInput } from "../../../shared/component-v2/form/form-input/form-input";
 import { FormSelect } from "../../../shared/component-v2/form/form-select/form-select";
+import { DetailEntityService } from '../../../service/detail-entity.service';
+import { ScheduleService } from '../../../service/schedule/schedule.service';
 
 @Component({
   selector: 'app-schedule-add-edit',
@@ -16,6 +18,8 @@ import { FormSelect } from "../../../shared/component-v2/form/form-select/form-s
   styleUrl: './schedule-add-edit.css',
 })
 export class ScheduleAddEdit extends AddEditDialog<ScheduleDetailModel> {
+  protected override entityService: DetailEntityService<ScheduleDetailModel> = inject(ScheduleService);
+
   override form = this.formBuilder.nonNullable.group({
       showTime: [this.model?.showTime ?? ''],
       movieId: [this.model?.movie?.id ?? null, [CustomValidators.required('schedule.movie.required')]],

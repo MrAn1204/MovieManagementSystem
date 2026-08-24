@@ -10,6 +10,8 @@ import { AddEditContainer } from "../../../shared/component-v2/dialog/add-edit-c
 import { FormInput } from "../../../shared/component-v2/form/form-input/form-input";
 import { FormSelect } from "../../../shared/component-v2/form/form-select/form-select";
 import { FormTextArea } from "../../../shared/component-v2/form/form-textarea/form-textarea";
+import { DetailEntityService } from '../../../service/detail-entity.service';
+import { UserService } from '../../../service/user/user.service';
 
 @Component({
   selector: 'app-user-add-edit',
@@ -18,6 +20,8 @@ import { FormTextArea } from "../../../shared/component-v2/form/form-textarea/fo
   styleUrl: './user-add-edit.css',
 })
 export class UserAddEdit extends AddEditDialog<UserDetailModel> {
+  protected override entityService: DetailEntityService<UserDetailModel> = inject(UserService);
+
   private readonly roleService = inject(RoleService);
   private readonly constraintService = inject(ConstraintService);
   private readonly authService = inject(AuthService);

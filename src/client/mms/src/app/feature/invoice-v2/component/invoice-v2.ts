@@ -5,7 +5,7 @@ import { RoleConfigModel } from '../../../shared/model/role-config.model';
 import { InvoiceAddEdit } from '../add-edit/invoice-add-edit';
 import { InvoiceDetailV2 } from '../detail/invoice-detail-v2';
 import { getRoleConfig } from '../../../shared/config/role-config';
-import { TableV2 } from "../../../shared/component-v2/table/table";
+import { TableMenuOutput, TableV2 } from "../../../shared/component-v2/table/table";
 import { TableColumnModel } from '../../../shared/model/table-column.model';
 import { InvoiceService } from '../../../service/invoice/invoice.service';
 import { UserSummaryModel } from '../../../model/user/user-summary.model';
@@ -13,7 +13,6 @@ import { EntityService } from '../../../service/entity.service';
 import { InvoiceDialogService } from '../../../service/dialog-v2/invoice/invoice-dialog.service';
 import { EntityDialogServiceV2 } from '../../../service/dialog-v2/entity-dialog.service';
 import { TableFeature } from '../../../shared/component-v2/feature/table-feature';
-import { finalize } from 'rxjs';
 
 @Component({
   selector: 'app-invoice-v2',
@@ -43,29 +42,22 @@ export class InvoiceV2 extends TableFeature<InvoiceModel> {
   protected override entityService: EntityService<InvoiceModel> = inject(InvoiceService);
   protected override dialogService: EntityDialogServiceV2<InvoiceModel> = inject(InvoiceDialogService);
 
-  override onView(id: string): void {
+  override onMenuAction(event: TableMenuOutput): void {
     this.viewInvoice.emit(true);
-
-    this.dialogService.showDetailDialog(id).subscribe(result => this.handleViewResult(result, id));
+    super.onMenuAction(event);
   }
 
-  protected override handleViewResult(result: string, id: string): void {
+  protected override handleViewResult(result: any, id: string): void {
+    super.handleViewResult(result, id);
     if (!result) {
       this.viewInvoice.emit(false);
-    } else {
-      super.handleViewResult(result, id);
     }
   }
 
-  override onEdit(id: string): void {
-    this.dialogService.showAddEditDialog(id)
-      .pipe(finalize(() => this.viewInvoice.emit(false)))
-      .subscribe();
-  }
-
-  override onDelete(id: string): void {
-    this.dialogService.showDeleteDialog(id)
-      .pipe(finalize(() => this.viewInvoice.emit(false)))
-      .subscribe();
+  protected override handleEditResult(result: any): void {
+    super.handleEditResult(result);
+    if (!result) {
+      this.viewInvoice.emit(false);
+    }
   }
 }
