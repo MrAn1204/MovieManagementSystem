@@ -1,8 +1,8 @@
-import { Directive, OnInit, signal } from "@angular/core";
+import { Directive, inject, OnInit, signal } from "@angular/core";
 import { BaseEntityModel } from "../../model/base-entity.model";
 import { FormOptionModel } from "../../model/form-option.model";
 import { createEmptyPaginatedResult, PaginatedResult } from "../../model/paginated-result.model";
-import { FormGroup } from "@angular/forms";
+import { FormBuilder, FormGroup } from "@angular/forms";
 import { finalize } from "rxjs";
 import { PageEvent } from "@angular/material/paginator";
 import { SearchForm } from "../search/search";
@@ -11,6 +11,8 @@ import { TableFeature } from "./table-feature";
 @Directive()
 export abstract class SearchableFeatureV2<T extends BaseEntityModel> extends TableFeature<T> implements OnInit {
   private readonly DEFAULT_SORT_KEY = 'createdAt';
+
+  protected readonly formBuilder = inject(FormBuilder);
 
   data = signal<PaginatedResult<T>>(createEmptyPaginatedResult<T>());
 
@@ -57,27 +59,24 @@ export abstract class SearchableFeatureV2<T extends BaseEntityModel> extends Tab
     this.onSearch();
   }
 
-  override onAdd(): void {
-    this.dialogService.showAddEditDialog().subscribe(res => {
-      if (res) {
-        this.onSearch();
-      }
-    });
+  protected override handleAddResult(result: any): void {
+    super.handleAddResult(result);
+    if (result) {
+      this.onSearch();
+    }
   }
 
-  override onEdit(id: string): void {
-    this.dialogService.showAddEditDialog(id).subscribe(res => {
-      if (res) {
-        this.onSearch();
-      }
-    });
+  protected override handleEditResult(result: any): void {
+    super.handleEditResult(result);
+    if (result) {
+      this.onSearch();
+    }
   }
 
-  override onDelete(id: string): void {
-    this.dialogService.showDeleteDialog(id).subscribe(res => {
-      if (res) {
-        this.onSearch();
-      }
-    });
+  protected override handleDeleteResult(result: any, id: string): void {
+    super.handleDeleteResult(result, id);
+    if (result) {
+      this.onSearch();
+    }
   }
 }
