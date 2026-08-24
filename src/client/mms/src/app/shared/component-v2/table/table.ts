@@ -1,4 +1,4 @@
-import { Component, computed, input, output } from '@angular/core';
+import { Component, computed, input, OnInit, output } from '@angular/core';
 import { BaseEntityModel } from '../../model/base-entity.model';
 import { MatTableModule } from '@angular/material/table';
 import { TableColumnModel } from '../../model/table-column.model';
@@ -6,7 +6,7 @@ import { FormatCellPipe } from '../../pipe/format-cell/format-cell-pipe';
 import { MatCheckboxModule } from '@angular/material/checkbox';
 import { SelectionModel } from '@angular/cdk/collections';
 import { RoleConfigModel } from '../../model/role-config.model';
-import { MenuItem, Menu } from '../menu/menu';
+import { MenuItem, Menu, COMMON_MENU_ITEMS } from '../menu/menu';
 import { MatMenuModule } from "@angular/material/menu";
 import { MatIcon } from "@angular/material/icon";
 import { MatButtonModule } from "@angular/material/button";
@@ -17,7 +17,7 @@ import { MatButtonModule } from "@angular/material/button";
   templateUrl: './table.html',
   styleUrl: './table.css',
 })
-export class TableV2<T extends BaseEntityModel> {
+export class TableV2<T extends BaseEntityModel> implements OnInit {
   data = input.required<T[]>();
   columns = input.required<TableColumnModel<T>[]>();
   roleConfig = input<RoleConfigModel>();
@@ -27,14 +27,16 @@ export class TableV2<T extends BaseEntityModel> {
   columnsToDisplay = computed(() => ['select', ...this.columns().map(col => col.key as string), 'menu']);
 
   tableMenuItems = input<MenuItem[]>([
-    { label: 'Add', icon: 'add', action: 'add' },
+    COMMON_MENU_ITEMS.ADD,
   ]);
 
   rowMenuItems = input<MenuItem[]>([
-    { label: 'View', icon: 'visibility', action: 'view' },
-    { label: 'Edit', icon: 'edit', action: 'edit' },
-    { label: 'Delete', icon: 'delete', action: 'delete' },
+    COMMON_MENU_ITEMS.VIEW,
+    COMMON_MENU_ITEMS.EDIT,
+    COMMON_MENU_ITEMS.DELETE,
   ]);
+
+  selectItem = output<T[]>();
 
   protected selectedItems: SelectionModel<T> = new SelectionModel<T>(true, []);
 
@@ -48,6 +50,12 @@ export class TableV2<T extends BaseEntityModel> {
 
   get canDelete(): boolean {
     return !!(this.roleConfig()?.delete);
+  }
+
+  ngOnInit(): void {
+    this.selectedItems.changed.subscribe(() => {
+      this.selectItem.emit(this.selectedItems.selected);
+    });
   }
 
   getColumnValue(item: T, column: TableColumnModel<T>): any {
@@ -77,11 +85,12 @@ export class TableV2<T extends BaseEntityModel> {
   }
 
   onMenuAction(action: string, item?: T): void {
-    this.menuAction.emit({ action, item });
+    this.menuAction.emit({ action, item, selected: this.selectedItems.selected });
   }
 }
 
 export type TableMenuOutput = {
   action: string;
   item?: BaseEntityModel;
+  selected?: BaseEntityModel[];
 }
