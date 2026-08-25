@@ -64,7 +64,7 @@ export abstract class AddEditDialog<T extends BaseEntityModel> extends BaseDialo
   addItem(): void {
     this.spinner.show();
 
-    this.entityService.create(this.form.value)
+    this.entityService.create(this.form.getRawValue())
       .pipe(finalize(() => this.spinner.hide()))
       .subscribe({
         next: (res) => this.onClose(res),
@@ -75,7 +75,7 @@ export abstract class AddEditDialog<T extends BaseEntityModel> extends BaseDialo
   updateItem(): void {
     this.spinner.show();
 
-    this.entityService.update(this.data.id!, this.form.value)
+    this.entityService.update(this.data.id!, this.form.getRawValue())
       .pipe(finalize(() => this.spinner.hide()))
       .subscribe({
         next: (res) => this.onClose(res),
