@@ -55,7 +55,7 @@ export class InvoiceV2 extends TableFeature<InvoiceModel> {
   }
 
   protected override handleEditResult(result: any): void {
-    super.handleEditResult(result);
+    super.handleEditResult?.(result);
     if (!result) {
       this.viewInvoice.emit(false);
     }

@@ -8,7 +8,6 @@ import { AuthService } from '../../../service/auth/auth.service';
 import { ButtonV2 } from "../../../shared/component-v2/button/button";
 import { SeatMapV2 } from "../../seat-v2/seat-map-v2/seat-map-v2";
 import { SeatDialogService } from '../../../service/dialog-v2/seat/seat-dialog.service';
-import { finalize } from 'rxjs';
 import { MatDivider } from "@angular/material/divider";
 import { DetailEntityService } from '../../../service/detail-entity.service';
 import { RoomService } from '../../../service/room/room.service';
@@ -32,11 +31,13 @@ export class RoomDetailV2 extends DetailDialogV2<RoomDetailModel> {
       roomId: this.model!.id,
       rowMax: this.model!.rowLength,
       columnMax: this.model!.columnLength,
-    }).pipe(finalize(() => this.onRefresh()))
-      .subscribe();
+    }).subscribe(() => this.onRefresh());
   }
 
   canAddSeat(): boolean {
+    if (!this.model) {
+      return false;
+    }
     return this.authService.includeRoles(['ADMIN']) && this.model!.currentCapacity < this.model!.maxCapacity;
   }
 }

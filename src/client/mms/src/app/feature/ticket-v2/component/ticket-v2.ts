@@ -56,7 +56,7 @@ export class TicketV2 extends SearchableFeatureV2<TicketModel> {
 
   tableMenuItems: MenuItem[] = [
     COMMON_MENU_ITEMS.ADD,
-    { label: 'Create Invoice', icon: 'receipt', action: 'create-invoice', isDisabled: () => !this.validateSelected() },
+    { label: 'Create Invoice', icon: 'receipt', action: 'create_invoice', isDisabled: () => !this.validateSelected() },
   ]
 
   onSelect(item: TicketModel[]): void {
@@ -74,10 +74,10 @@ export class TicketV2 extends SearchableFeatureV2<TicketModel> {
   }
 
   override onMenuAction(event: TableMenuOutput): void {
-    if (event.action === 'create-invoice' && this.validateSelected()) {
+    if (event.action === 'create_invoice' && this.validateSelected()) {
       this.invoiceDialog.displayAdd({
         tickets: this.selectedItems(),
-      });
+      }).subscribe(() => this.onSearch());
     } else {
       super.onMenuAction(event);
     }

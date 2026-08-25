@@ -6,6 +6,7 @@ import { DialogFormDataModel } from "../../shared/model/dialog/dialog-form-data.
 import { NotificationDialogDataModel } from "../../shared/model/dialog/notification-dialog-data.model";
 import { DialogServiceV2 } from "./dialog.service";
 import { NotificationDialogService } from "./notification/notification-dialog.service";
+import { finalize, Observable, switchMap, tap } from "rxjs";
 
 export abstract class EntityDialogServiceV2<T extends BaseEntityModel> extends DialogServiceV2 {
   protected abstract entityName: string;
@@ -56,7 +57,11 @@ export abstract class EntityDialogServiceV2<T extends BaseEntityModel> extends D
 
     const dialogRef = this.openForm(dialogData);
 
-    return dialogRef.afterClosed();
+    return dialogRef.afterClosed().pipe(tap((res) => {
+      if (res) {
+        this.createSuccess();
+      }
+    }));
   }
 
   displayEdit(id: string, data?: Record<string, unknown>) {
@@ -68,10 +73,14 @@ export abstract class EntityDialogServiceV2<T extends BaseEntityModel> extends D
 
     const dialogRef = this.openForm(dialogData);
 
-    return dialogRef.afterClosed();
+    return dialogRef.afterClosed().pipe(tap((res) => {
+      if (res) {
+        this.updateSuccess();
+      }
+    }));
   }
 
-  displayDelete() {
+  displayDelete(onConfirm: () => Observable<any>) {
     const lowercaseName = this.entityName.toLowerCase();
 
     const dialogData: NotificationDialogDataModel = {
@@ -81,7 +90,18 @@ export abstract class EntityDialogServiceV2<T extends BaseEntityModel> extends D
 
     const dialogRef = this.notification.openDialog(dialogData);
 
-    return dialogRef.afterClosed();
+    return dialogRef.afterClosed().pipe(
+      switchMap((res) => {
+        if (res) {
+          this.spinner.show();
+          return onConfirm().pipe(
+            tap(() => this.deleteSuccess()),
+            finalize(() => this.spinner.hide())
+          );
+        }
+        return res;
+      })
+    );
   }
 
   createSuccess() {

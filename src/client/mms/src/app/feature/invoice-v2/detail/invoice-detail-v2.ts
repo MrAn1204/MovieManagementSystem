@@ -11,6 +11,7 @@ import { DetailEntityService } from '../../../service/detail-entity.service';
 import { InvoiceService } from '../../../service/invoice/invoice.service';
 import { TicketDialogService } from '../../../service/dialog-v2/ticket/ticket-dialog.service';
 import { finalize } from 'rxjs';
+import { TicketService } from '../../../service/ticket/ticket.service';
 
 @Component({
   selector: 'app-invoice-detail-v2',
@@ -21,6 +22,7 @@ import { finalize } from 'rxjs';
 export class InvoiceDetailV2 extends DetailDialogV2<InvoiceModel> {
   protected override entityService: DetailEntityService<InvoiceModel> = inject(InvoiceService);
 
+  private readonly ticketService = inject(TicketService);
   private readonly ticketDialog = inject(TicketDialogService);
 
   ticketColumns: TableColumnModel<TicketModel>[] = [
@@ -46,7 +48,7 @@ export class InvoiceDetailV2 extends DetailDialogV2<InvoiceModel> {
     } else if (action === 'edit') {
       dialog = this.ticketDialog.displayEdit(item.id);
     } else if (action === 'delete') {
-      dialog = this.ticketDialog.displayDelete();
+      dialog = this.ticketDialog.displayDelete(() => this.ticketService.delete(item.id));
     }
 
     dialog?.pipe(finalize(() => this.onRefresh())).subscribe();

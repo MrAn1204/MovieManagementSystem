@@ -28,7 +28,7 @@ export abstract class BaseFeatureV2<T extends BaseEntityModel> {
 
     this.dialogService.displayAdd()
       .pipe(finalize(() => this.onDialogClose?.()))
-      .subscribe((result) => this.handleAddResult(result));
+      .subscribe((result) => this.handleAddResult?.(result));
   }
 
   onEdit(id: string): void {
@@ -36,7 +36,7 @@ export abstract class BaseFeatureV2<T extends BaseEntityModel> {
 
     this.dialogService.displayEdit(id)
       .pipe(finalize(() => this.onDialogClose?.()))
-      .subscribe((result) => this.handleEditResult(result));
+      .subscribe((result) => this.handleEditResult?.(result));
   }
 
   onView(id: string): void {
@@ -50,9 +50,9 @@ export abstract class BaseFeatureV2<T extends BaseEntityModel> {
   onDelete(id: string): void {
     this.onDialogOpen?.();
 
-    this.dialogService.displayDelete()
+    this.dialogService.displayDelete(() => this.entityService.delete(id))
       .pipe(finalize(() => this.onDialogClose?.()))
-      .subscribe((result) => this.handleDeleteResult(result, id));
+      .subscribe((result) => this.handleDeleteResult?.(result));
   }
 
   protected onDialogOpen?(): void;
@@ -69,25 +69,9 @@ export abstract class BaseFeatureV2<T extends BaseEntityModel> {
     }
   }
 
-  protected handleAddResult(result: any): void {
-    if (result) {
-      this.dialogService.createSuccess();
-    }
-  }
+  protected handleAddResult?(result: any): void;
 
-  protected handleEditResult(result: any): void {
-    if (result) {
-      this.dialogService.updateSuccess();
-    }
-  }
+  protected handleEditResult?(result: any): void;
 
-  protected handleDeleteResult(result: any, id: string): void {
-    if (result) {
-      this.spinner.show();
-
-      this.entityService.delete(id)
-        .pipe(finalize(() => this.spinner.hide()))
-        .subscribe(() => this.dialogService.deleteSuccess());
-    }
-  }
+  protected handleDeleteResult?(result: any): void;
 }

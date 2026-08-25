@@ -60,23 +60,21 @@ export abstract class SearchableFeatureV2<T extends BaseEntityModel> extends Tab
   }
 
   protected override handleAddResult(result: any): void {
-    super.handleAddResult(result);
+    super.handleAddResult?.(result);
     if (result) {
       this.onSearch();
     }
   }
 
   protected override handleEditResult(result: any): void {
-    super.handleEditResult(result);
+    super.handleEditResult?.(result);
     if (result) {
       this.onSearch();
     }
   }
 
-  protected override handleDeleteResult(result: any, id: string): void {
-    super.handleDeleteResult(result, id);
-    if (result) {
-      this.onSearch();
-    }
+  protected override handleDeleteResult(result: any): void {
+    super.handleDeleteResult?.(result);
+    this.onSearch();
   }
 }

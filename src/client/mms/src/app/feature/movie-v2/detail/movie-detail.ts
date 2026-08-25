@@ -9,11 +9,12 @@ import { TableColumnModel } from '../../../shared/model/table-column.model';
 import { ScheduleSummaryModel } from '../../../model/schedule/schedule-summary.model';
 import { TableMenuOutput, TableV2 } from "../../../shared/component-v2/table/table";
 import { ScheduleDialogService } from '../../../service/dialog-v2/schedule/schedule-dialog.service';
-import { finalize, switchMap } from 'rxjs';
-import { MenuItem } from '../../../shared/component-v2/menu/menu';
+import { switchMap } from 'rxjs';
+import { COMMON_MENU_ITEMS, MenuItem } from '../../../shared/component-v2/menu/menu';
 import { TicketDialogService } from '../../../service/dialog-v2/ticket/ticket-dialog.service';
 import { DetailEntityService } from '../../../service/detail-entity.service';
 import { MovieService } from '../../../service/movie/movie.service';
+import { ScheduleService } from '../../../service/schedule/schedule.service';
 
 @Component({
   selector: 'app-movie-detail',
@@ -29,11 +30,12 @@ export class MovieDetailV2 extends DetailDialogV2<MovieDetailModel> {
     { key: 'roomName', label: 'Room' },
   ];
 
+  private readonly scheduleService = inject(ScheduleService);
   private readonly scheduleDialog = inject(ScheduleDialogService);
   private readonly ticketDialog = inject(TicketDialogService);
 
   scheduleRowMenu: MenuItem[] = [
-    { label: 'View', icon: 'visibility', action: 'view' },
+    COMMON_MENU_ITEMS.VIEW,
     { label: 'Book Ticket', icon: 'confirmation_number', action: 'book_ticket' },
   ];
 
@@ -47,7 +49,7 @@ export class MovieDetailV2 extends DetailDialogV2<MovieDetailModel> {
         } else if (res === 'edit') {
           return this.scheduleDialog.displayEdit(scheduleId);
         } else if (res === 'delete') {
-          return this.scheduleDialog.displayDelete();
+          return this.scheduleDialog.displayDelete(() => this.scheduleService.delete(scheduleId));
         }
         return res;
       })).subscribe(() => this.onRefresh());
@@ -68,7 +70,6 @@ export class MovieDetailV2 extends DetailDialogV2<MovieDetailModel> {
     this.hideSelf();
 
     this.ticketDialog.displayAdd({ scheduleId: scheduleId })
-      .pipe(finalize(() => this.onRefresh()))
-      .subscribe();
+      .subscribe(() => this.onRefresh());
   }
 }

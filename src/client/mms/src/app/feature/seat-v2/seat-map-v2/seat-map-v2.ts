@@ -91,12 +91,12 @@ export class SeatMapV2 extends BaseFeatureV2<SeatModel> implements OnChanges, On
 
   protected override handleEditResult(result: any): void {
     this.viewSeat.emit(false);
-    super.handleEditResult(result);
+    super.handleEditResult?.(result);
   }
 
-  protected override handleDeleteResult(result: any, id: string): void {
+  protected override handleDeleteResult(result: any): void {
     this.viewSeat.emit(false);
-    super.handleDeleteResult(result, id);
+    super.handleDeleteResult?.(result);
   }
 
   protected override onDialogOpen(): void {
