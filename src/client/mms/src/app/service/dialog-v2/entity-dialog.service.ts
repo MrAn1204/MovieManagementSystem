@@ -38,10 +38,11 @@ export abstract class EntityDialogServiceV2<T extends BaseEntityModel> extends D
     return dialogRef;
   }
 
-  displayInfo(id: string) {
+  displayInfo(id: string, data?: Record<string, unknown>) {
     const dialogData: DetailDialogDataModel<T> = {
       title: `${this.entityName} Details`,
-      id: id
+      id: id,
+      ...data
     };
 
     const dialogRef = this.openDetail(dialogData);
