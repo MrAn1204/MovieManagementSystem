@@ -77,7 +77,7 @@ export class TicketV2 extends SearchableFeatureV2<TicketModel> {
     if (event.action === 'create_invoice' && this.validateSelected()) {
       this.invoiceDialog.displayAdd({
         tickets: this.selectedItems(),
-      }).subscribe(() => this.onSearch());
+      }).subscribe((res) => res && this.onSearch());
     } else {
       super.onMenuAction(event);
     }
