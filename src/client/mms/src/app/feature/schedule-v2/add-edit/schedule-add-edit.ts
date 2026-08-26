@@ -21,10 +21,10 @@ export class ScheduleAddEdit extends AddEditDialog<ScheduleDetailModel> {
   protected override entityService: DetailEntityService<ScheduleDetailModel> = inject(ScheduleService);
 
   override form = this.formBuilder.nonNullable.group({
-      showTime: [this.model?.showTime ?? ''],
-      movieId: [this.model?.movie?.id ?? null, [CustomValidators.required('schedule.movie.required')]],
-      roomId: [this.model?.room?.id ?? null, [CustomValidators.required('schedule.room.required')]],
-    });
+    showTime: [''],
+    movieId: ['', [CustomValidators.required('schedule.movie.required')]],
+    roomId: ['', [CustomValidators.required('schedule.room.required')]],
+  });
 
   movies = signal<FormOptionModel[]>([]);
   rooms = signal<FormOptionModel[]>([]);
@@ -34,6 +34,14 @@ export class ScheduleAddEdit extends AddEditDialog<ScheduleDetailModel> {
     private readonly roomService: RoomService,
   ) {
     super();
+  }
+
+  protected override mapForm(model: ScheduleDetailModel): void {
+    this.form.patchValue({
+      showTime: model.showTime,
+      movieId: model.movie.id,
+      roomId: model.room.id,
+    });
   }
 
   override loadOptions(): void {

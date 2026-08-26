@@ -45,11 +45,11 @@ export class UserAddEdit extends AddEditDialog<UserDetailModel> {
 
     return this.formBuilder.nonNullable.group(
       {
-        username: [{ value: this.model?.username ?? '', disabled: this.isEditMode }, [
+        username: [{ value: '', disabled: this.isEditMode }, [
           CustomValidators.required('user.username.required'),
           CustomValidators.length(constraints['USERNAME_MIN'], constraints['USERNAME_MAX'], 'user.username.size'),
         ]],
-        fullname: [this.model?.fullname ?? '', [
+        fullname: ['', [
           CustomValidators.required('user.fullname.required'),
           CustomValidators.length(constraints['FULLNAME_MIN'], constraints['FULLNAME_MAX'], 'user.fullname.size'),
         ]],
@@ -58,24 +58,24 @@ export class UserAddEdit extends AddEditDialog<UserDetailModel> {
           CustomValidators.passwordValid(constraints['PASSWORD_MIN'], 'user.password.invalid')
         ]],
         confirmPassword: ['', [CustomValidators.required('user.confirmPassword.required')]],
-        gender: [this.model?.gender ?? '', [CustomValidators.required('user.gender.required')]],
-        dateOfBirth: [this.model?.dateOfBirth ?? '', [
+        gender: ['', [CustomValidators.required('user.gender.required')]],
+        dateOfBirth: ['', [
           CustomValidators.required('user.dob.required'),
           CustomValidators.pastDate('user.dob.past'),
         ]],
-        email: [this.model?.email ?? null, [CustomValidators.email('user.email.invalid')]],
-        citizenIdNumber: [this.model?.citizenIdNumber ?? null, [
+        email: [null, [CustomValidators.email('user.email.invalid')]],
+        citizenIdNumber: [null, [
           CustomValidators.minLength(constraints['CITIZEN_ID_MIN'], 'user.citizenId.size')
         ]],
-        phoneNumber: [this.model?.phoneNumber ?? null, [
+        phoneNumber: [null, [
           CustomValidators.required('user.phone.required'),
           CustomValidators.length(constraints['PHONE_MIN'], constraints['PHONE_MAX'], 'user.phone.size'),
         ]],
-        address: [this.model?.address ?? null, [
+        address: [null, [
           CustomValidators.length(constraints['ADDRESS_MIN'], constraints['ADDRESS_MAX'], 'user.address.size')
         ]],
-        score: [this.model?.score ?? 0],
-        roleIds: [this.model?.roles?.map((role) => role.id) ?? [] as string[], [
+        score: [0],
+        roleIds: [[] as string[], [
           CustomValidators.required('user.roles.required'),
           CustomValidators.arrayContainNoNull('user.roles.invalid'),
         ]],
@@ -84,8 +84,24 @@ export class UserAddEdit extends AddEditDialog<UserDetailModel> {
     );
   }
 
+
+  protected override mapForm(model: UserDetailModel): void {
+    this.onReset({
+      username: model.username,
+      fullname: model.fullname,
+      gender: model.gender,
+      dateOfBirth: model.dateOfBirth,
+      email: model.email,
+      citizenIdNumber: model.citizenIdNumber,
+      phoneNumber: model.phoneNumber,
+      address: model.address,
+      score: model.score,
+      roleIds: model.roles.map((role) => role.id),
+    });
+  }
+
   get isEditMode(): boolean {
-    return !!this.model;
+    return !!this.data.id;
   }
 
   get isAdmin(): boolean {

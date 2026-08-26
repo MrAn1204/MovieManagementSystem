@@ -1,7 +1,7 @@
 <app-add-edit-container [title]="title" (submitForm)="onSubmit()" (resetForm)="onReset()" (closeDialog)="onClose()">
   <div dialog-content class="form-grid">
     <app-detail-text label="Total Money">
-      {{ totalMoney }}
+      {{ totalMoney() }}
     </app-detail-text>
 
     <app-detail-text label="User">

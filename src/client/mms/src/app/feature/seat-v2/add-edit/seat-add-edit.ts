@@ -30,11 +30,11 @@ export class SeatAddEdit extends AddEditDialog<SeatDetailModel> {
   private readonly seatData = this.data as SeatDialogDataModel;
 
   override form = this.formBuilder.nonNullable.group({
-    name: [this.model?.name ?? '', [CustomValidators.required('seat.name.required')]],
-    seatType: [this.model?.seatType ?? 'STANDARD', [CustomValidators.required('seat.type.required')]],
-    seatRow: [this.model?.seatRow ?? 1, this.getRowValidators(this.model?.room.columnLength ?? 1)],
-    seatColumn: [this.model?.seatColumn ?? 1, this.getColumnValidators(this.model?.room.rowLength ?? 1)],
-    roomId: [this.model?.room.id ?? ''],
+    name: ['', [CustomValidators.required('seat.name.required')]],
+    seatType: ['STANDARD', [CustomValidators.required('seat.type.required')]],
+    seatRow: [1],
+    seatColumn: [1],
+    roomId: [''],
   });
 
   enableNameAutofill = false;
@@ -51,6 +51,18 @@ export class SeatAddEdit extends AddEditDialog<SeatDetailModel> {
   constructor(private readonly seatService: SeatService) {
     super();
 
+    if (this.seatData.roomId) {
+      this.form.controls.roomId.setValue(this.seatData.roomId);
+    }
+
+    if (this.seatData.rowMax) {
+      this.form.controls.seatRow.setValidators(this.getRowValidators(this.seatData.rowMax));
+    }
+
+    if (this.seatData.columnMax) {
+      this.form.controls.seatColumn.setValidators(this.getColumnValidators(this.seatData.columnMax));
+    }
+
     merge(this.rowControl.valueChanges, this.columnControl.valueChanges)
       .pipe(takeUntilDestroyed())
       .subscribe(() => {
@@ -60,20 +72,17 @@ export class SeatAddEdit extends AddEditDialog<SeatDetailModel> {
       });
   }
 
-  override ngOnInit(): void {
-    super.ngOnInit();
+  override mapForm(model: SeatDetailModel): void {
+    this.onReset({
+      name: model.name,
+      seatType: model.seatType,
+      seatRow: model.seatRow,
+      seatColumn: model.seatColumn,
+      roomId: model.room.id,
+    });
 
-    if (this.seatData.roomId) {
-      this.form.controls.roomId.setValue(this.seatData.roomId);
-    }
-
-    if (this.seatData.rowMax) {
-      this.rowControl.setValidators(this.getRowValidators(this.seatData.rowMax));
-    }
-
-    if (this.seatData.columnMax) {
-      this.columnControl.setValidators(this.getColumnValidators(this.seatData.columnMax));
-    }
+    this.form.controls.seatRow.setValidators(this.getRowValidators(model.room.columnLength));
+    this.form.controls.seatColumn.setValidators(this.getColumnValidators(model.room.rowLength));
   }
 
   private getRowValidators(max: number) {

@@ -25,15 +25,15 @@ export class MovieAddEdit extends AddEditDialog<MovieDetailModel> {
   protected override entityService: DetailEntityService<MovieDetailModel> = inject(MovieService);
 
   override form = this.formBuilder.nonNullable.group({
-    name: [this.model?.name ?? '', [CustomValidators.required('movie.name.required')]],
-    releaseDate: [this.model?.releaseDate ?? ''],
-    duration: [this.model?.duration ?? 0, [CustomValidators.min(1, 'movie.duration.invalid')]],
-    content: [this.model?.content ?? ''],
-    thumbnail: [this.model?.thumbnail ?? ''],
-    genreIds: [this.model?.genres?.map(genre => genre.id) ?? []],
-    studioIds: [this.model?.studios?.map(studio => studio.id) ?? []],
-    talentIds: [this.model?.talents?.map(talent => talent.id) ?? []],
-    languageId: [this.model?.language?.id ?? null],
+    name: ['', [CustomValidators.required('movie.name.required')]],
+    releaseDate: [''],
+    duration: [0, [CustomValidators.min(1, 'movie.duration.invalid')]],
+    content: [''],
+    thumbnail: [''],
+    genreIds: [[]],
+    studioIds: [[]],
+    talentIds: [[]],
+    languageId: [null],
   });
 
   genres = signal<FormOptionModel[]>([]);
@@ -48,6 +48,20 @@ export class MovieAddEdit extends AddEditDialog<MovieDetailModel> {
     private readonly languageService: LanguageService,
   ) {
     super();
+  }
+
+  protected override mapForm(model: MovieDetailModel): void {
+    this.onReset({
+      name: model.name,
+      releaseDate: model.releaseDate,
+      duration: model.duration,
+      content: model.content,
+      thumbnail: model.thumbnail,
+      genreIds: model.genres?.map(genre => genre.id) ?? [],
+      studioIds: model.studios?.map(studio => studio.id) ?? [],
+      talentIds: model.talents?.map(talent => talent.id) ?? [],
+      languageId: model.language?.id ?? null,
+    });
   }
 
   override loadOptions(): void {

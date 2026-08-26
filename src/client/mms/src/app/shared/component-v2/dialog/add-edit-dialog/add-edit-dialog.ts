@@ -1,4 +1,4 @@
-import { Component, inject, OnInit, signal } from '@angular/core';
+import { Component, inject, OnInit } from '@angular/core';
 import { BaseDialogV2 } from '../base-dialog/base-dialog';
 import { BaseEntityModel } from '../../../model/base-entity.model';
 import { FormBuilder, FormGroup } from '@angular/forms';
@@ -22,12 +22,6 @@ export abstract class AddEditDialog<T extends BaseEntityModel> extends BaseDialo
 
   protected abstract entityService: DetailEntityService<T>;
 
-  private readonly item = signal<T | null>(null);
-
-  get model(): T | null {
-    return this.item();
-  }
-
   get title(): string | undefined {
     return this.data.title;
   }
@@ -43,9 +37,11 @@ export abstract class AddEditDialog<T extends BaseEntityModel> extends BaseDialo
 
       this.entityService.getById(this.data.id)
         .pipe(finalize(() => this.spinner.hide()))
-        .subscribe((res) => this.item.set(res));
+        .subscribe((res) => this.mapForm(res));
     }
   }
+
+  protected abstract mapForm(model: T): void;
 
   onSubmit(): void {
     this.form.markAllAsTouched();
@@ -83,8 +79,8 @@ export abstract class AddEditDialog<T extends BaseEntityModel> extends BaseDialo
       });
   }
 
-  onReset(): void {
-    this.form.reset();
+  onReset(data?: Record<string, unknown>): void {
+    this.form.reset(data);
   }
 
   loadOptions?(): void;

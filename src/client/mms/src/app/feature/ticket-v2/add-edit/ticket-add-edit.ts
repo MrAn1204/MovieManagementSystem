@@ -42,10 +42,10 @@ export class TicketAddEdit extends AddEditDialog<TicketDetailModel> {
   private readonly constraintService = inject(ConstraintService);
 
   override form = this.formBuilder.nonNullable.group({
-    scheduleId: [this.model?.schedule.id ?? '', [CustomValidators.required('ticket.schedule.required')]],
-    seatIds: [this.model?.seat ? [this.model.seat.id] : [], [CustomValidators.required('ticket.seat.required')]],
-    promotionId: [this.model?.promotion?.id ?? ''],
-    userId: [this.model?.user?.id ?? '', [CustomValidators.required('user.required')]],
+    scheduleId: ['', [CustomValidators.required('ticket.schedule.required')]],
+    seatIds: [[] as string[], [CustomValidators.required('ticket.seat.required')]],
+    promotionId: [''],
+    userId: ['', [CustomValidators.required('user.required')]],
   });
 
   schedules = signal<FormOptionModel[]>([]);
@@ -77,7 +77,7 @@ export class TicketAddEdit extends AddEditDialog<TicketDetailModel> {
   }
 
   get isEditMode(): boolean {
-    return !!this.model;
+    return !!this.data.id;
   }
 
   override ngOnInit(): void {
@@ -88,7 +88,10 @@ export class TicketAddEdit extends AddEditDialog<TicketDetailModel> {
 
     this.loadOptions();
 
-    this.loadMap();
+    if (this.ticketData.scheduleId) {
+      this.loadMap(this.ticketData.scheduleId);
+    }
+
     this.form.get('scheduleId')?.valueChanges
       .pipe(filter(scheduleId => !!scheduleId))
       .subscribe(scheduleId => this.loadMap(scheduleId));
@@ -102,6 +105,15 @@ export class TicketAddEdit extends AddEditDialog<TicketDetailModel> {
     if (!this.isEditMode) {
       this.loadUsers();
     }
+  }
+
+  protected override mapForm(model: TicketDetailModel): void {
+    this.onReset({
+      scheduleId: model.schedule.id,
+      seatIds: [model.seat.id],
+      promotionId: model.promotion?.id ?? '',
+      userId: model.user.id,
+    });
   }
 
   private setupUserField(): void {
@@ -169,12 +181,9 @@ export class TicketAddEdit extends AddEditDialog<TicketDetailModel> {
     });
   }
 
-  private loadMap(scheduleId = this.ticketData.scheduleId ?? this.model?.schedule.id): void {
-    if (scheduleId) {
-      this.scheduleService.getById(scheduleId).subscribe((schedule) => {
-        this.selectedSchedule.set(schedule);
-      });
-    }
+  private loadMap(scheduleId: string): void {
+    this.scheduleService.getById(scheduleId)
+      .subscribe((res) => this.selectedSchedule.set(res));
   }
 
   private calculatePrice(seatType: string): number {

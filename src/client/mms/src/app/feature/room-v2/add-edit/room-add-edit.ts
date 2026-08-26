@@ -19,21 +19,17 @@ export class RoomAddEdit extends AddEditDialog<RoomDetailModel> {
 
   private readonly constraintService = inject(ConstraintService);
 
-  private get constraints() {
-    return this.constraintService.get('ROW_MAX', 'COLUMN_MAX');
-  }
-
   override form = this.formBuilder.nonNullable.group({
-      name: [this.model?.name ?? '', [CustomValidators.required('room.name.required')]],
-      rowLength: [this.model?.rowLength ?? 1, [
-        CustomValidators.required('room.rowLength.required'),
-        CustomValidators.min(1, 'room.rowLength.invalid'),
-      ]],
-      columnLength: [this.model?.columnLength ?? 1, [
-        CustomValidators.required('room.columnLength.required'),
-        CustomValidators.min(1, 'room.columnLength.invalid'),
-      ]],
-    });
+    name: ['', [CustomValidators.required('room.name.required')]],
+    rowLength: [1, [
+      CustomValidators.required('room.rowLength.required'),
+      CustomValidators.min(1, 'room.rowLength.invalid'),
+    ]],
+    columnLength: [1, [
+      CustomValidators.required('room.columnLength.required'),
+      CustomValidators.min(1, 'room.columnLength.invalid'),
+    ]],
+  });
 
   constructor() {
     super();
@@ -42,14 +38,22 @@ export class RoomAddEdit extends AddEditDialog<RoomDetailModel> {
   override ngOnInit(): void {
     super.ngOnInit();
 
-    const constraints = this.constraints;
+    const constraints = this.constraintService.get('ROW_MAX', 'COLUMN_MAX');
 
-    this.form.get('rowLength')?.addValidators([
+    this.form.controls.rowLength.addValidators([
       CustomValidators.max(constraints['ROW_MAX'], 'room.rowLength.max')
     ]);
 
-    this.form.get('columnLength')?.addValidators([
+    this.form.controls.columnLength.addValidators([
       CustomValidators.max(constraints['COLUMN_MAX'], 'room.columnLength.max')
     ]);
+  }
+
+  protected override mapForm(model: RoomDetailModel): void {
+    this.onReset({
+      name: model.name,
+      rowLength: model.rowLength,
+      columnLength: model.columnLength,
+    });
   }
 }

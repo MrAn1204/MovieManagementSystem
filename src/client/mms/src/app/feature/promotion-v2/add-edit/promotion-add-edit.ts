@@ -19,15 +19,26 @@ export class PromotionAddEdit extends AddEditDialog<PromotionModel> {
   protected override entityService: DetailEntityService<PromotionModel> = inject(PromotionService);
 
   override form = this.formBuilder.nonNullable.group({
-    title: [this.model?.title ?? '', [CustomValidators.required('promotion.title.required')]],
-    startDate: [this.model?.startDate ?? '', [CustomValidators.required('promotion.startDate.required')]],
-    endDate: [this.model?.endDate ?? '', [CustomValidators.required('promotion.endDate.required')]],
-    description: [this.model?.description ?? ''],
-    image: [this.model?.image ?? ''],
-    discount: [this.model?.discount ?? 0, [CustomValidators.required('promotion.discount.required'), CustomValidators.range(5, 100, 'promotion.discount.invalid')]],
+    title: ['', [CustomValidators.required('promotion.title.required')]],
+    startDate: ['', [CustomValidators.required('promotion.startDate.required')]],
+    endDate: ['', [CustomValidators.required('promotion.endDate.required')]],
+    description: [''],
+    image: [''],
+    discount: [0, [CustomValidators.required('promotion.discount.required'), CustomValidators.range(5, 100, 'promotion.discount.invalid')]],
   });
 
   constructor() {
     super();
+  }
+
+  protected override mapForm(model: PromotionModel): void {
+    this.onReset({
+      title: model.title,
+      startDate: model.startDate,
+      endDate: model.endDate,
+      description: model.description,
+      image: model.image,
+      discount: model.discount,
+    });
   }
 }
