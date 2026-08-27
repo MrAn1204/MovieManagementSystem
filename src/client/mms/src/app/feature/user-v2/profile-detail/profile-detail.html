@@ -1,0 +1,56 @@
+<app-dialog-container title="Profile" (closeDialog)="onClose()">
+  <mat-tab-group dialog-content>
+    <mat-tab label="User Info">
+      <div class="detail-grid">
+        <app-detail-text label="Username">
+          {{ user()?.username | formatCell }}
+        </app-detail-text>
+
+        <app-detail-text label="Full Name">
+          {{ user()?.fullname | formatCell }}
+        </app-detail-text>
+
+        <app-detail-text label="Gender">
+          {{ user()?.gender | formatCell }}
+        </app-detail-text>
+
+        <app-detail-text label="Date of Birth">
+          {{ user()?.dateOfBirth | formatCell:'date' }}
+        </app-detail-text>
+
+        <app-detail-text label="Email">
+          {{ user()?.email | formatCell }}
+        </app-detail-text>
+
+        <app-detail-text label="Phone Number">
+          {{ user()?.phoneNumber | formatCell }}
+        </app-detail-text>
+
+        <app-detail-text label="Citizen ID Number">
+          {{ user()?.citizenIdNumber | formatCell }}
+        </app-detail-text>
+
+        <app-detail-text label="Score">
+          {{ user()?.score | formatCell }}
+        </app-detail-text>
+
+        <app-detail-text label="Address" class="sm:col-span-2">
+          {{ user()?.address | formatCell }}
+        </app-detail-text>
+      </div>
+    </mat-tab>
+
+    <mat-tab label="Invoices">
+      <app-table-v2
+        [data]="user()?.invoices ?? []"
+        [columns]="invoiceColumns"
+        (menuAction)="handleInvoiceMenuAction($event)"
+        [rowMenuItems]="rowMenuItems">
+      </app-table-v2>
+    </mat-tab>
+  </mat-tab-group>
+
+  <app-button-v2 dialog-action variant="primary" (clicked)="openEditProfile()">Edit Profile</app-button-v2>
+
+  <app-button-v2 dialog-action variant="secondary" (clicked)="changePassword()">Change Password</app-button-v2>
+</app-dialog-container>

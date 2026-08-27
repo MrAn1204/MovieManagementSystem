@@ -3,11 +3,13 @@
     <mat-icon>menu</mat-icon>
   </app-button-icon>
 
-  <button type="button" (click)="showUserInfo()" class="flex items-center gap-x-2">
-    <img src="/images/user-solid-full.svg" alt="user_pfp" class="h-10 border rounded-full" />
-    <div class="text-left">
-      <p class="font-bold">{{ fullname }}</p>
-      <p class="text-sm">{{ email }}</p>
+  <app-button-v2 (clicked)="displayProfile()">
+    <div class="flex items-center p-2 gap-x-2">
+      <img src="/images/user-solid-full.svg" alt="user_pfp" class="h-10 border rounded-full" />
+      <div class="text-left">
+        <p class="font-bold">{{ fullname }}</p>
+        <p class="text-sm">{{ email }}</p>
+      </div>
     </div>
-  </button>
+  </app-button-v2>
 </mat-toolbar>
