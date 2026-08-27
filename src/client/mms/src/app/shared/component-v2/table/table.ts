@@ -6,7 +6,7 @@ import { FormatCellPipe } from '../../pipe/format-cell/format-cell-pipe';
 import { MatCheckboxModule } from '@angular/material/checkbox';
 import { SelectionModel } from '@angular/cdk/collections';
 import { RoleConfigModel } from '../../model/role-config.model';
-import { MenuItem, Menu, COMMON_MENU_ITEMS } from '../menu/menu';
+import { MenuItem, Menu } from '../menu/menu';
 import { MatMenuModule } from "@angular/material/menu";
 import { MatIcon } from "@angular/material/icon";
 import { MatButtonModule } from "@angular/material/button";
@@ -26,15 +26,9 @@ export class TableV2<T extends BaseEntityModel> implements OnInit, OnChanges {
 
   columnsToDisplay = computed(() => ['select', ...this.columns().map(col => col.key as string), 'menu']);
 
-  tableMenuItems = input<MenuItem[]>([
-    COMMON_MENU_ITEMS.ADD,
-  ]);
+  tableMenuItems = input<MenuItem[]>([]);
 
-  rowMenuItems = input<MenuItem[]>([
-    COMMON_MENU_ITEMS.VIEW,
-    COMMON_MENU_ITEMS.EDIT,
-    COMMON_MENU_ITEMS.DELETE,
-  ]);
+  rowMenuItems = input<MenuItem[]>([]);
 
   selectItem = output<T[]>();
 

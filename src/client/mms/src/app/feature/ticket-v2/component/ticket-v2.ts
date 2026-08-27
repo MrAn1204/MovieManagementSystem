@@ -14,7 +14,7 @@ import { SearchableFeatureV2 } from '../../../shared/component-v2/feature/search
 import { EntityService } from '../../../service/entity.service';
 import { TicketDialogService } from '../../../service/dialog-v2/ticket/ticket-dialog.service';
 import { EntityDialogServiceV2 } from '../../../service/dialog-v2/entity-dialog.service';
-import { COMMON_MENU_ITEMS, MenuItem } from '../../../shared/component-v2/menu/menu';
+import { MenuItem } from '../../../shared/component-v2/menu/menu';
 import { InvoiceDialogService } from '../../../service/dialog-v2/invoice/invoice-dialog.service';
 
 @Component({
@@ -54,10 +54,12 @@ export class TicketV2 extends SearchableFeatureV2<TicketModel> {
 
   selectedItems = signal<TicketModel[]>([]);
 
-  tableMenuItems: MenuItem[] = [
-    COMMON_MENU_ITEMS.ADD,
-    { label: 'Create Invoice', icon: 'receipt', action: 'create_invoice', isDisabled: () => !this.validateSelected() },
-  ]
+  override get tableMenuItems(): MenuItem[] {
+    return [
+      ...super.tableMenuItems,
+      { label: 'Create Invoice', icon: 'receipt', action: 'create_invoice', isDisabled: () => !this.validateSelected() },
+    ];
+  }
 
   onSelect(item: TicketModel[]): void {
     this.selectedItems.set(item);

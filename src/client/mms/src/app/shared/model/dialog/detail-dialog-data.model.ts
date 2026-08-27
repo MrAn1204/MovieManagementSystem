@@ -5,4 +5,6 @@ export interface DetailDialogDataModel<T extends BaseEntityModel> extends Dialog
   openEdit?(): void;
   openDelete?(): void;
   id?: string;
+  hasEdit?: boolean;
+  hasDelete?: boolean;
 }

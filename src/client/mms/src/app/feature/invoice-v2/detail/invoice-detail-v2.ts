@@ -12,6 +12,14 @@ import { InvoiceService } from '../../../service/invoice/invoice.service';
 import { TicketDialogService } from '../../../service/dialog-v2/ticket/ticket-dialog.service';
 import { finalize } from 'rxjs';
 import { TicketService } from '../../../service/ticket/ticket.service';
+import { COMMON_MENU_ITEMS, MenuItem } from '../../../shared/component-v2/menu/menu';
+import { DetailDialogDataModel } from '../../../shared/model/dialog/detail-dialog-data.model';
+import { InvoiceDetailModel } from '../../../model/invoice/invoice-detail.model';
+
+export interface InvoiceDetailDialogDataModel extends DetailDialogDataModel<InvoiceDetailModel> {
+  canEditTicket?: boolean;
+  canDeleteTicket?: boolean;
+}
 
 @Component({
   selector: 'app-invoice-detail-v2',
@@ -20,7 +28,9 @@ import { TicketService } from '../../../service/ticket/ticket.service';
   styleUrl: './invoice-detail-v2.css',
 })
 export class InvoiceDetailV2 extends DetailDialogV2<InvoiceModel> {
-  protected override entityService: DetailEntityService<InvoiceModel> = inject(InvoiceService);
+  protected override entityService: DetailEntityService<InvoiceDetailModel> = inject(InvoiceService);
+
+  private readonly invoiceData = this.data as InvoiceDetailDialogDataModel;
 
   private readonly ticketService = inject(TicketService);
   private readonly ticketDialog = inject(TicketDialogService);
@@ -30,6 +40,22 @@ export class InvoiceDetailV2 extends DetailDialogV2<InvoiceModel> {
     { key: 'movie', label: 'Movie', type: 'id-name' },
     { key: 'price', label: 'Price', type: 'number' },
   ];
+
+  protected get ticketRowMenuItems(): MenuItem[] {
+    const items = [
+      COMMON_MENU_ITEMS.VIEW,
+    ];
+
+    if (this.invoiceData.canEditTicket ?? true) {
+      items.push(COMMON_MENU_ITEMS.EDIT);
+    }
+
+    if (this.invoiceData.canDeleteTicket ?? true) {
+      items.push(COMMON_MENU_ITEMS.DELETE);
+    }
+
+    return items;
+  }
 
   handleTicketAction(event: TableMenuOutput) {
     const item = event.item;
@@ -44,7 +70,10 @@ export class InvoiceDetailV2 extends DetailDialogV2<InvoiceModel> {
     let dialog;
 
     if (action === 'view') {
-      dialog = this.ticketDialog.displayInfo(item.id);
+      dialog = this.ticketDialog.displayInfo(item.id, {
+        hasEdit: this.invoiceData.canEditTicket ?? true,
+        hasDelete: this.invoiceData.canDeleteTicket ?? true
+      });
     } else if (action === 'edit') {
       dialog = this.ticketDialog.displayEdit(item.id);
     } else if (action === 'delete') {

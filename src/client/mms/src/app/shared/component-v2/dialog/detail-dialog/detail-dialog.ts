@@ -31,6 +31,14 @@ export abstract class DetailDialogV2<T extends BaseEntityModel> extends BaseDial
     return undefined;
   }
 
+  get hasEdit(): boolean {
+    return this.data.hasEdit ?? true;
+  }
+
+  get hasDelete(): boolean {
+    return this.data.hasDelete ?? true;
+  }
+
   ngOnInit(): void {
     this.loadItem();
   }
@@ -51,9 +59,5 @@ export abstract class DetailDialogV2<T extends BaseEntityModel> extends BaseDial
 
   openDelete(): void {
     this.onClose('delete');
-  }
-
-  onRefresh(): void {
-    this.onClose('refresh');
   }
 }

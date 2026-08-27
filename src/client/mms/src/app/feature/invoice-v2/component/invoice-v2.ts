@@ -8,7 +8,6 @@ import { getRoleConfig } from '../../../shared/config/role-config';
 import { TableMenuOutput, TableV2 } from "../../../shared/component-v2/table/table";
 import { TableColumnModel } from '../../../shared/model/table-column.model';
 import { InvoiceService } from '../../../service/invoice/invoice.service';
-import { UserSummaryModel } from '../../../model/user/user-summary.model';
 import { EntityService } from '../../../service/entity.service';
 import { InvoiceDialogService } from '../../../service/dialog-v2/invoice/invoice-dialog.service';
 import { EntityDialogServiceV2 } from '../../../service/dialog-v2/entity-dialog.service';
@@ -27,7 +26,6 @@ export class InvoiceV2 extends TableFeature<InvoiceModel> {
   override roleConfig: RoleConfigModel = getRoleConfig(this.entityName);
 
   data = input.required<InvoiceModel[]>();
-  user = input.required<UserSummaryModel>();
 
   viewInvoice = output<boolean>();
 

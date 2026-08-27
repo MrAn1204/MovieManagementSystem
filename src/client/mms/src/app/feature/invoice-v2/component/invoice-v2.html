@@ -1,5 +1,9 @@
 <div class="flex flex-col max-h-48">
-  <app-table-v2 [columns]="columns" [data]="data()" [roleConfig]="roleConfig"
-    (menuAction)="onMenuAction($event)" [tableMenuItems]="[]">
+  <app-table-v2
+    [columns]="columns"
+    [data]="data()"
+    [roleConfig]="roleConfig"
+    (menuAction)="onMenuAction($event)"
+    [rowMenuItems]="rowMenuItems">
   </app-table-v2>
 </div>

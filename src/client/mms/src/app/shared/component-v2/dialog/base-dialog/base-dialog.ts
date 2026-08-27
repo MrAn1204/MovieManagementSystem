@@ -27,4 +27,8 @@ export abstract class BaseDialogV2 {
     this.dialogRef.removePanelClass('hidden!');
     this.dialogRef.removePanelClass('pointer-events-none!');
   }
+
+  onRefresh(): void {
+    this.onClose('refresh');
+  }
 }
