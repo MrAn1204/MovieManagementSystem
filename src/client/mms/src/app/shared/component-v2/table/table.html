@@ -1,21 +1,23 @@
 <table mat-table [dataSource]="data()">
   <!-- Checkbox column -->
-  <ng-container matColumnDef="select" sticky>
-    <th mat-header-cell *matHeaderCellDef>
-      <mat-checkbox
-        (change)="selectAll()"
-        [checked]="selectedItems.hasValue() && isAllSelected()"
-        [indeterminate]="selectedItems.hasValue() && !isAllSelected()">
-      </mat-checkbox>
-    </th>
+  @if (checkbox()) {
+    <ng-container matColumnDef="select" sticky>
+      <th mat-header-cell *matHeaderCellDef class="p-0!">
+        <mat-checkbox
+          (change)="selectAll()"
+          [checked]="selectedItems.hasValue() && isAllSelected()"
+          [indeterminate]="selectedItems.hasValue() && !isAllSelected()">
+        </mat-checkbox>
+      </th>
 
-    <td mat-cell *matCellDef="let row">
-      <mat-checkbox
-        (change)="selectedItems.toggle(row)"
-        [checked]="selectedItems.isSelected(row)">
-      </mat-checkbox>
-    </td>
-  </ng-container>
+      <td mat-cell *matCellDef="let row" class="p-0!">
+        <mat-checkbox
+          (change)="selectedItems.toggle(row)"
+          [checked]="selectedItems.isSelected(row)">
+        </mat-checkbox>
+      </td>
+    </ng-container>
+  }
 
   <!-- Data columns -->
   @for (col of columns(); track col) {
@@ -30,7 +32,7 @@
   </tr>
 
   <ng-container matColumnDef="menu" stickyEnd>
-    <th mat-header-cell *matHeaderCellDef>
+    <th mat-header-cell *matHeaderCellDef class="p-0!">
       @if (tableMenuItems().length > 0) {
         <button mat-icon-button [matMenuTriggerFor]="tableMenu.menu()!">
           <mat-icon>more_vert</mat-icon>
@@ -39,7 +41,7 @@
       }
     </th>
 
-    <td mat-cell *matCellDef="let item">
+    <td mat-cell *matCellDef="let item" class="p-0!">
       @if (rowMenuItems().length > 0) {
         <button mat-icon-button [matMenuTriggerFor]="rowMenu.menu()!">
           <mat-icon>more_vert</mat-icon>

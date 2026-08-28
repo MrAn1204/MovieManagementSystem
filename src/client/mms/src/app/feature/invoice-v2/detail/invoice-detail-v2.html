@@ -30,7 +30,8 @@
         [columns]="ticketColumns"
         [data]="model?.tickets ?? []"
         [rowMenuItems]="ticketRowMenuItems"
-        (menuAction)="handleTicketAction($event)">
+        (menuAction)="handleTicketAction($event)"
+        [checkbox]="false">
       </app-table-v2>
     </div>
   </div>

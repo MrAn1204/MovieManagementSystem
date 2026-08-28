@@ -20,17 +20,22 @@ import { MatButtonModule } from "@angular/material/button";
 export class TableV2<T extends BaseEntityModel> implements OnInit, OnChanges {
   data = input.required<T[]>();
   columns = input.required<TableColumnModel<T>[]>();
+
   roleConfig = input<RoleConfigModel>();
+  tableMenuItems = input<MenuItem[]>([]);
+  rowMenuItems = input<MenuItem[]>([]);
+  checkbox = input<boolean>(true);
 
   menuAction = output<TableMenuOutput>();
-
-  columnsToDisplay = computed(() => ['select', ...this.columns().map(col => col.key as string), 'menu']);
-
-  tableMenuItems = input<MenuItem[]>([]);
-
-  rowMenuItems = input<MenuItem[]>([]);
-
   selectItem = output<T[]>();
+
+  columnsToDisplay = computed(() => {
+    const cols = [...this.columns().map(col => col.key as string), 'menu'];
+    if (this.checkbox()) {
+      cols.unshift('select');
+    }
+    return cols;
+  });
 
   protected selectedItems: SelectionModel<T> = new SelectionModel<T>(true, []);
 
