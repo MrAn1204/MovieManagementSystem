@@ -1,0 +1,41 @@
+<app-add-edit-container title="Edit Profile" (submitForm)="onSubmit()" (resetForm)="onReset()" (closeDialog)="onClose()">
+  <div dialog-content class="form-grid">
+    <app-form-input idName="fullname"
+      type="text" label="Full Name"
+      [control]="form.controls.fullname"
+      [required]="true">
+    </app-form-input>
+
+    <app-form-select idName="gender"
+      label="Gender" [options]="genders"
+      [control]="form.controls.gender">
+    </app-form-select>
+
+    <app-form-input idName="dateOfBirth"
+      type="date" label="Date of Birth"
+      [control]="form.controls.dateOfBirth"
+      [required]="true">
+    </app-form-input>
+
+    <app-form-input idName="email"
+      type="email" label="Email"
+      [control]="form.controls.email">
+    </app-form-input>
+
+    <app-form-input idName="phoneNumber"
+      type="text" label="Phone Number"
+      [control]="form.controls.phoneNumber"
+      [required]="true">
+    </app-form-input>
+
+    <app-form-input idName="citizenIdNumber"
+      type="text" label="Citizen ID Number"
+      [control]="form.controls.citizenIdNumber">
+    </app-form-input>
+
+    <app-form-textarea class="sm:col-span-2" idName="address"
+      label="Address"
+      [control]="form.controls.address">
+    </app-form-textarea>
+  </div>
+</app-add-edit-container>
