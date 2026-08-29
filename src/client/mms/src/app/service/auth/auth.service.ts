@@ -102,6 +102,7 @@ export class AuthService {
   }
 
   resetPassword(request: PasswordResetFormModel): Observable<void> {
-    return this.http.post<void>(`${this.baseUrl}/reset-password`, request);
+    return this.http.post<void>(`${this.baseUrl}/reset-password`, request)
+      .pipe(tap(() => this.logout()));
   }
 }

@@ -23,7 +23,7 @@ export class HeaderV2 {
 
   constructor(
     private readonly authService: AuthService,
-    private readonly profileDialog: ProfileDialogService
+    private readonly profileDialog: ProfileDialogService,
   ) {
     this.fullname = this.authService.getFullname();
     this.email = this.authService.getEmail();
@@ -39,6 +39,8 @@ export class HeaderV2 {
         this.displayProfile();
       } else if (res === 'edit') {
         this.displayEditProfile();
+      } else if (res === 'password') {
+        this.displayChangePassword();
       }
     });
   }
@@ -49,5 +51,15 @@ export class HeaderV2 {
       'Close',
       { duration: 5000 }
     ));
+  }
+
+  displayChangePassword(): void {
+    this.profileDialog.displayChangePassword().subscribe((res) => res && this.authService.forgotPassword(this.email)
+      .subscribe(() => this.snackbar.open(
+        'A link has been sent to your email to change your password. Please check your inbox.',
+        'Close',
+        { duration: 5000 }
+      ))
+    );
   }
 }
