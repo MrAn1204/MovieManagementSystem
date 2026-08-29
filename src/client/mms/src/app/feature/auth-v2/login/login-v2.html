@@ -1,0 +1,33 @@
+<div class="flex flex-col justify-center items-center h-screen bg-space-black/50">
+  <form [formGroup]="form" (submit)="onSubmit()"
+    class="dialog-container max-w-xs">
+    <h1 class="font-bold text-2xl mb-8">User Login</h1>
+
+    <div class="flex flex-col gap-y-4 items-center">
+      <app-form-input
+        [control]="usernameControl" type="text" idName="username" label="Username">
+      </app-form-input>
+
+      <app-form-input
+        [control]="passwordControl" type="password" idName="password" label="Password">
+      </app-form-input>
+    </div>
+
+    <div class="mt-4 w-full flex flex-col gap-y-4">
+      <a routerLink="/forgot-password" class="text-sm text-steel-blue-500 hover:underline hover:cursor-pointer italic text-right">Forgot Password?</a>
+
+      <div class="flex flex-col">
+        <button mat-raised-button color="primary" type="submit">Login</button>
+        @if (form.errors?.['loginFailed']) {
+          <mat-error>{{ form.errors!['loginFailed'] }}</mat-error>
+        }
+      </div>
+
+      <hr class="border-platinum-300">
+
+      <button mat-stroked-button type="button" (click)="navigateToRegister()">
+        Create Account
+      </button>
+    </div>
+  </form>
+</div>

@@ -17,11 +17,16 @@ import { ResetPassword } from './feature/auth/reset-password/reset-password';
 import { passwordResetGuard } from './guard/password/password-reset-guard';
 import { MainLayoutV2 } from './shared/main-layout-v2/main-layout-v2';
 import { MovieV2 } from './feature/movie-v2/component/movie';
+import { HomeV2 } from './feature/home-v2/home-v2';
 import { ScheduleV2 } from './feature/schedule-v2/component/schedule-v2';
 import { RoomV2 } from './feature/room-v2/component/room-v2';
 import { PromotionV2 } from './feature/promotion-v2/component/promotion-v2';
 import { TicketV2 } from './feature/ticket-v2/component/ticket-v2';
 import { UserV2 } from './feature/user-v2/component/user-v2';
+import { LoginV2 } from './feature/auth-v2/login/login-v2';
+import { RegisterV2 } from './feature/auth-v2/register/register-v2';
+import { ForgotPasswordV2 } from './feature/auth-v2/forgot-password/forgot-password-v2';
+import { ResetPasswordV2 } from './feature/auth-v2/reset-password/reset-password-v2';
 
 export const routes: Routes = [
   {
@@ -42,6 +47,27 @@ export const routes: Routes = [
   {
     path: 'reset-password',
     component: ResetPassword,
+    title: 'Reset Password',
+    canActivate: [passwordResetGuard],
+  },
+  {
+    path: 'v2/login',
+    component: LoginV2,
+    title: 'Login',
+  },
+  {
+    path: 'v2/register',
+    component: RegisterV2,
+    title: 'Register',
+  },
+  {
+    path: 'v2/forgot-password',
+    component: ForgotPasswordV2,
+    title: 'Forgot Password',
+  },
+  {
+    path: 'v2/reset-password',
+    component: ResetPasswordV2,
     title: 'Reset Password',
     canActivate: [passwordResetGuard],
   },
@@ -92,6 +118,11 @@ export const routes: Routes = [
     component: MainLayoutV2,
     canActivate: [authGuard],
     children: [
+      {
+        path: '',
+        component: HomeV2,
+        title: 'Home',
+      },
       {
         path: 'movie',
         component: MovieV2,

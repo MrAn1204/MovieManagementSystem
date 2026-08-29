@@ -1,0 +1,61 @@
+<div class="flex flex-col justify-center items-center h-screen bg-space-black/50">
+  <form [formGroup]="form" (submit)="onSubmit()"
+    class="dialog-container max-w-2xl">
+
+    <h1 class="font-bold text-2xl mb-8">Create Account</h1>
+
+    <div class="w-full gap-4 grid grid-cols-1 sm:grid-cols-2">
+      <app-form-input class="sm:col-span-2"
+        [control]="usernameControl" type="text" idName="username" label="Username">
+      </app-form-input>
+
+      <app-form-input class="sm:col-span-2"
+        [control]="passwordControl" type="password" idName="password" label="Password">
+      </app-form-input>
+
+      <app-form-input class="sm:col-span-2"
+        [control]="confirmPasswordControl" type="password" idName="confirmPassword" label="Confirm Password">
+      </app-form-input>
+
+      <hr class="border-platinum-300 sm:col-span-2">
+
+      <app-form-input
+        [control]="fullnameControl" type="text" idName="fullname" label="Full Name">
+      </app-form-input>
+
+      <app-form-select
+        [control]="genderControl" idName="gender" label="Gender" [options]="genders">
+      </app-form-select>
+
+      <app-form-input
+        [control]="dateOfBirthControl" type="date" idName="dateOfBirth" label="Date of Birth">
+      </app-form-input>
+
+      <app-form-input
+        [control]="phoneNumberControl" type="tel" idName="phoneNumber" label="Phone Number">
+      </app-form-input>
+
+      <app-form-input class="sm:col-span-2"
+        [control]="emailControl" type="email" idName="email" label="Email">
+      </app-form-input>
+    </div>
+
+    <div class="mt-4 w-full flex flex-col gap-y-4">
+      <div class="flex flex-col w-full">
+        <button mat-raised-button color="primary" type="submit">Register</button>
+        @if (form.errors?.['serverError']) {
+          <mat-error>{{ form.errors!['serverError'] }}</mat-error>
+        }
+        @if (form.errors?.['passwordMismatch']) {
+          <mat-error>{{ form.errors!['passwordMismatch'] }}</mat-error>
+        }
+      </div>
+
+      <hr class="border-platinum-300">
+
+      <button mat-stroked-button type="button" (click)="navigateToLogin()">
+        Go to Login
+      </button>
+    </div>
+  </form>
+</div>

@@ -1,0 +1,79 @@
+<div class="flex flex-nowrap gap-2 md:gap-4 py-4 overflow-x-auto w-full
+      *:flex *:border *:md:p-4 *:p-2 *:min-w-48 *:flex-1 *:overflow-hidden *:justify-center *:items-center
+      *:bg-white *:rounded-xl *:shadow-md *:hover:bg-blue-50
+      *:transition *:duration-300 *:ease-in-out *:h-full">
+
+  <a routerLink="/movie" class="text-steel-blue hover:text-steel-blue-600">
+    <i class="fa-film fa-solid text-3xl md:text-5xl"></i>
+    <div class="flex md:flex-col px-2 md:px-4 not-md:space-x-2">
+      <p class="font-bold text-3xl">{{ summary()?.movieCount ?? 0 }}</p>
+      <p class="font-semibold text-gray-600 not-md:self-center">Movies</p>
+    </div>
+  </a>
+
+  @if (isVisible()) {
+    <a routerLink="/ticket" class="text-bright-fern hover:text-bright-fern-600">
+      <i class="fa-ticket fa-solid text-3xl md:text-5xl"></i>
+      <div class="flex md:flex-col px-2 md:px-4 not-md:space-x-2">
+        <p class="font-bold text-3xl">{{ summary()?.ticketCount ?? 0 }}</p>
+        <p class="font-semibold text-gray-600 not-md:self-center">Tickets</p>
+      </div>
+    </a>
+  }
+
+  <a routerLink="/room" class="text-carrot-orange hover:text-carrot-orange-600">
+    <i class="fa-door-closed fa-solid text-3xl md:text-5xl"></i>
+    <div class="flex md:flex-col px-2 md:px-4 not-md:space-x-2">
+      <p class="font-bold text-3xl">{{ summary()?.roomCount ?? 0 }}</p>
+      <p class="font-semibold text-gray-600 not-md:self-center">Rooms</p>
+    </div>
+  </a>
+
+  <a routerLink="/schedule" class="text-vermilion hover:text-vermilion-600">
+    <i class="fa-calendar fa-solid text-3xl md:text-5xl"></i>
+    <div class="flex md:flex-col px-2 md:px-4 not-md:space-x-2">
+      <p class="font-bold text-3xl">{{ summary()?.scheduleCount ?? 0 }}</p>
+      <p class="font-semibold text-gray-600 not-md:self-center">Schedules</p>
+    </div>
+  </a>
+
+  <a routerLink="/promotion" class="text-lavender-purple hover:text-lavender-purple-600">
+    <i class="fa-percent fa-solid text-3xl md:text-5xl"></i>
+    <div class="flex md:flex-col px-2 md:px-4 not-md:space-x-2">
+      <p class="font-bold text-3xl">{{ summary()?.promotionCount ?? 0 }}</p>
+      <p class="font-semibold text-gray-600 not-md:self-center">Promotions</p>
+    </div>
+  </a>
+
+  @if (isVisible()) {
+    <a routerLink="/user" class="text-platinum hover:text-platinum-600">
+      <i class="fa-users fa-solid text-3xl md:text-5xl"></i>
+      <div class="flex md:flex-col px-2 md:px-4 not-md:space-x-2">
+        <p class="font-bold text-3xl">{{ summary()?.userCount ?? 0 }}</p>
+        <p class="font-semibold text-gray-600 not-md:self-center">Users</p>
+      </div>
+    </a>
+  }
+</div>
+
+<div class="grid grid-cols-1 md:grid-cols-2 py-2 gap-4 overflow-auto flex-1 min-h-0">
+  @if (isVisible()) {
+    <div class="row-span-2 flex flex-col min-w-0">
+      <h2 class="text-2xl font-bold mb-4">Tickets Sold</h2>
+      <c-chart class="w-full h-full min-h-60" [data]="ticketSold()" [options]="chartOptions" type="bar"
+        customTooltips="false"></c-chart>
+    </div>
+  }
+
+  <div class="flex flex-col">
+    <h2 class="text-2xl font-bold mb-4">Today's Schedules</h2>
+    <app-table-v2 [columns]="scheduleColumns" [data]="todaySchedules()" [checkbox]="false">
+    </app-table-v2>
+  </div>
+
+  <div class="flex flex-col">
+    <h2 class="text-2xl font-bold mb-4">Upcoming Movies</h2>
+    <app-table-v2 [columns]="movieColumns" [data]="upcomingMovies()" [checkbox]="false">
+    </app-table-v2>
+  </div>
+</div>
