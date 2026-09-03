@@ -42,6 +42,7 @@
     "flowbite": "^4.0.1",
     "jwt-decode": "^4.0.0",
     "lodash-es": "^4.17.21",
+    "ng2-charts": "^10.0.0",
     "ngx-spinner": "^21.1.0",
     "postcss": "^8.5.6",
     "rxjs": "~7.8.0",

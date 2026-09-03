@@ -1,7 +1,6 @@
 import { Component, computed, OnInit, signal } from '@angular/core';
-import { ChartjsComponent } from "@coreui/angular-chartjs";
 import { TableV2 } from "../../shared/component-v2/table/table";
-import { ChartData, ChartOptions } from 'chart.js';
+import { ChartData } from 'chart.js';
 import { StatisticsSummaryModel } from '../../model/statistics/statistics-summary.model';
 import { TodayScheduleStatisticsModel } from '../../model/statistics/today-schedule-statistics';
 import { UpcomingMovieStatisticsModel } from '../../model/statistics/upcoming-movie-statistics.model';
@@ -12,10 +11,11 @@ import { AuthService } from '../../service/auth/auth.service';
 import { RoleName } from '../../shared/model/role-config.model';
 import { MovieDialogService } from '../../service/dialog-v2/movie/movie-dialog.service';
 import { ScheduleDialogService } from '../../service/dialog-v2/schedule/schedule-dialog.service';
+import { BaseChartDirective } from 'ng2-charts';
 
 @Component({
   selector: 'app-dashboard-v2',
-  imports: [ChartjsComponent, TableV2, RouterLink],
+  imports: [TableV2, RouterLink, BaseChartDirective],
   templateUrl: './dashboard-v2.html',
   styleUrl: './dashboard-v2.css',
 })
@@ -44,11 +44,6 @@ export class DashboardV2 implements OnInit {
       datasets: [{ label: 'Tickets Sold', data }]
     };
   });
-
-  chartOptions: ChartOptions = {
-    responsive: true,
-    plugins: { legend: { display: false } }
-  };
 
   constructor(
     private readonly authService: AuthService,

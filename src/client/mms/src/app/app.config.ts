@@ -10,6 +10,7 @@ import { OVERLAY_DEFAULT_CONFIG } from '@angular/cdk/overlay';
 import { MessageService } from './service/message.service';
 import { ConstraintService } from './service/constraint.service';
 import { AuthService } from './service/auth/auth.service';
+import { provideCharts, withDefaultRegisterables } from 'ng2-charts';
 
 export const appConfig: ApplicationConfig = {
   providers: [
@@ -17,7 +18,7 @@ export const appConfig: ApplicationConfig = {
     provideRouter(routes), provideClientHydration(withEventReplay()),
     provideHttpClient(withFetch(), withInterceptors([authInterceptor, errorInterceptor])),
     { provide: OVERLAY_DEFAULT_CONFIG, useValue: { usePopover: false } },
-    provideAppInitializer(async () => await initializeApp())
+    provideAppInitializer(async () => await initializeApp()), provideCharts(withDefaultRegisterables())
   ]
 };
 
