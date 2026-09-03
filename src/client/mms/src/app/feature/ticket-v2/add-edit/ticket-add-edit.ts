@@ -1,4 +1,4 @@
-import { Component, computed, inject, signal } from '@angular/core';
+import { Component, inject, signal } from '@angular/core';
 import { AddEditDialog } from '../../../shared/component-v2/dialog/add-edit-dialog/add-edit-dialog';
 import { TicketDetailModel } from '../../../model/ticket/ticket-detail.model';
 import { FormOptionModel } from '../../../shared/model/form-option.model';
@@ -10,7 +10,7 @@ import { SeatTypeModel } from '../../../model/seat/seat-type.model';
 import { ConstraintService } from '../../../service/constraint.service';
 import { SeatMap } from "../../seat/seat-map/seat-map";
 import { ScheduleDetailModel } from '../../../model/schedule/schedule-detail.model';
-import { filter } from 'rxjs';
+import { filter, switchMap } from 'rxjs';
 import { CustomValidators } from '../../../shared/util/custom-validators';
 import { DialogFormDataModel } from '../../../shared/model/dialog/dialog-form-data.model';
 import { AddEditContainer } from "../../../shared/component-v2/dialog/add-edit-container/add-edit-container";
@@ -51,23 +51,10 @@ export class TicketAddEdit extends AddEditDialog<TicketDetailModel> {
   schedules = signal<FormOptionModel[]>([]);
   promotions = signal<FormOptionModel[]>([]);
   users = signal<FormOptionModel[]>([]);
+  seats = signal<FormOptionModel[]>([]);
   seatTypes = signal<SeatTypeModel>({});
+
   selectedSchedule = signal<ScheduleDetailModel | null>(null);
-
-  seats = computed<FormOptionModel[]>(() => {
-    const schedule = this.selectedSchedule();
-
-    if (!schedule) {
-      return [];
-    }
-
-    const availableSeats = schedule.seats.filter((seat) => !seat.reserved);
-
-    return availableSeats.map((seat) => ({
-      label: `${seat.name} (${seat.seatType}) - ${this.calculatePrice(seat.seatType)}`,
-      value: seat.id,
-    }));
-  });
 
   private readonly basePrice: number;
 
@@ -88,13 +75,20 @@ export class TicketAddEdit extends AddEditDialog<TicketDetailModel> {
 
     this.loadOptions();
 
-    if (this.ticketData.scheduleId) {
-      this.loadMap(this.ticketData.scheduleId);
-    }
+    this.form.controls.scheduleId.valueChanges
+      .pipe(
+        filter(scheduleId => !!scheduleId),
+        switchMap(scheduleId => this.scheduleService.getById(scheduleId))
+      ).subscribe((schedule) => {
+        this.selectedSchedule.set(schedule);
 
-    this.form.get('scheduleId')?.valueChanges
-      .pipe(filter(scheduleId => !!scheduleId))
-      .subscribe(scheduleId => this.loadMap(scheduleId));
+        schedule.seats.sort((a, b) => a.name.localeCompare(b.name));
+
+        this.seats.set(schedule.seats.map((seat) => ({
+          label: `${seat.name} (${seat.seatType}) - ${this.calculatePrice(seat.seatType)}`,
+          value: seat.id
+        })));
+      });
   }
 
   override loadOptions(): void {
@@ -179,11 +173,6 @@ export class TicketAddEdit extends AddEditDialog<TicketDetailModel> {
     this.seatService.getSeatTypes().subscribe((seatTypes) => {
       this.seatTypes.set(seatTypes);
     });
-  }
-
-  private loadMap(scheduleId: string): void {
-    this.scheduleService.getById(scheduleId)
-      .subscribe((res) => this.selectedSchedule.set(res));
   }
 
   private calculatePrice(seatType: string): number {
