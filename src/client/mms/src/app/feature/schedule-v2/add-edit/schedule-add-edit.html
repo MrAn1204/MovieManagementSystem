@@ -1,6 +1,6 @@
 <app-add-edit-container [title]="title" (submitForm)="onSubmit()" (resetForm)="onReset()" (closeDialog)="onClose()">
   <div dialog-content class="form-grid">
-    <app-form-input idName="showTime"
+    <app-form-input idName="showTime" class="sm:col-span-2"
       type="datetime-local" label="Show Time"
       [control]="form.controls.showTime">
     </app-form-input>
