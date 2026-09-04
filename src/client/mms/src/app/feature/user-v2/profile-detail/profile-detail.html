@@ -45,7 +45,8 @@
         [data]="user()?.invoices ?? []"
         [columns]="invoiceColumns"
         (menuAction)="handleInvoiceMenuAction($event)"
-        [rowMenuItems]="rowMenuItems">
+        [rowMenuItems]="rowMenuItems"
+        [checkbox]="false">
       </app-table-v2>
     </mat-tab>
   </mat-tab-group>

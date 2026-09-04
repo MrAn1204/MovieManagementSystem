@@ -44,7 +44,8 @@
       [data]="model?.schedules ?? []"
       [tableMenuItems]="[]"
       [rowMenuItems]="scheduleRowMenu"
-      (menuAction)="handleMenuAction($event)">
+      (menuAction)="handleMenuAction($event)"
+      [checkbox]="false">
     </app-table-v2>
   </div>
 

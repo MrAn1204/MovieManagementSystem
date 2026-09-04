@@ -3,7 +3,7 @@
       *:bg-white *:rounded-xl *:shadow-md *:hover:bg-blue-50
       *:transition *:duration-300 *:ease-in-out *:h-full">
 
-  <a routerLink="/movie" class="text-steel-blue hover:text-steel-blue-600">
+  <a routerLink="/v2/movie" class="text-steel-blue hover:text-steel-blue-600">
     <i class="fa-film fa-solid text-3xl md:text-5xl"></i>
     <div class="flex md:flex-col px-2 md:px-4 not-md:space-x-2">
       <p class="font-bold text-3xl">{{ summary()?.movieCount ?? 0 }}</p>
@@ -12,7 +12,7 @@
   </a>
 
   @if (isVisible()) {
-    <a routerLink="/ticket" class="text-bright-fern hover:text-bright-fern-600">
+    <a routerLink="/v2/ticket" class="text-bright-fern hover:text-bright-fern-600">
       <i class="fa-ticket fa-solid text-3xl md:text-5xl"></i>
       <div class="flex md:flex-col px-2 md:px-4 not-md:space-x-2">
         <p class="font-bold text-3xl">{{ summary()?.ticketCount ?? 0 }}</p>
@@ -21,7 +21,7 @@
     </a>
   }
 
-  <a routerLink="/room" class="text-carrot-orange hover:text-carrot-orange-600">
+  <a routerLink="/v2/room" class="text-carrot-orange hover:text-carrot-orange-600">
     <i class="fa-door-closed fa-solid text-3xl md:text-5xl"></i>
     <div class="flex md:flex-col px-2 md:px-4 not-md:space-x-2">
       <p class="font-bold text-3xl">{{ summary()?.roomCount ?? 0 }}</p>
@@ -29,7 +29,7 @@
     </div>
   </a>
 
-  <a routerLink="/schedule" class="text-vermilion hover:text-vermilion-600">
+  <a routerLink="/v2/schedule" class="text-vermilion hover:text-vermilion-600">
     <i class="fa-calendar fa-solid text-3xl md:text-5xl"></i>
     <div class="flex md:flex-col px-2 md:px-4 not-md:space-x-2">
       <p class="font-bold text-3xl">{{ summary()?.scheduleCount ?? 0 }}</p>
@@ -37,7 +37,7 @@
     </div>
   </a>
 
-  <a routerLink="/promotion" class="text-lavender-purple hover:text-lavender-purple-600">
+  <a routerLink="/v2/promotion" class="text-lavender-purple hover:text-lavender-purple-600">
     <i class="fa-percent fa-solid text-3xl md:text-5xl"></i>
     <div class="flex md:flex-col px-2 md:px-4 not-md:space-x-2">
       <p class="font-bold text-3xl">{{ summary()?.promotionCount ?? 0 }}</p>
@@ -46,7 +46,7 @@
   </a>
 
   @if (isVisible()) {
-    <a routerLink="/user" class="text-platinum hover:text-platinum-600">
+    <a routerLink="/v2/user" class="text-platinum hover:text-platinum-600">
       <i class="fa-users fa-solid text-3xl md:text-5xl"></i>
       <div class="flex md:flex-col px-2 md:px-4 not-md:space-x-2">
         <p class="font-bold text-3xl">{{ summary()?.userCount ?? 0 }}</p>
