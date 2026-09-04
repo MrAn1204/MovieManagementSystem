@@ -74,21 +74,6 @@ export class TicketAddEdit extends AddEditDialog<TicketDetailModel> {
     this.setupScheduleField();
 
     this.loadOptions();
-
-    this.form.controls.scheduleId.valueChanges
-      .pipe(
-        filter(scheduleId => !!scheduleId),
-        switchMap(scheduleId => this.scheduleService.getById(scheduleId))
-      ).subscribe((schedule) => {
-        this.selectedSchedule.set(schedule);
-
-        schedule.seats.sort((a, b) => a.name.localeCompare(b.name));
-
-        this.seats.set(schedule.seats.map((seat) => ({
-          label: `${seat.name} (${seat.seatType}) - ${this.calculatePrice(seat.seatType)}`,
-          value: seat.id
-        })));
-      });
   }
 
   override loadOptions(): void {
@@ -126,11 +111,22 @@ export class TicketAddEdit extends AddEditDialog<TicketDetailModel> {
   }
 
   private setupScheduleField(): void {
-    const scheduleControl = this.form.get('scheduleId');
+    const scheduleControl = this.form.controls.scheduleId;
 
-    if (!scheduleControl) {
-      return;
-    }
+    scheduleControl.valueChanges
+      .pipe(
+        filter(scheduleId => !!scheduleId),
+        switchMap(scheduleId => this.scheduleService.getById(scheduleId))
+      ).subscribe((schedule) => {
+        this.selectedSchedule.set(schedule);
+
+        schedule.seats.sort((a, b) => a.name.localeCompare(b.name));
+
+        this.seats.set(schedule.seats.map((seat) => ({
+          label: `${seat.name} (${seat.seatType}) - ${this.calculatePrice(seat.seatType)}`,
+          value: seat.id
+        })));
+      });
 
     if (this.ticketData.scheduleId) {
       scheduleControl.disable();
