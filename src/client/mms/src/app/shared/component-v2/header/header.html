@@ -3,13 +3,17 @@
     <mat-icon>menu</mat-icon>
   </app-button-icon>
 
-  <app-button-v2 (clicked)="displayProfile()">
-    <div class="flex items-center p-2 gap-x-2">
-      <img src="/images/user-solid-full.svg" alt="user_pfp" class="h-10 border rounded-full" />
-      <div class="text-left">
-        <p class="font-bold">{{ fullname }}</p>
-        <p class="text-sm">{{ email }}</p>
+  <div>
+    <app-button-v2 [matMenuTriggerFor]="accountMenu.menu()!">
+      <div class="flex items-center p-2 gap-x-2">
+        <img src="/images/user-solid-full.svg" alt="user_pfp" class="h-10 border rounded-full" />
+        <div class="text-left">
+          <p class="font-bold">{{ fullname }}</p>
+          <p class="text-sm">{{ email }}</p>
+        </div>
       </div>
-    </div>
-  </app-button-v2>
+    </app-button-v2>
+
+    <app-menu #accountMenu [items]="menu" (action)="handleMenuAction($event)"></app-menu>
+  </div>
 </mat-toolbar>

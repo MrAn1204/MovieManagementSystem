@@ -6,10 +6,12 @@ import { AuthService } from '../../../service/auth/auth.service';
 import { ProfileDialogService } from '../../../service/dialog-v2/profile/profile-dialog.service';
 import { ButtonV2 } from "../button/button";
 import { MatSnackBar } from '@angular/material/snack-bar';
+import { Menu, MenuItem } from "../menu/menu";
+import { MatMenuModule } from "@angular/material/menu";
 
 @Component({
   selector: 'app-header-v2',
-  imports: [MatToolbarModule, MatIconModule, ButtonIcon, ButtonV2],
+  imports: [MatToolbarModule, MatIconModule, ButtonIcon, ButtonV2, Menu, MatMenuModule],
   templateUrl: './header.html',
   styleUrl: './header.css',
 })
@@ -21,6 +23,11 @@ export class HeaderV2 {
 
   private readonly snackbar = inject(MatSnackBar);
 
+  menu: MenuItem[] = [
+    { label: 'Profile', action: 'profile', icon: 'person' },
+    { label: 'Logout', action: 'logout', icon: 'logout' },
+  ];
+
   constructor(
     private readonly authService: AuthService,
     private readonly profileDialog: ProfileDialogService,
@@ -31,6 +38,14 @@ export class HeaderV2 {
 
   onLogout(): void {
     this.authService.logout();
+  }
+
+  handleMenuAction(action: string): void {
+    if (action === 'profile') {
+      this.displayProfile();
+    } else if (action === 'logout') {
+      this.onLogout();
+    }
   }
 
   displayProfile(): void {
