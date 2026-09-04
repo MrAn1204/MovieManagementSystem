@@ -17,7 +17,7 @@ export class TicketDialogService extends EntityDialogServiceV2<TicketModel> {
 
   private readonly authService = inject(AuthService);
 
-  override displayAdd(data?: TicketDialogDataModel): Observable<any> {
+  bookTicket(data?: TicketDialogDataModel): Observable<any> {
     return super.displayAdd({
       ...data,
       userId: this.authService.getId(),

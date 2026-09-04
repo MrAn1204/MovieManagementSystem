@@ -69,7 +69,7 @@ export class MovieDetailV2 extends DetailDialogV2<MovieDetailModel> {
   handleBooking(scheduleId: string): void {
     this.hideSelf();
 
-    this.ticketDialog.displayAdd({ scheduleId: scheduleId })
+    this.ticketDialog.bookTicket({ scheduleId: scheduleId })
       .subscribe(() => this.onRefresh());
   }
 }
