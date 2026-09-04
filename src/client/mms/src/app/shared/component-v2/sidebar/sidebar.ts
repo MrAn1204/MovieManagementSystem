@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, output } from '@angular/core';
 import { Router, RouterLink } from "@angular/router";
 import { RoleName } from '../../model/role-config.model';
 import { AuthService } from '../../../service/auth/auth.service';
@@ -24,6 +24,8 @@ export class SidebarV2 {
 
   fullname: string = '';
   email: string = '';
+
+  pageSelect = output<void>();
 
   constructor(
     private readonly authService: AuthService,
