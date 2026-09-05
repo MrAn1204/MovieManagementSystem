@@ -1,5 +1,9 @@
 @import "../../../../styles.css";
 
+button {
+  @apply w-full;
+}
+
 button.primary {
   @apply bg-steel-blue-500 hover:bg-steel-blue-600 focus:ring-steel-blue;
 }
