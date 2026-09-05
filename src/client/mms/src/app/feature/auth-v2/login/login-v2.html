@@ -1,9 +1,9 @@
 <div class="flex flex-col justify-center items-center h-screen bg-space-black/50">
-  <form [formGroup]="form" (submit)="onSubmit()"
+  <form [formGroup]="form"
     class="dialog-container max-w-xs">
-    <h1 class="font-bold text-2xl mb-8">User Login</h1>
+    <h1 class="font-bold text-2xl mb-4">User Login</h1>
 
-    <div class="flex flex-col gap-y-4 items-center">
+    <div class="flex flex-col gap-y-2 items-center w-full *:w-full">
       <app-form-input
         [control]="usernameControl" type="text" idName="username" label="Username">
       </app-form-input>
@@ -14,10 +14,12 @@
     </div>
 
     <div class="mt-4 w-full flex flex-col gap-y-4">
-      <a routerLink="/forgot-password" class="text-sm text-steel-blue-500 hover:underline hover:cursor-pointer italic text-right">Forgot Password?</a>
+      <a routerLink="/v2/forgot-password" class="text-sm text-steel-blue-500 hover:underline hover:cursor-pointer italic w-fit self-end">
+        Forgot Password?
+      </a>
 
       <div class="flex flex-col">
-        <button mat-raised-button color="primary" type="submit">Login</button>
+        <app-button-v2 (clicked)="onSubmit()" variant="primary">Login</app-button-v2>
         @if (form.errors?.['loginFailed']) {
           <mat-error>{{ form.errors!['loginFailed'] }}</mat-error>
         }
@@ -25,9 +27,9 @@
 
       <hr class="border-platinum-300">
 
-      <button mat-stroked-button type="button" (click)="navigateToRegister()">
+      <app-button-v2 (clicked)="navigateToRegister()" variant="secondary">
         Create Account
-      </button>
+      </app-button-v2>
     </div>
   </form>
 </div>

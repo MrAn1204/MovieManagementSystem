@@ -1,48 +1,48 @@
 <div class="flex flex-col justify-center items-center h-screen bg-space-black/50">
-  <form [formGroup]="form" (submit)="onSubmit()"
+  <form [formGroup]="form"
     class="dialog-container max-w-2xl">
 
-    <h1 class="font-bold text-2xl mb-8">Create Account</h1>
+    <h1 class="font-bold text-2xl mb-4">Create Account</h1>
 
     <div class="w-full gap-4 grid grid-cols-1 sm:grid-cols-2">
       <app-form-input class="sm:col-span-2"
-        [control]="usernameControl" type="text" idName="username" label="Username">
+        [control]="form.controls.username" type="text" idName="username" label="Username">
       </app-form-input>
 
       <app-form-input class="sm:col-span-2"
-        [control]="passwordControl" type="password" idName="password" label="Password">
+        [control]="form.controls.password" type="password" idName="password" label="Password">
       </app-form-input>
 
       <app-form-input class="sm:col-span-2"
-        [control]="confirmPasswordControl" type="password" idName="confirmPassword" label="Confirm Password">
+        [control]="form.controls.confirmPassword" type="password" idName="confirmPassword" label="Confirm Password">
       </app-form-input>
 
       <hr class="border-platinum-300 sm:col-span-2">
 
       <app-form-input
-        [control]="fullnameControl" type="text" idName="fullname" label="Full Name">
+        [control]="form.controls.fullname" type="text" idName="fullname" label="Full Name">
       </app-form-input>
 
       <app-form-select
-        [control]="genderControl" idName="gender" label="Gender" [options]="genders">
+        [control]="form.controls.gender" idName="gender" label="Gender" [options]="genders">
       </app-form-select>
 
       <app-form-input
-        [control]="dateOfBirthControl" type="date" idName="dateOfBirth" label="Date of Birth">
+        [control]="form.controls.dateOfBirth" type="date" idName="dateOfBirth" label="Date of Birth">
       </app-form-input>
 
       <app-form-input
-        [control]="phoneNumberControl" type="tel" idName="phoneNumber" label="Phone Number">
+        [control]="form.controls.phoneNumber" type="tel" idName="phoneNumber" label="Phone Number">
       </app-form-input>
 
       <app-form-input class="sm:col-span-2"
-        [control]="emailControl" type="email" idName="email" label="Email">
+        [control]="form.controls.email" type="email" idName="email" label="Email">
       </app-form-input>
     </div>
 
     <div class="mt-4 w-full flex flex-col gap-y-4">
       <div class="flex flex-col w-full">
-        <button mat-raised-button color="primary" type="submit">Register</button>
+        <app-button-v2 (clicked)="onSubmit()" variant="primary" color="primary" type="submit">Register</app-button-v2>
         @if (form.errors?.['serverError']) {
           <mat-error>{{ form.errors!['serverError'] }}</mat-error>
         }
@@ -53,9 +53,9 @@
 
       <hr class="border-platinum-300">
 
-      <button mat-stroked-button type="button" (click)="navigateToLogin()">
+      <app-button-v2 (clicked)="navigateToLogin()" variant="secondary" type="button">
         Go to Login
-      </button>
+      </app-button-v2>
     </div>
   </form>
 </div>

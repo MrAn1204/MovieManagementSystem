@@ -9,10 +9,11 @@ import { SpinnerService } from '../../../service/ui/spinner/spinner.service';
 import { finalize } from 'rxjs';
 import { MatButtonModule } from '@angular/material/button';
 import { MatError } from '@angular/material/form-field';
+import { ButtonV2 } from "../../../shared/component-v2/button/button";
 
 @Component({
   selector: 'app-login-v2',
-  imports: [FormInput, ReactiveFormsModule, RouterLink, MatButtonModule, MatError],
+  imports: [FormInput, ReactiveFormsModule, RouterLink, MatButtonModule, MatError, ButtonV2],
   templateUrl: './login-v2.html',
   styleUrl: './login-v2.css',
 })
@@ -48,6 +49,6 @@ export class LoginV2 {
   }
 
   navigateToRegister() {
-    this.router.navigateByUrl('/register');
+    this.router.navigateByUrl('/v2/register');
   }
 }
