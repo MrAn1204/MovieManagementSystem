@@ -5,11 +5,11 @@
 
     <div class="flex flex-col gap-y-2 items-center w-full *:w-full">
       <app-form-input
-        [control]="usernameControl" type="text" idName="username" label="Username">
+        [control]="form.controls.username" type="text" idName="username" label="Username">
       </app-form-input>
 
       <app-form-input
-        [control]="passwordControl" type="password" idName="password" label="Password">
+        [control]="form.controls.password" type="password" idName="password" label="Password">
       </app-form-input>
     </div>
 
@@ -20,8 +20,8 @@
 
       <div class="flex flex-col">
         <app-button-v2 (clicked)="onSubmit()" variant="primary">Login</app-button-v2>
-        @if (form.errors?.['loginFailed']) {
-          <mat-error>{{ form.errors!['loginFailed'] }}</mat-error>
+        @if (form.errors?.['serverError']) {
+          <mat-error>{{ form.errors!['serverError'] }}</mat-error>
         }
       </div>
 

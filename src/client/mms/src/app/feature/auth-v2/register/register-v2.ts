@@ -4,7 +4,6 @@ import { Router } from '@angular/router';
 import { CustomValidators } from '../../../shared/util/custom-validators';
 import { FormOptionModel } from '../../../shared/model/form-option.model';
 import { AuthService } from '../../../service/auth/auth.service';
-import { HttpErrorResponse } from '@angular/common/http';
 import { ConstraintService } from '../../../service/constraint.service';
 import { SpinnerService } from '../../../service/ui/spinner/spinner.service';
 import { finalize } from 'rxjs';
@@ -14,6 +13,8 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatError } from '@angular/material/form-field';
 import { ButtonV2 } from "../../../shared/component-v2/button/button";
 import { RegisterRequest } from '../../../model/auth/register-request';
+import { ErrorRespondModel } from '../../../shared/model/error-respond.model';
+import { FormMapper } from '../../../shared/util/form-mapper';
 
 @Component({
   selector: 'app-register-v2',
@@ -62,23 +63,12 @@ export class RegisterV2 {
         .pipe(finalize(() => this.spinner.hide()))
         .subscribe({
           next: () => this.navigateToLogin(),
-          error: (res: HttpErrorResponse) => {
-            this.setServerErrors(res.error.messages);
-            this.form.markAllAsTouched();
-          }
+          error: (res: ErrorRespondModel) => FormMapper.mapErrorResponse(res, this.form)
         });
     }
   }
 
   navigateToLogin() {
     this.router.navigateByUrl('/v2/login');
-  }
-
-  setServerErrors(errorMessages: Record<string, string>) {
-    for (const field in errorMessages) {
-      const control = this.form.get(field);
-      if (control) control.setErrors({ serverError: errorMessages[field] });
-      else this.form.setErrors({ serverError: errorMessages[field] });
-    }
   }
 }
