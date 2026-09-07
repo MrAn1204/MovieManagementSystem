@@ -1,5 +1,5 @@
-import { Component, OnInit } from '@angular/core';
-import { FormBuilder, FormControl, FormGroup, ReactiveFormsModule } from '@angular/forms';
+import { Component, inject } from '@angular/core';
+import { FormBuilder, ReactiveFormsModule } from '@angular/forms';
 import { CustomValidators } from '../../../shared/util/custom-validators';
 import { ConstraintService } from '../../../service/constraint.service';
 import { SpinnerService } from '../../../service/ui/spinner/spinner.service';
@@ -14,19 +14,18 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatError } from '@angular/material/form-field';
 import { NotificationDialogDataModel } from '../../../shared/model/dialog/notification-dialog-data.model';
 import { NotificationDialogService } from '../../../service/dialog-v2/notification/notification-dialog.service';
+import { ButtonV2 } from "../../../shared/component-v2/button/button";
 
 @Component({
   selector: 'app-reset-password-v2',
-  imports: [ReactiveFormsModule, FormInput, MatButtonModule, MatError],
+  imports: [ReactiveFormsModule, FormInput, MatButtonModule, MatError, ButtonV2],
   templateUrl: './reset-password-v2.html',
   styleUrl: './reset-password-v2.css',
 })
-export class ResetPasswordV2 implements OnInit {
-  form!: FormGroup;
+export class ResetPasswordV2 {
+  form = this.buildForm();
 
   constructor(
-    private readonly formBuilder: FormBuilder,
-    private readonly constraintService: ConstraintService,
     private readonly spinner: SpinnerService,
     private readonly authService: AuthService,
     private readonly router: Router,
@@ -34,10 +33,13 @@ export class ResetPasswordV2 implements OnInit {
     private readonly route: ActivatedRoute
   ) { }
 
-  ngOnInit(): void {
-    const passwordMin = this.constraintService.getConstraint('PASSWORD_MIN');
+  private buildForm() {
+    const formBuilder = inject(FormBuilder);
+    const constraintService = inject(ConstraintService);
 
-    this.form = this.formBuilder.group({
+    const passwordMin = constraintService.getConstraint('PASSWORD_MIN');
+
+    return formBuilder.nonNullable.group({
       password: ['', [
         CustomValidators.required("user.password.required"),
         CustomValidators.passwordValid(passwordMin, "user.password.invalid")
@@ -56,8 +58,8 @@ export class ResetPasswordV2 implements OnInit {
 
     const data: PasswordResetFormModel = {
       token: this.route.snapshot.queryParamMap.get('token') || '',
-      password: this.form.get('password')!.value,
-      confirmPassword: this.form.get('confirmPassword')!.value,
+      password: this.form.controls.password.value,
+      confirmPassword: this.form.controls.confirmPassword.value,
     };
 
     this.spinner.show();
@@ -85,9 +87,6 @@ export class ResetPasswordV2 implements OnInit {
   }
 
   navigateToLogin(): void {
-    this.router.navigateByUrl('/login');
+    this.router.navigateByUrl('/v2/login');
   }
-
-  get passwordControl() { return this.form.get('password') as FormControl; }
-  get confirmPasswordControl() { return this.form.get('confirmPassword') as FormControl; }
 }
