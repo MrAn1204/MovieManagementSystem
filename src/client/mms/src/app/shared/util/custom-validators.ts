@@ -105,13 +105,7 @@ export class CustomValidators {
 
   static range(min: number, max: number, message: string): ValidatorFn {
     return (control: AbstractControl): ValidationErrors | null => {
-      if (!control.value) {
-        return null;
-      }
-
-      const value = Number(control.value);
-
-      if (value < min || value > max) {
+      if (control.value != null && (control.value < min || control.value > max)) {
         return this.buildError('range', message, {
           min: min,
           max: max
