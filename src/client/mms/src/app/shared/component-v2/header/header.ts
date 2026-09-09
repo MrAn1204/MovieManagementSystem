@@ -1,4 +1,4 @@
-import { Component, inject, output } from '@angular/core';
+import { Component, output } from '@angular/core';
 import { MatIconModule } from '@angular/material/icon';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { ButtonIcon } from "../button-icon/button-icon";
@@ -8,6 +8,7 @@ import { ButtonV2 } from "../button/button";
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { Menu, MenuItem } from "../menu/menu";
 import { MatMenuModule } from "@angular/material/menu";
+import { NotificationDialogService } from '../../../service/dialog-v2/notification/notification-dialog.service';
 
 @Component({
   selector: 'app-header-v2',
@@ -21,8 +22,6 @@ export class HeaderV2 {
   fullname: string = '';
   email: string = '';
 
-  private readonly snackbar = inject(MatSnackBar);
-
   menu: MenuItem[] = [
     { label: 'Profile', action: 'profile', icon: 'person' },
     { label: 'Logout', action: 'logout', icon: 'logout' },
@@ -30,6 +29,8 @@ export class HeaderV2 {
 
   constructor(
     private readonly authService: AuthService,
+    private readonly notification: NotificationDialogService,
+    private readonly snackbar: MatSnackBar,
     private readonly profileDialog: ProfileDialogService,
   ) {
     this.fullname = this.authService.getFullname();
@@ -37,7 +38,12 @@ export class HeaderV2 {
   }
 
   onLogout(): void {
-    this.authService.logout();
+    const ref = this.notification.openDialog({
+      type: 'warning',
+      message: 'Are you sure you want to logout?',
+    });
+
+    ref.afterClosed().subscribe((result) => result && this.authService.logout());
   }
 
   handleMenuAction(action: string): void {
