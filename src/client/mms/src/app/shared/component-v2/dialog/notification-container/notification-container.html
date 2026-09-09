@@ -3,7 +3,13 @@
     {{ message() }}
   </p>
 
-  <app-button-v2 dialog-action variant="secondary" (clicked)="closeDialog.emit()">Cancel</app-button-v2>
+  @if (type() === 'success' || type() === 'danger') {
+    <app-button-v2 variant="primary" (clicked)="closeDialog.emit()">Close</app-button-v2>
+  } @else {
+    <ng-container dialog-action>
+      <app-button-v2 variant="secondary" (clicked)="closeDialog.emit()">Cancel</app-button-v2>
 
-  <app-button-v2 dialog-action variant="primary" (clicked)="confirm.emit()">Confirm</app-button-v2>
+      <app-button-v2 variant="primary" (clicked)="confirm.emit()">Confirm</app-button-v2>
+    </ng-container>
+  }
 </app-dialog-container>
