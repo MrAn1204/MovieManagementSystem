@@ -24,9 +24,9 @@ export class CustomValidators {
       const value = control.value;
 
       if (value == null ||
-          (typeof value === 'string' && value.trim() === '') ||
-          (Array.isArray(value) && value.length === 0) ||
-          (typeof value === 'object' && Object.keys(value).length === 0)
+        (typeof value === 'string' && value.trim() === '') ||
+        (Array.isArray(value) && value.length === 0) ||
+        (typeof value === 'object' && Object.keys(value).length === 0)
       ) {
         // use key 'mandatory' since Angular Material already uses 'required'
         return this.buildError('mandatory', message);
@@ -81,7 +81,7 @@ export class CustomValidators {
 
   static min(min: number, message: string): ValidatorFn {
     return (control: AbstractControl): ValidationErrors | null => {
-      if (control.value != null && control.value < min) {
+      if (control.value != null && Number(control.value) < min) {
         return this.buildError('min', message, {
           value: min
         });
@@ -93,7 +93,7 @@ export class CustomValidators {
 
   static max(max: number, message: string): ValidatorFn {
     return (control: AbstractControl): ValidationErrors | null => {
-      if (control.value != null && control.value > max) {
+      if (control.value != null && Number(control.value) > max) {
         return this.buildError('max', message, {
           value: max
         });
@@ -105,7 +105,13 @@ export class CustomValidators {
 
   static range(min: number, max: number, message: string): ValidatorFn {
     return (control: AbstractControl): ValidationErrors | null => {
-      if (control.value != null && (control.value < min || control.value > max)) {
+      if (control.value == null) {
+        return null;
+      }
+
+      const value = Number(control.value);
+
+      if (value < min || value > max) {
         return this.buildError('range', message, {
           min: min,
           max: max
