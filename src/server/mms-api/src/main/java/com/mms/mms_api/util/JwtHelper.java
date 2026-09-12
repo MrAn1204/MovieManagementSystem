@@ -11,6 +11,7 @@ import javax.crypto.SecretKey;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.stereotype.Component;
 
+import com.mms.mms_api.common.AppConstant;
 import com.mms.mms_api.security.UserInfo;
 
 import io.jsonwebtoken.Claims;
@@ -22,8 +23,6 @@ import io.jsonwebtoken.security.Keys;
  */
 @Component
 public class JwtHelper {
-    private static final long EXPIRATION_TIME = 86400000;
-
     /**
      * Generates a signed token containing user identity and role claims.
      */
@@ -51,7 +50,7 @@ public class JwtHelper {
                 .claims(claims)
                 .subject(userInfo.getUsername())
                 .issuedAt(now)
-                .expiration(new Date(now.getTime() + EXPIRATION_TIME))
+                .expiration(new Date(now.getTime() + AppConstant.LOGIN_EXPIRY))
                 .signWith(getSigningKey())
                 .compact();
     }

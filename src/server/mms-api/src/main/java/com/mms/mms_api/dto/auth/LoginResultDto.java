@@ -12,4 +12,6 @@ import lombok.Data;
 @AllArgsConstructor
 public class LoginResultDto {
     private String token;
+
+    private UserInfoDto userInfo;
 }

@@ -34,4 +34,8 @@ public class AppConstant {
     public static final int COLUMN_MAX = 20;
 
     public static final int BASE_SEAT_PRICE = 20000;
+
+    public static final long LOGIN_EXPIRY = 86400000;
+
+    public static final String LOGIN_COOKIE_NAME = "login_token";
 }
