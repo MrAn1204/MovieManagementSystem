@@ -13,6 +13,7 @@ import com.mms.mms_api.common.AppConstant;
 import com.mms.mms_api.dto.auth.LoginResultDto;
 import com.mms.mms_api.dto.auth.UserInfoDto;
 import com.mms.mms_api.dto.user.UserDto;
+import com.mms.mms_api.security.UserInfo;
 
 import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
@@ -20,6 +21,7 @@ import lombok.AllArgsConstructor;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.ResponseCookie;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -57,6 +59,11 @@ public class AuthenticationController {
         return ResponseEntity.ok()
                 .header(HttpHeaders.SET_COOKIE, cookie.toString())
                 .build();
+    }
+
+    @GetMapping("/current-user")
+    public ResponseEntity<UserInfoDto> getCurrentUser(@AuthenticationPrincipal UserInfo userInfo) {
+        return ResponseEntity.ok(new UserInfoDto(userInfo));
     }
 
     /**
