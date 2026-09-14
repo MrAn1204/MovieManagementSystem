@@ -63,7 +63,7 @@ public class AuthenticationController {
 
     @GetMapping("/current-user")
     public ResponseEntity<UserInfoDto> getCurrentUser(@AuthenticationPrincipal UserInfo userInfo) {
-        return ResponseEntity.ok(new UserInfoDto(userInfo));
+        return ResponseEntity.ok(userInfo != null ? new UserInfoDto(userInfo) : null);
     }
 
     /**
