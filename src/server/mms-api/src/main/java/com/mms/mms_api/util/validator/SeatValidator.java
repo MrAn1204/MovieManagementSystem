@@ -52,7 +52,7 @@ public class SeatValidator implements BaseValidator {
         Room room = roomValidationService.getById(command.getRoomId());
 
         validateRoomCapacity(errors, room);
-        validatePosition(errors, room, command.getSeatColumn(), command.getSeatRow());
+        validatePosition(errors, room, command.getSeatColumn(), command.getSeatRow(), null);
 
         errors.throwIfNotEmpty(ErrorType.INVALID_INPUT);
 
@@ -107,24 +107,6 @@ public class SeatValidator implements BaseValidator {
     }
 
     /**
-     * Checks that the given column and row are within the room's bounds.
-     *
-     * @param errors the error accumulator
-     * @param room the room to validate the position against
-     * @param seatColumn the column index of the seat
-     * @param seatRow the row index of the seat
-     */
-    private void validatePosition(ErrorSet errors, Room room, int seatColumn, int seatRow) {
-        if (!room.isValidColumn(seatColumn)) {
-            errors.add("seatColumn", "seat.column.invalid");
-        }
-        
-        if (!room.isValidRow(seatRow)) {
-            errors.add("seatRow", "seat.row.invalid");
-        }
-    }
-
-    /**
      * Checks that the given column and row are within the room's bounds and not already occupied by another seat.
      *
      * @param errors the error accumulator
@@ -134,9 +116,18 @@ public class SeatValidator implements BaseValidator {
      * @param seatId the id of the seat being updated, excluded from the occupancy check
      */
     private void validatePosition(ErrorSet errors, Room room, int seatColumn, int seatRow, UUID seatId) {
-        validatePosition(errors, room, seatColumn, seatRow);
+        boolean validCol = room.isValidColumn(seatColumn);
+        boolean validRow = room.isValidRow(seatRow);
 
-        if (room.hasOtherSeatAt(seatRow, seatColumn, seatId)) {
+        if (!validCol) {
+            errors.add("seatColumn", "seat.column.invalid");
+        }
+
+        if (!validRow) {
+            errors.add("seatRow", "seat.row.invalid");
+        }
+
+        if (validCol && validRow && room.hasSeatAt(seatRow, seatColumn, seatId)) {
             errors.add("position", "seat.position.invalid");
         }
     }

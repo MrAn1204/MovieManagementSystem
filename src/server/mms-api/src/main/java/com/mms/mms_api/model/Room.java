@@ -44,19 +44,7 @@ public class Room extends AuditableEntity {
         return seats.size() < rowLength * columnLength;
     }
 
-    public boolean hasSeatAt(int seatRow, int seatColumn) {
-        if (!isValidRow(seatRow) || !isValidColumn(seatColumn)) {
-            return false;
-        }
-
-        return seats.stream().anyMatch(seat -> seat.hasPosition(seatRow, seatColumn));
-    }
-
-    public boolean hasOtherSeatAt(int seatRow, int seatColumn, UUID excludeId) {
-        if (!isValidRow(seatRow) || !isValidColumn(seatColumn)) {
-            return false;
-        }
-
+    public boolean hasSeatAt(int seatRow, int seatColumn, UUID excludeId) {
         Seat seat = getSeatAt(seatRow, seatColumn);
 
         return seat != null && !seat.getId().equals(excludeId);

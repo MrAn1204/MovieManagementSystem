@@ -1,6 +1,7 @@
 package com.mms.mms_api.security;
 
 import java.io.IOException;
+import java.util.Arrays;
 import java.util.Collection;
 
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -14,6 +15,7 @@ import org.springframework.web.filter.OncePerRequestFilter;
 import org.springframework.web.servlet.HandlerExceptionResolver;
 
 import com.mms.mms_api.business.service.UserInfoService;
+import com.mms.mms_api.common.AppConstant;
 import com.mms.mms_api.util.JwtHelper;
 
 import jakarta.servlet.FilterChain;
@@ -60,12 +62,18 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
             String authHeader = request.getHeader("Authorization");
 
             String jwt = null;
-            String username = null;
 
             if (authHeader != null && authHeader.startsWith("Bearer ")) {
                 jwt = authHeader.substring(7);
-                username = jwtHelper.extractUsername(jwt);
+            } else if (request.getCookies() != null) {
+                jwt = Arrays.stream(request.getCookies())
+                        .filter(c -> c.getName().equals(AppConstant.LOGIN_COOKIE_NAME))
+                        .map(c -> c != null ? c.getValue() : null)
+                        .findFirst()
+                        .orElse(null);
             }
+
+            String username = jwt != null ? jwtHelper.extractUsername(jwt) : null;
 
             if (username != null && SecurityContextHolder.getContext().getAuthentication() == null) {
                 UserDetails userDetails = authService.loadUserByUsername(username);

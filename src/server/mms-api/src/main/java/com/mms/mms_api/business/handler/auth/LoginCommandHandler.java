@@ -9,6 +9,7 @@ import org.springframework.security.core.context.SecurityContextHolder;
 
 import com.mms.mms_api.business.command.auth.LoginCommand;
 import com.mms.mms_api.dto.auth.LoginResultDto;
+import com.mms.mms_api.dto.auth.UserInfoDto;
 import com.mms.mms_api.security.UserInfo;
 import com.mms.mms_api.util.JwtHelper;
 
@@ -38,10 +39,14 @@ public class LoginCommandHandler extends AuthBaseHandler<LoginCommand, LoginResu
         Authentication authentication = authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(request.getUsername(), request.getPassword()));
         
         SecurityContextHolder.getContext().setAuthentication(authentication);
-        
-        String token = jwtHelper.generateToken((UserInfo) authentication.getPrincipal());
 
-        return new LoginResultDto(token);
+        UserInfo user = (UserInfo) authentication.getPrincipal();
+
+        String token = jwtHelper.generateToken(user);
+
+        UserInfoDto userInfo = new UserInfoDto(user);
+
+        return new LoginResultDto(token, userInfo);
     }
 
 }

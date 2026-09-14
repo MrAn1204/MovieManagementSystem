@@ -1,12 +1,14 @@
 package com.mms.mms_api.security;
 
 import java.util.Collection;
+import java.util.List;
 import java.util.UUID;
 
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
+import com.mms.mms_api.model.Role;
 import com.mms.mms_api.model.User;
 
 import lombok.AllArgsConstructor;
@@ -78,5 +80,11 @@ public class UserInfo implements UserDetails {
      */
     public String getEmail() {
         return user.getEmail();
+    }
+
+    public List<String> getRoles() {
+        return this.user.getRoles().stream()
+                .map(Role::getName)
+                .toList();
     }
 }
