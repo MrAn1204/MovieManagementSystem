@@ -27,10 +27,7 @@ async function initializeApp() {
   const messageService = inject(MessageService);
   const constraintService = inject(ConstraintService);
 
-  await new Promise<void>((resolve) => {
-    authService.checkToken();
-    resolve();
-  })
+  await authService.getCurrentUser();
 
   await Promise.all([
     messageService.loadAll(),

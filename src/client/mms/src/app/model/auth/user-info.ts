@@ -5,4 +5,5 @@ export interface UserInfo extends JwtPayload {
   fullname?: string;
   email?: string;
   roles?: string[];
+  expiry?: Date;
 }
