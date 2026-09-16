@@ -9,7 +9,6 @@ import com.mms.mms_api.business.command.auth.PasswordResetCommand;
 import com.mms.mms_api.business.command.auth.RegisterCommand;
 import com.mms.mms_api.business.command.auth.ValidateResetTokenCommand;
 import com.mms.mms_api.business.service.AuthenticationService;
-import com.mms.mms_api.common.AppConstant;
 import com.mms.mms_api.dto.auth.LoginResultDto;
 import com.mms.mms_api.dto.auth.UserInfoDto;
 import com.mms.mms_api.dto.user.UserDto;
@@ -34,7 +33,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 @AllArgsConstructor
 public class AuthenticationController {
     private AuthenticationService authenticationService;
-    
+
     /**
      * Authenticates a user and returns access credentials.
      *
@@ -45,7 +44,7 @@ public class AuthenticationController {
     public ResponseEntity<UserInfoDto> login(@Valid @RequestBody LoginCommand request) {
         LoginResultDto result = authenticationService.handle(request);
 
-        ResponseCookie cookie = getLoginCookie(result.getToken(), AppConstant.LOGIN_EXPIRY);
+        ResponseCookie cookie = authenticationService.getLoginCookie(result.getToken());
 
         return ResponseEntity.ok()
                 .header(HttpHeaders.SET_COOKIE, cookie.toString())
@@ -54,7 +53,7 @@ public class AuthenticationController {
  
     @PostMapping("/logout")
     public ResponseEntity<Void> logout() {
-        ResponseCookie cookie = getLoginCookie("", 0);
+        ResponseCookie cookie = authenticationService.getLogoutCookie();
 
         return ResponseEntity.ok()
                 .header(HttpHeaders.SET_COOKIE, cookie.toString())
@@ -93,15 +92,11 @@ public class AuthenticationController {
     @PostMapping("/reset-password")
     public ResponseEntity<Void> resetPassword(@Valid @RequestBody PasswordResetCommand request) {
         authenticationService.handle(request);
-        return ResponseEntity.ok().build();
-    }
 
-    private ResponseCookie getLoginCookie(String token, long maxAge) {
-        return ResponseCookie.from(AppConstant.LOGIN_COOKIE_NAME, token)
-                .httpOnly(true)
-                .path("/")
-                .maxAge(maxAge)
-                .sameSite("Strict")
+        ResponseCookie cookie = authenticationService.getLogoutCookie();
+
+        return ResponseEntity.ok()
+                .header(HttpHeaders.SET_COOKIE, cookie.toString())
                 .build();
     }
 }

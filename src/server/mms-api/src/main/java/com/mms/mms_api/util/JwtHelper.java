@@ -73,6 +73,13 @@ public class JwtHelper {
         return (String) extractAllClaims(token).get("roles");
     }
 
+    public long extractLifespan(String token) {
+        Date expiration = extractAllClaims(token).getExpiration();
+        long diff = expiration.getTime() - System.currentTimeMillis();
+
+        return Math.max(0, diff);
+    }
+
     private Claims extractAllClaims(String token) {
         return Jwts.parser().verifyWith(getSigningKey()).build().parseSignedClaims(token).getPayload();
     }
@@ -80,8 +87,8 @@ public class JwtHelper {
     /**
      * Validates that a token belongs to the username and is not expired.
      */
-    public boolean isTokenValid(String token, String username) {
-        return username.equals(extractUsername(token)) && !isTokenExpired(token);
+    public boolean isTokenValid(String token) {
+        return token != null && !token.isEmpty() && !isTokenExpired(token);
     }
 
     private boolean isTokenExpired(String token) {
