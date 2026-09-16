@@ -15,7 +15,7 @@ import lombok.Data;
 public class UserInfoDto {
     private UUID id;
 
-    private String username;
+    private String fullname;
 
     private String email;
 
@@ -25,7 +25,7 @@ public class UserInfoDto {
 
     public UserInfoDto(UserInfo userInfo) {
         this.id = userInfo.getId();
-        this.username = userInfo.getUsername();
+        this.fullname = userInfo.getFullname();
         this.email = userInfo.getEmail();
         this.roles = userInfo.getRoles();
         this.expiry = Instant.now().plusMillis(AppConstant.LOGIN_EXPIRY);
