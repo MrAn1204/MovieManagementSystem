@@ -1,5 +1,6 @@
 package com.mms.mms_api.business.service;
 
+import org.springframework.http.ResponseCookie;
 import org.springframework.stereotype.Service;
 
 import com.mms.mms_api.business.command.auth.ForgotPasswordCommand;
@@ -7,6 +8,7 @@ import com.mms.mms_api.business.command.auth.LoginCommand;
 import com.mms.mms_api.business.command.auth.PasswordResetCommand;
 import com.mms.mms_api.business.command.auth.RegisterCommand;
 import com.mms.mms_api.business.command.auth.ValidateResetTokenCommand;
+import com.mms.mms_api.common.AppConstant;
 import com.mms.mms_api.dto.auth.LoginResultDto;
 import com.mms.mms_api.dto.user.UserDto;
 import com.mms.mms_api.mediator.RequestMediator;
@@ -55,5 +57,23 @@ public class AuthenticationService {
 
     public void handle(PasswordResetCommand request) {
         mediator.execute(request);
+    }
+
+    public ResponseCookie getLoginCookie(String token) {
+        return ResponseCookie.from(AppConstant.LOGIN_COOKIE_NAME, token)
+                .httpOnly(true)
+                .path("/")
+                .maxAge(AppConstant.LOGIN_EXPIRY / 1000)
+                .sameSite("Strict")
+                .build();
+    }
+
+    public ResponseCookie getLogoutCookie() {
+        return ResponseCookie.from(AppConstant.LOGIN_COOKIE_NAME, "")
+                .httpOnly(true)
+                .path("/")
+                .maxAge(0)
+                .sameSite("Strict")
+                .build();
     }
 }

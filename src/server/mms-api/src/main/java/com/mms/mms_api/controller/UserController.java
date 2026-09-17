@@ -8,6 +8,7 @@ import com.mms.mms_api.business.command.user.UserUpdateCommand;
 import com.mms.mms_api.business.query.user.UserGetAllQuery;
 import com.mms.mms_api.business.query.user.UserGetByIdQuery;
 import com.mms.mms_api.business.query.user.UserSearchQuery;
+import com.mms.mms_api.business.service.AuthenticationService;
 import com.mms.mms_api.business.service.UserService;
 import com.mms.mms_api.common.PaginatedResult;
 import com.mms.mms_api.dto.user.UserDetailDto;
@@ -16,7 +17,9 @@ import com.mms.mms_api.dto.user.UserDto;
 import java.util.List;
 import java.util.UUID;
 
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseCookie;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -26,6 +29,7 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 
+import jakarta.servlet.http.HttpServletRequest;
 import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
 
@@ -37,6 +41,8 @@ import lombok.AllArgsConstructor;
 @AllArgsConstructor
 public class UserController {
     private UserService userService;
+
+    private AuthenticationService authenticationService;
 
     /**
      * Returns all users.
@@ -90,14 +96,24 @@ public class UserController {
      * @return updated user when found
      */
     @PutMapping("/{id}")
-    public ResponseEntity<UserDetailDto> update(@PathVariable UUID id, @Valid @RequestBody UserUpdateCommand command) {
+    public ResponseEntity<UserDetailDto> update(@PathVariable UUID id, @Valid @RequestBody UserUpdateCommand command, HttpServletRequest http) {
         command.setId(id);
 
         UserDetailDto updatedUser = userService.handle(command);
 
-        return updatedUser != null
-                ? ResponseEntity.ok(updatedUser)
-                : ResponseEntity.notFound().build();
+        if (updatedUser == null) {
+            return ResponseEntity.notFound().build();
+        }
+
+        if (command.getPassword() != null && !command.getPassword().isEmpty()) {
+            ResponseCookie cookie = authenticationService.getLogoutCookie();
+
+            return ResponseEntity.ok()
+                    .header(HttpHeaders.SET_COOKIE, cookie.toString())
+                    .body(updatedUser);
+        }
+
+        return ResponseEntity.ok(updatedUser);
     }
 
     /**

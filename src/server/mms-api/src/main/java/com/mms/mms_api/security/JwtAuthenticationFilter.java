@@ -2,12 +2,10 @@ package com.mms.mms_api.security;
 
 import java.io.IOException;
 import java.util.Arrays;
-import java.util.Collection;
 
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.lang.NonNull;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
-import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Component;
@@ -59,33 +57,14 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
     protected void doFilterInternal(@NonNull HttpServletRequest request, @NonNull HttpServletResponse response,
             @NonNull FilterChain filterChain) throws ServletException, IOException {
         try {
-            String authHeader = request.getHeader("Authorization");
+            String jwt = getJwt(request);
 
-            String jwt = null;
-
-            if (authHeader != null && authHeader.startsWith("Bearer ")) {
-                jwt = authHeader.substring(7);
-            } else if (request.getCookies() != null) {
-                jwt = Arrays.stream(request.getCookies())
-                        .filter(c -> c.getName().equals(AppConstant.LOGIN_COOKIE_NAME))
-                        .map(c -> c != null ? c.getValue() : null)
-                        .findFirst()
-                        .orElse(null);
-            }
-
-            String username = jwt != null ? jwtHelper.extractUsername(jwt) : null;
-
-            if (username != null && SecurityContextHolder.getContext().getAuthentication() == null) {
+            if (jwt != null && jwtHelper.isTokenValid(jwt)) {
+                String username = jwtHelper.extractUsername(jwt);
                 UserDetails userDetails = authService.loadUserByUsername(username);
 
-                if (jwtHelper.isTokenValid(jwt, userDetails.getUsername())) {
-                    Collection<? extends GrantedAuthority> authority = userDetails.getAuthorities();
-
-                    UsernamePasswordAuthenticationToken authToken = new UsernamePasswordAuthenticationToken(
-                            userDetails, null, authority);
-
-                    SecurityContextHolder.getContext().setAuthentication(authToken);
-                }
+                SecurityContextHolder.getContext().setAuthentication(
+                        new UsernamePasswordAuthenticationToken(userDetails, null, userDetails.getAuthorities()));
             }
 
             filterChain.doFilter(request, response);
@@ -93,5 +72,21 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
             SecurityContextHolder.clearContext();
             resolver.resolveException(request, response, null, e);
         }
+    }
+
+    private String getJwt(HttpServletRequest request) {
+        String header = request.getHeader("Authorization");
+
+        if (header != null && header.startsWith("Bearer ")) {
+            return header.substring(7);
+        } else if (request.getCookies() != null) {
+            return Arrays.stream(request.getCookies())
+                    .filter(c -> AppConstant.LOGIN_COOKIE_NAME.equals(c.getName()))
+                    .map(c -> c != null ? c.getValue() : null)
+                    .findFirst()
+                    .orElse(null);
+        }
+
+        return null;
     }
 }
