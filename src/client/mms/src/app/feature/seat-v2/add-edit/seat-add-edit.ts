@@ -11,6 +11,7 @@ import { FormSelect } from "../../../shared/component-v2/form/form-select/form-s
 import { SeatDetailModel } from '../../../model/seat/seat-detail.model';
 import { DetailEntityService } from '../../../service/detail-entity.service';
 import { DialogFormDataModel } from '../../../shared/model/dialog/dialog-form-data.model';
+import { MatError } from '@angular/material/select';
 
 export interface SeatDialogDataModel extends DialogFormDataModel<SeatDetailModel> {
   roomId?: string;
@@ -20,7 +21,7 @@ export interface SeatDialogDataModel extends DialogFormDataModel<SeatDetailModel
 
 @Component({
   selector: 'app-seat-add-edit',
-  imports: [AddEditContainer, FormInput, FormSelect],
+  imports: [AddEditContainer, FormInput, FormSelect, MatError],
   templateUrl: './seat-add-edit.html',
   styleUrl: './seat-add-edit.css',
 })

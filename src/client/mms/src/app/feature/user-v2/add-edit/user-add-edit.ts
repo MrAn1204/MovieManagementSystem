@@ -12,10 +12,11 @@ import { FormSelect } from "../../../shared/component-v2/form/form-select/form-s
 import { FormTextArea } from "../../../shared/component-v2/form/form-textarea/form-textarea";
 import { DetailEntityService } from '../../../service/detail-entity.service';
 import { UserService } from '../../../service/user/user.service';
+import { MatError } from '@angular/material/select';
 
 @Component({
   selector: 'app-user-add-edit',
-  imports: [AddEditContainer, FormInput, FormSelect, FormTextArea],
+  imports: [AddEditContainer, FormInput, FormSelect, FormTextArea, MatError],
   templateUrl: './user-add-edit.html',
   styleUrl: './user-add-edit.css',
 })

@@ -18,6 +18,7 @@ import { FormSelect } from "../../../shared/component-v2/form/form-select/form-s
 import { MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { DetailEntityService } from '../../../service/detail-entity.service';
 import { TicketService } from '../../../service/ticket/ticket.service';
+import { MatError } from '@angular/material/select';
 
 export interface TicketDialogDataModel extends DialogFormDataModel<TicketDetailModel> {
   scheduleId?: string;
@@ -26,7 +27,7 @@ export interface TicketDialogDataModel extends DialogFormDataModel<TicketDetailM
 
 @Component({
   selector: 'app-ticket-add-edit',
-  imports: [AddEditContainer, FormSelect, SeatMap],
+  imports: [AddEditContainer, FormSelect, SeatMap, MatError],
   templateUrl: './ticket-add-edit.html',
   styleUrl: './ticket-add-edit.css',
 })

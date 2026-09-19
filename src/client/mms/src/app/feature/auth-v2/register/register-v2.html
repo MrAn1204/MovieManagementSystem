@@ -40,6 +40,12 @@
       </app-form-input>
     </div>
 
+    @if (form.getError('serverError')) {
+      <mat-error>
+        {{ form.getError('serverError') }}
+      </mat-error>
+    }
+
     <div class="mt-4 w-full flex flex-col gap-y-4">
       <div class="flex flex-col w-full">
         <app-button-v2 (clicked)="onSubmit()" variant="primary" color="primary" type="submit">Register</app-button-v2>

@@ -7,10 +7,11 @@ import { FormInput } from "../../../shared/component-v2/form/form-input/form-inp
 import { ConstraintService } from '../../../service/constraint.service';
 import { DetailEntityService } from '../../../service/detail-entity.service';
 import { RoomService } from '../../../service/room/room.service';
+import { MatError } from '@angular/material/select';
 
 @Component({
   selector: 'app-room-add-edit',
-  imports: [AddEditContainer, FormInput],
+  imports: [AddEditContainer, FormInput, MatError],
   templateUrl: './room-add-edit.html',
   styleUrl: './room-add-edit.css',
 })

@@ -8,10 +8,11 @@ import { FormInput } from "../../../shared/component-v2/form/form-input/form-inp
 import { FormTextArea } from "../../../shared/component-v2/form/form-textarea/form-textarea";
 import { DetailEntityService } from '../../../service/detail-entity.service';
 import { PromotionService } from '../../../service/promotion/promotion.service';
+import { MatError } from '@angular/material/select';
 
 @Component({
   selector: 'app-promotion-add-edit',
-  imports: [AddEditContainer, ImageField, FormInput, FormTextArea],
+  imports: [AddEditContainer, ImageField, FormInput, FormTextArea, MatError],
   templateUrl: './promotion-add-edit.html',
   styleUrl: './promotion-add-edit.css',
 })

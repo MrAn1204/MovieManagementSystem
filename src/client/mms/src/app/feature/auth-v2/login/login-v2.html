@@ -13,6 +13,12 @@
       </app-form-input>
     </div>
 
+    @if (form.getError('serverError')) {
+      <mat-error>
+        {{ form.getError('serverError') }}
+      </mat-error>
+    }
+
     <div class="mt-4 w-full flex flex-col gap-y-4">
       <a routerLink="/forgot-password" class="text-sm text-steel-blue-500 hover:underline hover:cursor-pointer italic w-fit self-end">
         Forgot Password?

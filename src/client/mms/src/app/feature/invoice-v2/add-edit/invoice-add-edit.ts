@@ -10,6 +10,7 @@ import { InvoiceService } from '../../../service/invoice/invoice.service';
 import { DialogFormDataModel } from '../../../shared/model/dialog/dialog-form-data.model';
 import { TicketModel } from '../../../model/ticket/ticket.model';
 import { UserSummaryModel } from '../../../model/user/user-summary.model';
+import { MatError } from '@angular/material/select';
 
 export interface InvoiceDialogDataModel extends DialogFormDataModel<InvoiceDetailModel> {
   tickets?: TicketModel[];
@@ -17,7 +18,7 @@ export interface InvoiceDialogDataModel extends DialogFormDataModel<InvoiceDetai
 
 @Component({
   selector: 'app-invoice-add-edit',
-  imports: [AddEditContainer, FormInput, DetailText],
+  imports: [AddEditContainer, FormInput, DetailText, MatError],
   templateUrl: './invoice-add-edit.html',
   styleUrl: './invoice-add-edit.css',
 })

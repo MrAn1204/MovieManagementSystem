@@ -18,4 +18,10 @@
       [required]="true">
     </app-form-input>
   </div>
+
+  @if (form.getError('serverError')) {
+    <mat-error dialog-content>
+      {{ form.getError('serverError') }}
+    </mat-error>
+  }
 </app-add-edit-container>

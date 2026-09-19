@@ -15,4 +15,10 @@
       [control]="form.controls.roomId">
     </app-form-select>
   </div>>
+
+  @if (form.getError('serverError')) {
+    <mat-error dialog-content>
+      {{ form.getError('serverError') }}
+    </mat-error>
+  }
 </app-add-edit-container>

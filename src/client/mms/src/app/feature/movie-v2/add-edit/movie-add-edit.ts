@@ -14,10 +14,11 @@ import { FormSelect } from "../../../shared/component-v2/form/form-select/form-s
 import { FormTextArea } from "../../../shared/component-v2/form/form-textarea/form-textarea";
 import { DetailEntityService } from '../../../service/detail-entity.service';
 import { MovieService } from '../../../service/movie/movie.service';
+import { MatError } from '@angular/material/select';
 
 @Component({
   selector: 'app-movie-add-edit',
-  imports: [AddEditContainer, ImageField, FormInput, FormSelect, FormTextArea],
+  imports: [AddEditContainer, ImageField, FormInput, FormSelect, FormTextArea, MatError],
   templateUrl: './movie-add-edit.html',
   styleUrl: './movie-add-edit.css',
 })

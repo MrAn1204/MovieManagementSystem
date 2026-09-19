@@ -10,10 +10,11 @@ import { FormInput } from "../../../shared/component-v2/form/form-input/form-inp
 import { FormSelect } from "../../../shared/component-v2/form/form-select/form-select";
 import { DetailEntityService } from '../../../service/detail-entity.service';
 import { ScheduleService } from '../../../service/schedule/schedule.service';
+import { MatError } from '@angular/material/select';
 
 @Component({
   selector: 'app-schedule-add-edit',
-  imports: [AddEditContainer, FormInput, FormSelect],
+  imports: [AddEditContainer, FormInput, FormSelect, MatError],
   templateUrl: './schedule-add-edit.html',
   styleUrl: './schedule-add-edit.css',
 })
