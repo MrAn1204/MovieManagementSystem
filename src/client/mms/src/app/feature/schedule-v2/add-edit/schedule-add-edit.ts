@@ -22,7 +22,7 @@ export class ScheduleAddEdit extends AddEditDialog<ScheduleDetailModel> {
   protected override entityService: DetailEntityService<ScheduleDetailModel> = inject(ScheduleService);
 
   override form = this.formBuilder.nonNullable.group({
-    showTime: [''],
+    showTime: [this.toDateTimeLocal(new Date())],
     movieId: ['', [CustomValidators.required('schedule.movie.required')]],
     roomId: ['', [CustomValidators.required('schedule.room.required')]],
   });
@@ -39,10 +39,15 @@ export class ScheduleAddEdit extends AddEditDialog<ScheduleDetailModel> {
 
   protected override mapForm(model: ScheduleDetailModel): void {
     this.form.patchValue({
-      showTime: model.showTime,
+      showTime: this.toDateTimeLocal(new Date(model.showTime)),
       movieId: model.movie.id,
       roomId: model.room.id,
     });
+  }
+
+  private toDateTimeLocal(date: Date): string {
+    const pad = (n: number) => n.toString().padStart(2, '0');
+    return `${date.getFullYear()}-${pad(date.getMonth() + 1)}-${pad(date.getDate())}T${pad(date.getHours())}:${pad(date.getMinutes())}`;
   }
 
   override loadOptions(): void {
