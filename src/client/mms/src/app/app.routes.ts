@@ -30,49 +30,49 @@ import { ResetPasswordV2 } from './feature/auth-v2/reset-password/reset-password
 
 export const routes: Routes = [
   {
-    path: 'login',
+    path: 'old/login',
     component: Login,
     title: 'Login',
   },
   {
-    path: 'register',
+    path: 'old/register',
     component: Register,
     title: 'Register',
   },
   {
-    path: 'forgot-password',
+    path: 'old/forgot-password',
     component: ForgotPassword,
     title: 'Forgot Password',
   },
   {
-    path: 'reset-password',
+    path: 'old/reset-password',
     component: ResetPassword,
     title: 'Reset Password',
     canActivate: [passwordResetGuard],
   },
   {
-    path: 'v2/login',
+    path: 'login',
     component: LoginV2,
     title: 'Login',
   },
   {
-    path: 'v2/register',
+    path: 'register',
     component: RegisterV2,
     title: 'Register',
   },
   {
-    path: 'v2/forgot-password',
+    path: 'forgot-password',
     component: ForgotPasswordV2,
     title: 'Forgot Password',
   },
   {
-    path: 'v2/reset-password',
+    path: 'reset-password',
     component: ResetPasswordV2,
     title: 'Reset Password',
     canActivate: [passwordResetGuard],
   },
   {
-    path: '',
+    path: 'old',
     component: MainLayout,
     canActivate: [authGuard],
     children: [
@@ -114,7 +114,7 @@ export const routes: Routes = [
     ]
   },
   {
-    path: 'v2',
+    path: '',
     component: MainLayoutV2,
     canActivate: [authGuard],
     children: [

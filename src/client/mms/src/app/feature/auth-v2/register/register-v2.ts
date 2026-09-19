@@ -69,6 +69,6 @@ export class RegisterV2 {
   }
 
   navigateToLogin() {
-    this.router.navigateByUrl('/v2/login');
+    this.router.navigateByUrl('/login');
   }
 }

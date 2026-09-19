@@ -87,6 +87,6 @@ export class ResetPasswordV2 {
   }
 
   navigateToLogin(): void {
-    this.router.navigateByUrl('/v2/login');
+    this.router.navigateByUrl('/login');
   }
 }

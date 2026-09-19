@@ -13,13 +13,13 @@ import { MatIcon } from "@angular/material/icon";
 })
 export class SidebarV2 {
   readonly routes: SidebarRoute[] = [
-    { path: '/v2', label: 'Home', icon: 'home' },
-    { path: '/v2/movie', label: 'Movie', icon: 'movie' },
-    { path: '/v2/schedule', label: 'Schedule', icon: 'calendar_today' },
-    { path: '/v2/room', label: 'Room', icon: 'meeting_room' },
-    { path: '/v2/ticket', label: 'Ticket', icon: 'local_activity', roles: ['ADMIN'] },
-    { path: '/v2/promotion', label: 'Promotion', icon: 'percent_discount' },
-    { path: '/v2/user', label: 'User', icon: 'groups', roles: ['ADMIN'] }
+    { path: '', label: 'Home', icon: 'home' },
+    { path: '/movie', label: 'Movie', icon: 'movie' },
+    { path: '/schedule', label: 'Schedule', icon: 'calendar_today' },
+    { path: '/room', label: 'Room', icon: 'meeting_room' },
+    { path: '/ticket', label: 'Ticket', icon: 'local_activity', roles: ['ADMIN'] },
+    { path: '/promotion', label: 'Promotion', icon: 'percent_discount' },
+    { path: '/user', label: 'User', icon: 'groups', roles: ['ADMIN'] }
   ]
 
   fullname: string = '';
