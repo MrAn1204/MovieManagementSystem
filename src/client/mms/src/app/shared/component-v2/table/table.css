@@ -1,4 +1,4 @@
-@import "tailwindcss";
+@reference "../../../../styles.css";
 
 :host {
   @apply max-h-full overflow-auto;
