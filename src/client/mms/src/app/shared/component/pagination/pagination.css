@@ -1,4 +1,4 @@
-@import 'tailwindcss';
+@reference "../../../../styles.css";
 
 .page-button {
   @apply rounded-md border p-2 text-center text-sm shadow-sm transition-all;

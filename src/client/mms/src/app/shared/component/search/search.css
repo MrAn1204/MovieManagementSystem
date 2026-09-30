@@ -1,4 +1,4 @@
-@import 'tailwindcss';
+@reference "../../../../styles.css";
 
 :host {
   @apply flex flex-col w-full lg:max-h-1/2 max-h-full;
