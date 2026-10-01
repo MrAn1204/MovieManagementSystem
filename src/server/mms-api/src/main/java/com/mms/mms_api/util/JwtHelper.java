@@ -8,6 +8,7 @@ import java.util.UUID;
 
 import javax.crypto.SecretKey;
 
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.stereotype.Component;
 
@@ -23,6 +24,9 @@ import io.jsonwebtoken.security.Keys;
  */
 @Component
 public class JwtHelper {
+    @Value("${JWT_SECRET_KEY}")
+    private String jwtSecretKey;
+
     /**
      * Generates a signed token containing user identity and role claims.
      */
@@ -56,7 +60,7 @@ public class JwtHelper {
     }
 
     private SecretKey getSigningKey() {
-        return Keys.hmacShaKeyFor(System.getenv("JWT_SECRET_KEY").getBytes());
+        return Keys.hmacShaKeyFor(jwtSecretKey.getBytes());
     }
 
     /**
