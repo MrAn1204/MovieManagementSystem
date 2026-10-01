@@ -20,13 +20,10 @@ import org.springframework.web.cors.CorsConfiguration;
 import org.springframework.web.cors.CorsConfigurationSource;
 import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 
-import lombok.AllArgsConstructor;
-
 /**
  * Central Spring Security configuration for stateless JWT-based authentication.
  */
 @Configuration
-@AllArgsConstructor
 @EnableMethodSecurity
 @EnableJpaAuditing
 public class SecurityConfiguration {
@@ -40,6 +37,17 @@ public class SecurityConfiguration {
 
     @Value("${app.frontend.url}")
     private String frontendUrl;
+
+    public SecurityConfiguration(
+            JwtAuthenticationFilter jwtAuthFilter,
+            CustomAuthenticationEntryPoint authEntryPoint,
+            CustomAccessDeniedHandler accessDeniedHandler,
+            RateLimitFilter rateLimitFilter) {
+        this.jwtAuthFilter = jwtAuthFilter;
+        this.authEntryPoint = authEntryPoint;
+        this.accessDeniedHandler = accessDeniedHandler;
+        this.rateLimitFilter = rateLimitFilter;
+    }
 
     /**
      * Configures HTTP security rules, filter chain, and exception handling.
