@@ -62,6 +62,9 @@ Set the required environment variables for the current PowerShell session:
 ```powershell
 $env:DB_PASSWORD = "your-mysql-password"
 $env:JWT_SECRET_KEY = "your-jwt-secret"
+$env:MMS_EMAIL = "your-gmail-address"
+$env:MMS_EMAIL_PASSWORD = "your-gmail-app-password"
+$env:APP_FRONTEND_URL = "your-frontend-url"
 ```
 
 Start Redis on `localhost:6379`, then start the API:
@@ -71,25 +74,6 @@ Start Redis on `localhost:6379`, then start the API:
 ```
 
 The API runs at `http://localhost:8080` by default.
-
-### Development Profile
-
-The development profile contains Gmail SMTP settings. Activate the Spring profile explicitly when password-reset email is needed:
-
-```powershell
-$env:MMS_EMAIL = "your-gmail-address"
-$env:MMS_EMAIL_PASSWORD = "your-gmail-app-password"
-$env:SPRING_PROFILES_ACTIVE = "dev"
-.\mvnw.cmd spring-boot:run
-```
-
-Alternatively, pass the profile to Maven:
-
-```powershell
-.\mvnw.cmd spring-boot:run "-Dspring-boot.run.profiles=dev"
-```
-
-`-Pdev` alone does not activate the Spring `dev` profile. The local `application-dev.properties` file may be ignored by Git, so recreate it or provide the values through environment variables as needed.
 
 ### Backend Build and Tests
 
@@ -167,7 +151,7 @@ The backend CORS configuration currently allows `http://localhost:4200`, not `ht
 
 1. Start MySQL and Redis.
 2. Create the `mms` database and load a compatible schema.
-3. Set `DB_PASSWORD` and `JWT_SECRET_KEY`.
+3. Set `DB_PASSWORD`, `JWT_SECRET_KEY`, `MMS_EMAIL`, `MMS_EMAIL_PASSWORD`, and `APP_FRONTEND_URL`.
 4. Start the backend from `src/server/mms-api`.
 5. Install dependencies and start the frontend from `src/client/mms`.
 6. Open `http://localhost:4200`.
@@ -177,5 +161,5 @@ The backend CORS configuration currently allows `http://localhost:4200`, not `ht
 - Angular services use `http://localhost:8080` as the backend origin.
 - `npm run build` may call backend endpoints while Angular prerenders routes, so the backend and database should be available during the build.
 - Image upload and deletion require Google Cloud credentials and access to the configured storage bucket.
-- Password-reset email requires Gmail SMTP credentials and the `dev` Spring profile.
+- Password-reset email requires `MMS_EMAIL` and `MMS_EMAIL_PASSWORD`; these settings are loaded from the main Spring configuration.
 - No default login credentials are included in the repository. A compatible database schema and user account must be supplied separately.
