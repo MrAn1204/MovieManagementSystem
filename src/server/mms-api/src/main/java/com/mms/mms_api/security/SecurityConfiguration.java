@@ -2,6 +2,7 @@ package com.mms.mms_api.security;
 
 import java.util.List;
 
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.data.domain.AuditorAware;
@@ -37,6 +38,9 @@ public class SecurityConfiguration {
 
     private RateLimitFilter rateLimitFilter;
 
+    @Value("${app.frontend.url}")
+    private String frontendUrl;
+
     /**
      * Configures HTTP security rules, filter chain, and exception handling.
      *
@@ -71,7 +75,7 @@ public class SecurityConfiguration {
     @Bean
     CorsConfigurationSource corsConfigurationSource() {
         CorsConfiguration config = new CorsConfiguration();
-        config.setAllowedOriginPatterns(List.of("http://localhost:4200"));
+        config.setAllowedOriginPatterns(List.of(frontendUrl));
         config.setAllowedMethods(List.of("GET", "POST", "PUT", "DELETE", "OPTIONS"));
         config.setAllowedHeaders(List.of("*"));
         config.setAllowCredentials(true);
