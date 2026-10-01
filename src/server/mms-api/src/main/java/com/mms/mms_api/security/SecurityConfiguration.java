@@ -2,6 +2,7 @@ package com.mms.mms_api.security;
 
 import java.util.List;
 
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.data.domain.AuditorAware;
@@ -19,13 +20,10 @@ import org.springframework.web.cors.CorsConfiguration;
 import org.springframework.web.cors.CorsConfigurationSource;
 import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 
-import lombok.AllArgsConstructor;
-
 /**
  * Central Spring Security configuration for stateless JWT-based authentication.
  */
 @Configuration
-@AllArgsConstructor
 @EnableMethodSecurity
 @EnableJpaAuditing
 public class SecurityConfiguration {
@@ -36,6 +34,20 @@ public class SecurityConfiguration {
     private CustomAccessDeniedHandler accessDeniedHandler;
 
     private RateLimitFilter rateLimitFilter;
+
+    @Value("${app.frontend.url}")
+    private String frontendUrl;
+
+    public SecurityConfiguration(
+            JwtAuthenticationFilter jwtAuthFilter,
+            CustomAuthenticationEntryPoint authEntryPoint,
+            CustomAccessDeniedHandler accessDeniedHandler,
+            RateLimitFilter rateLimitFilter) {
+        this.jwtAuthFilter = jwtAuthFilter;
+        this.authEntryPoint = authEntryPoint;
+        this.accessDeniedHandler = accessDeniedHandler;
+        this.rateLimitFilter = rateLimitFilter;
+    }
 
     /**
      * Configures HTTP security rules, filter chain, and exception handling.
@@ -71,7 +83,7 @@ public class SecurityConfiguration {
     @Bean
     CorsConfigurationSource corsConfigurationSource() {
         CorsConfiguration config = new CorsConfiguration();
-        config.setAllowedOriginPatterns(List.of("http://localhost:4200"));
+        config.setAllowedOriginPatterns(List.of(frontendUrl));
         config.setAllowedMethods(List.of("GET", "POST", "PUT", "DELETE", "OPTIONS"));
         config.setAllowedHeaders(List.of("*"));
         config.setAllowCredentials(true);
