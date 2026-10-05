@@ -24,4 +24,6 @@ public interface ScheduleRepository extends JpaRepository<Schedule, UUID>, JpaSp
             ORDER BY s.showTime ASC, s.movie.name ASC
             """)
     List<TodayScheduleProjection> findUpcomingSchedules(@Param("start") LocalDateTime start, @Param("end") LocalDateTime end);
+
+    List<Schedule> findByMovieIdAndShowTimeAfterOrderByShowTimeAsc(UUID movieId, LocalDateTime showTime);
 }
