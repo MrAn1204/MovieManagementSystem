@@ -39,6 +39,7 @@ public abstract class MovieMapper {
     
     @Mapping(target = "thumbnail", qualifiedByName = "getThumbnailUrl")
     @Mapping(target = "audit", ignore = true)
+    @Mapping(target = "schedules", ignore = true)
     public abstract MovieDetailDto toDetailDto(Movie movie);
 
     @Mapping(target = "rating", ignore = true)

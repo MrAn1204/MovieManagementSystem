@@ -1,6 +1,11 @@
 package com.mms.mms_api.business.handler.movie;
 
+import java.time.LocalDateTime;
+import java.time.ZoneId;
+
+import com.mms.mms_api.data.ScheduleRepository;
 import com.mms.mms_api.util.CurrentUserHelper;
+import com.mms.mms_api.util.mapper.ScheduleMapper;
 import org.springframework.stereotype.Component;
 
 import com.mms.mms_api.business.query.movie.MovieGetByIdQuery;
@@ -17,6 +22,8 @@ import com.mms.mms_api.util.mapper.MovieMapper;
 @Component
 public class MovieGetByIdHandler extends MovieBaseHandler<MovieGetByIdQuery, MovieDetailDto> {
     private final CurrentUserHelper currentUser;
+    private final ScheduleRepository scheduleRepository;
+    private final ScheduleMapper scheduleMapper;
 
     /**
      * Creates a MovieGetByIdHandler.
@@ -25,9 +32,13 @@ public class MovieGetByIdHandler extends MovieBaseHandler<MovieGetByIdQuery, Mov
      * @param movieRepository movie repository
      * @param currentUserHelper current user helper
      */
-    public MovieGetByIdHandler(MovieMapper movieMapper, MovieRepository movieRepository, CurrentUserHelper currentUserHelper) {
+    public MovieGetByIdHandler(MovieMapper movieMapper, MovieRepository movieRepository,
+            CurrentUserHelper currentUserHelper, ScheduleRepository scheduleRepository,
+            ScheduleMapper scheduleMapper) {
         super(movieMapper, movieRepository);
         this.currentUser = currentUserHelper;
+        this.scheduleRepository = scheduleRepository;
+        this.scheduleMapper = scheduleMapper;
     }
 
     /**
@@ -43,6 +54,12 @@ public class MovieGetByIdHandler extends MovieBaseHandler<MovieGetByIdQuery, Mov
                 () -> new ResourceNotFoundException("movie.notFound"));
 
         MovieDetailDto dto = movieMapper.toDetailDto(movie);
+
+        dto.setSchedules(scheduleRepository
+                .findByMovieIdAndShowTimeAfterOrderByShowTimeAsc(movie.getId(), LocalDateTime.now(ZoneId.systemDefault()))
+                .stream()
+                .map(scheduleMapper::toSummaryDto)
+                .toList());
 
         if (currentUser.isAdmin()) {
             dto.setAudit(new AuditDto(movie));
