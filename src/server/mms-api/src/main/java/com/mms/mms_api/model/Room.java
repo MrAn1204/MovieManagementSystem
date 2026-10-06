@@ -3,6 +3,9 @@ package com.mms.mms_api.model;
 import java.util.List;
 import java.util.UUID;
 
+import org.hibernate.annotations.Fetch;
+import org.hibernate.annotations.FetchMode;
+
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -27,6 +30,7 @@ public class Room extends AuditableEntity {
     private String name;
 
     @OneToMany(mappedBy = "room", cascade = CascadeType.ALL)
+    @Fetch(FetchMode.SUBSELECT)
     private List<Seat> seats;
 
     public Seat getSeatAt(int seatRow, int seatColumn) {

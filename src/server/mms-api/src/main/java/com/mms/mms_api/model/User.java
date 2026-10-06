@@ -3,6 +3,9 @@ package com.mms.mms_api.model;
 import java.time.LocalDate;
 import java.util.List;
 
+import org.hibernate.annotations.Fetch;
+import org.hibernate.annotations.FetchMode;
+
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -59,6 +62,7 @@ public class User extends AuditableEntity {
         name = "user_roles",
         joinColumns = @JoinColumn(name = "user_id"),
         inverseJoinColumns = @JoinColumn(name = "role_id"))
+    @Fetch(FetchMode.SUBSELECT)
     private List<Role> roles;
 
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)

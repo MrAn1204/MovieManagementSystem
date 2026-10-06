@@ -3,8 +3,12 @@ package com.mms.mms_api.model;
 import java.time.LocalDate;
 import java.util.List;
 
+import org.hibernate.annotations.Fetch;
+import org.hibernate.annotations.FetchMode;
+
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+import jakarta.persistence.FetchType;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.JoinTable;
 import jakarta.persistence.ManyToMany;
@@ -38,6 +42,7 @@ public class Movie extends AuditableEntity {
         name = "movie_genres",
         joinColumns = @JoinColumn(name = "movie_id"),
         inverseJoinColumns = @JoinColumn(name = "genre_id"))
+    @Fetch(FetchMode.SUBSELECT)
     private List<Genre> genres;
 
     @ManyToMany
@@ -45,6 +50,7 @@ public class Movie extends AuditableEntity {
         name = "movie_studios",
         joinColumns = @JoinColumn(name = "movie_id"),
         inverseJoinColumns = @JoinColumn(name = "studio_id"))
+    @Fetch(FetchMode.SUBSELECT)
     private List<Studio> studios;
 
     @ManyToMany
@@ -52,9 +58,10 @@ public class Movie extends AuditableEntity {
         name = "movie_talents",
         joinColumns = @JoinColumn(name = "movie_id"),
         inverseJoinColumns = @JoinColumn(name = "talent_id"))
+    @Fetch(FetchMode.SUBSELECT)
     private List<Talent> talents;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "language_id")
     private Language language;
 
