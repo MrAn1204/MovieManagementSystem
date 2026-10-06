@@ -1,5 +1,7 @@
 package com.mms.mms_api.util.validator;
 
+import java.time.LocalDateTime;
+import java.time.ZoneId;
 import java.util.List;
 import java.util.UUID;
 
@@ -144,7 +146,7 @@ public class TicketValidator implements BaseValidator {
     }
 
     /**
-     * Checks that the given schedule is not null and adds an error if it is.
+     * Checks that the given schedule is not null and its show time is not in the past; otherwise adds an error.
      *
      * @param errors the error accumulator
      * @param schedule the schedule to check
@@ -152,6 +154,11 @@ public class TicketValidator implements BaseValidator {
     private void validateSchedule(ErrorSet errors, Schedule schedule) {
         if (schedule == null) {
             errors.add("schedule", "schedule.notFound");
+            return;
+        }
+
+        if (schedule.getShowTime().isBefore(LocalDateTime.now(ZoneId.systemDefault()))) {
+            errors.add("schedule", "ticket.schedule.past");
         }
     }
 

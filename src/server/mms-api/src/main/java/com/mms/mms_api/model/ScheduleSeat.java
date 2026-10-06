@@ -5,6 +5,7 @@ import org.springframework.lang.NonNull;
 import jakarta.persistence.Column;
 import jakarta.persistence.EmbeddedId;
 import jakarta.persistence.Entity;
+import jakarta.persistence.FetchType;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.MapsId;
@@ -30,13 +31,13 @@ public class ScheduleSeat {
     private boolean reserved = false;
 
     @NonNull
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @MapsId("scheduleId")
     @JoinColumn(name = "schedule_id")
     private Schedule schedule;
 
     @NonNull
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @MapsId("seatId")
     @JoinColumn(name = "seat_id")
     private Seat seat;

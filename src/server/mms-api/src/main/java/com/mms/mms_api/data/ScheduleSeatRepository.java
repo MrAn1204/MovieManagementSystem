@@ -2,6 +2,7 @@ package com.mms.mms_api.data;
 
 import java.util.List;
 
+import org.springframework.data.jpa.repository.EntityGraph;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 import com.mms.mms_api.model.Schedule;
@@ -13,5 +14,6 @@ import com.mms.mms_api.model.Seat;
  * Repository for schedule-seat relation persistence.
  */
 public interface ScheduleSeatRepository extends JpaRepository<ScheduleSeat, ScheduleSeatId> {
+    @EntityGraph(attributePaths = {"seat"})
     List<ScheduleSeat> findByScheduleAndSeatIn(Schedule schedule, List<Seat> seats);
 }

@@ -2,6 +2,10 @@ package com.mms.mms_api.data;
 
 import java.time.LocalDateTime;
 
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.jpa.domain.Specification;
+import org.springframework.data.jpa.repository.EntityGraph;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.JpaSpecificationExecutor;
 import org.springframework.data.jpa.repository.Query;
@@ -24,4 +28,12 @@ public interface ScheduleRepository extends JpaRepository<Schedule, UUID>, JpaSp
             ORDER BY s.showTime ASC, s.movie.name ASC
             """)
     List<TodayScheduleProjection> findUpcomingSchedules(@Param("start") LocalDateTime start, @Param("end") LocalDateTime end);
+
+    List<Schedule> findByMovieIdAndShowTimeAfterOrderByShowTimeAsc(UUID movieId, LocalDateTime showTime);
+
+    @EntityGraph(attributePaths = {"movie", "room"})
+    List<Schedule> findAll();
+
+    @EntityGraph(attributePaths = {"movie", "room"})
+    Page<Schedule> findAll(Specification<Schedule> spec, Pageable pageable);
 }
